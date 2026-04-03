@@ -53,13 +53,21 @@
 
     .tile:hover .tile-label { letter-spacing: 0.2em; }
 
-    .tile-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
     .tile-inner {
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .tile-logo {
+      max-width: 180px;
+      max-height: 120px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
     }
 
     /* --- DETAIL PANEL --- */
@@ -172,25 +180,25 @@
   <div id="grid">
     <div class="tile" data-role="maitre">
       <div class="tile-inner">
-        <div class="tile-icon">🍽️</div>
+        <img class="tile-logo" src="https://logo.clearbit.com/happier.nyc" alt="Happier" onerror="this.style.display='none'">
         <div class="tile-label">Maître D' & Events Producer</div>
       </div>
     </div>
     <div class="tile" data-role="manager">
       <div class="tile-inner">
-        <div class="tile-icon">📋</div>
+        <img class="tile-logo" src="https://logo.clearbit.com/lockstockbristol.com" alt="Lock Stock Bar & Grill" onerror="this.style.display='none'">
         <div class="tile-label">Floor & Closing Manager</div>
       </div>
     </div>
     <div class="tile" data-role="marketing">
       <div class="tile-inner">
-        <div class="tile-icon">📊</div>
+        <img class="tile-logo" src="https://logo.clearbit.com/keplergrp.com" alt="Kepler" onerror="this.style.display='none'">
         <div class="tile-label">Digital Marketing Analyst</div>
       </div>
     </div>
     <div class="tile" data-role="digital">
       <div class="tile-inner">
-        <div class="tile-icon">💡</div>
+        <img class="tile-logo" src="https://logo.clearbit.com/newblueinteractive.com" alt="New Blue Interactive" onerror="this.style.display='none'">
         <div class="tile-label">Digital Strategy Assistant</div>
       </div>
     </div>
