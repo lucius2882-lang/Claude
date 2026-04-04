@@ -531,6 +531,11 @@
     .bk-stat-label { font-size: 0.8rem; color: #888; }
     .bk-stat-val { font-size: 0.8rem; color: #e8e0d0; font-weight: 600; }
 
+    .resv-popup {
+      border-color: #c8a96e;
+      box-shadow: 0 0 0 1px #2a2a2a, 6px 6px 32px rgba(0,0,0,0.6);
+    }
+
     /* --- GMAIL UI (NBI) --- */
     #gmail {
       position: fixed;
@@ -1413,10 +1418,9 @@
       panel.innerHTML = html;
 
       panel.querySelectorAll('.bk-resv-row').forEach(row => {
-        row.addEventListener('click', e => {
+        row.addEventListener('click', () => {
           const resv = reservations[parseInt(row.dataset.resv)];
-          const rect = row.getBoundingClientRect();
-          openResvPopup(resv, rect.right + 16, rect.top);
+          openResvPopup(resv);
         });
       });
     }
@@ -1424,11 +1428,11 @@
     let resvPopup = null;
     let resvSlideIndex = 0;
 
-    function openResvPopup(resv, spawnX, spawnY) {
+    function openResvPopup(resv) {
       if (resvPopup) { resvPopup.remove(); resvPopup = null; }
 
       const popup = document.createElement('div');
-      popup.className = 'popup';
+      popup.className = 'popup resv-popup';
       popup.style.setProperty('--tilt', '0deg');
       popup.style.visibility = 'hidden';
       popup.style.left = '-9999px';
@@ -1441,15 +1445,8 @@
       requestAnimationFrame(() => {
         const w = popup.offsetWidth;
         const h = popup.offsetHeight;
-        const pad = 16;
-        let x = spawnX;
-        let y = spawnY;
-        if (x + w > window.innerWidth - pad) x = spawnX - w - 32;
-        if (y + h > window.innerHeight - pad) y = window.innerHeight - h - pad;
-        x = Math.max(pad, x);
-        y = Math.max(pad, y);
-        popup.style.left = x + 'px';
-        popup.style.top = y + 'px';
+        popup.style.left = Math.round((window.innerWidth - w) / 2) + 'px';
+        popup.style.top = Math.round((window.innerHeight - h) / 2) + 'px';
         popup.style.visibility = 'visible';
       });
 
@@ -1462,14 +1459,14 @@
       const slide = resv.slides[idx];
       const isLast = idx === resv.slides.length - 1;
       return `
-        <div class="popup-titlebar" data-drag>
-          <div class="popup-title">${resv.guest}</div>
+        <div class="popup-titlebar" data-drag style="background:linear-gradient(to right,#111,#2a1f00);border-bottom:1px solid #c8a96e;">
+          <div class="popup-title" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
           <div class="popup-controls">
-            <button class="popup-btn resv-close-btn">✕</button>
+            <button class="popup-btn resv-close-btn" style="background:#2a2a2a;border-color:#555;color:#aaa;">✕</button>
           </div>
         </div>
-        <div class="popup-photo" style="background:#1a1a2e">
-          <div class="popup-photo-placeholder">
+        <div class="popup-photo" style="background:#111;border-bottom:1px solid #2a2a2a;">
+          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.2);color:rgba(200,169,110,0.3);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -1478,13 +1475,15 @@
             Add photo
           </div>
         </div>
-        <div class="popup-body">
-          <div class="popup-label">${slide.label}</div>
-          <div class="popup-text">${slide.text}</div>
+        <div class="popup-body" style="background:#1a1008;border-top:none;">
+          <div class="popup-label" style="color:#c8a96e;">${slide.label}</div>
+          <div class="popup-text" style="color:#e8e0d0;">${slide.text}</div>
         </div>
-        <div class="popup-footer">
-          <span class="popup-counter">${idx + 1} of ${resv.slides.length}</span>
-          ${!isLast ? `<button class="popup-next-btn resv-next-btn">Next →</button>` : '<span style="font-size:0.7rem;color:#888">Done</span>'}
+        <div class="popup-footer" style="background:#111;border-top:1px solid #2a2a2a;">
+          <span class="popup-counter" style="color:#666;">${idx + 1} of ${resv.slides.length}</span>
+          ${!isLast
+            ? `<button class="popup-next-btn resv-next-btn" style="color:#c8a96e;">Next →</button>`
+            : '<span style="font-size:0.7rem;color:#555;letter-spacing:0.05em;">Done</span>'}
         </div>
       `;
     }
