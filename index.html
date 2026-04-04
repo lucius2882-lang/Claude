@@ -1303,20 +1303,20 @@
     const bookviewEl = document.getElementById('bookview');
 
     const reservations = [
-      { time: '11:00 AM', pax: 2, guest: 'Osei, A.', note: 'Member — monthly wellness lunch', table: 'Tbl 3', status: 'completed' },
-      { time: '11:30 AM', pax: 4, guest: 'Whitfield Party', note: 'Corporate membership — 4 guests', table: 'Tbl 7', status: 'completed' },
-      { time: '12:00 PM', pax: 2, guest: 'VIP — Park, S.', note: 'Founding member, prefers window', table: 'Tbl 1', status: 'vip' },
-      { time: '12:00 PM', pax: 6, guest: 'Lena Group', note: 'Private lunch — dietary notes on file', table: 'Tbl 10', status: 'completed' },
-      { time: '12:30 PM', pax: 2, guest: 'Reyes, M.', note: '', table: 'Tbl 4', status: 'completed' },
-      { time: '1:00 PM', pax: 3, guest: 'Thornton, E.', note: 'Nut allergy — confirmed with kitchen', table: 'Tbl 6', status: 'seated' },
-      { time: '1:00 PM', pax: 8, guest: 'Harris Corp.', note: 'Wellness team event — pre-ordered', table: 'Tbl 12', status: 'seated' },
-      { time: '1:30 PM', pax: 2, guest: 'Nakamura, Y.', note: '', table: 'Tbl 2', status: 'arrived' },
-      { time: '2:00 PM', pax: 4, guest: 'Chen, L.', note: 'New member onboarding lunch', table: 'Tbl 8', status: 'reserved' },
-      { time: '2:00 PM', pax: 2, guest: 'VIP — Brooks, T.', note: 'Regular — herbal tea on arrival', table: 'Tbl 1', status: 'vip' },
-      { time: '3:00 PM', pax: 20, guest: 'Private Event — Meridian Health', note: 'Full buyout — east dining room', table: 'Event', status: 'reserved' },
-      { time: '5:00 PM', pax: 2, guest: 'Delgado, C.', note: '', table: 'Tbl 5', status: 'reserved' },
-      { time: '5:30 PM', pax: 4, guest: 'Nguyen Party', note: 'Anniversary — flowers arranged', table: 'Tbl 9', status: 'reserved' },
-      { time: '6:00 PM', pax: 10, guest: 'Board Dinner — Happier HQ', note: 'Internal — coordinate with ops', table: 'Tbl 12', status: 'reserved' }
+      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Led team of 5 from open to close', table: 'Tbl 3', status: 'completed' },
+      { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed' },
+      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for members & regulars', table: 'Tbl 1', status: 'vip' },
+      { time: '12:00 PM', pax: 6, guest: 'Private Event Execution', note: 'End-to-end inquiry through day-of ops', table: 'Tbl 10', status: 'completed' },
+      { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed' },
+      { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated' },
+      { time: '1:00 PM', pax: 8, guest: 'Corporate Events', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'seated' },
+      { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived' },
+      { time: '2:00 PM', pax: 4, guest: 'Member Onboarding', note: 'New member experience & relationship building', table: 'Tbl 8', status: 'reserved' },
+      { time: '2:00 PM', pax: 2, guest: 'Toast POS Operations', note: 'Daily platform management & reporting', table: 'Tbl 1', status: 'vip' },
+      { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved' },
+      { time: '5:00 PM', pax: 2, guest: 'Service Standards Enforcement', note: 'Product quality & guest experience, open to close', table: 'Tbl 5', status: 'reserved' },
+      { time: '5:30 PM', pax: 4, guest: 'Performance Management', note: 'Ongoing feedback & staff development', table: 'Tbl 9', status: 'reserved' },
+      { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved' }
     ];
 
     const shifts = [
