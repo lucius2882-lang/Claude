@@ -95,10 +95,10 @@
     .popup {
       position: fixed;
       z-index: 100;
-      width: calc(100vw / 3);
-      height: calc(100vh / 3);
-      min-width: 260px;
-      min-height: 240px;
+      width: calc(100vw / 2);
+      height: calc(100vh / 2);
+      min-width: 320px;
+      min-height: 300px;
       display: flex;
       flex-direction: column;
       background: #fff;
@@ -128,7 +128,7 @@
     /* Title bar */
     .popup-titlebar {
       background: linear-gradient(to right, #000080, #1084d0);
-      padding: 4px 6px;
+      padding: 7px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -137,7 +137,7 @@
 
     .popup-title {
       color: #fff;
-      font-size: 0.78rem;
+      font-size: 1rem;
       font-weight: bold;
       font-family: 'Segoe UI', Tahoma, sans-serif;
       white-space: nowrap;
@@ -149,14 +149,14 @@
 
     .popup-controls {
       display: flex;
-      gap: 2px;
+      gap: 4px;
       flex-shrink: 0;
     }
 
     .popup-btn {
-      width: 18px;
-      height: 16px;
-      font-size: 0.65rem;
+      width: 28px;
+      height: 24px;
+      font-size: 0.9rem;
       font-weight: bold;
       border: 1px solid rgba(255,255,255,0.4);
       border-bottom-color: rgba(0,0,0,0.4);
@@ -214,17 +214,17 @@
     }
 
     .popup-label {
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #888;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
 
     .popup-text {
-      font-size: 0.8rem;
+      font-size: 1rem;
       color: #222;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .popup-footer {
