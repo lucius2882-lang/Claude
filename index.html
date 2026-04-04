@@ -812,8 +812,8 @@
   <div id="bookview">
     <div class="bk-topbar">
       <div>
-        <div class="bk-title">Lock Stock Bar & Grill</div>
-        <div class="bk-date">Saturday, March 7, 2020 &nbsp;·&nbsp; Floor Manager: Lucius</div>
+        <div class="bk-title">Happier New York</div>
+        <div class="bk-date">Thursday, September 12, 2024 &nbsp;·&nbsp; Maître D': Lucius</div>
       </div>
       <button class="bk-close" id="bk-close-btn">← Exit</button>
     </div>
@@ -827,43 +827,43 @@
       <div class="bk-side-panel">
         <div class="bk-side-section">
           <div class="bk-side-heading">Shift Stats</div>
-          <div class="bk-stat-row"><span class="bk-stat-label">Covers tonight</span><span class="bk-stat-val">87</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Covers today</span><span class="bk-stat-val">61</span></div>
           <div class="bk-stat-row"><span class="bk-stat-label">Reservations</span><span class="bk-stat-val">14</span></div>
-          <div class="bk-stat-row"><span class="bk-stat-label">Walk-ins</span><span class="bk-stat-val">31</span></div>
-          <div class="bk-stat-row"><span class="bk-stat-label">Turn time avg</span><span class="bk-stat-val">52 min</span></div>
-          <div class="bk-stat-row"><span class="bk-stat-label">Current wait</span><span class="bk-stat-val">25 min</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Members</span><span class="bk-stat-val">48</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Private events</span><span class="bk-stat-val">2</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">New members</span><span class="bk-stat-val">3</span></div>
         </div>
         <div class="bk-side-section">
-          <div class="bk-side-heading">Manager's Notes</div>
+          <div class="bk-side-heading">Maître D' Notes</div>
           <p class="bk-note-text">
-            Table 7 has a loose chair leg — flagged for facilities. Keep 86'd items updated with kitchen. Late private buyout arrives at 11PM — hold back bar area. DJ setup at 10:30, remind staff on noise compliance.
+            Meridian Health buyout at 3PM — east dining room set by 2:45. Coordinate florals with front desk. Park, S. (Tbl 1) prefers no fragrance near table. New member orientation group arriving at 2PM — greet personally and walk through amenities.
           </p>
         </div>
         <div class="bk-side-section">
-          <div class="bk-side-heading">Closing Checklist</div>
+          <div class="bk-side-heading">End of Day Checklist</div>
           <div class="bk-checklist-item done" id="bk-chk-1">
-            <div class="bk-checkbox checked" >✓</div>
-            <span>Cash drawer counted & reconciled</span>
+            <div class="bk-checkbox checked">✓</div>
+            <span>Resy notes updated for all covers</span>
           </div>
           <div class="bk-checklist-item done" id="bk-chk-2">
             <div class="bk-checkbox checked">✓</div>
-            <span>Bar inventory log completed</span>
+            <span>Member feedback logged in CRM</span>
           </div>
           <div class="bk-checklist-item" id="bk-chk-3">
             <div class="bk-checkbox"></div>
-            <span>Health dept. compliance walk-through</span>
+            <span>Private event debrief sent to ops</span>
           </div>
           <div class="bk-checklist-item" id="bk-chk-4">
             <div class="bk-checkbox"></div>
-            <span>End-of-night financial report submitted</span>
+            <span>Tomorrow's reservations reviewed</span>
           </div>
           <div class="bk-checklist-item" id="bk-chk-5">
             <div class="bk-checkbox"></div>
-            <span>Staff signed out & tip pool distributed</span>
+            <span>FOH staff performance notes filed</span>
           </div>
           <div class="bk-checklist-item" id="bk-chk-6">
             <div class="bk-checkbox"></div>
-            <span>Alarm set & building secured</span>
+            <span>Space reset & secured</span>
           </div>
         </div>
       </div>
@@ -1303,26 +1303,26 @@
     const bookviewEl = document.getElementById('bookview');
 
     const reservations = [
-      { time: '5:00 PM', pax: 2, guest: 'Mitchell, R.', note: 'Anniversary dinner', table: 'Tbl 4', status: 'completed' },
-      { time: '5:30 PM', pax: 4, guest: 'Huang Party', note: '', table: 'Tbl 8', status: 'completed' },
-      { time: '6:00 PM', pax: 6, guest: 'Delgado, M.', note: 'Birthday — cake confirmed', table: 'Tbl 12', status: 'completed' },
-      { time: '7:00 PM', pax: 2, guest: 'Okonkwo, T.', note: '', table: 'Tbl 3', status: 'seated' },
-      { time: '7:00 PM', pax: 8, guest: 'Torres Corp.', note: 'Work dinner — separate checks', table: 'Tbl 15', status: 'seated' },
-      { time: '7:30 PM', pax: 3, guest: 'Patel, S.', note: 'Gluten allergy — kitchen notified', table: 'Tbl 6', status: 'seated' },
-      { time: '8:00 PM', pax: 4, guest: 'Brennan, C.', note: '', table: 'Tbl 9', status: 'arrived' },
-      { time: '8:00 PM', pax: 2, guest: 'VIP — Kim, J.', note: 'Regular — preferred corner booth', table: 'Tbl 2', status: 'vip' },
-      { time: '8:30 PM', pax: 5, guest: 'Walsh Party', note: '', table: 'Tbl 11', status: 'reserved' },
-      { time: '9:00 PM', pax: 2, guest: 'Andersen, L.', note: '', table: 'Tbl 5', status: 'reserved' },
-      { time: '9:00 PM', pax: 10, guest: 'Rivera — Bday', note: 'Late-night group, bar area', table: 'Bar', status: 'reserved' },
-      { time: '9:30 PM', pax: 4, guest: 'Nakamura, Y.', note: '', table: 'Tbl 7', status: 'reserved' },
-      { time: '10:00 PM', pax: 6, guest: 'Franklin Group', note: 'Late dinner, post-show', table: 'Tbl 14', status: 'reserved' },
-      { time: '11:00 PM', pax: 30, guest: 'Private Buyout', note: 'Bar area — full section hold', table: 'Bar', status: 'reserved' }
+      { time: '11:00 AM', pax: 2, guest: 'Osei, A.', note: 'Member — monthly wellness lunch', table: 'Tbl 3', status: 'completed' },
+      { time: '11:30 AM', pax: 4, guest: 'Whitfield Party', note: 'Corporate membership — 4 guests', table: 'Tbl 7', status: 'completed' },
+      { time: '12:00 PM', pax: 2, guest: 'VIP — Park, S.', note: 'Founding member, prefers window', table: 'Tbl 1', status: 'vip' },
+      { time: '12:00 PM', pax: 6, guest: 'Lena Group', note: 'Private lunch — dietary notes on file', table: 'Tbl 10', status: 'completed' },
+      { time: '12:30 PM', pax: 2, guest: 'Reyes, M.', note: '', table: 'Tbl 4', status: 'completed' },
+      { time: '1:00 PM', pax: 3, guest: 'Thornton, E.', note: 'Nut allergy — confirmed with kitchen', table: 'Tbl 6', status: 'seated' },
+      { time: '1:00 PM', pax: 8, guest: 'Harris Corp.', note: 'Wellness team event — pre-ordered', table: 'Tbl 12', status: 'seated' },
+      { time: '1:30 PM', pax: 2, guest: 'Nakamura, Y.', note: '', table: 'Tbl 2', status: 'arrived' },
+      { time: '2:00 PM', pax: 4, guest: 'Chen, L.', note: 'New member onboarding lunch', table: 'Tbl 8', status: 'reserved' },
+      { time: '2:00 PM', pax: 2, guest: 'VIP — Brooks, T.', note: 'Regular — herbal tea on arrival', table: 'Tbl 1', status: 'vip' },
+      { time: '3:00 PM', pax: 20, guest: 'Private Event — Meridian Health', note: 'Full buyout — east dining room', table: 'Event', status: 'reserved' },
+      { time: '5:00 PM', pax: 2, guest: 'Delgado, C.', note: '', table: 'Tbl 5', status: 'reserved' },
+      { time: '5:30 PM', pax: 4, guest: 'Nguyen Party', note: 'Anniversary — flowers arranged', table: 'Tbl 9', status: 'reserved' },
+      { time: '6:00 PM', pax: 10, guest: 'Board Dinner — Happier HQ', note: 'Internal — coordinate with ops', table: 'Tbl 12', status: 'reserved' }
     ];
 
     const shifts = [
-      { label: '— Dinner Service  5:00 PM – 7:30 PM', from: '5:00 PM', to: '7:59 PM' },
-      { label: '— Peak Service  8:00 PM – 10:00 PM', from: '8:00 PM', to: '10:30 PM' },
-      { label: '— Late Night  10:00 PM – Close', from: '10:00 PM', to: '11:59 PM' }
+      { label: '— Morning Service  11:00 AM – 12:30 PM', from: '11:00 AM', to: '12:59 PM' },
+      { label: '— Afternoon Service  1:00 PM – 3:00 PM', from: '1:00 PM', to: '3:59 PM' },
+      { label: '— Evening Service  5:00 PM – Close', from: '4:00 PM', to: '11:59 PM' }
     ];
 
     function timeToMin(t) {
@@ -1389,7 +1389,7 @@
           openKeplerSlide(0);
         } else if (roleKey === 'digital') {
           openGmail();
-        } else if (roleKey === 'manager') {
+        } else if (roleKey === 'maitre') {
           openBook();
         } else {
           openDetail(roleKey);
