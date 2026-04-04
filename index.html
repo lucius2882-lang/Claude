@@ -340,6 +340,197 @@
     }
     #overlay.active { display: block; }
 
+    /* --- RESERVATION BOOK (Lock Stock) --- */
+    #bookview {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      background: #1a1008;
+      font-family: 'Segoe UI', sans-serif;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #bookview.visible { display: flex; opacity: 1; }
+
+    .bk-topbar {
+      background: #111;
+      border-bottom: 2px solid #c8a96e;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .bk-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #c8a96e;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .bk-date {
+      font-size: 0.85rem;
+      color: #888;
+      letter-spacing: 0.08em;
+    }
+    .bk-close {
+      background: none;
+      border: 1px solid #444;
+      color: #aaa;
+      padding: 6px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+    }
+    .bk-close:hover { border-color: #c8a96e; color: #c8a96e; }
+
+    .bk-tabs {
+      background: #111;
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid #2a2a2a;
+      flex-shrink: 0;
+      padding: 0 24px;
+    }
+    .bk-tab {
+      padding: 10px 20px;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .bk-tab.active { color: #c8a96e; border-bottom-color: #c8a96e; }
+    .bk-tab:hover:not(.active) { color: #aaa; }
+
+    .bk-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      gap: 0;
+    }
+
+    /* Reservation list */
+    .bk-resv-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 24px;
+    }
+    .bk-shift-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c8a96e;
+      margin: 16px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #2a2215;
+    }
+    .bk-resv-row {
+      display: grid;
+      grid-template-columns: 64px 40px 1fr 100px 80px;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .bk-resv-row:hover { background: rgba(200,169,110,0.06); }
+    .bk-resv-row.seated { border-left-color: #34A853; }
+    .bk-resv-row.arrived { border-left-color: #FBBC05; }
+    .bk-resv-row.reserved { border-left-color: #4285F4; }
+    .bk-resv-row.completed { border-left-color: #555; opacity: 0.5; }
+    .bk-resv-row.vip { border-left-color: #c8a96e; }
+    .bk-time { font-size: 0.88rem; color: #c8a96e; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .bk-pax { font-size: 0.82rem; color: #aaa; text-align: center; }
+    .bk-guest { font-size: 0.9rem; color: #e8e0d0; font-weight: 500; }
+    .bk-guest .bk-note { font-size: 0.75rem; color: #888; font-weight: 400; margin-top: 2px; }
+    .bk-table { font-size: 0.8rem; color: #888; text-align: center; }
+    .bk-status {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .bk-status.seated { background: rgba(52,168,83,0.15); color: #34A853; }
+    .bk-status.arrived { background: rgba(251,188,5,0.15); color: #FBBC05; }
+    .bk-status.reserved { background: rgba(66,133,244,0.15); color: #4285F4; }
+    .bk-status.completed { background: rgba(100,100,100,0.15); color: #666; }
+    .bk-status.vip { background: rgba(200,169,110,0.15); color: #c8a96e; }
+
+    /* Right panel */
+    .bk-side-panel {
+      width: 300px;
+      border-left: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .bk-side-section {
+      padding: 16px 20px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .bk-side-heading {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c8a96e;
+      margin-bottom: 12px;
+    }
+    .bk-checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .bk-checkbox {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #555;
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #34A853;
+      transition: all 0.15s;
+    }
+    .bk-checkbox.checked { background: rgba(52,168,83,0.15); border-color: #34A853; }
+    .bk-checklist-item span {
+      font-size: 0.82rem;
+      color: #bbb;
+      line-height: 1.4;
+    }
+    .bk-checklist-item.done span { text-decoration: line-through; color: #555; }
+    .bk-note-text {
+      font-size: 0.82rem;
+      color: #aaa;
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .bk-stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .bk-stat-label { font-size: 0.8rem; color: #888; }
+    .bk-stat-val { font-size: 0.8rem; color: #e8e0d0; font-weight: 600; }
+
     /* --- GMAIL UI (NBI) --- */
     #gmail {
       position: fixed;
@@ -613,6 +804,68 @@
       <div class="tile-inner">
         <img class="tile-logo" src="https://i.imgur.com/3EdnKkj.jpg" alt="New Blue Interactive">
         <div class="tile-label">Digital Strategy Assistant</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservation Book (Lock Stock tile) -->
+  <div id="bookview">
+    <div class="bk-topbar">
+      <div>
+        <div class="bk-title">Lock Stock Bar & Grill</div>
+        <div class="bk-date">Saturday, March 7, 2020 &nbsp;·&nbsp; Floor Manager: Lucius</div>
+      </div>
+      <button class="bk-close" id="bk-close-btn">← Exit</button>
+    </div>
+    <div class="bk-tabs">
+      <div class="bk-tab active">📋 Reservations</div>
+      <div class="bk-tab">🪑 Floor Map</div>
+      <div class="bk-tab">📊 Reports</div>
+    </div>
+    <div class="bk-body">
+      <div class="bk-resv-panel" id="bk-resv-panel"></div>
+      <div class="bk-side-panel">
+        <div class="bk-side-section">
+          <div class="bk-side-heading">Shift Stats</div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Covers tonight</span><span class="bk-stat-val">87</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Reservations</span><span class="bk-stat-val">14</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Walk-ins</span><span class="bk-stat-val">31</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Turn time avg</span><span class="bk-stat-val">52 min</span></div>
+          <div class="bk-stat-row"><span class="bk-stat-label">Current wait</span><span class="bk-stat-val">25 min</span></div>
+        </div>
+        <div class="bk-side-section">
+          <div class="bk-side-heading">Manager's Notes</div>
+          <p class="bk-note-text">
+            Table 7 has a loose chair leg — flagged for facilities. Keep 86'd items updated with kitchen. Late private buyout arrives at 11PM — hold back bar area. DJ setup at 10:30, remind staff on noise compliance.
+          </p>
+        </div>
+        <div class="bk-side-section">
+          <div class="bk-side-heading">Closing Checklist</div>
+          <div class="bk-checklist-item done" id="bk-chk-1">
+            <div class="bk-checkbox checked" >✓</div>
+            <span>Cash drawer counted & reconciled</span>
+          </div>
+          <div class="bk-checklist-item done" id="bk-chk-2">
+            <div class="bk-checkbox checked">✓</div>
+            <span>Bar inventory log completed</span>
+          </div>
+          <div class="bk-checklist-item" id="bk-chk-3">
+            <div class="bk-checkbox"></div>
+            <span>Health dept. compliance walk-through</span>
+          </div>
+          <div class="bk-checklist-item" id="bk-chk-4">
+            <div class="bk-checkbox"></div>
+            <span>End-of-night financial report submitted</span>
+          </div>
+          <div class="bk-checklist-item" id="bk-chk-5">
+            <div class="bk-checkbox"></div>
+            <span>Staff signed out & tip pool distributed</span>
+          </div>
+          <div class="bk-checklist-item" id="bk-chk-6">
+            <div class="bk-checkbox"></div>
+            <span>Alarm set & building secured</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1046,6 +1299,86 @@
       setTimeout(() => { gmailEl.style.display = 'none'; }, 300);
     }
 
+    // --- Reservation Book (Lock Stock) ---
+    const bookviewEl = document.getElementById('bookview');
+
+    const reservations = [
+      { time: '5:00 PM', pax: 2, guest: 'Mitchell, R.', note: 'Anniversary dinner', table: 'Tbl 4', status: 'completed' },
+      { time: '5:30 PM', pax: 4, guest: 'Huang Party', note: '', table: 'Tbl 8', status: 'completed' },
+      { time: '6:00 PM', pax: 6, guest: 'Delgado, M.', note: 'Birthday — cake confirmed', table: 'Tbl 12', status: 'completed' },
+      { time: '7:00 PM', pax: 2, guest: 'Okonkwo, T.', note: '', table: 'Tbl 3', status: 'seated' },
+      { time: '7:00 PM', pax: 8, guest: 'Torres Corp.', note: 'Work dinner — separate checks', table: 'Tbl 15', status: 'seated' },
+      { time: '7:30 PM', pax: 3, guest: 'Patel, S.', note: 'Gluten allergy — kitchen notified', table: 'Tbl 6', status: 'seated' },
+      { time: '8:00 PM', pax: 4, guest: 'Brennan, C.', note: '', table: 'Tbl 9', status: 'arrived' },
+      { time: '8:00 PM', pax: 2, guest: 'VIP — Kim, J.', note: 'Regular — preferred corner booth', table: 'Tbl 2', status: 'vip' },
+      { time: '8:30 PM', pax: 5, guest: 'Walsh Party', note: '', table: 'Tbl 11', status: 'reserved' },
+      { time: '9:00 PM', pax: 2, guest: 'Andersen, L.', note: '', table: 'Tbl 5', status: 'reserved' },
+      { time: '9:00 PM', pax: 10, guest: 'Rivera — Bday', note: 'Late-night group, bar area', table: 'Bar', status: 'reserved' },
+      { time: '9:30 PM', pax: 4, guest: 'Nakamura, Y.', note: '', table: 'Tbl 7', status: 'reserved' },
+      { time: '10:00 PM', pax: 6, guest: 'Franklin Group', note: 'Late dinner, post-show', table: 'Tbl 14', status: 'reserved' },
+      { time: '11:00 PM', pax: 30, guest: 'Private Buyout', note: 'Bar area — full section hold', table: 'Bar', status: 'reserved' }
+    ];
+
+    const shifts = [
+      { label: '— Dinner Service  5:00 PM – 7:30 PM', from: '5:00 PM', to: '7:59 PM' },
+      { label: '— Peak Service  8:00 PM – 10:00 PM', from: '8:00 PM', to: '10:30 PM' },
+      { label: '— Late Night  10:00 PM – Close', from: '10:00 PM', to: '11:59 PM' }
+    ];
+
+    function timeToMin(t) {
+      const [time, ampm] = t.split(' ');
+      let [h, m] = time.split(':').map(Number);
+      if (ampm === 'PM' && h !== 12) h += 12;
+      if (ampm === 'AM' && h === 12) h = 0;
+      return h * 60 + m;
+    }
+
+    function renderBook() {
+      const panel = document.getElementById('bk-resv-panel');
+      let html = '';
+      shifts.forEach(shift => {
+        const rows = reservations.filter(r => {
+          const t = timeToMin(r.time);
+          return t >= timeToMin(shift.from) && t < timeToMin(shift.to);
+        });
+        if (!rows.length) return;
+        html += `<div class="bk-shift-label">${shift.label}</div>`;
+        rows.forEach(r => {
+          html += `<div class="bk-resv-row ${r.status}">
+            <div class="bk-time">${r.time}</div>
+            <div class="bk-pax">${r.pax}👤</div>
+            <div class="bk-guest">${r.guest}${r.note ? `<div class="bk-note">${r.note}</div>` : ''}</div>
+            <div class="bk-table">${r.table}</div>
+            <div class="bk-status ${r.status}">${r.status}</div>
+          </div>`;
+        });
+      });
+      panel.innerHTML = html;
+    }
+
+    // Clickable closing checklist
+    document.querySelectorAll('.bk-checklist-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const box = item.querySelector('.bk-checkbox');
+        const isDone = item.classList.toggle('done');
+        box.classList.toggle('checked', isDone);
+        box.textContent = isDone ? '✓' : '';
+      });
+    });
+
+    document.getElementById('bk-close-btn').addEventListener('click', closeBook);
+
+    function openBook() {
+      renderBook();
+      bookviewEl.style.display = 'flex';
+      requestAnimationFrame(() => bookviewEl.classList.add('visible'));
+    }
+
+    function closeBook() {
+      bookviewEl.classList.remove('visible');
+      setTimeout(() => { bookviewEl.style.display = 'none'; }, 300);
+    }
+
     // --- Tile click routing ---
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
@@ -1056,6 +1389,8 @@
           openKeplerSlide(0);
         } else if (roleKey === 'digital') {
           openGmail();
+        } else if (roleKey === 'manager') {
+          openBook();
         } else {
           openDetail(roleKey);
         }
@@ -1074,6 +1409,8 @@
           setTimeout(() => { detail.style.display = 'none'; }, 400);
         } else if (gmailEl.classList.contains('visible')) {
           closeGmail();
+        } else if (bookviewEl.classList.contains('visible')) {
+          closeBook();
         }
       }
     });
