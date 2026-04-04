@@ -824,6 +824,52 @@
     }
     .gm-ev-photo img { width: 100%; height: 100%; object-fit: cover; }
     .gm-ev-body { font-size: 0.95rem; color: #202124; line-height: 1.8; max-width: 640px; }
+
+    @media (max-width: 700px) {
+      /* Topbar */
+      .gm-topbar { padding: 0 10px; height: 54px; gap: 8px; }
+      .gm-logo { font-size: 1.2rem; }
+      .gm-searchbar { padding: 8px 14px; font-size: 0.9rem; }
+
+      /* Hide sidebar */
+      .gm-sidebar { display: none; }
+      .gm-main { border-radius: 0; margin: 0; }
+
+      /* Email rows: stack sender+time on top, subject+snippet below */
+      .gm-email-row {
+        flex-wrap: wrap;
+        padding: 12px 14px;
+        gap: 4px;
+        align-items: flex-start;
+      }
+      .gm-unread-dot { margin-top: 6px; }
+      .gm-avatar { width: 32px; height: 32px; font-size: 0.85rem; margin-top: 2px; }
+      .gm-email-sender {
+        width: auto;
+        flex: 1;
+        font-size: 0.9rem;
+      }
+      .gm-email-time { font-size: 0.75rem; }
+      .gm-email-preview {
+        width: 100%;
+        padding-left: 44px; /* align under sender */
+        white-space: normal;
+        font-size: 0.82rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .gm-email-preview .gm-snippet { display: block; margin-top: 2px; }
+
+      /* Email view */
+      #gm-email-view { padding: 16px; }
+      .gm-ev-subject { font-size: 1.15rem; margin-bottom: 12px; }
+      .gm-ev-meta { flex-wrap: wrap; gap: 8px; }
+      .gm-ev-date { width: 100%; margin-left: 0; font-size: 0.75rem; }
+      .gm-ev-photo { height: 180px; margin-bottom: 16px; }
+      .gm-ev-body { font-size: 0.88rem; line-height: 1.7; }
+    }
   </style>
 </head>
 <body>
