@@ -242,19 +242,6 @@
       letter-spacing: 0.05em;
     }
 
-    .popup-next-btn {
-      font-size: 0.72rem;
-      font-weight: bold;
-      color: #000080;
-      background: none;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      text-decoration: underline;
-    }
-
-    .popup-next-btn:hover { color: #1084d0; }
-
     /* Dim overlay */
     #overlay {
       position: fixed;
@@ -429,7 +416,6 @@
         </div>
         <div class="popup-footer">
           <span class="popup-counter">${slideIndex + 1} of ${role.slides.length}</span>
-          ${!isLast ? `<button class="popup-next-btn" id="popup-next">Next →</button>` : `<span class="popup-counter" style="color:#888">End of story</span>`}
         </div>
       `;
 
@@ -451,16 +437,6 @@
         dismissPopup(popup, roleKey, slideIndex, !isLast);
       });
 
-      // Next button — updates content in place, no close
-      function bindNextBtn() {
-        const nextBtn = popup.querySelector('#popup-next');
-        if (nextBtn) {
-          nextBtn.addEventListener('click', () => {
-            updateSlide(popup, roleKey, currentSlideIndex + 1);
-          });
-        }
-      }
-      bindNextBtn();
 
       // Draggable
       makeDraggable(popup, popup.querySelector('[data-drag]'));
@@ -496,28 +472,6 @@
 
       // Update counter + next button
       popup.querySelector('.popup-counter').textContent = `${newIndex + 1} of ${role.slides.length}`;
-      const footer = popup.querySelector('.popup-footer');
-      const existingNext = footer.querySelector('.popup-next-btn, .popup-counter:last-child');
-      if (existingNext && existingNext !== footer.querySelector('.popup-counter')) existingNext.remove();
-
-      // Re-render the right side of footer
-      const footerRight = footer.querySelector('#popup-next, .popup-counter:last-child');
-      if (footerRight) footerRight.remove();
-
-      if (!isLast) {
-        const btn = document.createElement('button');
-        btn.className = 'popup-next-btn';
-        btn.id = 'popup-next';
-        btn.textContent = 'Next →';
-        btn.addEventListener('click', () => updateSlide(popup, roleKey, newIndex + 1));
-        footer.appendChild(btn);
-      } else {
-        const end = document.createElement('span');
-        end.className = 'popup-counter';
-        end.style.color = '#888';
-        end.textContent = 'End of story';
-        footer.appendChild(end);
-      }
     }
 
     function dismissPopup(popup, roleKey, slideIndex, goNext) {
