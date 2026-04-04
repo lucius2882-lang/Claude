@@ -339,6 +339,253 @@
       display: none;
     }
     #overlay.active { display: block; }
+
+    /* --- GMAIL UI (NBI) --- */
+    #gmail {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      background: #f6f8fc;
+      font-family: 'Google Sans', 'Segoe UI', sans-serif;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #gmail.visible { display: flex; opacity: 1; }
+
+    .gm-topbar {
+      height: 64px;
+      background: #f6f8fc;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      border-bottom: 1px solid #e0e0e0;
+      flex-shrink: 0;
+    }
+    .gm-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      color: #444;
+      padding: 6px 10px;
+      border-radius: 50%;
+      line-height: 1;
+    }
+    .gm-back:hover { background: #e8eaed; }
+    .gm-logo {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #5f6368;
+      margin-right: 8px;
+    }
+    .gm-logo span { color: #EA4335; }
+    .gm-logo span:nth-child(2) { color: #4285F4; }
+    .gm-logo span:nth-child(3) { color: #FBBC05; }
+    .gm-logo span:nth-child(4) { color: #34A853; }
+    .gm-logo span:nth-child(5) { color: #EA4335; }
+    .gm-logo span:nth-child(6) { color: #4285F4; }
+    .gm-searchbar {
+      flex: 1;
+      max-width: 720px;
+      background: #eaf1fb;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #202124;
+      outline: none;
+    }
+
+    .gm-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .gm-sidebar {
+      width: 220px;
+      padding: 8px 0;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+    .gm-compose {
+      margin: 8px 16px 16px;
+      padding: 16px 24px;
+      background: #c2e7ff;
+      border: none;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #001d35;
+      width: calc(100% - 32px);
+    }
+    .gm-compose:hover { background: #a8d8f8; }
+    .gm-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 4px 16px;
+      border-radius: 0 24px 24px 0;
+      font-size: 0.88rem;
+      color: #202124;
+      cursor: pointer;
+      margin-right: 16px;
+    }
+    .gm-nav-item.active { background: #d3e3fd; font-weight: 600; }
+    .gm-nav-item:hover:not(.active) { background: #e8eaed; }
+    .gm-nav-count { margin-left: auto; font-size: 0.8rem; font-weight: 600; }
+
+    .gm-main {
+      flex: 1;
+      background: #fff;
+      border-radius: 16px;
+      margin: 0 8px 8px 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Inbox list */
+    #gm-inbox {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .gm-email-row {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid #f1f3f4;
+      cursor: pointer;
+      gap: 12px;
+      min-height: 56px;
+    }
+    .gm-email-row:hover { background: #f2f6fc; box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0; }
+    .gm-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .gm-email-sender {
+      width: 180px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #202124;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+    }
+    .gm-email-preview {
+      flex: 1;
+      font-size: 0.88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #202124;
+    }
+    .gm-email-preview .gm-subject { font-weight: 700; }
+    .gm-email-preview .gm-snippet { color: #5f6368; font-weight: 400; }
+    .gm-email-time {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #202124;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .gm-unread-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1a73e8;
+      flex-shrink: 0;
+    }
+
+    /* Email view */
+    #gm-email-view {
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+      flex: 1;
+      padding: 24px 32px;
+    }
+    #gm-email-view.open { display: flex; }
+    .gm-ev-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: #1a73e8;
+      padding: 0 0 16px;
+      text-align: left;
+    }
+    .gm-ev-back:hover { text-decoration: underline; }
+    .gm-ev-subject {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #202124;
+      margin-bottom: 16px;
+    }
+    .gm-ev-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .gm-ev-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #fff;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .gm-ev-from { font-size: 0.9rem; font-weight: 600; color: #202124; }
+    .gm-ev-addr { font-size: 0.8rem; color: #5f6368; }
+    .gm-ev-date { margin-left: auto; font-size: 0.8rem; color: #5f6368; }
+    .gm-ev-photo {
+      width: 100%;
+      max-width: 560px;
+      height: 260px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background: #e8eaed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9aa0a6;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 2px dashed #dadce0;
+    }
+    .gm-ev-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .gm-ev-body { font-size: 0.95rem; color: #202124; line-height: 1.8; max-width: 640px; }
   </style>
 </head>
 <body>
@@ -377,6 +624,45 @@
       <button id="close-btn">← Back</button>
     </div>
     <div class="detail-body" id="detail-body"></div>
+  </div>
+
+  <!-- Gmail UI (NBI tile) -->
+  <div id="gmail">
+    <div class="gm-topbar">
+      <button class="gm-back" id="gm-back-btn">☰</button>
+      <div class="gm-logo">
+        <span>G</span><span>m</span><span>a</span><span>i</span><span>l</span>
+      </div>
+      <input class="gm-searchbar" type="text" placeholder="Search mail" readonly>
+    </div>
+    <div class="gm-layout">
+      <div class="gm-sidebar">
+        <button class="gm-compose">✏ &nbsp;Compose</button>
+        <div class="gm-nav-item active">📥 Inbox <span class="gm-nav-count">5</span></div>
+        <div class="gm-nav-item">⭐ Starred</div>
+        <div class="gm-nav-item">🕐 Snoozed</div>
+        <div class="gm-nav-item">📤 Sent</div>
+        <div class="gm-nav-item">📝 Drafts</div>
+        <div class="gm-nav-item">🏷 New Blue</div>
+      </div>
+      <div class="gm-main">
+        <div id="gm-inbox"></div>
+        <div id="gm-email-view">
+          <button class="gm-ev-back" id="gm-inbox-btn">← Back to Inbox</button>
+          <div class="gm-ev-subject" id="gm-ev-subject"></div>
+          <div class="gm-ev-meta">
+            <div class="gm-ev-avatar" id="gm-ev-avatar"></div>
+            <div>
+              <div class="gm-ev-from" id="gm-ev-from"></div>
+              <div class="gm-ev-addr" id="gm-ev-addr"></div>
+            </div>
+            <div class="gm-ev-date" id="gm-ev-date"></div>
+          </div>
+          <div class="gm-ev-photo" id="gm-ev-photo"></div>
+          <div class="gm-ev-body" id="gm-ev-body"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="overlay"></div>
@@ -617,6 +903,149 @@
       document.addEventListener('mouseup', () => { dragging = false; });
     }
 
+    // --- Gmail (NBI) ---
+    const gmailEl = document.getElementById('gmail');
+    const gmInbox = document.getElementById('gm-inbox');
+    const gmEmailView = document.getElementById('gm-email-view');
+
+    const gmEmails = [
+      {
+        id: 1,
+        from: 'Sarah Chen',
+        addr: 'sarah.chen@newblueinteractive.com',
+        color: '#EA4335',
+        subject: 'Re: Q3 Campaign — Final Fundraising Numbers',
+        time: '9:14 AM',
+        date: 'Mar 18, 2020, 9:14 AM',
+        snippet: 'Lucius, attached are the final numbers from the Q3 digital push...',
+        photo: null,
+        photoLabel: 'Campaign results dashboard',
+        body: `Lucius,\n\nAttached are the final results from the Q3 digital fundraising push. The campaign hit $1.2M raised — well above our target. Your work on the email sequence was a big part of that.\n\nThe segmented list approach you recommended outperformed our control group by 34%. I've flagged this in the debrief doc as a model for future cycles.\n\nLet's sync Thursday to talk about how we apply this to the November slate.\n\n— Sarah`
+      },
+      {
+        id: 2,
+        from: 'Marcus Webb',
+        addr: 'mwebb@newblueinteractive.com',
+        color: '#4285F4',
+        subject: 'A/B Test Results — Subject Line Variant B Won',
+        time: 'Yesterday',
+        date: 'Mar 17, 2020, 4:51 PM',
+        snippet: 'Just pulled the results — Variant B outperformed A by 22% open rate...',
+        photo: null,
+        photoLabel: 'A/B test comparison chart',
+        body: `Lucius,\n\nJust pulled the final A/B results from the "last chance" send.\n\nVariant B — your version with the urgency reframe in the subject line — outperformed Variant A by 22% on open rate and 18% on click-through. Donor conversion was up 11%.\n\nThis confirms what you flagged in the tone analysis doc. I'm updating the subject line playbook to reflect this. Nice work.\n\n— Marcus`
+      },
+      {
+        id: 3,
+        from: 'Priya Nair',
+        addr: 'pnair@newblueinteractive.com',
+        color: '#34A853',
+        subject: 'READY FOR QA — October Broadcast (104,211 subscribers)',
+        time: 'Oct 28',
+        date: 'Oct 28, 2019, 11:02 AM',
+        snippet: 'Template is loaded and staged. Needs your QA sign-off before we deploy...',
+        photo: null,
+        photoLabel: 'Email QA checklist screenshot',
+        body: `Lucius,\n\nThe October broadcast is staged in the CRM and ready for your QA pass before we deploy to the full list (104,211 active subscribers).\n\nChecklist:\n• Rendering tested across Gmail, Outlook, Apple Mail ✓\n• All links verified ✓\n• Unsubscribe footer active ✓\n• Personalization tokens firing correctly — PLEASE VERIFY\n• Subject line and preview text confirmed ✓\n\nNothing goes out until you sign off. Let me know ASAP — we're targeting a 2PM send window.\n\n— Priya`
+      },
+      {
+        id: 4,
+        from: 'Dev Desk',
+        addr: 'dev@newblueinteractive.com',
+        color: '#FBBC05',
+        subject: 'HTML Build Complete — Responsive Email Template v3',
+        time: 'Sep 12',
+        date: 'Sep 12, 2019, 3:38 PM',
+        snippet: 'Template coded and loaded into the CRM. Renders clean on mobile and desktop...',
+        photo: null,
+        photoLabel: 'Responsive email template mockup',
+        body: `Lucius,\n\nTemplate v3 is built, QA'd, and loaded into the CRM system.\n\nKey specs:\n• Fully responsive — tested at 320px, 480px, 600px, and desktop\n• Inline CSS for Outlook compatibility\n• Dark mode safe (tested on iOS Mail and Gmail app)\n• Two-column layout collapses to single-column on mobile\n\nThe HTML/CSS work you spec'd made this cleaner than any template we've shipped. It's been saved as the new master in the template library.\n\n— Dev Desk`
+      },
+      {
+        id: 5,
+        from: 'Jamie Torres',
+        addr: 'jamie.torres@newblueinteractive.com',
+        color: '#9C27B0',
+        subject: 'Final Assets — Photoshop + Illustrator Files Attached',
+        time: 'Aug 5',
+        date: 'Aug 5, 2019, 1:22 PM',
+        snippet: 'All final creative files are attached. PSD, AI, and exported PNGs included...',
+        photo: null,
+        photoLabel: 'Creative asset package preview',
+        body: `Lucius,\n\nFinal creative package is attached — all files are export-ready.\n\nIncludes:\n• Hero banner (PSD, layered)\n• Icon set (AI, vector)\n• Social cuts — 4 sizes per platform (PNG exports)\n• Email header variants — light and dark (PSD)\n\nEverything is named and organized per the brand guide. The Illustrator files are live text so copy changes won't require a rebuild.\n\nGreat working with you on this one.\n\n— Jamie`
+      }
+    ];
+
+    function renderInbox() {
+      gmInbox.innerHTML = gmEmails.map(e => `
+        <div class="gm-email-row" data-id="${e.id}">
+          <div class="gm-unread-dot"></div>
+          <div class="gm-avatar" style="background:${e.color}">${e.from[0]}</div>
+          <div class="gm-email-sender">${e.from}</div>
+          <div class="gm-email-preview">
+            <span class="gm-subject">${e.subject}</span>
+            <span class="gm-snippet"> — ${e.snippet}</span>
+          </div>
+          <div class="gm-email-time">${e.time}</div>
+        </div>
+      `).join('');
+
+      gmInbox.querySelectorAll('.gm-email-row').forEach(row => {
+        row.addEventListener('click', () => openEmail(parseInt(row.dataset.id)));
+      });
+    }
+
+    function openEmail(id) {
+      const e = gmEmails.find(x => x.id === id);
+      document.getElementById('gm-ev-subject').textContent = e.subject;
+      document.getElementById('gm-ev-avatar').textContent = e.from[0];
+      document.getElementById('gm-ev-avatar').style.background = e.color;
+      document.getElementById('gm-ev-from').textContent = e.from;
+      document.getElementById('gm-ev-addr').textContent = `<${e.addr}>`;
+      document.getElementById('gm-ev-date').textContent = e.date;
+
+      const photoEl = document.getElementById('gm-ev-photo');
+      photoEl.innerHTML = e.photo
+        ? `<img src="${e.photo}" alt="${e.photoLabel}">`
+        : `📷 &nbsp;${e.photoLabel}`;
+
+      document.getElementById('gm-ev-body').innerHTML = e.body.replace(/\n/g, '<br>');
+
+      // Mark as read (remove bold + dot)
+      const row = gmInbox.querySelector(`[data-id="${id}"]`);
+      if (row) {
+        row.querySelector('.gm-unread-dot').style.visibility = 'hidden';
+        row.querySelector('.gm-email-sender').style.fontWeight = '400';
+        row.querySelector('.gm-subject').style.fontWeight = '400';
+        row.querySelector('.gm-email-time').style.fontWeight = '400';
+      }
+
+      gmInbox.style.display = 'none';
+      gmEmailView.classList.add('open');
+    }
+
+    document.getElementById('gm-inbox-btn').addEventListener('click', () => {
+      gmEmailView.classList.remove('open');
+      gmInbox.style.display = 'flex';
+      gmInbox.style.flexDirection = 'column';
+    });
+
+    document.getElementById('gm-back-btn').addEventListener('click', closeGmail);
+
+    function openGmail() {
+      renderInbox();
+      gmEmailView.classList.remove('open');
+      gmInbox.style.display = 'flex';
+      gmInbox.style.flexDirection = 'column';
+      gmailEl.style.display = 'flex';
+      requestAnimationFrame(() => gmailEl.classList.add('visible'));
+    }
+
+    function closeGmail() {
+      gmailEl.classList.remove('visible');
+      setTimeout(() => { gmailEl.style.display = 'none'; }, 300);
+    }
+
     // --- Tile click routing ---
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
@@ -625,6 +1054,8 @@
           if (currentPopup) { currentPopup.remove(); currentPopup = null; }
           tiltIndex = 0;
           openKeplerSlide(0);
+        } else if (roleKey === 'digital') {
+          openGmail();
         } else {
           openDetail(roleKey);
         }
@@ -641,6 +1072,8 @@
         else if (detail.classList.contains('visible')) {
           detail.classList.remove('visible');
           setTimeout(() => { detail.style.display = 'none'; }, 400);
+        } else if (gmailEl.classList.contains('visible')) {
+          closeGmail();
         }
       }
     });
