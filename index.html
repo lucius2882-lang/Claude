@@ -95,8 +95,12 @@
     .popup {
       position: fixed;
       z-index: 100;
-      width: 420px;
-      max-width: 92vw;
+      width: calc(100vw / 3);
+      height: calc(100vh / 3);
+      min-width: 260px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
       background: #fff;
       border: 2px solid #000080;
       box-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0,0,0,0.2);
@@ -104,6 +108,7 @@
       animation: popIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       cursor: default;
       user-select: none;
+      overflow: hidden;
     }
 
     .popup.closing {
@@ -173,7 +178,7 @@
     /* Photo area */
     .popup-photo {
       width: 100%;
-      height: 200px;
+      flex: 1;
       background: #1a1a2e;
       position: relative;
       overflow: hidden;
@@ -202,8 +207,10 @@
 
     /* Content */
     .popup-body {
-      padding: 1rem 1.2rem 1.2rem;
+      padding: 0.7rem 1rem;
       border-top: 1px solid #ddd;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .popup-label {
@@ -215,9 +222,9 @@
     }
 
     .popup-text {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #222;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .popup-footer {
@@ -348,17 +355,32 @@
     const tilts = [-2.5, 1.8, -1.2, 2.1, -0.8, 1.5, -1.9, 2.4];
     let tiltIndex = 0;
 
-    function randomPos(popupW, popupH) {
-      const margin = 60;
-      const maxX = window.innerWidth - popupW - margin;
-      const maxY = window.innerHeight - popupH - margin;
+    function clampPos(x, y, w, h) {
+      const pad = 20;
       return {
-        x: margin + Math.random() * Math.max(0, maxX - margin),
-        y: margin + Math.random() * Math.max(0, maxY - margin)
+        x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
+        y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
       };
     }
 
-    function openSlide(roleKey, slideIndex) {
+    function randomPos(w, h) {
+      const pad = 40;
+      return {
+        x: pad + Math.random() * Math.max(0, window.innerWidth - w - pad * 2),
+        y: pad + Math.random() * Math.max(0, window.innerHeight - h - pad * 2)
+      };
+    }
+
+    function nearbyPos(fromX, fromY, w, h) {
+      // Offset by a small random nudge from the previous popup's position
+      const nudge = 30 + Math.random() * 60;
+      const angle = Math.random() * Math.PI * 2;
+      const x = fromX + Math.cos(angle) * nudge;
+      const y = fromY + Math.sin(angle) * nudge;
+      return clampPos(x, y, w, h);
+    }
+
+    function openSlide(roleKey, slideIndex, fromPos) {
       const role = roles[roleKey];
       const slide = role.slides[slideIndex];
       const isLast = slideIndex === role.slides.length - 1;
@@ -373,7 +395,7 @@
       popup.className = 'popup';
       popup.style.setProperty('--tilt', tilt + 'deg');
 
-      // Temporarily place off-screen to measure height
+      // Temporarily place off-screen to measure size
       popup.style.visibility = 'hidden';
       popup.style.left = '-9999px';
       popup.style.top = '0';
@@ -417,15 +439,16 @@
       requestAnimationFrame(() => {
         const w = popup.offsetWidth;
         const h = popup.offsetHeight;
-        const pos = randomPos(w, h);
+        const pos = fromPos ? nearbyPos(fromPos.x, fromPos.y, w, h) : randomPos(w, h);
         popup.style.left = pos.x + 'px';
         popup.style.top = pos.y + 'px';
         popup.style.visibility = 'visible';
+        popup._pos = pos; // store for next popup
       });
 
-      // Close button
+      // Close button — X advances to next slide (near same position)
       popup.querySelector('#popup-close').addEventListener('click', () => {
-        dismissPopup(popup, roleKey, slideIndex, false);
+        dismissPopup(popup, roleKey, slideIndex, !isLast);
       });
 
       // Next button
@@ -446,12 +469,13 @@
     }
 
     function dismissPopup(popup, roleKey, slideIndex, goNext) {
+      const savedPos = popup._pos || { x: parseInt(popup.style.left) || 0, y: parseInt(popup.style.top) || 0 };
       popup.classList.add('closing');
       popup.addEventListener('animationend', () => {
         popup.remove();
         const role = roles[roleKey];
         if (goNext && slideIndex + 1 < role.slides.length) {
-          setTimeout(() => openSlide(roleKey, slideIndex + 1), 80);
+          setTimeout(() => openSlide(roleKey, slideIndex + 1, savedPos), 80);
         } else {
           overlay.classList.remove('active');
           currentPopup = null;
