@@ -478,6 +478,48 @@
       overflow-y: auto;
       flex-shrink: 0;
     }
+
+    /* Mobile: collapsible side panel */
+    .bk-side-toggle {
+      display: none;
+      width: 100%;
+      padding: 12px 20px;
+      background: #111;
+      border: none;
+      border-top: 1px solid #2a2a2a;
+      border-bottom: 1px solid #2a2a2a;
+      color: #c8a96e;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: left;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .bk-side-toggle span { float: right; transition: transform 0.2s; }
+    .bk-side-toggle.open span { transform: rotate(180deg); }
+
+    @media (max-width: 700px) {
+      .bk-topbar { padding: 0 14px; height: auto; flex-wrap: wrap; gap: 6px; padding-top: 10px; padding-bottom: 10px; }
+      .bk-date { font-size: 0.7rem; }
+      .bk-title { font-size: 0.9rem; }
+      .bk-tabs { padding: 0 8px; }
+      .bk-tab { padding: 8px 10px; font-size: 0.72rem; }
+      .bk-body { flex-direction: column; overflow-y: auto; }
+      .bk-resv-panel { padding: 10px 12px; overflow-y: visible; }
+      .bk-resv-row { grid-template-columns: 56px 30px 1fr 60px; font-size: 0.8rem; }
+      .bk-status { display: none; }
+      .bk-side-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #2a2a2a;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.35s ease;
+      }
+      .bk-side-panel.expanded { max-height: 800px; }
+      .bk-side-toggle { display: block; }
+    }
     .bk-side-section {
       padding: 16px 20px;
       border-bottom: 1px solid #2a2a2a;
@@ -829,7 +871,8 @@
     </div>
     <div class="bk-body">
       <div class="bk-resv-panel" id="bk-resv-panel"></div>
-      <div class="bk-side-panel">
+      <button class="bk-side-toggle" id="bk-side-toggle">Stats & Notes <span>▼</span></button>
+      <div class="bk-side-panel" id="bk-side-panel">
         <div class="bk-side-section">
           <div class="bk-side-heading">Shift Stats</div>
           <div class="bk-stat-row"><span class="bk-stat-label">Covers today</span><span class="bk-stat-val">61</span></div>
@@ -1516,6 +1559,13 @@
     });
 
     document.getElementById('bk-close-btn').addEventListener('click', closeBook);
+
+    const bkSideToggle = document.getElementById('bk-side-toggle');
+    const bkSidePanel = document.getElementById('bk-side-panel');
+    bkSideToggle.addEventListener('click', () => {
+      const isOpen = bkSidePanel.classList.toggle('expanded');
+      bkSideToggle.classList.toggle('open', isOpen);
+    });
 
     function openBook() {
       renderBook();
