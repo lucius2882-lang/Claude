@@ -756,6 +756,8 @@
       background: #1a73e8;
       flex-shrink: 0;
     }
+    .gm-email-row.gm-spam { cursor: default; opacity: 0.75; }
+    .gm-email-row.gm-spam:hover { background: #fafafa; box-shadow: none; }
 
     /* Email view */
     #gm-email-view {
@@ -1323,21 +1325,42 @@
       }
     ];
 
+    const spamEmails = [
+      { color: '#F4B400', from: 'Prince Adebayo Okonkwo', subject: '🤝 CONFIDENTIAL BUSINESS PROPOSAL — $4.7M USD Awaiting Transfer', time: 'Mar 14', snippet: 'Dear Friend, I am a Nigerian prince in urgent need of your bank account...' },
+      { color: '#DB4437', from: 'LinkedIn', subject: 'Lucius, you have 847 profile views this week! 🔥', time: 'Mar 13', snippet: 'Recruiters are looking at your profile. Upgrade to Premium to see who...' },
+      { color: '#4285F4', from: 'Groupon', subject: '94% OFF Laser Hair Removal — TODAY ONLY (Expires in 00:47:22)', time: 'Mar 12', snippet: 'Don\'t miss this deal! 47 people are looking at this right now...' },
+      { color: '#0F9D58', from: 'Amazon', subject: 'Your package has been delayed 🚨 Action Required', time: 'Mar 11', snippet: 'We were unable to deliver your package. Click here to reschedule. (You have no order)' },
+      { color: '#AA00FF', from: 'DoorDash', subject: 'Lucius, your Chipotle is getting COLD 🌯 We\'re concerned', time: 'Mar 10', snippet: 'We noticed you haven\'t ordered in 3 days. Are you okay? Your burrito misses you...' },
+      { color: '#E91E63', from: 'Shutterstock', subject: 'You left something behind... 👀', time: 'Mar 9', snippet: 'Those stock photos you were looking at are still available. They\'re thinking about you.' },
+      { color: '#FF6D00', from: 'Geico', subject: 'Lucius — 15 minutes could save you 15% or more. Or you could just read this email forever', time: 'Mar 8', snippet: 'You\'ve received this email because you exist. Click to get a quote for something.' },
+      { color: '#607D8B', from: 'Ancestry.com', subject: 'We found a SHOCKING family secret 😱 (subscribe to find out)', time: 'Mar 7', snippet: 'One of your ancestors did something. Click to reveal their identity for just $29.99/mo...' }
+    ];
+
     function renderInbox() {
-      gmInbox.innerHTML = gmEmails.map(e => `
-        <div class="gm-email-row" data-id="${e.id}">
-          <div class="gm-unread-dot"></div>
+      const allEmails = [...gmEmails.map(e => ({ ...e, isQualification: true }))];
+      // Intersperse spam between real emails
+      const spamCopy = [...spamEmails];
+      const mixed = [];
+      allEmails.forEach((e, i) => {
+        mixed.push(e);
+        if (spamCopy.length && (i === 1 || i === 3)) mixed.push({ ...spamCopy.shift(), isQualification: false });
+      });
+      while (spamCopy.length) mixed.push({ ...spamCopy.shift(), isQualification: false });
+
+      gmInbox.innerHTML = mixed.map(e => `
+        <div class="gm-email-row${e.isQualification ? '' : ' gm-spam'}" ${e.isQualification ? `data-id="${e.id}"` : ''}>
+          <div class="gm-unread-dot" style="${e.isQualification ? '' : 'visibility:hidden'}"></div>
           <div class="gm-avatar" style="background:${e.color}">${e.from[0]}</div>
-          <div class="gm-email-sender">${e.from}</div>
+          <div class="gm-email-sender" style="${e.isQualification ? '' : 'font-weight:400;color:#5f6368'}">${e.from}</div>
           <div class="gm-email-preview">
-            <span class="gm-subject">${e.subject}</span>
+            <span class="gm-subject" style="${e.isQualification ? '' : 'font-weight:400;color:#5f6368'}">${e.subject}</span>
             <span class="gm-snippet"> — ${e.snippet}</span>
           </div>
-          <div class="gm-email-time">${e.time}</div>
+          <div class="gm-email-time" style="${e.isQualification ? '' : 'font-weight:400;color:#5f6368'}">${e.time}</div>
         </div>
       `).join('');
 
-      gmInbox.querySelectorAll('.gm-email-row').forEach(row => {
+      gmInbox.querySelectorAll('.gm-email-row:not(.gm-spam)').forEach(row => {
         row.addEventListener('click', () => openEmail(parseInt(row.dataset.id)));
       });
     }
