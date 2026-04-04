@@ -1144,24 +1144,23 @@
       popup.style.top = '0';
 
       popup.innerHTML = `
-        <div class="popup-titlebar" data-drag>
-          <div class="popup-title">Digital Marketing Analyst — Kepler</div>
+        <div class="popup-titlebar" data-drag style="background:#111;border-bottom:1px solid #333;">
+          <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
           <div class="popup-controls">
-            <button class="popup-btn">_</button>
-            <button class="popup-btn">□</button>
-            <button class="popup-btn close-btn" id="popup-close">✕</button>
+            <button class="popup-btn" style="background:#333;border-color:#555;color:#aaa;">_</button>
+            <button class="popup-btn" style="background:#333;border-color:#555;color:#aaa;">□</button>
+            <button class="popup-btn close-btn" id="popup-close" style="background:#333;border-color:#555;color:#aaa;">✕</button>
           </div>
         </div>
         <div class="popup-photo" style="background:#0f3460">
           ${photoHTML(slide)}
         </div>
-        <div class="popup-body">
-          <div class="popup-label">${slide.label}</div>
-          <div class="popup-text">${slide.text}</div>
+        <div class="popup-body" style="background:#1a1a1a;border-top:1px solid #333;">
+          <div class="popup-label" style="color:#888;">${slide.label}</div>
+          <div class="popup-text" style="color:#e8e8e8;">${slide.text}</div>
         </div>
-        <div class="popup-footer">
-          <span class="popup-counter">${slideIndex + 1} of ${keplerSlides.length}</span>
-          ${!isLast ? `<button class="popup-next-btn" id="popup-next">Next →</button>` : '<span style="font-size:0.7rem;color:#888">End of story</span>'}
+        <div class="popup-footer" style="background:#111;border-top:1px solid #333;">
+          <span class="popup-counter" style="color:#555;">${slideIndex + 1} of ${keplerSlides.length}</span>
         </div>
       `;
 
@@ -1182,42 +1181,9 @@
         dismissPopup(popup, slideIndex, !isLast);
       });
 
-      // Next → update in place
-      const nextBtn = popup.querySelector('#popup-next');
-      if (nextBtn) nextBtn.addEventListener('click', () => updateKeplerSlide(popup, slideIndex + 1));
-
       makeDraggable(popup, popup.querySelector('[data-drag]'));
       overlay.classList.add('active');
       currentPopup = popup;
-    }
-
-    function updateKeplerSlide(popup, newIndex) {
-      const slide = keplerSlides[newIndex];
-      const isLast = newIndex === keplerSlides.length - 1;
-      currentSlideIndex = newIndex;
-
-      popup.querySelector('.popup-photo').innerHTML = photoHTML(slide);
-      popup.querySelector('.popup-label').textContent = slide.label;
-      popup.querySelector('.popup-text').textContent = slide.text;
-      popup.querySelector('.popup-counter').textContent = `${newIndex + 1} of ${keplerSlides.length}`;
-
-      const footer = popup.querySelector('.popup-footer');
-      const oldBtn = footer.querySelector('#popup-next');
-      if (oldBtn) oldBtn.remove();
-
-      if (!isLast) {
-        const btn = document.createElement('button');
-        btn.className = 'popup-next-btn';
-        btn.id = 'popup-next';
-        btn.textContent = 'Next →';
-        btn.addEventListener('click', () => updateKeplerSlide(popup, newIndex + 1));
-        footer.appendChild(btn);
-      } else {
-        const end = document.createElement('span');
-        end.style.cssText = 'font-size:0.7rem;color:#888';
-        end.textContent = 'End of story';
-        footer.appendChild(end);
-      }
     }
 
     function dismissPopup(popup, slideIndex, goNext) {
