@@ -1303,20 +1303,76 @@
     const bookviewEl = document.getElementById('bookview');
 
     const reservations = [
-      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Led team of 5 from open to close', table: 'Tbl 3', status: 'completed' },
-      { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed' },
-      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for members & regulars', table: 'Tbl 1', status: 'vip' },
-      { time: '12:00 PM', pax: 6, guest: 'Private Event Execution', note: 'End-to-end inquiry through day-of ops', table: 'Tbl 10', status: 'completed' },
-      { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed' },
-      { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated' },
-      { time: '1:00 PM', pax: 8, guest: 'Corporate Events', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'seated' },
-      { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived' },
-      { time: '2:00 PM', pax: 4, guest: 'Member Onboarding', note: 'New member experience & relationship building', table: 'Tbl 8', status: 'reserved' },
-      { time: '2:00 PM', pax: 2, guest: 'Toast POS Operations', note: 'Daily platform management & reporting', table: 'Tbl 1', status: 'vip' },
-      { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved' },
-      { time: '5:00 PM', pax: 2, guest: 'Service Standards Enforcement', note: 'Product quality & guest experience, open to close', table: 'Tbl 5', status: 'reserved' },
-      { time: '5:30 PM', pax: 4, guest: 'Performance Management', note: 'Ongoing feedback & staff development', table: 'Tbl 9', status: 'reserved' },
-      { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved' }
+      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Led team of 5 from open to close', table: 'Tbl 3', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Led a front-of-house team of 5 as an active, hands-on manager — working directly alongside staff from the moment doors opened to the last table clearing.' },
+        { label: 'How It Worked', text: 'Real leadership meant being on the floor, not behind a desk. Every shift I was the last line of quality control — for the guest experience, the team\'s execution, and the overall energy of the room.' },
+        { label: 'The Result', text: 'A team that operated with consistency and confidence. Service standards stayed high regardless of volume because the expectation was set from the top down, every day.' }
+      ]},
+      { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Designed and executed training programs for incoming FOH team members, covering service standards, product knowledge, and member-first hospitality.' },
+        { label: 'How It Worked', text: 'Training wasn\'t a one-time event — it was ongoing. I gave real-time feedback during shifts and conducted formal performance reviews to keep the team developing.' },
+        { label: 'The Result', text: 'Staff who could represent Happier\'s brand without constant supervision. Lower turnover, higher confidence on the floor, and members who noticed the consistency.' }
+      ]},
+      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for members & regulars', table: 'Tbl 1', status: 'vip', slides: [
+        { label: 'The Skill', text: 'Served as the primary point of contact for founding members, regulars, and high-value guests — building relationships that kept them coming back.' },
+        { label: 'How It Worked', text: 'I tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. The personal touch was the product.' },
+        { label: 'The Result', text: 'Measurable return visits and member satisfaction. When something went wrong, guests came to me directly — and left satisfied because they trusted the relationship.' }
+      ]},
+      { time: '12:00 PM', pax: 6, guest: 'Private Event Execution', note: 'End-to-end inquiry through day-of ops', table: 'Tbl 10', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Managed private event inquiries from first contact through day-of execution — covering logistics, guest coordination, and on-site management.' },
+        { label: 'How It Worked', text: 'Every event required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. I was the single point of accountability.' },
+        { label: 'The Result', text: 'Events that ran without visible effort. Guests experienced seamless hospitality; the coordination that made it happen stayed entirely behind the scenes.' }
+      ]},
+      { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable — balancing capacity, pacing, and the guest experience from the host stand.' },
+        { label: 'How It Worked', text: 'I actively supported the host throughout each shift, making real-time adjustments to seating assignments to keep covers moving without guests feeling rushed.' },
+        { label: 'The Result', text: 'Smooth service pacing that protected both the kitchen and the guest experience — maximizing covers without sacrificing the quality of each visit.' }
+      ]},
+      { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated', slides: [
+        { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor — resolving complaints, de-escalating tension, and turning negative experiences into positive ones in real time.' },
+        { label: 'How It Worked', text: 'The key was speed and ownership. I never passed a problem to someone else. I made the call on the floor, handled it personally, and followed up before the guest left.' },
+        { label: 'The Result', text: 'Guests who came in frustrated left satisfied. Repeat visits from people who originally had a problem became a regular pattern — because resolution done right builds loyalty.' }
+      ]},
+      { time: '1:00 PM', pax: 8, guest: 'Corporate Events', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'seated', slides: [
+        { label: 'The Skill', text: 'Coordinated corporate events across multiple Happier properties, working cross-functionally with HR, Facilities, and the Communications team.' },
+        { label: 'How It Worked', text: 'These weren\'t just dinner reservations — they were full productions involving space setup, custom menus, AV, and internal stakeholder alignment before a single guest arrived.' },
+        { label: 'The Result', text: 'Events that reflected well on both the company hosting them and on Happier. Repeat corporate bookings became a consistent revenue stream.' }
+      ]},
+      { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived', slides: [
+        { label: 'The Skill', text: 'Maintained live control of seating flow throughout each shift — reading the room, anticipating bottlenecks, and adjusting table assignments before problems developed.' },
+        { label: 'How It Worked', text: 'I stayed at or near the host stand during peak periods, tracking turn times, kitchen pacing, and server sections to keep everything balanced in real time.' },
+        { label: 'The Result', text: 'Shorter wait times, less pressure on the kitchen, and a guest experience that never felt rushed or uneven — even on the busiest days.' }
+      ]},
+      { time: '2:00 PM', pax: 4, guest: 'Member Onboarding', note: 'New member experience & relationship building', table: 'Tbl 8', status: 'reserved', slides: [
+        { label: 'The Skill', text: 'Led the in-person onboarding experience for new Happier members — introducing them to the space, the team, and the standard of service they could expect.' },
+        { label: 'How It Worked', text: 'First impressions set the tone for the entire membership. I personally greeted new members, walked them through the space, and made sure their first visit was memorable.' },
+        { label: 'The Result', text: 'Members who felt connected from day one. Early engagement translated directly into regular visits and referrals — the best sign that the experience landed.' }
+      ]},
+      { time: '2:00 PM', pax: 2, guest: 'Toast POS Operations', note: 'Daily platform management & reporting', table: 'Tbl 1', status: 'vip', slides: [
+        { label: 'The Skill', text: 'Operated Toast POS daily for order management, payment processing, and end-of-shift reporting — alongside Resy and OpenTable for reservations.' },
+        { label: 'How It Worked', text: 'Knowing the systems meant the team could lean on me for troubleshooting during service, and I could pull accurate reporting at close without delays.' },
+        { label: 'The Result', text: 'Faster service, cleaner data, and a team that wasn\'t blocked by technology issues during high-volume periods.' }
+      ]},
+      { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved', slides: [
+        { label: 'The Skill', text: 'Produced large-scale events across multiple Happier properties — managing logistics, vendor coordination, and cross-departmental communication from inquiry to execution.' },
+        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show — I kept all of it aligned and moving toward the same deadline.' },
+        { label: 'The Result', text: 'Events executed without incident across properties. Internal stakeholders trusted the process; guests experienced the outcome without seeing any of the work behind it.' }
+      ]},
+      { time: '5:00 PM', pax: 2, guest: 'Service Standards Enforcement', note: 'Product quality & guest experience, open to close', table: 'Tbl 5', status: 'reserved', slides: [
+        { label: 'The Skill', text: 'Maintained Happier\'s service and product standards across every shift — from the first cover of the day through the last.' },
+        { label: 'How It Worked', text: 'Standards don\'t enforce themselves. I walked the floor constantly, coached in the moment, and set the expectation through my own presence and behavior.' },
+        { label: 'The Result', text: 'A consistent guest experience that members could count on regardless of the day, the server, or the volume. Consistency is what turns visitors into members.' }
+      ]},
+      { time: '5:30 PM', pax: 4, guest: 'Performance Management', note: 'Ongoing feedback & staff development', table: 'Tbl 9', status: 'reserved', slides: [
+        { label: 'The Skill', text: 'Provided ongoing performance feedback to FOH staff and contributed to formal reviews — keeping the team accountable and growing throughout each season.' },
+        { label: 'How It Worked', text: 'Feedback happened in real time, not just at review cycles. A quick note after service about what went well or what to adjust is more effective than a quarterly conversation.' },
+        { label: 'The Result', text: 'Staff who improved visibly over their tenure. Better performance, fewer repeat mistakes, and a team culture where feedback was normal — not feared.' }
+      ]},
+      { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved', slides: [
+        { label: 'The Skill', text: 'Coordinated regularly with HR, Facilities, and Communications teams to execute events and resolve operational issues across Happier\'s properties.' },
+        { label: 'How It Worked', text: 'Hospitality doesn\'t operate in a silo. Getting the right things done meant knowing who to call, communicating clearly, and following through without being chased.' },
+        { label: 'The Result', text: 'Smoother events, faster problem resolution, and a reputation internally as someone who could be trusted to close the loop — no matter which department was involved.' }
+      ]}
     ];
 
     const shifts = [
@@ -1343,8 +1399,9 @@
         });
         if (!rows.length) return;
         html += `<div class="bk-shift-label">${shift.label}</div>`;
-        rows.forEach(r => {
-          html += `<div class="bk-resv-row ${r.status}">
+        rows.forEach((r, i) => {
+          const idx = reservations.indexOf(r);
+          html += `<div class="bk-resv-row ${r.status}" data-resv="${idx}" style="cursor:pointer">
             <div class="bk-time">${r.time}</div>
             <div class="bk-pax">${r.pax}👤</div>
             <div class="bk-guest">${r.guest}${r.note ? `<div class="bk-note">${r.note}</div>` : ''}</div>
@@ -1354,6 +1411,99 @@
         });
       });
       panel.innerHTML = html;
+
+      panel.querySelectorAll('.bk-resv-row').forEach(row => {
+        row.addEventListener('click', e => {
+          const resv = reservations[parseInt(row.dataset.resv)];
+          const rect = row.getBoundingClientRect();
+          openResvPopup(resv, rect.right + 16, rect.top);
+        });
+      });
+    }
+
+    let resvPopup = null;
+    let resvSlideIndex = 0;
+
+    function openResvPopup(resv, spawnX, spawnY) {
+      if (resvPopup) { resvPopup.remove(); resvPopup = null; }
+
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.style.setProperty('--tilt', '0deg');
+      popup.style.visibility = 'hidden';
+      popup.style.left = '-9999px';
+      popup.style.top = '0';
+      resvSlideIndex = 0;
+
+      popup.innerHTML = buildResvPopupHTML(resv, 0);
+      document.body.appendChild(popup);
+
+      requestAnimationFrame(() => {
+        const w = popup.offsetWidth;
+        const h = popup.offsetHeight;
+        const pad = 16;
+        let x = spawnX;
+        let y = spawnY;
+        if (x + w > window.innerWidth - pad) x = spawnX - w - 32;
+        if (y + h > window.innerHeight - pad) y = window.innerHeight - h - pad;
+        x = Math.max(pad, x);
+        y = Math.max(pad, y);
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        popup.style.visibility = 'visible';
+      });
+
+      bindResvPopupBtns(popup, resv);
+      makeDraggable(popup, popup.querySelector('[data-drag]'));
+      resvPopup = popup;
+    }
+
+    function buildResvPopupHTML(resv, idx) {
+      const slide = resv.slides[idx];
+      const isLast = idx === resv.slides.length - 1;
+      return `
+        <div class="popup-titlebar" data-drag>
+          <div class="popup-title">${resv.guest}</div>
+          <div class="popup-controls">
+            <button class="popup-btn resv-close-btn">✕</button>
+          </div>
+        </div>
+        <div class="popup-photo" style="background:#1a1a2e">
+          <div class="popup-photo-placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Add photo
+          </div>
+        </div>
+        <div class="popup-body">
+          <div class="popup-label">${slide.label}</div>
+          <div class="popup-text">${slide.text}</div>
+        </div>
+        <div class="popup-footer">
+          <span class="popup-counter">${idx + 1} of ${resv.slides.length}</span>
+          ${!isLast ? `<button class="popup-next-btn resv-next-btn">Next →</button>` : '<span style="font-size:0.7rem;color:#888">Done</span>'}
+        </div>
+      `;
+    }
+
+    function bindResvPopupBtns(popup, resv) {
+      popup.querySelector('.resv-close-btn').addEventListener('click', () => {
+        popup.classList.add('closing');
+        popup.addEventListener('animationend', () => { popup.remove(); resvPopup = null; }, { once: true });
+      });
+      const nextBtn = popup.querySelector('.resv-next-btn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          resvSlideIndex++;
+          popup.innerHTML = buildResvPopupHTML(resv, resvSlideIndex);
+          bindResvPopupBtns(popup, resv);
+          const handle = popup.querySelector('[data-drag]');
+          if (handle) makeDraggable(popup, handle);
+        });
+      }
     }
 
     // Clickable closing checklist
