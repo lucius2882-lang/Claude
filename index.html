@@ -91,7 +91,87 @@
 
     .tile:hover .tile-label { letter-spacing: 0.2em; }
 
-    /* --- POP-UP WINDOW --- */
+    /* --- FULL-SCREEN DETAIL PANEL (non-Kepler) --- */
+    #detail {
+      position: fixed;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      overflow-y: auto;
+      z-index: 50;
+    }
+
+    #detail.visible {
+      display: flex;
+      opacity: 1;
+    }
+
+    .detail-header {
+      padding: 3rem 4rem 2rem;
+      color: #fff;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .detail-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    #close-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    #close-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .detail-body {
+      background: #f9f9f9;
+      flex: 1;
+      padding: 3rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .detail-body { grid-template-columns: 1fr; padding: 2rem; }
+      .detail-header { padding: 2rem; }
+    }
+
+    .detail-section h3 {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .detail-section p {
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* --- KEPLER POP-UP --- */
     .popup {
       position: fixed;
       z-index: 100;
@@ -125,7 +205,6 @@
       to   { transform: scale(0.6) rotate(var(--tilt)); opacity: 0; }
     }
 
-    /* Title bar */
     .popup-titlebar {
       background: linear-gradient(to right, #000080, #1084d0);
       padding: 7px 10px;
@@ -133,6 +212,7 @@
       align-items: center;
       justify-content: space-between;
       cursor: move;
+      flex-shrink: 0;
     }
 
     .popup-title {
@@ -172,14 +252,11 @@
     }
 
     .popup-btn:hover { background: #d8d8d8; }
-    .popup-btn.close-btn { background: #c0c0c0; }
     .popup-btn.close-btn:hover { background: #ff4444; color: #fff; }
 
-    /* Photo area */
     .popup-photo {
       width: 100%;
       flex: 1;
-      background: #1a1a2e;
       position: relative;
       overflow: hidden;
     }
@@ -205,7 +282,6 @@
       border: 2px dashed rgba(255,255,255,0.15);
     }
 
-    /* Content */
     .popup-body {
       padding: 0.7rem 1rem;
       border-top: 1px solid #ddd;
@@ -234,6 +310,7 @@
       justify-content: space-between;
       align-items: center;
       background: #f5f5f5;
+      flex-shrink: 0;
     }
 
     .popup-counter {
@@ -242,7 +319,18 @@
       letter-spacing: 0.05em;
     }
 
-    /* Dim overlay */
+    .popup-next-btn {
+      font-size: 0.72rem;
+      font-weight: bold;
+      color: #000080;
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      text-decoration: underline;
+    }
+    .popup-next-btn:hover { color: #1084d0; }
+
     #overlay {
       position: fixed;
       inset: 0;
@@ -250,13 +338,11 @@
       z-index: 90;
       display: none;
     }
-
     #overlay.active { display: block; }
   </style>
 </head>
 <body>
 
-  <!-- HOME GRID -->
   <div id="grid">
     <div class="tile" data-role="maitre">
       <div class="tile-inner">
@@ -284,6 +370,15 @@
     </div>
   </div>
 
+  <!-- Full-screen detail panel (non-Kepler) -->
+  <div id="detail">
+    <div class="detail-header" id="detail-header">
+      <div class="detail-title" id="detail-title"></div>
+      <button id="close-btn">← Back</button>
+    </div>
+    <div class="detail-body" id="detail-body"></div>
+  </div>
+
   <div id="overlay"></div>
 
   <script>
@@ -291,52 +386,73 @@
       maitre: {
         title: "Maître D' & Events Producer",
         color: "#1a1a2e",
-        slides: [
-          { label: "The Role", text: "Front-of-house lead and events producer at Happier New York — a members-only wellness concept in Manhattan. Every shift started before the first guest arrived and ended long after the last one left.", photo: null },
-          { label: "Running the Room", text: "Led a team of 5 FOH staff through full-day service — managing the floor, supporting the host stand, and making real-time seating calls to keep the guest experience seamless from open to close.", photo: null },
-          { label: "Guest Relationships", text: "Served as the primary point of contact for members and regulars. Building relationships was the job — knowing names, preferences, and handling anything that went sideways with composure.", photo: null },
-          { label: "Events", text: "Managed private event inquiries end-to-end across multiple properties — from first inquiry through day-of execution, coordinating with HR, Facilities, and Communications to pull it all together.", photo: null },
-          { label: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and people management.", photo: null }
+        sections: [
+          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Front-of-house lead and events producer at Happier New York — a members-only wellness concept in Manhattan. Every shift started before the first guest arrived and ended long after the last one left." },
+          { heading: "Running the Room", text: "Led a team of 5 FOH staff through full-day service — managing the floor, supporting the host stand, and making real-time seating calls to keep the guest experience seamless from open to close." },
+          { heading: "Guest Relationships", text: "Served as the primary point of contact for members and regulars. Building relationships was the job — knowing names, preferences, and handling anything that went sideways with composure." },
+          { heading: "Events", text: "Managed private event inquiries end-to-end across multiple properties — from first inquiry through day-of execution, coordinating with HR, Facilities, and Communications to pull it all together." },
+          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and people management." }
         ]
       },
       manager: {
         title: "Floor & Closing Manager",
         color: "#16213e",
-        slides: [
-          { label: "The Role", text: "Floor and closing manager at Lock Stock Bar & Grill in Bristol, NY — a high-volume spot running lunch, dinner, and late-night. Fast pace, full house, no shortcuts.", photo: null },
-          { label: "Owning the Shift", text: "Kept service flowing across all dayparts — lunch rushes, dinner covers, late-night crowds. Standards stayed consistent regardless of volume. That was the job.", photo: null },
-          { label: "Closing the Night", text: "Every close meant financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off.", photo: null },
-          { label: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a team that could adapt on the fly — which mattered a lot when COVID hit.", photo: null },
-          { label: "COVID Pivot", text: "Led the operational restructuring when the restaurant reopened — rewrote SOPs, retrained the full FOH team, and maintained service quality through every phase of reopening.", photo: null }
-        ]
-      },
-      marketing: {
-        title: "Digital Marketing Analyst",
-        color: "#0f3460",
-        slides: [
-          { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photo: null },
-          { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photo: null },
-          { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photo: null },
-          { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photo: null },
-          { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photo: null }
+        sections: [
+          { heading: "Lock Stock Bar & Grill · Bristol, NY · Nov 2019 – Mar 2021", text: "Floor and closing manager at Lock Stock Bar & Grill — a high-volume spot running lunch, dinner, and late-night. Fast pace, full house, no shortcuts." },
+          { heading: "Owning the Shift", text: "Kept service flowing across all dayparts — lunch rushes, dinner covers, late-night crowds. Standards stayed consistent regardless of volume. That was the job." },
+          { heading: "Closing the Night", text: "Every close meant financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
+          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a team that could adapt on the fly — which mattered a lot when COVID hit." },
+          { heading: "COVID Pivot", text: "Led the operational restructuring when the restaurant reopened — rewrote SOPs, retrained the full FOH team, and maintained service quality through every phase of reopening." }
         ]
       },
       digital: {
         title: "Digital Strategy Assistant",
         color: "#533483",
-        slides: [
-          { label: "The Role", text: "Digital Strategy Assistant at New Blue Interactive in the DC-Baltimore area — a political digital agency running fundraising and communications for local and state campaigns.", photo: null },
-          { label: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections. Every email, every ask, every subject line mattered — campaigns live or die on their fundraising numbers.", photo: null },
-          { label: "Writing & Testing", text: "Drafted fundraising emails and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a deep understanding of what moves donors to act.", photo: null },
-          { label: "Scale & QA", text: "Ran quality assurance on marketing materials going to email lists of 100,000+. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off.", photo: null },
-          { label: "Technical + Creative", text: "Built emails in HTML and CSS for CRM deployment, and handled all creative production in Adobe Photoshop and Illustrator. Both sides of the work lived in the same role.", photo: null }
+        sections: [
+          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2019 – May 2020", text: "Digital Strategy Assistant at New Blue Interactive — a political digital agency running fundraising and communications for local and state campaigns." },
+          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections. Every email, every ask, every subject line mattered — campaigns live or die on their fundraising numbers." },
+          { heading: "Writing & Testing", text: "Drafted fundraising emails and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a deep understanding of what moves donors to act." },
+          { heading: "Scale & QA", text: "Ran quality assurance on marketing materials going to email lists of 100,000+. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off." },
+          { heading: "Technical + Creative", text: "Built emails in HTML and CSS for CRM deployment, and handled all creative production in Adobe Photoshop and Illustrator. Both sides of the work lived in the same role." }
         ]
       }
     };
 
+    const keplerSlides = [
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photo: null },
+      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photo: null },
+      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photo: null },
+      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photo: null },
+      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photo: null }
+    ];
+
+    // --- Detail panel ---
+    const detail = document.getElementById('detail');
+    const detailHeader = document.getElementById('detail-header');
+    const detailTitle = document.getElementById('detail-title');
+    const detailBody = document.getElementById('detail-body');
+    document.getElementById('close-btn').addEventListener('click', () => {
+      detail.classList.remove('visible');
+      setTimeout(() => { detail.style.display = 'none'; }, 400);
+    });
+
+    function openDetail(roleKey) {
+      const role = roles[roleKey];
+      detailTitle.textContent = role.title;
+      detailHeader.style.background = role.color;
+      detailBody.innerHTML = role.sections.map(s => `
+        <div class="detail-section">
+          <h3>${s.heading}</h3>
+          <p>${s.text}</p>
+        </div>
+      `).join('');
+      detail.style.display = 'flex';
+      requestAnimationFrame(() => detail.classList.add('visible'));
+    }
+
+    // --- Kepler popup ---
     const overlay = document.getElementById('overlay');
     let currentPopup = null;
-    let currentRole = null;
     let currentSlideIndex = 0;
 
     const tilts = [-2.5, 1.8, -1.2, 2.1, -0.8, 1.5, -1.9, 2.4];
@@ -359,103 +475,13 @@
     }
 
     function nearbyPos(fromX, fromY, w, h) {
-      // Offset by a small random nudge from the previous popup's position
       const nudge = 30 + Math.random() * 60;
       const angle = Math.random() * Math.PI * 2;
-      const x = fromX + Math.cos(angle) * nudge;
-      const y = fromY + Math.sin(angle) * nudge;
-      return clampPos(x, y, w, h);
+      return clampPos(fromX + Math.cos(angle) * nudge, fromY + Math.sin(angle) * nudge, w, h);
     }
 
-    function openSlide(roleKey, slideIndex, fromPos) {
-      const role = roles[roleKey];
-      const slide = role.slides[slideIndex];
-      const isLast = slideIndex === role.slides.length - 1;
-
-      currentRole = roleKey;
-      currentSlideIndex = slideIndex;
-
-      const tilt = tilts[tiltIndex % tilts.length];
-      tiltIndex++;
-
-      const popup = document.createElement('div');
-      popup.className = 'popup';
-      popup.style.setProperty('--tilt', tilt + 'deg');
-
-      // Temporarily place off-screen to measure size
-      popup.style.visibility = 'hidden';
-      popup.style.left = '-9999px';
-      popup.style.top = '0';
-
-      // Build HTML
-      popup.innerHTML = `
-        <div class="popup-titlebar" data-drag>
-          <div class="popup-title">${role.title}</div>
-          <div class="popup-controls">
-            <button class="popup-btn">_</button>
-            <button class="popup-btn">□</button>
-            <button class="popup-btn close-btn" id="popup-close">✕</button>
-          </div>
-        </div>
-        <div class="popup-photo" style="background:${role.color}">
-          ${slide.photo
-            ? `<img src="${slide.photo}" alt="${slide.label}">`
-            : `<div class="popup-photo-placeholder">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21 15 16 10 5 21"/>
-                </svg>
-                Add photo
-              </div>`
-          }
-        </div>
-        <div class="popup-body">
-          <div class="popup-label">${slide.label}</div>
-          <div class="popup-text">${slide.text}</div>
-        </div>
-        <div class="popup-footer">
-          <span class="popup-counter">${slideIndex + 1} of ${role.slides.length}</span>
-        </div>
-      `;
-
-      document.body.appendChild(popup);
-
-      // Position after render
-      requestAnimationFrame(() => {
-        const w = popup.offsetWidth;
-        const h = popup.offsetHeight;
-        const pos = fromPos ? nearbyPos(fromPos.x, fromPos.y, w, h) : randomPos(w, h);
-        popup.style.left = pos.x + 'px';
-        popup.style.top = pos.y + 'px';
-        popup.style.visibility = 'visible';
-        popup._pos = pos; // store for next popup
-      });
-
-      // Close button — X advances to next slide near same position
-      popup.querySelector('#popup-close').addEventListener('click', () => {
-        dismissPopup(popup, roleKey, slideIndex, !isLast);
-      });
-
-
-      // Draggable
-      makeDraggable(popup, popup.querySelector('[data-drag]'));
-
-      // Dim overlay
-      overlay.classList.add('active');
-
-      currentPopup = popup;
-    }
-
-    function updateSlide(popup, roleKey, newIndex) {
-      const role = roles[roleKey];
-      const slide = role.slides[newIndex];
-      const isLast = newIndex === role.slides.length - 1;
-      currentSlideIndex = newIndex;
-
-      // Update photo
-      popup.querySelector('.popup-photo').style.background = role.color;
-      popup.querySelector('.popup-photo').innerHTML = slide.photo
+    function photoHTML(slide) {
+      return slide.photo
         ? `<img src="${slide.photo}" alt="${slide.label}">`
         : `<div class="popup-photo-placeholder">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -465,23 +491,107 @@
             </svg>
             Add photo
           </div>`;
-
-      // Update label + text
-      popup.querySelector('.popup-label').textContent = slide.label;
-      popup.querySelector('.popup-text').textContent = slide.text;
-
-      // Update counter + next button
-      popup.querySelector('.popup-counter').textContent = `${newIndex + 1} of ${role.slides.length}`;
     }
 
-    function dismissPopup(popup, roleKey, slideIndex, goNext) {
+    function openKeplerSlide(slideIndex, fromPos) {
+      const slide = keplerSlides[slideIndex];
+      const isLast = slideIndex === keplerSlides.length - 1;
+      currentSlideIndex = slideIndex;
+
+      const tilt = tilts[tiltIndex % tilts.length];
+      tiltIndex++;
+
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.style.setProperty('--tilt', tilt + 'deg');
+      popup.style.visibility = 'hidden';
+      popup.style.left = '-9999px';
+      popup.style.top = '0';
+
+      popup.innerHTML = `
+        <div class="popup-titlebar" data-drag>
+          <div class="popup-title">Digital Marketing Analyst — Kepler</div>
+          <div class="popup-controls">
+            <button class="popup-btn">_</button>
+            <button class="popup-btn">□</button>
+            <button class="popup-btn close-btn" id="popup-close">✕</button>
+          </div>
+        </div>
+        <div class="popup-photo" style="background:#0f3460">
+          ${photoHTML(slide)}
+        </div>
+        <div class="popup-body">
+          <div class="popup-label">${slide.label}</div>
+          <div class="popup-text">${slide.text}</div>
+        </div>
+        <div class="popup-footer">
+          <span class="popup-counter">${slideIndex + 1} of ${keplerSlides.length}</span>
+          ${!isLast ? `<button class="popup-next-btn" id="popup-next">Next →</button>` : '<span style="font-size:0.7rem;color:#888">End of story</span>'}
+        </div>
+      `;
+
+      document.body.appendChild(popup);
+
+      requestAnimationFrame(() => {
+        const w = popup.offsetWidth;
+        const h = popup.offsetHeight;
+        const pos = fromPos ? nearbyPos(fromPos.x, fromPos.y, w, h) : randomPos(w, h);
+        popup.style.left = pos.x + 'px';
+        popup.style.top = pos.y + 'px';
+        popup.style.visibility = 'visible';
+        popup._pos = pos;
+      });
+
+      // X → next slide nearby
+      popup.querySelector('#popup-close').addEventListener('click', () => {
+        dismissPopup(popup, slideIndex, !isLast);
+      });
+
+      // Next → update in place
+      const nextBtn = popup.querySelector('#popup-next');
+      if (nextBtn) nextBtn.addEventListener('click', () => updateKeplerSlide(popup, slideIndex + 1));
+
+      makeDraggable(popup, popup.querySelector('[data-drag]'));
+      overlay.classList.add('active');
+      currentPopup = popup;
+    }
+
+    function updateKeplerSlide(popup, newIndex) {
+      const slide = keplerSlides[newIndex];
+      const isLast = newIndex === keplerSlides.length - 1;
+      currentSlideIndex = newIndex;
+
+      popup.querySelector('.popup-photo').innerHTML = photoHTML(slide);
+      popup.querySelector('.popup-label').textContent = slide.label;
+      popup.querySelector('.popup-text').textContent = slide.text;
+      popup.querySelector('.popup-counter').textContent = `${newIndex + 1} of ${keplerSlides.length}`;
+
+      const footer = popup.querySelector('.popup-footer');
+      const oldBtn = footer.querySelector('#popup-next');
+      if (oldBtn) oldBtn.remove();
+
+      if (!isLast) {
+        const btn = document.createElement('button');
+        btn.className = 'popup-next-btn';
+        btn.id = 'popup-next';
+        btn.textContent = 'Next →';
+        btn.addEventListener('click', () => updateKeplerSlide(popup, newIndex + 1));
+        footer.appendChild(btn);
+      } else {
+        const end = document.createElement('span');
+        end.style.cssText = 'font-size:0.7rem;color:#888';
+        end.textContent = 'End of story';
+        footer.appendChild(end);
+      }
+    }
+
+    function dismissPopup(popup, slideIndex, goNext) {
       const savedPos = popup._pos || { x: parseInt(popup.style.left) || 0, y: parseInt(popup.style.top) || 0 };
       popup.classList.add('closing');
       popup.addEventListener('animationend', () => {
         popup.remove();
-        const role = roles[roleKey];
-        if (goNext && slideIndex + 1 < role.slides.length) {
-          setTimeout(() => openSlide(roleKey, slideIndex + 1, savedPos), 80);
+        if (goNext && slideIndex + 1 < keplerSlides.length) {
+          setTimeout(() => openKeplerSlide(slideIndex + 1, savedPos), 80);
         } else {
           overlay.classList.remove('active');
           currentPopup = null;
@@ -489,51 +599,49 @@
       }, { once: true });
     }
 
-    // Click X → open next slide (cascade like real pop-ups)
     function makeDraggable(popup, handle) {
       let ox = 0, oy = 0, startX = 0, startY = 0, dragging = false;
-
       handle.addEventListener('mousedown', e => {
         if (e.target.classList.contains('popup-btn')) return;
         dragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
+        startX = e.clientX; startY = e.clientY;
         ox = parseInt(popup.style.left) || 0;
         oy = parseInt(popup.style.top) || 0;
         e.preventDefault();
       });
-
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
         popup.style.left = (ox + e.clientX - startX) + 'px';
         popup.style.top  = (oy + e.clientY - startY) + 'px';
       });
-
       document.addEventListener('mouseup', () => { dragging = false; });
     }
 
+    // --- Tile click routing ---
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
-        // If a popup is open, close it first
-        if (currentPopup) {
-          currentPopup.remove();
-          currentPopup = null;
+        const roleKey = tile.dataset.role;
+        if (roleKey === 'marketing') {
+          if (currentPopup) { currentPopup.remove(); currentPopup = null; }
+          tiltIndex = 0;
+          openKeplerSlide(0);
+        } else {
+          openDetail(roleKey);
         }
-        tiltIndex = 0;
-        openSlide(tile.dataset.role, 0);
       });
     });
 
-    // Dismiss on overlay click
     overlay.addEventListener('click', e => {
-      if (e.target === overlay && currentPopup) {
-        dismissPopup(currentPopup, currentRole, currentSlideIndex, false);
-      }
+      if (e.target === overlay && currentPopup) dismissPopup(currentPopup, currentSlideIndex, false);
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && currentPopup) {
-        dismissPopup(currentPopup, currentRole, currentSlideIndex, false);
+      if (e.key === 'Escape') {
+        if (currentPopup) dismissPopup(currentPopup, currentSlideIndex, false);
+        else if (detail.classList.contains('visible')) {
+          detail.classList.remove('visible');
+          setTimeout(() => { detail.style.display = 'none'; }, 400);
+        }
       }
     });
   </script>
