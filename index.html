@@ -613,33 +613,76 @@
     .bm-close-x:hover { background: #5c2d0c; color: #fff; }
 
     .bm-book {
-      width: min(92vw, 820px);
-      max-height: 88vh;
+      width: min(92vw, 760px);
+      height: min(82vh, 510px);
       display: flex;
       flex-direction: column;
-      border-radius: 4px;
-      border: 3px solid #5c2d0c;
+      border-radius: 0;
+      /* Spine on left, page stack on right */
+      border-left: 7px solid #1a0800;
+      border-right: 3px solid #3a1a05;
+      border-top: 3px solid #3a1a05;
+      border-bottom: 3px solid #3a1a05;
       box-shadow:
-        -4px 4px 0 rgba(0,0,0,0.5),
-        -8px 8px 0 rgba(0,0,0,0.3),
-        0 24px 64px rgba(0,0,0,0.7);
+        /* Page-edge stack illusion */
+        3px 0 0 #e4d5b8,
+        5px 0 0 #d8c9ac,
+        7px 0 0 #cbbea0,
+        /* Drop shadow */
+        10px 12px 50px rgba(0,0,0,0.75),
+        0 6px 20px rgba(0,0,0,0.5);
       overflow: hidden;
       position: relative;
+    }
+    /* Spine highlight */
+    .bm-book::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(to right, rgba(255,255,255,0.08), transparent);
+      z-index: 10;
+      pointer-events: none;
     }
 
     .bm-spread-wrap {
       flex: 1;
       overflow: hidden;
       position: relative;
+      perspective: 1600px;
+      perspective-origin: center center;
     }
 
     .bm-spread {
       display: flex;
       height: 100%;
-      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
     }
-    .bm-spread.turning-out { transform: translateX(-6%) scale(0.97); opacity: 0; }
-    .bm-spread.turning-in  { transform: translateX(6%)  scale(0.97); opacity: 0; }
+
+    /* 3D page flip animations */
+    @keyframes bm-flip-out-next {
+      0%   { transform: rotateY(0deg) scale(1);    opacity: 1; }
+      60%  { opacity: 0.3; }
+      100% { transform: rotateY(-82deg) scale(0.96); opacity: 0; }
+    }
+    @keyframes bm-flip-in-next {
+      0%   { transform: rotateY(82deg) scale(0.96); opacity: 0; }
+      40%  { opacity: 0.3; }
+      100% { transform: rotateY(0deg) scale(1);    opacity: 1; }
+    }
+    @keyframes bm-flip-out-prev {
+      0%   { transform: rotateY(0deg) scale(1);    opacity: 1; }
+      60%  { opacity: 0.3; }
+      100% { transform: rotateY(82deg) scale(0.96); opacity: 0; }
+    }
+    @keyframes bm-flip-in-prev {
+      0%   { transform: rotateY(-82deg) scale(0.96); opacity: 0; }
+      40%  { opacity: 0.3; }
+      100% { transform: rotateY(0deg) scale(1);    opacity: 1; }
+    }
+    .bm-spread.fold-out-next { animation: bm-flip-out-next 0.22s ease-in  forwards; }
+    .bm-spread.fold-in-next  { animation: bm-flip-in-next  0.26s ease-out forwards; }
+    .bm-spread.fold-out-prev { animation: bm-flip-out-prev 0.22s ease-in  forwards; }
+    .bm-spread.fold-in-prev  { animation: bm-flip-in-prev  0.26s ease-out forwards; }
 
     /* Cover */
     .bm-cover {
@@ -654,7 +697,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      min-height: 380px;
+      height: 100%;
       cursor: pointer;
     }
     /* Sunset stripe accent at top */
@@ -718,11 +761,11 @@
     /* Content pages — lighter, warm white */
     .bm-pages {
       width: 100%;
-      flex-shrink: 0;
+      flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
       background: #fdf8f0;
-      min-height: 380px;
+      height: 100%;
       overflow-y: auto;
       position: relative;
     }
@@ -2020,17 +2063,16 @@
       const spreadEl = document.getElementById('bm-spread');
       const spread = bmSpreads[idx];
 
-      // Animate out
-      spreadEl.classList.add(direction === 'next' ? 'turning-out' : 'turning-in');
+      // 3D page flip — fold out current, swap, fold in next
+      const outClass = direction === 'next' ? 'fold-out-next' : 'fold-out-prev';
+      const inClass  = direction === 'next' ? 'fold-in-next'  : 'fold-in-prev';
+      spreadEl.classList.add(outClass);
 
       setTimeout(() => {
         spreadEl.innerHTML = buildSpreadHTML(spread);
-        spreadEl.classList.remove('turning-out', 'turning-in');
-        // Animate in from opposite side
-        spreadEl.classList.add(direction === 'next' ? 'turning-in' : 'turning-out');
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => spreadEl.classList.remove('turning-in', 'turning-out'));
-        });
+        spreadEl.classList.remove(outClass);
+        spreadEl.classList.add(inClass);
+        spreadEl.addEventListener('animationend', () => spreadEl.classList.remove(inClass), { once: true });
         bindSpreadItems(spreadEl);
         updateNav(idx);
       }, 220);
