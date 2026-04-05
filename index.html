@@ -578,6 +578,165 @@
       box-shadow: 0 0 0 1px #2a2a2a, 6px 6px 32px rgba(0,0,0,0.6);
     }
 
+    /* --- BAR MENU (Lock Stock) --- */
+    #barmenu {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      background: #0d0a07;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+    #barmenu.visible { display: flex; opacity: 1; }
+
+    .bm-header {
+      text-align: center;
+      padding: 36px 24px 20px;
+      border-bottom: 1px solid #3a2a15;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .bm-back {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid #3a2a15;
+      color: #8a6a3a;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: 'Segoe UI', sans-serif;
+      border-radius: 3px;
+    }
+    .bm-back:hover { border-color: #c8a96e; color: #c8a96e; }
+    .bm-bar-name {
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      color: #c8a96e;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .bm-tagline {
+      font-size: 0.78rem;
+      color: #5a4a2a;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .bm-ornament {
+      color: #3a2a15;
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      margin-top: 12px;
+    }
+
+    .bm-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      flex: 1;
+      padding: 0 40px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .bm-section {
+      padding: 28px 20px;
+      border-right: 1px solid #1e160a;
+    }
+    .bm-section:nth-child(even) { border-right: none; border-left: 1px solid #1e160a; }
+
+    .bm-section-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #5a4a2a;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .bm-section-divider {
+      text-align: center;
+      color: #3a2a15;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 18px;
+    }
+
+    .bm-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px dotted #1e160a;
+      cursor: pointer;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .bm-item:last-child { border-bottom: none; }
+    .bm-item:hover .bm-item-name { color: #c8a96e; }
+    .bm-item:hover .bm-item-detail { color: #6a5a3a; }
+
+    .bm-item-left { flex: 1; }
+    .bm-item-name {
+      font-size: 1rem;
+      color: #d4c090;
+      display: block;
+      margin-bottom: 2px;
+      transition: color 0.15s;
+    }
+    .bm-item-desc {
+      font-size: 0.72rem;
+      color: #4a3a1a;
+      font-family: 'Segoe UI', sans-serif;
+      font-style: italic;
+    }
+    .bm-item-detail {
+      font-size: 0.72rem;
+      color: #4a3a1a;
+      font-family: 'Segoe UI', sans-serif;
+      white-space: nowrap;
+      transition: color 0.15s;
+    }
+
+    .bm-special {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid #1e160a;
+      margin-top: 0;
+    }
+    .bm-special .bm-item {
+      justify-content: center;
+      gap: 24px;
+      border-bottom: none;
+      flex-wrap: wrap;
+    }
+    .bm-special .bm-item-name { font-size: 1.1rem; }
+
+    /* Bar menu popup (dark) */
+    .bm-popup {
+      border-color: #3a2a15;
+      box-shadow: 0 0 0 1px #1a1005, 6px 6px 32px rgba(0,0,0,0.8);
+    }
+
+    @media (max-width: 600px) {
+      .bm-body { grid-template-columns: 1fr; padding: 0 16px 32px; }
+      .bm-section { border-right: none; border-bottom: 1px solid #1e160a; }
+      .bm-section:nth-child(even) { border-left: none; }
+      .bm-special { grid-column: 1; }
+      .bm-header { padding: 60px 16px 16px; }
+      .bm-back { top: 16px; transform: none; }
+    }
+
     /* --- GMAIL UI (NBI) --- */
     #gmail {
       position: fixed;
@@ -973,6 +1132,17 @@
       <button id="close-btn">← Back</button>
     </div>
     <div class="detail-body" id="detail-body"></div>
+  </div>
+
+  <!-- Bar Menu (Lock Stock tile) -->
+  <div id="barmenu">
+    <div class="bm-header">
+      <button class="bm-back" id="bm-back-btn">← Exit</button>
+      <div class="bm-bar-name">Lock Stock Bar &amp; Grill</div>
+      <div class="bm-tagline">Bristol, New York &nbsp;·&nbsp; Est. 2019</div>
+      <div class="bm-ornament">— ✦ —</div>
+    </div>
+    <div class="bm-body" id="bm-body"></div>
   </div>
 
   <!-- Gmail UI (NBI tile) -->
@@ -1613,6 +1783,200 @@
       setTimeout(() => { bookviewEl.style.display = 'none'; }, 300);
     }
 
+    // --- Bar Menu (Lock Stock) ---
+    const barmenuEl = document.getElementById('barmenu');
+
+    const barSections = [
+      {
+        title: 'On Draft', ornament: '— ⬥ —',
+        items: [
+          { name: 'Service Flow Management', desc: 'All shifts, all dayparts', detail: 'Lunch · Dinner · Late Night', slides: [
+            { label: 'The Skill', text: 'Maintained the flow of service across high-volume lunch, dinner, and late-night shifts — keeping tables moving, servers supported, and guests satisfied through every period.' },
+            { label: 'In Practice', text: 'No two shifts ran the same. I read the room constantly — adjusting pacing when the kitchen backed up, redistributing floor coverage when a section got slammed, and stepping in wherever the service chain needed support.' },
+            { label: 'The Standard', text: 'Standards didn\'t slip when it got busy. That was the whole point. Anyone can run a smooth slow night — the job is keeping quality consistent when it\'s full and loud and moving fast.' }
+          ]},
+          { name: 'Real-Time Floor Oversight', desc: 'Open to close, every shift', detail: 'FOH · BOH · Bar', slides: [
+            { label: 'The Skill', text: 'Active floor presence throughout every shift — not managing from a distance, but working the room alongside the team to catch problems before guests noticed them.' },
+            { label: 'In Practice', text: 'I was the constant in an always-changing room. If a table waited too long, I knew before they flagged someone. If a server was in the weeds, I was already there. The floor ran better because I was on it.' },
+            { label: 'The Standard', text: 'Good floor management is invisible. When it\'s working, guests just have a great experience — they never see the coordination that made it happen.' }
+          ]},
+          { name: 'Guest Relations & Recovery', desc: 'Every table, every night', detail: 'Front-line · Escalations', slides: [
+            { label: 'The Skill', text: 'Handled all guest issues directly — from minor service hiccups to full escalations — with composure and a bias toward resolution over explanation.' },
+            { label: 'In Practice', text: 'At a high-volume bar, something goes wrong every shift. The question is how fast you own it and fix it. I made the call on the floor, handled it personally, and followed up before the guest left.' },
+            { label: 'The Standard', text: 'A guest who had a problem and got it handled right is often more loyal than one who never had an issue. Recovery done well builds trust.' }
+          ]}
+        ]
+      },
+      {
+        title: 'Cocktails', ornament: '— ⬥ —',
+        items: [
+          { name: 'Staff Cross-Training', desc: 'Full FOH coverage', detail: 'All Roles', slides: [
+            { label: 'The Skill', text: 'Trained staff across every FOH role — host, server, barback, bar — so the team could flex to cover gaps without service dropping.' },
+            { label: 'In Practice', text: 'A team that only knows one role is fragile. I cross-trained everyone so a no-call-no-show didn\'t break the shift. Adaptability was built into the team by design.' },
+            { label: 'The Standard', text: 'The best shifts were the ones where nobody noticed we were short — because the team knew how to cover each other without being asked.' }
+          ]},
+          { name: 'Performance Coaching', desc: 'Ongoing feedback culture', detail: 'In-shift · Formal Reviews', slides: [
+            { label: 'The Skill', text: 'Provided real-time coaching during shifts and contributed to formal performance reviews — keeping the team growing throughout the season.' },
+            { label: 'In Practice', text: 'Feedback that waits for review season is too late. I gave it in the moment — a quick word after a table, a debrief at the end of a shift. Small corrections compounded into real improvement.' },
+            { label: 'The Standard', text: 'A staff that gets honest, consistent feedback performs better and stays longer. The team knew where they stood — and that I was invested in where they were going.' }
+          ]},
+          { name: 'Scheduling & Staffing', desc: 'Weekly floor planning', detail: 'Availability · Coverage · Costs', slides: [
+            { label: 'The Skill', text: 'Built the weekly schedule balancing staff availability, projected covers, and labor cost targets — keeping the floor covered without overstaffing slow periods.' },
+            { label: 'In Practice', text: 'Good scheduling is risk management. I tracked patterns — which nights ran long, which sections needed double coverage, when to cut early. The schedule was a live document, not a formality.' },
+            { label: 'The Standard', text: 'The floor was always appropriately staffed. Staff got consistent hours. Labor costs stayed in line. That\'s what a schedule is supposed to do.' }
+          ]}
+        ]
+      },
+      {
+        title: 'Spirits', ornament: '— ⬥ —',
+        items: [
+          { name: 'Financial Reporting', desc: 'Nightly close, every shift', detail: 'Cash · Reconciliation · Reports', slides: [
+            { label: 'The Skill', text: 'Completed end-of-night financial reports as part of every closing — reconciling cash drawers, accounting for comps and voids, and submitting accurate close documentation.' },
+            { label: 'In Practice', text: 'Closing wasn\'t done until the numbers were right. I ran the reconciliation, flagged discrepancies, and filed the report before leaving — no exceptions, regardless of what time it was.' },
+            { label: 'The Standard', text: 'Clean books every night. Management had accurate data every morning because closing was treated as seriously as service.' }
+          ]},
+          { name: 'Health & Safety Compliance', desc: 'Dept. of Health standards', detail: 'Nightly Walk-Through', slides: [
+            { label: 'The Skill', text: 'Conducted compliance walk-throughs as part of every close — checking food storage, temperature logs, sanitation stations, and any flagged items from the previous inspection.' },
+            { label: 'In Practice', text: 'Compliance isn\'t a once-a-year event before the inspector shows up. I built it into the close routine so the kitchen and bar stayed inspection-ready at all times.' },
+            { label: 'The Standard', text: 'No violations. No surprises. A clean inspection is the result of consistent nightly habits — not a scramble the day the inspector walks in.' }
+          ]},
+          { name: 'Facilities Coordination', desc: 'Maintenance & vendor liaison', detail: 'As Needed', slides: [
+            { label: 'The Skill', text: 'Identified and coordinated facilities issues — logging maintenance needs, communicating with vendors, and ensuring repairs happened without disrupting service.' },
+            { label: 'In Practice', text: 'Things break in a bar. The job is knowing what can wait until tomorrow and what needs a call tonight. I managed the triage and made sure nothing fell through the cracks.' },
+            { label: 'The Standard', text: 'The space stayed operational. Issues got resolved. Staff didn\'t have to work around broken equipment because it was tracked and actioned before it became a real problem.' }
+          ]}
+        ]
+      },
+      {
+        title: "Tonight's Special", ornament: '— ✦ —', special: true,
+        items: [
+          { name: 'COVID-19 Operations Pivot', desc: 'Spring 2020 — Full team retrain & SOP overhaul', detail: 'Crisis Management', slides: [
+            { label: 'The Situation', text: 'When Lock Stock reopened after COVID-19 closures, the entire operating model had changed. Distancing rules, sanitation requirements, and capacity limits meant the old playbook was gone.' },
+            { label: 'The Work', text: 'I rewrote the SOPs, retrained the full FOH team on every new protocol, and managed the reopening rollout through multiple phases as restrictions evolved. The team went from zero to operational in two weeks.' },
+            { label: 'The Result', text: 'Service quality held through every reopening phase. The team adapted without complaint because the expectation and the training were both clear from day one. We didn\'t just reopen — we ran well.' }
+          ]}
+        ]
+      }
+    ];
+
+    let bmPopup = null;
+    let bmSlideIndex = 0;
+
+    function renderBarMenu() {
+      const body = document.getElementById('bm-body');
+      body.innerHTML = barSections.map(section => `
+        <div class="bm-section${section.special ? ' bm-special' : ''}">
+          <div class="bm-section-title">${section.title}</div>
+          <div class="bm-section-divider">${section.ornament}</div>
+          ${section.items.map((item, i) => `
+            <div class="bm-item" data-section="${section.title}" data-item="${i}">
+              <div class="bm-item-left">
+                <span class="bm-item-name">${item.name}</span>
+                <span class="bm-item-desc">${item.desc}</span>
+              </div>
+              <span class="bm-item-detail">${item.detail}</span>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+
+      body.querySelectorAll('.bm-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const sec = barSections.find(s => s.title === el.dataset.section);
+          const item = sec.items[parseInt(el.dataset.item)];
+          openBmPopup(item);
+        });
+      });
+    }
+
+    function openBmPopup(item) {
+      if (bmPopup) { bmPopup.remove(); bmPopup = null; }
+      bmSlideIndex = 0;
+
+      const popup = document.createElement('div');
+      popup.className = 'popup bm-popup';
+      popup.style.setProperty('--tilt', '0deg');
+      popup.style.visibility = 'hidden';
+      popup.style.left = '-9999px';
+      popup.style.top = '0';
+      popup.innerHTML = buildBmPopupHTML(item, 0);
+      document.body.appendChild(popup);
+
+      requestAnimationFrame(() => {
+        const w = popup.offsetWidth;
+        const h = popup.offsetHeight;
+        popup.style.left = Math.round((window.innerWidth - w) / 2) + 'px';
+        popup.style.top = Math.round((window.innerHeight - h) / 2) + 'px';
+        popup.style.visibility = 'visible';
+      });
+
+      bindBmPopupBtns(popup, item);
+      makeDraggable(popup, popup.querySelector('[data-drag]'));
+      bmPopup = popup;
+    }
+
+    function buildBmPopupHTML(item, idx) {
+      const slide = item.slides[idx];
+      const isLast = idx === item.slides.length - 1;
+      return `
+        <div class="popup-titlebar" data-drag style="background:#0d0a07;border-bottom:1px solid #3a2a15;">
+          <div class="popup-title" style="color:#c8a96e;font-family:Georgia,serif;letter-spacing:0.06em;">${item.name}</div>
+          <div class="popup-controls">
+            <button class="popup-btn bm-close-btn" style="background:#1a1005;border-color:#3a2a15;color:#6a5a3a;">✕</button>
+          </div>
+        </div>
+        <div class="popup-photo" style="background:#0a0805;border-bottom:1px solid #1e160a;">
+          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.15);color:rgba(200,169,110,0.25);font-family:'Segoe UI',sans-serif;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Add photo
+          </div>
+        </div>
+        <div class="popup-body" style="background:#110d08;border-top:none;">
+          <div class="popup-label" style="color:#5a4a2a;font-family:'Segoe UI',sans-serif;">${slide.label}</div>
+          <div class="popup-text" style="color:#c8b88a;font-family:Georgia,serif;line-height:1.7;">${slide.text}</div>
+        </div>
+        <div class="popup-footer" style="background:#0d0a07;border-top:1px solid #1e160a;">
+          <span class="popup-counter" style="color:#3a2a15;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${item.slides.length}</span>
+          ${!isLast
+            ? `<button class="popup-next-btn bm-next-btn" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
+            : '<span style="font-size:0.7rem;color:#3a2a15;font-family:\'Segoe UI\',sans-serif;letter-spacing:0.1em;">— fin —</span>'}
+        </div>
+      `;
+    }
+
+    function bindBmPopupBtns(popup, item) {
+      popup.querySelector('.bm-close-btn').addEventListener('click', () => {
+        popup.classList.add('closing');
+        popup.addEventListener('animationend', () => { popup.remove(); bmPopup = null; }, { once: true });
+      });
+      const nextBtn = popup.querySelector('.bm-next-btn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          bmSlideIndex++;
+          popup.innerHTML = buildBmPopupHTML(item, bmSlideIndex);
+          bindBmPopupBtns(popup, item);
+          makeDraggable(popup, popup.querySelector('[data-drag]'));
+        });
+      }
+    }
+
+    document.getElementById('bm-back-btn').addEventListener('click', closeBarMenu);
+
+    function openBarMenu() {
+      renderBarMenu();
+      barmenuEl.style.display = 'flex';
+      requestAnimationFrame(() => barmenuEl.classList.add('visible'));
+    }
+
+    function closeBarMenu() {
+      barmenuEl.classList.remove('visible');
+      setTimeout(() => { barmenuEl.style.display = 'none'; }, 300);
+    }
+
     // --- Tile click routing ---
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
@@ -1625,6 +1989,8 @@
           openGmail();
         } else if (roleKey === 'maitre') {
           openBook();
+        } else if (roleKey === 'manager') {
+          openBarMenu();
         } else {
           openDetail(roleKey);
         }
@@ -1645,6 +2011,8 @@
           closeGmail();
         } else if (bookviewEl.classList.contains('visible')) {
           closeBook();
+        } else if (barmenuEl.classList.contains('visible')) {
+          closeBarMenu();
         }
       }
     });
