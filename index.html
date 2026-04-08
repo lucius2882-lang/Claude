@@ -714,6 +714,18 @@
     .bm-arr:disabled { opacity: 0.2; cursor: default; }
     .bm-arr:disabled:hover { background: rgba(10,58,30,0.9); border-color: rgba(232,168,32,0.5); }
 
+    @media (max-width: 600px) {
+      .bm-book-wrap { flex-direction: column; align-items: center; }
+      .bm-book-wrap .bm-arr:first-child { order: 2; }
+      .bm-book-wrap .bm-book { order: 1; }
+      .bm-book-wrap .bm-arr:last-child { order: 3; }
+      .bm-book-wrap > .bm-arr { width: 60px; height: 36px; font-size: 1.4rem; }
+      /* Row the two arrows side by side below the book */
+      .bm-book-wrap { flex-wrap: wrap; }
+      .bm-book-wrap > .bm-arr { flex: 1; max-width: 80px; order: 2; }
+      .bm-book-wrap > .bm-book { order: 1; width: 100%; }
+    }
+
     .bm-book {
       width: min(88vw, 720px);
       height: auto;
