@@ -1635,7 +1635,8 @@
 
       // X → next slide nearby
       popup.querySelector('#popup-close').addEventListener('click', () => {
-        dismissPopup(popup, slideIndex, !isLast);
+        if (!isLast) dismissPopup(popup, slideIndex, true); // slide transition
+        else history.back(); // actually closing
       });
 
       makeDraggable(popup, popup.querySelector('[data-drag]'));
@@ -1823,7 +1824,7 @@
       gmInbox.style.flexDirection = 'column';
     });
 
-    document.getElementById('gm-back-btn').addEventListener('click', closeGmail);
+    document.getElementById('gm-back-btn').addEventListener('click', () => history.back());
 
     function openGmail() {
       renderInbox();
@@ -2051,7 +2052,7 @@
       });
     });
 
-    document.getElementById('bk-close-btn').addEventListener('click', closeBook);
+    document.getElementById('bk-close-btn').addEventListener('click', () => history.back());
 
     const bkSideToggle = document.getElementById('bk-side-toggle');
     const bkSidePanel = document.getElementById('bk-side-panel');
@@ -2359,7 +2360,7 @@
       });
     }
 
-    document.getElementById('bm-back-btn').addEventListener('click', closeBarMenu);
+    document.getElementById('bm-back-btn').addEventListener('click', () => history.back());
 
     function openBarMenu() {
       bmCurrentPage = 0;
@@ -2377,45 +2378,73 @@
       setTimeout(() => { barmenuEl.style.display = 'none'; }, 300);
     }
 
-    // --- Tile click routing ---
+    // --- Client-side routing ---
+    const roleToSlug = { marketing: 'kepler', digital: 'nbi', maitre: 'happier', manager: 'lockstock' };
+    const slugToRole = { kepler: 'marketing', nbi: 'digital', happier: 'maitre', lockstock: 'manager' };
+
+    function openPage(roleKey) {
+      if (roleKey === 'marketing') {
+        if (currentPopup) { currentPopup.remove(); currentPopup = null; }
+        tiltIndex = 0;
+        openKeplerSlide(0);
+      } else if (roleKey === 'digital') {
+        openGmail();
+      } else if (roleKey === 'maitre') {
+        openBook();
+      } else if (roleKey === 'manager') {
+        openBarMenu();
+      }
+    }
+
+    function closeCurrent() {
+      if (currentPopup) { dismissPopup(currentPopup, currentSlideIndex, false); return; }
+      if (detail.classList.contains('visible')) {
+        detail.classList.remove('visible');
+        setTimeout(() => { detail.style.display = 'none'; }, 400);
+        return;
+      }
+      if (gmailEl.classList.contains('visible'))    { closeGmail();    return; }
+      if (bookviewEl.classList.contains('visible')) { closeBook();     return; }
+      if (barmenuEl.classList.contains('visible'))  { closeBarMenu();  return; }
+    }
+
+    function isAnyViewOpen() {
+      return currentPopup ||
+        detail.classList.contains('visible') ||
+        gmailEl.classList.contains('visible') ||
+        bookviewEl.classList.contains('visible') ||
+        barmenuEl.classList.contains('visible');
+    }
+
+    // Tile clicks push URL + open view
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
         const roleKey = tile.dataset.role;
-        if (roleKey === 'marketing') {
-          if (currentPopup) { currentPopup.remove(); currentPopup = null; }
-          tiltIndex = 0;
-          openKeplerSlide(0);
-        } else if (roleKey === 'digital') {
-          openGmail();
-        } else if (roleKey === 'maitre') {
-          openBook();
-        } else if (roleKey === 'manager') {
-          openBarMenu();
-        } else {
-          openDetail(roleKey);
-        }
+        const slug = roleToSlug[roleKey] || roleKey;
+        history.pushState({ page: roleKey }, '', '/' + slug);
+        openPage(roleKey);
       });
     });
 
+    // Overlay click closes Kepler via back
     overlay.addEventListener('click', e => {
-      if (e.target === overlay && currentPopup) dismissPopup(currentPopup, currentSlideIndex, false);
+      if (e.target === overlay && currentPopup) history.back();
     });
 
+    // Escape → back only when a view is open
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        if (currentPopup) dismissPopup(currentPopup, currentSlideIndex, false);
-        else if (detail.classList.contains('visible')) {
-          detail.classList.remove('visible');
-          setTimeout(() => { detail.style.display = 'none'; }, 400);
-        } else if (gmailEl.classList.contains('visible')) {
-          closeGmail();
-        } else if (bookviewEl.classList.contains('visible')) {
-          closeBook();
-        } else if (barmenuEl.classList.contains('visible')) {
-          closeBarMenu();
-        }
-      }
+      if (e.key === 'Escape' && isAnyViewOpen()) history.back();
     });
+
+    // Back button → close current view
+    window.addEventListener('popstate', () => closeCurrent());
+
+    // Set base history state
+    history.replaceState({ page: 'home' }, '', window.location.pathname || '/');
+
+    // Direct URL load (e.g. luciuscampany.com/nbi)
+    const initSlug = window.location.pathname.replace(/^\//, '').toLowerCase();
+    if (initSlug && slugToRole[initSlug]) openPage(slugToRole[initSlug]);
   </script>
 </body>
 </html>
