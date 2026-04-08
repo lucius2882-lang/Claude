@@ -500,31 +500,31 @@
        ═══════════════════════════════════════════ */
     #bookview {
       position: fixed; inset: 0; z-index: 50; display: none;
-      flex-direction: column; background: #1B6B3A;
+      flex-direction: column; background: #1a1008;
       font-family: 'Segoe UI', sans-serif; opacity: 0;
       transition: opacity 0.3s ease;
     }
     #bookview.visible { display: flex; opacity: 1; }
 
     .bk-topbar {
-      background: #155930; border-bottom: 2px solid rgba(255,255,255,0.2);
+      background: #111; border-bottom: 2px solid #c8a96e;
       padding: 0 24px; height: 60px; display: flex;
       align-items: center; justify-content: space-between; flex-shrink: 0;
     }
-    .bk-title { font-size: 1.1rem; font-weight: 700; color: #ffffff; letter-spacing: 0.15em; text-transform: uppercase; }
-    .bk-date { font-size: 0.85rem; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; }
-    .bk-close { background: none; border: 1px solid rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; letter-spacing: 0.08em; }
-    .bk-close:hover { border-color: #ffffff; color: #ffffff; }
+    .bk-title { font-size: 1.1rem; font-weight: 700; color: #c8a96e; letter-spacing: 0.15em; text-transform: uppercase; }
+    .bk-date { font-size: 0.85rem; color: #888; letter-spacing: 0.08em; }
+    .bk-close { background: none; border: 1px solid #444; color: #aaa; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; letter-spacing: 0.08em; }
+    .bk-close:hover { border-color: #c8a96e; color: #c8a96e; }
 
-    .bk-tabs { background: #155930; display: flex; border-bottom: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; padding: 0 24px; }
-    .bk-tab { padding: 10px 20px; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
-    .bk-tab.active { color: #ffffff; border-bottom-color: #ffffff; }
-    .bk-tab:hover:not(.active) { color: rgba(255,255,255,0.75); }
+    .bk-tabs { background: #111; display: flex; border-bottom: 1px solid #2a2a2a; flex-shrink: 0; padding: 0 24px; }
+    .bk-tab { padding: 10px 20px; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: #666; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .bk-tab.active { color: #c8a96e; border-bottom-color: #c8a96e; }
+    .bk-tab:hover:not(.active) { color: #aaa; }
 
     .bk-body { display: flex; flex: 1; overflow: hidden; }
 
     .bk-resv-panel { flex: 1; overflow-y: auto; padding: 16px 24px; }
-    .bk-shift-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.25); }
+    .bk-shift-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #c8a96e; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #2a2215; }
     .bk-resv-row {
       display: grid;
       grid-template-columns: 64px 40px 1fr 100px 80px;
@@ -533,41 +533,41 @@
       transition: background 0.15s; border-left: 3px solid transparent;
     }
     .bk-resv-row.clickable { cursor: pointer; }
-    .bk-resv-row.clickable:hover { background: rgba(255,255,255,0.06); }
+    .bk-resv-row.clickable:hover { background: rgba(200,169,110,0.06); }
     .bk-resv-row.seated   { border-left-color: #34A853; }
     .bk-resv-row.arrived  { border-left-color: #FBBC05; }
     .bk-resv-row.reserved { border-left-color: #4285F4; }
-    .bk-resv-row.completed{ border-left-color: rgba(255,255,255,0.3); opacity: 0.5; }
-    .bk-resv-row.vip      { border-left-color: #ffffff; }
-    .bk-time { font-size: 0.88rem; color: #ffffff; font-weight: 600; font-variant-numeric: tabular-nums; }
-    .bk-pax  { font-size: 0.82rem; color: rgba(255,255,255,0.7); text-align: center; }
-    .bk-guest { font-size: 0.9rem; color: #ffffff; font-weight: 500; }
-    .bk-guest .bk-note { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 400; margin-top: 2px; }
-    .bk-table { font-size: 0.8rem; color: rgba(255,255,255,0.6); text-align: center; }
+    .bk-resv-row.completed{ border-left-color: #555; opacity: 0.5; }
+    .bk-resv-row.vip      { border-left-color: #c8a96e; }
+    .bk-time { font-size: 0.88rem; color: #c8a96e; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .bk-pax  { font-size: 0.82rem; color: #aaa; text-align: center; }
+    .bk-guest { font-size: 0.9rem; color: #e8e0d0; font-weight: 500; }
+    .bk-guest .bk-note { font-size: 0.75rem; color: #888; font-weight: 400; margin-top: 2px; }
+    .bk-table { font-size: 0.8rem; color: #888; text-align: center; }
     .bk-status { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 12px; text-align: center; font-weight: 600; }
     .bk-status.seated   { background: rgba(52,168,83,0.15);  color: #34A853; }
     .bk-status.arrived  { background: rgba(251,188,5,0.15);  color: #FBBC05; }
     .bk-status.reserved { background: rgba(66,133,244,0.15); color: #4285F4; }
-    .bk-status.completed{ background: rgba(255,255,255,0.1);color: rgba(255,255,255,0.5); }
-    .bk-status.vip      { background: rgba(255,255,255,0.15);color: #ffffff; }
+    .bk-status.completed{ background: rgba(100,100,100,0.15);color: #666; }
+    .bk-status.vip      { background: rgba(200,169,110,0.15);color: #c8a96e; }
 
-    .bk-side-panel { width: 300px; border-left: 1px solid rgba(255,255,255,0.15); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
-    .bk-side-toggle { display: none; width: 100%; padding: 12px 20px; background: #155930; border: none; border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15); color: #ffffff; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; cursor: pointer; flex-shrink: 0; }
+    .bk-side-panel { width: 300px; border-left: 1px solid #2a2a2a; display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+    .bk-side-toggle { display: none; width: 100%; padding: 12px 20px; background: #111; border: none; border-top: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a; color: #c8a96e; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; cursor: pointer; flex-shrink: 0; }
     .bk-side-toggle span { float: right; transition: transform 0.2s; }
     .bk-side-toggle.open span { transform: rotate(180deg); }
-    .bk-side-section { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-    .bk-side-heading { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; margin-bottom: 12px; }
+    .bk-side-section { padding: 16px 20px; border-bottom: 1px solid #2a2a2a; }
+    .bk-side-heading { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: #c8a96e; margin-bottom: 12px; }
     .bk-stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .bk-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
-    .bk-stat-val   { font-size: 0.8rem; color: #ffffff; font-weight: 600; }
-    .bk-note-text  { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.6; font-style: italic; }
+    .bk-stat-label { font-size: 0.8rem; color: #888; }
+    .bk-stat-val   { font-size: 0.8rem; color: #e8e0d0; font-weight: 600; }
+    .bk-note-text  { font-size: 0.82rem; color: #aaa; line-height: 1.6; font-style: italic; }
     .bk-checklist-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; cursor: pointer; }
-    .bk-checkbox { width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.4); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #34A853; transition: all 0.15s; }
-    .bk-checkbox.checked { background: rgba(52,168,83,0.2); border-color: #34A853; }
-    .bk-checklist-item span { font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
-    .bk-checklist-item.done span { text-decoration: line-through; color: rgba(255,255,255,0.35); }
+    .bk-checkbox { width: 16px; height: 16px; border: 1px solid #555; border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #34A853; transition: all 0.15s; }
+    .bk-checkbox.checked { background: rgba(52,168,83,0.15); border-color: #34A853; }
+    .bk-checklist-item span { font-size: 0.82rem; color: #bbb; line-height: 1.4; }
+    .bk-checklist-item.done span { text-decoration: line-through; color: #555; }
 
-    .resv-popup { border-color: #ffffff; box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 6px 6px 32px rgba(0,0,0,0.6); }
+    .resv-popup { border-color: #c8a96e; box-shadow: 0 0 0 1px #2a2a2a, 6px 6px 32px rgba(0,0,0,0.6); }
 
     @media (max-width: 700px) {
       .bk-topbar { padding: 0 14px; height: auto; flex-wrap: wrap; gap: 6px; padding-top: 10px; padding-bottom: 10px; }
@@ -577,7 +577,7 @@
       .bk-resv-panel { padding: 10px 12px; overflow-y: visible; }
       .bk-resv-row { grid-template-columns: 56px 30px 1fr 60px; font-size: 0.8rem; }
       .bk-status { display: none; }
-      .bk-side-panel { width: 100%; border-left: none; border-top: 1px solid rgba(255,255,255,0.15); overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
+      .bk-side-panel { width: 100%; border-left: none; border-top: 1px solid #2a2a2a; overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
       .bk-side-panel.expanded { max-height: 800px; }
       .bk-side-toggle { display: block; }
     }
@@ -1762,23 +1762,23 @@
       popup.style.top = '0';
 
       popup.innerHTML = `
-        <div class="popup-titlebar" data-drag style="background:#111;border-bottom:1px solid #333;">
+        <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
           <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
           <div class="popup-controls">
-            <button class="popup-btn" style="background:#333;border-color:#555;color:#aaa;">_</button>
-            <button class="popup-btn" style="background:#333;border-color:#555;color:#aaa;">□</button>
-            <button class="popup-btn close-btn" id="popup-close" style="background:#333;border-color:#555;color:#aaa;">✕</button>
+            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">_</button>
+            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">□</button>
+            <button class="popup-btn close-btn" id="popup-close" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button>
           </div>
         </div>
-        <div class="popup-photo" style="background:#0f3460">
+        <div class="popup-photo" style="background:#1B6B3A">
           ${photoHTML(slide)}
         </div>
-        <div class="popup-body" style="background:#1a1a1a;border-top:1px solid #333;">
-          <div class="popup-label" style="color:#888;">${slide.label}</div>
-          <div class="popup-text" style="color:#e8e8e8;">${slide.text}</div>
+        <div class="popup-body" style="background:#1B6B3A;border-top:1px solid rgba(255,255,255,0.15);">
+          <div class="popup-label" style="color:rgba(255,255,255,0.65);">${slide.label}</div>
+          <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
         </div>
-        <div class="popup-footer" style="background:#111;border-top:1px solid #333;">
-          <span class="popup-counter" style="color:#555;">${slideIndex + 1} of ${keplerSlides.length}</span>
+        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);">
+          <span class="popup-counter" style="color:rgba(255,255,255,0.5);">${slideIndex + 1} of ${keplerSlides.length}</span>
         </div>
       `;
 
@@ -2337,14 +2337,14 @@
       const slide = resv.slides[idx];
       const isLast = idx === resv.slides.length - 1;
       return `
-        <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
-          <div class="popup-title" style="color:#ffffff;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
+        <div class="popup-titlebar" data-drag style="background:linear-gradient(to right,#111,#2a1f00);border-bottom:1px solid #c8a96e;">
+          <div class="popup-title" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
           <div class="popup-controls">
-            <button class="popup-btn resv-close-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#ffffff;">✕</button>
+            <button class="popup-btn resv-close-btn" style="background:#2a2a2a;border-color:#555;color:#aaa;">✕</button>
           </div>
         </div>
-        <div class="popup-photo" style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.15);">
-          <div class="popup-photo-placeholder" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.3);">
+        <div class="popup-photo" style="background:#111;border-bottom:1px solid #2a2a2a;">
+          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.2);color:rgba(200,169,110,0.3);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -2353,15 +2353,15 @@
             Add photo
           </div>
         </div>
-        <div class="popup-body" style="background:#1B6B3A;border-top:none;">
-          <div class="popup-label" style="color:#ffffff;">${slide.label}</div>
-          <div class="popup-text" style="color:rgba(255,255,255,0.85);">${slide.text}</div>
+        <div class="popup-body" style="background:#1a1008;border-top:none;">
+          <div class="popup-label" style="color:#c8a96e;">${slide.label}</div>
+          <div class="popup-text" style="color:#e8e0d0;">${slide.text}</div>
         </div>
-        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);">
-          <span class="popup-counter" style="color:rgba(255,255,255,0.5);">${idx + 1} of ${resv.slides.length}</span>
+        <div class="popup-footer" style="background:#111;border-top:1px solid #2a2a2a;">
+          <span class="popup-counter" style="color:#666;">${idx + 1} of ${resv.slides.length}</span>
           ${!isLast
-            ? `<button class="popup-next-btn resv-next-btn" style="color:#ffffff;">Next →</button>`
-            : '<span style="font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Done</span>'}
+            ? `<button class="popup-next-btn resv-next-btn" style="color:#c8a96e;">Next →</button>`
+            : '<span style="font-size:0.7rem;color:#555;letter-spacing:0.05em;">Done</span>'}
         </div>
       `;
     }
