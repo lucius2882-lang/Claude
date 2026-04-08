@@ -1716,60 +1716,90 @@
       btn.textContent = 'Generating…';
       btn.disabled = true;
 
-      // Inject PDF-specific styles into <head> so html2canvas picks them up
-      const styleEl = document.createElement('style');
-      styleEl.id = 'pdf-render-styles';
-      styleEl.textContent = `
-        .pdf-clone { font-family:'Segoe UI',sans-serif; color:#111; background:white; width:710px; }
-        .pdf-clone .rv-download { display:none !important; }
-        .pdf-clone .rv-header { border-bottom:2px solid #111; padding-bottom:10px; margin-bottom:16px; }
-        .pdf-clone .rv-header-row { display:flex; justify-content:space-between; align-items:flex-start; }
-        .pdf-clone .rv-name { font-size:1.7rem; font-weight:200; letter-spacing:0.1em; text-transform:uppercase; line-height:1; color:#111; }
-        .pdf-clone .rv-headline { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:4px; color:#111; }
-        .pdf-clone .rv-contact { display:flex; gap:14px; margin-top:6px; flex-wrap:wrap; }
-        .pdf-clone .rv-contact a, .pdf-clone .rv-contact span { font-size:0.72rem; color:#111; text-decoration:none; }
-        .pdf-clone .rv-body { display:flex !important; flex-direction:column !important; gap:0 !important; }
-        .pdf-clone .rv-section { margin-bottom:8px; }
-        .pdf-clone .rv-section-title { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:#111; margin-bottom:8px; padding-bottom:4px; border-bottom:1px solid #111; }
-        .pdf-clone .rv-job { margin-bottom:10px; }
-        .pdf-clone .rv-job-header { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:2px; }
-        .pdf-clone .rv-job-title { font-size:0.78rem; font-weight:600; color:#111; }
-        .pdf-clone .rv-job-dates { font-size:0.66rem; color:#111; }
-        .pdf-clone .rv-job-company { font-size:0.7rem; color:#111; margin-bottom:4px; }
-        .pdf-clone .rv-job-bullets { list-style:none; padding:0; margin:2px 0 0; }
-        .pdf-clone .rv-job-bullets li { font-size:0.68rem; color:#111; line-height:1.4; padding-left:12px; position:relative; margin-bottom:1px; }
-        .pdf-clone .rv-job-bullets li::before { content:'–'; position:absolute; left:0; color:#999; }
-        .pdf-clone .rv-sidebar .rv-section { display:flex !important; flex-wrap:wrap !important; gap:8px 16px !important; align-items:flex-start; }
-        .pdf-clone .rv-sidebar .rv-section-title { width:100%; }
-        .pdf-clone .rv-skill-group { display:block !important; margin-bottom:6px; }
-        .pdf-clone .rv-skill-label { display:block !important; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:#111; margin-bottom:3px; font-weight:600; }
-        .pdf-clone .rv-skill-list { display:flex !important; flex-wrap:wrap; gap:3px; }
-        .pdf-clone .rv-skill-tag { font-size:0.6rem; color:#111; background:#ebebeb; border-radius:3px; padding:2px 6px; }
-      `;
-      document.head.appendChild(styleEl);
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
+      const ml = 16, mr = 16, pageW = 215.9;
+      const cw = pageW - ml - mr;
+      let y = 16;
 
-      const clone = document.querySelector('.rv-wrap').cloneNode(true);
-      clone.classList.add('pdf-clone');
-      // Must be visible on-screen for html2canvas to render
-      Object.assign(clone.style, {
-        position: 'fixed', top: '0', left: '0',
-        width: '710px', zIndex: '99999',
-        background: 'white', overflowY: 'visible'
-      });
-      document.body.appendChild(clone);
+      const sf = (size, style='normal', r=17, g=17, b=17) => {
+        doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
+      };
+      const hline = (r=17,g=17,b=17,w=0.4) => {
+        doc.setDrawColor(r,g,b); doc.setLineWidth(w);
+        doc.line(ml, y, pageW - mr, y);
+      };
 
-      html2pdf().set({
-        margin: [12, 14],
-        filename: 'lucius-campany-resume.pdf',
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff',
-                       logging: false, windowWidth: 710 },
-        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-      }).from(clone).save().then(() => {
-        document.body.removeChild(clone);
-        document.head.removeChild(styleEl);
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download`;
-        btn.disabled = false;
+      // Header
+      sf(22, 'bold'); doc.text('LUCIUS CAMPANY', ml, y); y += 7;
+      sf(7.5, 'normal', 80,80,80); doc.text('HOSPITALITY & MARKETING SPECIALIST', ml, y); y += 5;
+      sf(7, 'normal', 80,80,80); doc.text('New York, NY   \u00b7   lucius@luciuscampany.com   \u00b7   luciuscampany.com', ml, y); y += 4;
+      hline(17,17,17,0.5); y += 8;
+
+      // Section heading helper
+      const sectionHead = (title) => {
+        sf(6, 'bold', 130,130,130); doc.text(title, ml, y); y += 2.5;
+        hline(200,200,200,0.2); y += 5;
+      };
+
+      sectionHead('EXPERIENCE');
+
+      const jobs = [
+        { title:"Maitre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  New York, NY",
+          bullets:["Led FOH team of 5 through full-day service at a members-only wellness concept in Manhattan","Managed private event inquiries end-to-end across multiple properties \u2014 from inquiry through day-of execution","Served as primary point of contact for founding members, regulars, and VIP guests","Coordinated cross-functionally with HR, Facilities, and Communications on corporate events","Daily operation of Resy, OpenTable, and Toast POS; ran staff training and performance reviews"] },
+        { title:"Digital Marketing Analyst", dates:"[Start] \u2013 [End]", company:"Kepler  \u00b7  New York, NY",
+          bullets:["Purchased ad inventory across 6 social platforms within a $250K monthly client budget","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
+        { title:"Floor & Closing Manager", dates:"Nov 2019 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Bristol, NY",
+          bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 rewrote SOPs and retrained team for reopening"] },
+        { title:"Digital Strategy Assistant", dates:"Jun 2019 \u2013 May 2020", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
+          bullets:["Supported million-dollar digital fundraising campaigns for local and state political candidates","Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts","Ran QA on marketing materials distributed to lists of 100,000+ subscribers","Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop & Illustrator"] }
+      ];
+
+      jobs.forEach(job => {
+        sf(8.5, 'bold'); doc.text(job.title, ml, y);
+        sf(7, 'normal', 80,80,80);
+        doc.text(job.dates, pageW - mr - doc.getTextWidth(job.dates), y);
+        y += 4;
+        sf(7.5, 'normal', 80,80,80); doc.text(job.company, ml, y); y += 4;
+        job.bullets.forEach(b => {
+          sf(7.5, 'normal');
+          const lines = doc.splitTextToSize('\u2013  ' + b, cw - 4);
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 4 : 0), y); y += 3.6; });
+        });
+        y += 3;
       });
+
+      y += 2;
+      sectionHead('SKILLS');
+
+      const groups = [
+        { label:'Events & Hospitality', tags:['Private Events','Guest Relations','VIP Management','Resy','OpenTable','Toast POS'] },
+        { label:'Marketing', tags:['Paid Social','Campaign Management','A/B Testing','Performance Analytics','Email Marketing'] },
+        { label:'Platforms', tags:['Meta','TikTok','LinkedIn','Pinterest','Snapchat'] },
+        { label:'Operations', tags:['Team Leadership','Staff Training','Scheduling','Financial Reporting','Compliance'] },
+        { label:'Tools', tags:['HTML/CSS','Adobe Photoshop','Illustrator','Google Analytics'] }
+      ];
+
+      const gw = cw / groups.length;
+      const baseY = y;
+      groups.forEach((grp, gi) => {
+        const gx = ml + gi * gw;
+        let gy = baseY;
+        sf(6, 'bold'); doc.text(grp.label.toUpperCase(), gx, gy); gy += 4.5;
+        let tx = gx;
+        grp.tags.forEach(tag => {
+          sf(6, 'normal');
+          const tw = doc.getTextWidth(tag) + 4;
+          if (tx + tw > gx + gw - 1) { tx = gx; gy += 5.5; }
+          doc.setFillColor(235,235,235);
+          doc.roundedRect(tx, gy - 3.2, tw, 4.5, 0.6, 0.6, 'F');
+          doc.text(tag, tx + 2, gy); tx += tw + 1.5;
+        });
+      });
+
+      doc.save('lucius-campany-resume.pdf');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download`;
+      btn.disabled = false;
     });
 
     // Skip splash if opening a direct URL
@@ -2935,6 +2965,6 @@
       scrollHint.classList.toggle('hidden', window.scrollY > 60);
     }, { passive: true });
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
