@@ -173,11 +173,46 @@
       padding: 4px 10px;
     }
 
+    .rv-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .rv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 6px;
+      padding: 8px 18px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Segoe UI', sans-serif;
+      white-space: nowrap;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .rv-download:hover { background: #333; }
+    .rv-download svg { flex-shrink: 0; }
+
     @media (max-width: 700px) {
       .rv-wrap { padding: 0 20px; }
       #resume { padding: 60px 0; }
       .rv-body { grid-template-columns: 1fr; gap: 0; }
       .rv-contact { gap: 14px; }
+      .rv-download { padding: 7px 14px; font-size: 0.72rem; }
+    }
+
+    @media print {
+      body > *:not(#resume) { display: none !important; }
+      #resume { padding: 0 !important; min-height: unset !important; }
+      .rv-download { display: none !important; }
+      .rv-wrap { padding: 0 24px !important; }
     }
 
     /* ═══════════════════════════════════════════
@@ -1340,8 +1375,20 @@
   <section id="resume">
     <div class="rv-wrap">
       <div class="rv-header">
-        <div class="rv-name">Lucius Campany</div>
-        <div class="rv-headline">Events &amp; Marketing Specialist</div>
+        <div class="rv-header-row">
+          <div>
+            <div class="rv-name">Lucius Campany</div>
+            <div class="rv-headline">Events &amp; Marketing Specialist</div>
+          </div>
+          <button class="rv-download" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </button>
+        </div>
         <div class="rv-contact">
           <span>New York, NY</span>
           <a href="mailto:lucius@luciuscampany.com">lucius@luciuscampany.com</a>
