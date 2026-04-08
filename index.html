@@ -92,10 +92,19 @@
     .rv-contact a:hover { color: #111; }
 
     .rv-body {
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 60px;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+    }
+    .rv-sidebar .rv-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 40px;
+    }
+    .rv-sidebar .rv-section-title {
+      width: 100%;
+    }
+    .rv-sidebar .rv-skill-group {
+      min-width: 160px;
     }
     .rv-section { margin-bottom: 40px; }
     .rv-section-title {
@@ -203,7 +212,7 @@
     @media (max-width: 700px) {
       .rv-wrap { padding: 0 20px; }
       #resume { padding: 60px 0; }
-      .rv-body { grid-template-columns: 1fr; gap: 0; }
+      .rv-sidebar .rv-skill-group { min-width: 120px; }
       .rv-contact { gap: 14px; }
       .rv-download { padding: 7px 14px; font-size: 0.72rem; }
     }
@@ -223,7 +232,8 @@
       .rv-contact { margin-top: 5px !important; font-size: 0.7rem !important; gap: 10px !important; }
 
       /* Body layout */
-      .rv-body { gap: 20px !important; }
+      .rv-sidebar .rv-skill-group { min-width: 100px !important; }
+      .rv-sidebar .rv-section { gap: 0 16px !important; }
       .rv-section { margin-bottom: 0 !important; }
       .rv-section-title { font-size: 0.6rem !important; margin-bottom: 6px !important; padding-bottom: 3px !important; }
 
