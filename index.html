@@ -209,10 +209,37 @@
     }
 
     @media print {
+      @page { margin: 12mm 14mm; }
+
       body > *:not(#resume) { display: none !important; }
-      #resume { padding: 0 !important; min-height: unset !important; }
+      #resume { padding: 0 !important; min-height: unset !important; background: white !important; }
       .rv-download { display: none !important; }
-      .rv-wrap { padding: 0 24px !important; }
+      .rv-wrap { padding: 0 !important; max-width: 100% !important; }
+
+      /* Header */
+      .rv-header { padding-bottom: 8px !important; margin-bottom: 14px !important; }
+      .rv-name { font-size: 1.6rem !important; }
+      .rv-headline { font-size: 0.72rem !important; margin-top: 1px !important; }
+      .rv-contact { margin-top: 5px !important; font-size: 0.7rem !important; gap: 10px !important; }
+
+      /* Body layout */
+      .rv-body { gap: 20px !important; }
+      .rv-section { margin-bottom: 0 !important; }
+      .rv-section-title { font-size: 0.6rem !important; margin-bottom: 6px !important; padding-bottom: 3px !important; }
+
+      /* Jobs */
+      .rv-job { margin-bottom: 9px !important; }
+      .rv-job-title { font-size: 0.78rem !important; }
+      .rv-job-dates { font-size: 0.68rem !important; }
+      .rv-job-company { font-size: 0.68rem !important; margin-bottom: 2px !important; }
+      .rv-job-bullets { margin-top: 2px !important; padding-left: 10px !important; }
+      .rv-job-bullets li { font-size: 0.68rem !important; margin-bottom: 1px !important; line-height: 1.35 !important; }
+      .rv-job-bullets li:nth-child(n+3) { display: none !important; }
+
+      /* Skills */
+      .rv-skill-group { margin-bottom: 7px !important; }
+      .rv-skill-label { font-size: 0.6rem !important; margin-bottom: 3px !important; }
+      .rv-skill-tag { font-size: 0.62rem !important; padding: 2px 5px !important; margin: 1px !important; }
     }
 
     /* ═══════════════════════════════════════════
