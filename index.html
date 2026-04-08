@@ -72,7 +72,7 @@
     }
     .rv-headline {
       font-size: 0.9rem;
-      color: #111;
+      color: #666;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       margin-top: 10px;
@@ -85,45 +85,36 @@
     }
     .rv-contact a, .rv-contact span {
       font-size: 0.82rem;
-      color: #111;
+      color: #555;
       text-decoration: none;
       letter-spacing: 0.04em;
     }
     .rv-contact a:hover { color: #111; }
 
     .rv-body {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 60px;
+      align-items: start;
     }
-    .rv-sidebar .rv-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: flex-start;
-      align-content: flex-start;
-    }
-    .rv-sidebar .rv-section-title {
-      width: 100%;
-      margin-bottom: 12px;
-    }
-    .rv-section { margin-bottom: 56px; }
+    .rv-section { margin-bottom: 40px; }
     .rv-section-title {
       font-size: 0.65rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #111;
-      margin-bottom: 28px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #111;
+      color: #999;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
     }
-    .rv-job { margin-bottom: 44px; }
+    .rv-job { margin-bottom: 30px; }
     .rv-job-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .rv-job-title {
       font-size: 0.95rem;
@@ -132,14 +123,14 @@
     }
     .rv-job-dates {
       font-size: 0.78rem;
-      color: #111;
+      color: #999;
       white-space: nowrap;
       flex-shrink: 0;
     }
     .rv-job-company {
       font-size: 0.82rem;
-      color: #111;
-      margin-bottom: 14px;
+      color: #666;
+      margin-bottom: 10px;
     }
     .rv-job-bullets {
       list-style: none;
@@ -147,28 +138,36 @@
     }
     .rv-job-bullets li {
       font-size: 0.85rem;
-      color: #111;
-      line-height: 1.75;
-      padding-left: 16px;
+      color: #444;
+      line-height: 1.65;
+      padding-left: 14px;
       position: relative;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .rv-job-bullets li::before {
-      content: '•';
+      content: '–';
       position: absolute;
       left: 0;
-      color: #111;
+      color: #bbb;
     }
 
-    /* Skills */
-    .rv-skill-group { display: contents; }
-    .rv-skill-label { display: none; }
+    /* Sidebar */
+    .rv-skill-group { margin-bottom: 24px; }
+    .rv-skill-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+    }
     .rv-skill-list {
-      display: contents;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .rv-skill-tag {
       font-size: 0.75rem;
-      color: #111;
+      color: #444;
       background: #ebebeb;
       border-radius: 3px;
       padding: 4px 10px;
@@ -204,7 +203,7 @@
     @media (max-width: 700px) {
       .rv-wrap { padding: 0 20px; }
       #resume { padding: 60px 0; }
-      .rv-sidebar .rv-skill-group { min-width: 120px; }
+      .rv-body { grid-template-columns: 1fr; gap: 0; }
       .rv-contact { gap: 14px; }
       .rv-download { padding: 7px 14px; font-size: 0.72rem; }
     }
@@ -223,7 +222,17 @@
       .rv-headline { font-size: 0.72rem !important; margin-top: 1px !important; }
       .rv-contact { margin-top: 5px !important; font-size: 0.7rem !important; gap: 10px !important; }
 
-      /* Body layout */
+      /* All-black fonts for print */
+      .rv-headline, .rv-contact a, .rv-contact span,
+      .rv-section-title, .rv-job-dates, .rv-job-company,
+      .rv-job-bullets li, .rv-skill-label, .rv-skill-tag { color: #111 !important; }
+      .rv-section-title { border-bottom-color: #111 !important; }
+
+      /* Bullet style */
+      .rv-job-bullets li::before { content: '•' !important; color: #111 !important; }
+
+      /* Body: single column, skills below experience */
+      .rv-body { display: flex !important; flex-direction: column !important; gap: 0 !important; }
       .rv-section { margin-bottom: 10px !important; }
       .rv-section-title { font-size: 0.6rem !important; margin-bottom: 6px !important; padding-bottom: 3px !important; }
 
@@ -235,8 +244,12 @@
       .rv-job-bullets { margin-top: 2px !important; }
       .rv-job-bullets li { font-size: 0.63rem !important; margin-bottom: 1px !important; line-height: 1.3 !important; padding-left: 12px !important; }
 
-      /* Skills */
-      .rv-sidebar .rv-section { gap: 5px !important; margin-bottom: 0 !important; }
+      /* Skills: flat tag row below experience */
+      .rv-skill-group { display: contents !important; }
+      .rv-skill-label { display: none !important; }
+      .rv-skill-list { display: contents !important; }
+      .rv-sidebar .rv-section { display: flex !important; flex-wrap: wrap !important; gap: 4px !important; margin-bottom: 0 !important; }
+      .rv-sidebar .rv-section-title { width: 100% !important; margin-bottom: 4px !important; }
       .rv-skill-tag { font-size: 0.6rem !important; padding: 2px 6px !important; }
     }
 
