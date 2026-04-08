@@ -9,9 +9,168 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      overflow: hidden;
       background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Scroll hint on grid */
+    #scroll-hint {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: rgba(0,0,0,0.3);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    #scroll-hint.hidden { opacity: 0; }
+    #scroll-hint svg { animation: hint-bounce 2s ease-in-out infinite; }
+    @keyframes hint-bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(5px); }
+    }
+
+    /* --- RESUME SECTION --- */
+    #resume {
+      background: #f8f8f8;
+      min-height: 100vh;
+      padding: 80px 0 80px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .rv-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .rv-header {
+      border-bottom: 2px solid #111;
+      padding-bottom: 28px;
+      margin-bottom: 48px;
+    }
+    .rv-name {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 200;
+      letter-spacing: 0.1em;
+      color: #111;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .rv-headline {
+      font-size: 0.9rem;
+      color: #666;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+    .rv-contact {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .rv-contact a, .rv-contact span {
+      font-size: 0.82rem;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .rv-contact a:hover { color: #111; }
+
+    .rv-body {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 60px;
+      align-items: start;
+    }
+    .rv-section { margin-bottom: 40px; }
+    .rv-section-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .rv-job { margin-bottom: 30px; }
+    .rv-job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 2px;
+    }
+    .rv-job-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111;
+    }
+    .rv-job-dates {
+      font-size: 0.78rem;
+      color: #999;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rv-job-company {
+      font-size: 0.82rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .rv-job-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .rv-job-bullets li {
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.65;
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .rv-job-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: #bbb;
+    }
+
+    /* Sidebar */
+    .rv-skill-group { margin-bottom: 24px; }
+    .rv-skill-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .rv-skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .rv-skill-tag {
+      font-size: 0.75rem;
+      color: #444;
+      background: #ebebeb;
+      border-radius: 3px;
+      padding: 4px 10px;
+    }
+
+    @media (max-width: 700px) {
+      .rv-wrap { padding: 0 20px; }
+      #resume { padding: 60px 0; }
+      .rv-body { grid-template-columns: 1fr; gap: 0; }
+      .rv-contact { gap: 14px; }
     }
 
     /* --- SPLASH PAGE --- */
@@ -1272,6 +1431,149 @@
     </div>
   </div>
 
+  <!-- Scroll hint -->
+  <div id="scroll-hint">
+    <span>Resume</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+      <polyline points="3,6 8,11 13,6"/>
+    </svg>
+  </div>
+
+  <!-- Resume -->
+  <section id="resume">
+    <div class="rv-wrap">
+      <div class="rv-header">
+        <div class="rv-name">Lucius Campany</div>
+        <div class="rv-headline">Events &amp; Marketing Specialist</div>
+        <div class="rv-contact">
+          <span>New York, NY</span>
+          <a href="mailto:lucius@luciuscampany.com">lucius@luciuscampany.com</a>
+          <a href="https://luciuscampany.com">luciuscampany.com</a>
+        </div>
+      </div>
+      <div class="rv-body">
+        <div class="rv-main">
+          <div class="rv-section">
+            <div class="rv-section-title">Experience</div>
+
+            <div class="rv-job">
+              <div class="rv-job-header">
+                <span class="rv-job-title">Maître D' &amp; Events Producer</span>
+                <span class="rv-job-dates">Jun 2023 – Oct 2024</span>
+              </div>
+              <div class="rv-job-company">Happier New York &nbsp;·&nbsp; New York, NY</div>
+              <ul class="rv-job-bullets">
+                <li>Led FOH team of 5 through full-day service at a members-only wellness concept in Manhattan</li>
+                <li>Managed private event inquiries end-to-end across multiple properties — from inquiry through day-of execution</li>
+                <li>Served as primary point of contact for founding members, regulars, and VIP guests</li>
+                <li>Coordinated cross-functionally with HR, Facilities, and Communications on corporate events</li>
+                <li>Daily operation of Resy, OpenTable, and Toast POS; ran staff training and performance reviews</li>
+              </ul>
+            </div>
+
+            <div class="rv-job">
+              <div class="rv-job-header">
+                <span class="rv-job-title">Digital Marketing Analyst</span>
+                <span class="rv-job-dates">[Start] – [End]</span>
+              </div>
+              <div class="rv-job-company">Kepler &nbsp;·&nbsp; New York, NY</div>
+              <ul class="rv-job-bullets">
+                <li>Purchased ad inventory across 6 social platforms within a $250K monthly client budget</li>
+                <li>Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization</li>
+                <li>Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn</li>
+                <li>Delivered regular performance presentations to internal teams and clients</li>
+              </ul>
+            </div>
+
+            <div class="rv-job">
+              <div class="rv-job-header">
+                <span class="rv-job-title">Floor &amp; Closing Manager</span>
+                <span class="rv-job-dates">Nov 2019 – Mar 2021</span>
+              </div>
+              <div class="rv-job-company">Lock Stock Bar &amp; Grill &nbsp;·&nbsp; Bristol, NY</div>
+              <ul class="rv-job-bullets">
+                <li>Managed floor operations across lunch, dinner, and late-night service at a high-volume venue</li>
+                <li>Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs</li>
+                <li>Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews</li>
+                <li>Led full COVID-19 operational restructuring — rewrote SOPs and retrained team for reopening</li>
+              </ul>
+            </div>
+
+            <div class="rv-job">
+              <div class="rv-job-header">
+                <span class="rv-job-title">Digital Strategy Assistant</span>
+                <span class="rv-job-dates">Jun 2019 – May 2020</span>
+              </div>
+              <div class="rv-job-company">New Blue Interactive &nbsp;·&nbsp; Washington DC – Baltimore Area</div>
+              <ul class="rv-job-bullets">
+                <li>Supported million-dollar digital fundraising campaigns for local and state political candidates</li>
+                <li>Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts</li>
+                <li>Ran QA on marketing materials distributed to lists of 100,000+ subscribers</li>
+                <li>Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop &amp; Illustrator</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="rv-sidebar">
+          <div class="rv-section">
+            <div class="rv-section-title">Skills</div>
+            <div class="rv-skill-group">
+              <div class="rv-skill-label">Events &amp; Hospitality</div>
+              <div class="rv-skill-list">
+                <span class="rv-skill-tag">Private Events</span>
+                <span class="rv-skill-tag">Guest Relations</span>
+                <span class="rv-skill-tag">VIP Management</span>
+                <span class="rv-skill-tag">Resy</span>
+                <span class="rv-skill-tag">OpenTable</span>
+                <span class="rv-skill-tag">Toast POS</span>
+              </div>
+            </div>
+            <div class="rv-skill-group">
+              <div class="rv-skill-label">Marketing</div>
+              <div class="rv-skill-list">
+                <span class="rv-skill-tag">Paid Social</span>
+                <span class="rv-skill-tag">Campaign Management</span>
+                <span class="rv-skill-tag">A/B Testing</span>
+                <span class="rv-skill-tag">Performance Analytics</span>
+                <span class="rv-skill-tag">Email Marketing</span>
+              </div>
+            </div>
+            <div class="rv-skill-group">
+              <div class="rv-skill-label">Platforms</div>
+              <div class="rv-skill-list">
+                <span class="rv-skill-tag">Meta</span>
+                <span class="rv-skill-tag">TikTok</span>
+                <span class="rv-skill-tag">LinkedIn</span>
+                <span class="rv-skill-tag">Pinterest</span>
+                <span class="rv-skill-tag">Snapchat</span>
+              </div>
+            </div>
+            <div class="rv-skill-group">
+              <div class="rv-skill-label">Operations</div>
+              <div class="rv-skill-list">
+                <span class="rv-skill-tag">Team Leadership</span>
+                <span class="rv-skill-tag">Staff Training</span>
+                <span class="rv-skill-tag">Scheduling</span>
+                <span class="rv-skill-tag">Financial Reporting</span>
+                <span class="rv-skill-tag">Compliance</span>
+              </div>
+            </div>
+            <div class="rv-skill-group">
+              <div class="rv-skill-label">Tools</div>
+              <div class="rv-skill-list">
+                <span class="rv-skill-tag">HTML/CSS</span>
+                <span class="rv-skill-tag">Adobe Photoshop</span>
+                <span class="rv-skill-tag">Illustrator</span>
+                <span class="rv-skill-tag">Google Analytics</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Reservation Book (Happier tile) -->
   <div id="bookview">
     <div class="bk-topbar">
@@ -2321,6 +2623,12 @@
     // Direct URL load (e.g. luciuscampany.com/nbi)
     const initSlug = window.location.pathname.replace(/^\//, '').toLowerCase();
     if (initSlug && slugToRole[initSlug]) openPage(slugToRole[initSlug]);
+
+    // Scroll hint: hide once user scrolls past the grid
+    const scrollHint = document.getElementById('scroll-hint');
+    window.addEventListener('scroll', () => {
+      scrollHint.classList.toggle('hidden', window.scrollY > 60);
+    }, { passive: true });
   </script>
 </body>
 </html>
