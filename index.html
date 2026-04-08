@@ -688,9 +688,35 @@
     }
     .bm-close-x:hover { background: #5c2d0c; color: #fff; }
 
+    .bm-book-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bm-arr {
+      background: rgba(10,58,30,0.9);
+      border: 1px solid rgba(232,168,32,0.5);
+      color: #e8a820;
+      font-size: 1.7rem;
+      width: 38px;
+      height: 60px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .bm-arr:hover { background: #0a3a1e; border-color: #e8a820; }
+    .bm-arr:disabled { opacity: 0.2; cursor: default; }
+    .bm-arr:disabled:hover { background: rgba(10,58,30,0.9); border-color: rgba(232,168,32,0.5); }
+
     .bm-book {
-      width: min(92vw, 760px);
-      height: min(82vh, 510px);
+      width: min(88vw, 720px);
+      height: min(88vh, 600px);
       display: flex;
       flex-direction: column;
       border-radius: 0;
@@ -1040,16 +1066,8 @@
       .bm-collage-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
     }
 
-    /* Nav bar */
-    .bm-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #0a3a1e;
-      padding: 10px 20px;
-      border-top: 3px solid #e8a820;
-      flex-shrink: 0;
-    }
+    /* Nav bar — hidden, arrows moved to sides */
+    .bm-nav { display: none; }
     .bm-nav-btn {
       background: rgba(0,0,0,0.2);
       border: 1px solid rgba(232,168,32,0.4);
@@ -1646,18 +1664,17 @@
   <!-- Bar Menu (Lock Stock tile) -->
   <div id="barmenu">
     <button class="bm-close-x" id="bm-back-btn">✕ Close</button>
-    <div class="bm-book">
-      <div class="bm-spread-wrap">
-        <div class="bm-spread" id="bm-spread"></div>
-      </div>
-      <div class="bm-nav">
-        <button class="bm-nav-btn" id="bm-prev" disabled>&#8249;</button>
-        <div class="bm-page-indicator">
-          <div id="bm-page-label">Cover</div>
+    <div class="bm-book-wrap">
+      <button class="bm-arr" id="bm-prev" disabled>&#8249;</button>
+      <div class="bm-book">
+        <div class="bm-spread-wrap">
+          <div class="bm-spread" id="bm-spread"></div>
+        </div>
+        <div class="bm-nav">
           <div class="bm-page-dots" id="bm-dots"></div>
         </div>
-        <button class="bm-nav-btn" id="bm-next">&#8250;</button>
       </div>
+      <button class="bm-arr" id="bm-next">&#8250;</button>
     </div>
   </div>
 
@@ -2702,7 +2719,8 @@
     </div>`;
 
     function buildImgSlot(url) {
-      return `<div class="bm-page-img">${url ? `<img src="${url}" alt="">` : imgPlaceholder}</div>`;
+      if (!url) return '';
+      return `<div class="bm-page-img"><img src="${url}" alt=""></div>`;
     }
 
     function buildSpreadHTML(spread) {
@@ -2791,11 +2809,6 @@
     function updateNav(idx) {
       document.getElementById('bm-prev').disabled = idx === 0;
       document.getElementById('bm-next').disabled = idx === bmSpreads.length - 1;
-      const labels = ['Cover', 'On Draft & Cocktails', 'Spirits & Specials', 'Gallery I', 'Gallery II'];
-      document.getElementById('bm-page-label').textContent = labels[idx];
-      document.getElementById('bm-dots').innerHTML = bmSpreads
-        .map((_, i) => `<div class="bm-dot${i === idx ? ' active' : ''}"></div>`)
-        .join('');
     }
 
     document.getElementById('bm-prev').addEventListener('click', () => {
