@@ -7,13 +7,18 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════ */
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #ffffff;
       overflow-x: hidden;
     }
 
-    /* Scroll hint on grid */
+    /* ═══════════════════════════════════════════
+       SCROLL HINT
+       ═══════════════════════════════════════════ */
     #scroll-hint {
       position: fixed;
       bottom: 22px;
@@ -38,7 +43,9 @@
       50%      { transform: translateY(5px); }
     }
 
-    /* --- RESUME SECTION --- */
+    /* ═══════════════════════════════════════════
+       RESUME
+       ═══════════════════════════════════════════ */
     #resume {
       background: #f8f8f8;
       min-height: 100vh;
@@ -173,7 +180,9 @@
       .rv-contact { gap: 14px; }
     }
 
-    /* --- SPLASH PAGE --- */
+    /* ═══════════════════════════════════════════
+       SPLASH PAGE
+       ═══════════════════════════════════════════ */
     #splash {
       position: fixed;
       inset: 0;
@@ -233,7 +242,9 @@
       0%, 100% { opacity: 0.25; } 50% { opacity: 0.55; }
     }
 
-    /* --- GRID --- */
+    /* ═══════════════════════════════════════════
+       GRID
+       ═══════════════════════════════════════════ */
     #grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -310,87 +321,9 @@
 
     .tile:hover .tile-label { letter-spacing: 0.2em; }
 
-    /* --- FULL-SCREEN DETAIL PANEL (non-Kepler) --- */
-    #detail {
-      position: fixed;
-      inset: 0;
-      display: none;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      overflow-y: auto;
-      z-index: 50;
-    }
-
-    #detail.visible {
-      display: flex;
-      opacity: 1;
-    }
-
-    .detail-header {
-      padding: 3rem 4rem 2rem;
-      color: #fff;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      flex-shrink: 0;
-    }
-
-    .detail-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    #close-btn {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.35);
-      color: #fff;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.6rem 1.4rem;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
-
-    #close-btn:hover { background: rgba(255,255,255,0.3); }
-
-    .detail-body {
-      background: #f9f9f9;
-      flex: 1;
-      padding: 3rem 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-    }
-
-    @media (max-width: 700px) {
-      .detail-body { grid-template-columns: 1fr; padding: 2rem; }
-      .detail-header { padding: 2rem; }
-    }
-
-    .detail-section h3 {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .detail-section p {
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.7;
-    }
-
-    /* --- KEPLER POP-UP --- */
+    /* ═══════════════════════════════════════════
+       KEPLER POPUPS
+       ═══════════════════════════════════════════ */
     .popup {
       position: fixed;
       z-index: 100;
@@ -550,6 +483,9 @@
     }
     .popup-next-btn:hover { color: #1084d0; }
 
+    /* ═══════════════════════════════════════════
+       OVERLAY
+       ═══════════════════════════════════════════ */
     #overlay {
       position: fixed;
       inset: 0;
@@ -559,7 +495,9 @@
     }
     #overlay.active { display: block; }
 
-    /* --- RESERVATION BOOK (Happier) --- */
+    /* ═══════════════════════════════════════════
+       RESERVATION BOOK — Happier
+       ═══════════════════════════════════════════ */
     #bookview {
       position: fixed; inset: 0; z-index: 50; display: none;
       flex-direction: column; background: #1a1008;
@@ -644,7 +582,9 @@
       .bk-side-toggle { display: block; }
     }
 
-    /* --- BAR MENU (Lock Stock) — Physical Book --- */
+    /* ═══════════════════════════════════════════
+       BAR MENU — Lock Stock
+       ═══════════════════════════════════════════ */
     /* Colors from logo: brown #5c2d0c, gold #e8a820, navy #1a4a8a, sky #4a9fd4, orange #e85a20 */
     #barmenu {
       position: fixed;
@@ -1083,7 +1023,9 @@
       .bm-page-item:hover { transform: none; }
     }
 
-    /* --- GMAIL UI (NBI) --- */
+    /* ═══════════════════════════════════════════
+       GMAIL UI — NBI
+       ═══════════════════════════════════════════ */
     #gmail {
       position: fixed;
       inset: 0;
