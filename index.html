@@ -1259,6 +1259,7 @@
       width: 100%;
       height: 0;
       padding-bottom: 75%;
+      padding-bottom: min(75%, 440px);
       border-radius: 12px;
       margin-bottom: 20px;
       overflow: hidden;
@@ -1272,14 +1273,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-    }
-    @media (min-width: 701px) {
-      .gm-ev-photo {
-        height: auto;
-        padding-bottom: 0;
-        aspect-ratio: 4 / 3;
-        max-width: 480px;
-      }
     }
     .gm-ev-body { font-size: 0.95rem; color: #202124; line-height: 1.8; max-width: 640px; }
 
