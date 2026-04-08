@@ -500,31 +500,31 @@
        ═══════════════════════════════════════════ */
     #bookview {
       position: fixed; inset: 0; z-index: 50; display: none;
-      flex-direction: column; background: #1a1008;
+      flex-direction: column; background: #1B6B3A;
       font-family: 'Segoe UI', sans-serif; opacity: 0;
       transition: opacity 0.3s ease;
     }
     #bookview.visible { display: flex; opacity: 1; }
 
     .bk-topbar {
-      background: #111; border-bottom: 2px solid #c8a96e;
+      background: #155930; border-bottom: 2px solid rgba(255,255,255,0.2);
       padding: 0 24px; height: 60px; display: flex;
       align-items: center; justify-content: space-between; flex-shrink: 0;
     }
-    .bk-title { font-size: 1.1rem; font-weight: 700; color: #c8a96e; letter-spacing: 0.15em; text-transform: uppercase; }
-    .bk-date { font-size: 0.85rem; color: #888; letter-spacing: 0.08em; }
-    .bk-close { background: none; border: 1px solid #444; color: #aaa; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; letter-spacing: 0.08em; }
-    .bk-close:hover { border-color: #c8a96e; color: #c8a96e; }
+    .bk-title { font-size: 1.1rem; font-weight: 700; color: #ffffff; letter-spacing: 0.15em; text-transform: uppercase; }
+    .bk-date { font-size: 0.85rem; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; }
+    .bk-close { background: none; border: 1px solid rgba(255,255,255,0.4); color: rgba(255,255,255,0.7); padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.82rem; letter-spacing: 0.08em; }
+    .bk-close:hover { border-color: #ffffff; color: #ffffff; }
 
-    .bk-tabs { background: #111; display: flex; border-bottom: 1px solid #2a2a2a; flex-shrink: 0; padding: 0 24px; }
-    .bk-tab { padding: 10px 20px; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: #666; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
-    .bk-tab.active { color: #c8a96e; border-bottom-color: #c8a96e; }
-    .bk-tab:hover:not(.active) { color: #aaa; }
+    .bk-tabs { background: #155930; display: flex; border-bottom: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; padding: 0 24px; }
+    .bk-tab { padding: 10px 20px; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .bk-tab.active { color: #ffffff; border-bottom-color: #ffffff; }
+    .bk-tab:hover:not(.active) { color: rgba(255,255,255,0.75); }
 
     .bk-body { display: flex; flex: 1; overflow: hidden; }
 
     .bk-resv-panel { flex: 1; overflow-y: auto; padding: 16px 24px; }
-    .bk-shift-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #c8a96e; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #2a2215; }
+    .bk-shift-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.25); }
     .bk-resv-row {
       display: grid;
       grid-template-columns: 64px 40px 1fr 100px 80px;
@@ -533,41 +533,41 @@
       transition: background 0.15s; border-left: 3px solid transparent;
     }
     .bk-resv-row.clickable { cursor: pointer; }
-    .bk-resv-row.clickable:hover { background: rgba(200,169,110,0.06); }
+    .bk-resv-row.clickable:hover { background: rgba(255,255,255,0.06); }
     .bk-resv-row.seated   { border-left-color: #34A853; }
     .bk-resv-row.arrived  { border-left-color: #FBBC05; }
     .bk-resv-row.reserved { border-left-color: #4285F4; }
-    .bk-resv-row.completed{ border-left-color: #555; opacity: 0.5; }
-    .bk-resv-row.vip      { border-left-color: #c8a96e; }
-    .bk-time { font-size: 0.88rem; color: #c8a96e; font-weight: 600; font-variant-numeric: tabular-nums; }
-    .bk-pax  { font-size: 0.82rem; color: #aaa; text-align: center; }
-    .bk-guest { font-size: 0.9rem; color: #e8e0d0; font-weight: 500; }
-    .bk-guest .bk-note { font-size: 0.75rem; color: #888; font-weight: 400; margin-top: 2px; }
-    .bk-table { font-size: 0.8rem; color: #888; text-align: center; }
+    .bk-resv-row.completed{ border-left-color: rgba(255,255,255,0.3); opacity: 0.5; }
+    .bk-resv-row.vip      { border-left-color: #ffffff; }
+    .bk-time { font-size: 0.88rem; color: #ffffff; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .bk-pax  { font-size: 0.82rem; color: rgba(255,255,255,0.7); text-align: center; }
+    .bk-guest { font-size: 0.9rem; color: #ffffff; font-weight: 500; }
+    .bk-guest .bk-note { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 400; margin-top: 2px; }
+    .bk-table { font-size: 0.8rem; color: rgba(255,255,255,0.6); text-align: center; }
     .bk-status { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 12px; text-align: center; font-weight: 600; }
     .bk-status.seated   { background: rgba(52,168,83,0.15);  color: #34A853; }
     .bk-status.arrived  { background: rgba(251,188,5,0.15);  color: #FBBC05; }
     .bk-status.reserved { background: rgba(66,133,244,0.15); color: #4285F4; }
-    .bk-status.completed{ background: rgba(100,100,100,0.15);color: #666; }
-    .bk-status.vip      { background: rgba(200,169,110,0.15);color: #c8a96e; }
+    .bk-status.completed{ background: rgba(255,255,255,0.1);color: rgba(255,255,255,0.5); }
+    .bk-status.vip      { background: rgba(255,255,255,0.15);color: #ffffff; }
 
-    .bk-side-panel { width: 300px; border-left: 1px solid #2a2a2a; display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
-    .bk-side-toggle { display: none; width: 100%; padding: 12px 20px; background: #111; border: none; border-top: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a; color: #c8a96e; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; cursor: pointer; flex-shrink: 0; }
+    .bk-side-panel { width: 300px; border-left: 1px solid rgba(255,255,255,0.15); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+    .bk-side-toggle { display: none; width: 100%; padding: 12px 20px; background: #155930; border: none; border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15); color: #ffffff; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; cursor: pointer; flex-shrink: 0; }
     .bk-side-toggle span { float: right; transition: transform 0.2s; }
     .bk-side-toggle.open span { transform: rotate(180deg); }
-    .bk-side-section { padding: 16px 20px; border-bottom: 1px solid #2a2a2a; }
-    .bk-side-heading { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: #c8a96e; margin-bottom: 12px; }
+    .bk-side-section { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    .bk-side-heading { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; margin-bottom: 12px; }
     .bk-stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .bk-stat-label { font-size: 0.8rem; color: #888; }
-    .bk-stat-val   { font-size: 0.8rem; color: #e8e0d0; font-weight: 600; }
-    .bk-note-text  { font-size: 0.82rem; color: #aaa; line-height: 1.6; font-style: italic; }
+    .bk-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+    .bk-stat-val   { font-size: 0.8rem; color: #ffffff; font-weight: 600; }
+    .bk-note-text  { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.6; font-style: italic; }
     .bk-checklist-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; cursor: pointer; }
-    .bk-checkbox { width: 16px; height: 16px; border: 1px solid #555; border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #34A853; transition: all 0.15s; }
-    .bk-checkbox.checked { background: rgba(52,168,83,0.15); border-color: #34A853; }
-    .bk-checklist-item span { font-size: 0.82rem; color: #bbb; line-height: 1.4; }
-    .bk-checklist-item.done span { text-decoration: line-through; color: #555; }
+    .bk-checkbox { width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.4); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #34A853; transition: all 0.15s; }
+    .bk-checkbox.checked { background: rgba(52,168,83,0.2); border-color: #34A853; }
+    .bk-checklist-item span { font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
+    .bk-checklist-item.done span { text-decoration: line-through; color: rgba(255,255,255,0.35); }
 
-    .resv-popup { border-color: #c8a96e; box-shadow: 0 0 0 1px #2a2a2a, 6px 6px 32px rgba(0,0,0,0.6); }
+    .resv-popup { border-color: #ffffff; box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 6px 6px 32px rgba(0,0,0,0.6); }
 
     @media (max-width: 700px) {
       .bk-topbar { padding: 0 14px; height: auto; flex-wrap: wrap; gap: 6px; padding-top: 10px; padding-bottom: 10px; }
@@ -577,7 +577,7 @@
       .bk-resv-panel { padding: 10px 12px; overflow-y: visible; }
       .bk-resv-row { grid-template-columns: 56px 30px 1fr 60px; font-size: 0.8rem; }
       .bk-status { display: none; }
-      .bk-side-panel { width: 100%; border-left: none; border-top: 1px solid #2a2a2a; overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
+      .bk-side-panel { width: 100%; border-left: none; border-top: 1px solid rgba(255,255,255,0.15); overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
       .bk-side-panel.expanded { max-height: 800px; }
       .bk-side-toggle { display: block; }
     }
@@ -585,7 +585,7 @@
     /* ═══════════════════════════════════════════
        BAR MENU — Lock Stock
        ═══════════════════════════════════════════ */
-    /* Colors from logo: brown #5c2d0c, gold #e8a820, navy #1a4a8a, sky #4a9fd4, orange #e85a20 */
+    /* Colors from logo: brown #0a3a1e, gold #e8a820, navy #1a4a8a, sky #4a9fd4, orange #e85a20 */
     #barmenu {
       position: fixed;
       inset: 0;
@@ -616,7 +616,7 @@
       z-index: 10;
       transition: all 0.15s;
     }
-    .bm-close-x:hover { background: #5c2d0c; color: #fff; }
+    .bm-close-x:hover { background: #0a3a1e; color: #fff; }
 
     .bm-book {
       width: min(92vw, 760px);
@@ -626,9 +626,9 @@
       border-radius: 0;
       /* Spine on left, page stack on right */
       border-left: 7px solid #1a0800;
-      border-right: 3px solid #3a1a05;
-      border-top: 3px solid #3a1a05;
-      border-bottom: 3px solid #3a1a05;
+      border-right: 3px solid #071d10;
+      border-top: 3px solid #071d10;
+      border-bottom: 3px solid #071d10;
       box-shadow:
         /* Page-edge stack illusion */
         3px 0 0 #e4d5b8,
@@ -694,7 +694,7 @@
     .bm-cover {
       width: 100%;
       flex-shrink: 0;
-      background: linear-gradient(160deg, #5c2d0c 0%, #3a1a05 40%, #1a0a02 100%);
+      background: linear-gradient(160deg, #0a3a1e 0%, #071d10 40%, #030e07 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -795,7 +795,7 @@
       font-size: 0.62rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: #5c2d0c;
+      color: #0a3a1e;
       font-family: 'Segoe UI', sans-serif;
       font-weight: 700;
       text-align: center;
@@ -869,8 +869,8 @@
       gap: 8px;
     }
     .bm-page-item:hover {
-      background: #5c2d0c;
-      border-color: #5c2d0c;
+      background: #0a3a1e;
+      border-color: #0a3a1e;
       transform: translateX(3px);
       box-shadow: -3px 0 0 #e8a820;
     }
@@ -906,7 +906,7 @@
       grid-column: 1 / -1;
       padding: 20px 28px;
       background: linear-gradient(to bottom, #fdf8f0, #f5ede0);
-      border-top: 2px solid #5c2d0c;
+      border-top: 2px solid #0a3a1e;
     }
     .bm-page-full .bm-page-item {
       max-width: 500px;
@@ -975,7 +975,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #5c2d0c;
+      background: #0a3a1e;
       padding: 10px 20px;
       border-top: 3px solid #e8a820;
       flex-shrink: 0;
@@ -1012,13 +1012,13 @@
 
     /* Popup */
     .bm-popup {
-      border-color: #5c2d0c;
+      border-color: #0a3a1e;
       box-shadow: 0 0 0 2px #e8a820, 6px 6px 32px rgba(0,0,0,0.7);
     }
 
     @media (max-width: 600px) {
       .bm-pages { grid-template-columns: 1fr; }
-      .bm-page:first-child { border-bottom: 2px solid #5c2d0c; }
+      .bm-page:first-child { border-bottom: 2px solid #0a3a1e; }
       .bm-page-full { grid-column: 1; }
       .bm-page-item:hover { transform: none; }
     }
@@ -2337,14 +2337,14 @@
       const slide = resv.slides[idx];
       const isLast = idx === resv.slides.length - 1;
       return `
-        <div class="popup-titlebar" data-drag style="background:linear-gradient(to right,#111,#2a1f00);border-bottom:1px solid #c8a96e;">
-          <div class="popup-title" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
+        <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
+          <div class="popup-title" style="color:#ffffff;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
           <div class="popup-controls">
-            <button class="popup-btn resv-close-btn" style="background:#2a2a2a;border-color:#555;color:#aaa;">✕</button>
+            <button class="popup-btn resv-close-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#ffffff;">✕</button>
           </div>
         </div>
-        <div class="popup-photo" style="background:#111;border-bottom:1px solid #2a2a2a;">
-          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.2);color:rgba(200,169,110,0.3);">
+        <div class="popup-photo" style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.15);">
+          <div class="popup-photo-placeholder" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.3);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -2353,15 +2353,15 @@
             Add photo
           </div>
         </div>
-        <div class="popup-body" style="background:#1a1008;border-top:none;">
-          <div class="popup-label" style="color:#c8a96e;">${slide.label}</div>
-          <div class="popup-text" style="color:#e8e0d0;">${slide.text}</div>
+        <div class="popup-body" style="background:#1B6B3A;border-top:none;">
+          <div class="popup-label" style="color:#ffffff;">${slide.label}</div>
+          <div class="popup-text" style="color:rgba(255,255,255,0.85);">${slide.text}</div>
         </div>
-        <div class="popup-footer" style="background:#111;border-top:1px solid #2a2a2a;">
-          <span class="popup-counter" style="color:#666;">${idx + 1} of ${resv.slides.length}</span>
+        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);">
+          <span class="popup-counter" style="color:rgba(255,255,255,0.5);">${idx + 1} of ${resv.slides.length}</span>
           ${!isLast
-            ? `<button class="popup-next-btn resv-next-btn" style="color:#c8a96e;">Next →</button>`
-            : '<span style="font-size:0.7rem;color:#555;letter-spacing:0.05em;">Done</span>'}
+            ? `<button class="popup-next-btn resv-next-btn" style="color:#ffffff;">Next →</button>`
+            : '<span style="font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Done</span>'}
         </div>
       `;
     }
@@ -2659,13 +2659,13 @@
       const isLast = idx === item.slides.length - 1;
       return `
         <div class="popup-titlebar" data-drag style="background:#0d0a07;border-bottom:1px solid #3a2a15;">
-          <div class="popup-title" style="color:#c8a96e;font-family:Georgia,serif;letter-spacing:0.06em;">${item.name}</div>
+          <div class="popup-title" style="color:#ffffff;font-family:Georgia,serif;letter-spacing:0.06em;">${item.name}</div>
           <div class="popup-controls">
             <button class="popup-btn bm-close-btn" style="background:#1a1005;border-color:#3a2a15;color:#6a5a3a;">✕</button>
           </div>
         </div>
         <div class="popup-photo" style="background:#0a0805;border-bottom:1px solid #1e160a;">
-          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.15);color:rgba(200,169,110,0.25);font-family:'Segoe UI',sans-serif;">
+          <div class="popup-photo-placeholder" style="border-color:rgba(255,255,255,0.15);color:rgba(200,169,110,0.25);font-family:'Segoe UI',sans-serif;">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -2681,7 +2681,7 @@
         <div class="popup-footer" style="background:#0d0a07;border-top:1px solid #1e160a;">
           <span class="popup-counter" style="color:#3a2a15;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${item.slides.length}</span>
           ${!isLast
-            ? `<button class="popup-next-btn bm-next-btn" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
+            ? `<button class="popup-next-btn bm-next-btn" style="color:#ffffff;font-family:'Segoe UI',sans-serif;text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
             : '<span style="font-size:0.7rem;color:#3a2a15;font-family:\'Segoe UI\',sans-serif;letter-spacing:0.1em;">— fin —</span>'}
         </div>`;
     }
