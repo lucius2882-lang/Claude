@@ -1718,9 +1718,9 @@
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
-      const ml = 16, mr = 16, pageW = 215.9;
+      const ml = 25.4, mr = 25.4, pageW = 215.9;
       const cw = pageW - ml - mr;
-      let y = 16;
+      let y = 25.4;
 
       const sf = (size, style='normal', r=17, g=17, b=17) => {
         doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
@@ -1731,15 +1731,15 @@
       };
 
       // Header
-      sf(22, 'bold'); doc.text('LUCIUS CAMPANY', ml, y); y += 10;
-      sf(7.5, 'normal', 80,80,80); doc.text('HOSPITALITY & MARKETING SPECIALIST', ml, y); y += 7;
-      sf(7, 'normal', 80,80,80); doc.text('New York, NY   \u00b7   lucius@luciuscampany.com   \u00b7   luciuscampany.com', ml, y); y += 6;
-      hline(17,17,17,0.5); y += 12;
+      sf(22, 'bold'); doc.text('LUCIUS CAMPANY', ml, y); y += 9;
+      sf(7.5, 'normal', 80,80,80); doc.text('HOSPITALITY & MARKETING SPECIALIST', ml, y); y += 6;
+      sf(7, 'normal', 80,80,80); doc.text('New York, NY   \u00b7   lucius@luciuscampany.com   \u00b7   luciuscampany.com', ml, y); y += 5.5;
+      hline(17,17,17,0.5); y += 11;
 
       // Section heading helper
       const sectionHead = (title) => {
-        sf(6, 'bold', 130,130,130); doc.text(title, ml, y); y += 4;
-        hline(200,200,200,0.2); y += 7;
+        sf(6, 'bold', 130,130,130); doc.text(title, ml, y); y += 3.5;
+        hline(200,200,200,0.2); y += 6;
       };
 
       sectionHead('EXPERIENCE');
@@ -1759,17 +1759,17 @@
         sf(8.5, 'bold'); doc.text(job.title, ml, y);
         sf(7, 'normal', 80,80,80);
         doc.text(job.dates, pageW - mr - doc.getTextWidth(job.dates), y);
-        y += 6;
-        sf(7.5, 'normal', 80,80,80); doc.text(job.company, ml, y); y += 6;
+        y += 5.5;
+        sf(7.5, 'normal', 80,80,80); doc.text(job.company, ml, y); y += 5.5;
         job.bullets.forEach(b => {
           sf(7.5, 'normal');
           const lines = doc.splitTextToSize('\u2013  ' + b, cw - 4);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 4 : 0), y); y += 5.2; });
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 4 : 0), y); y += 4.7; });
         });
-        y += 5;
+        y += 4.5;
       });
 
-      y += 4;
+      y += 3.5;
       sectionHead('SKILLS');
 
       const groups = [
@@ -1785,12 +1785,12 @@
       groups.forEach((grp, gi) => {
         const gx = ml + gi * gw;
         let gy = baseY;
-        sf(6, 'bold'); doc.text(grp.label.toUpperCase(), gx, gy); gy += 6.5;
+        sf(6, 'bold'); doc.text(grp.label.toUpperCase(), gx, gy); gy += 6;
         let tx = gx;
         grp.tags.forEach(tag => {
           sf(6, 'normal');
           const tw = doc.getTextWidth(tag) + 4;
-          if (tx + tw > gx + gw - 1) { tx = gx; gy += 8.5; }
+          if (tx + tw > gx + gw - 1) { tx = gx; gy += 7.5; }
           doc.setFillColor(235,235,235);
           doc.roundedRect(tx, gy - 3.2, tw, 4.5, 0.6, 0.6, 'F');
           doc.text(tag, tx + 2, gy); tx += tw + 1.5;
