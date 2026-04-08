@@ -1256,8 +1256,9 @@
     .gm-ev-date { margin-left: auto; font-size: 0.8rem; color: #5f6368; }
     .gm-ev-photo {
       width: 100%;
-      max-width: 560px;
-      height: 260px;
+      height: auto;
+      aspect-ratio: 560 / 320;
+      max-height: 380px;
       border-radius: 12px;
       margin-bottom: 20px;
       overflow: hidden;
@@ -1269,7 +1270,7 @@
       font-size: 0.85rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      border: 2px dashed #dadce0;
+      border: 1px solid #dadce0;
     }
     .gm-ev-photo img { width: 100%; height: 100%; object-fit: cover; }
     .gm-ev-body { font-size: 0.95rem; color: #202124; line-height: 1.8; max-width: 640px; }
@@ -1316,7 +1317,7 @@
       .gm-ev-subject { font-size: 1.15rem; margin-bottom: 12px; }
       .gm-ev-meta { flex-wrap: wrap; gap: 8px; }
       .gm-ev-date { width: 100%; margin-left: 0; font-size: 0.75rem; }
-      .gm-ev-photo { height: 180px; margin-bottom: 16px; }
+      .gm-ev-photo { max-height: none; margin-bottom: 16px; }
       .gm-ev-body { font-size: 0.88rem; line-height: 1.7; }
     }
   </style>
@@ -1845,9 +1846,9 @@
         time: '9:14 AM',
         date: 'Mar 18, 2020, 9:14 AM',
         snippet: 'Lucius, the Q3 digital fundraising push hit $1.2M — well above target...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
-          <clipPath id="cp1"><rect width="560" height="240"/></clipPath>
-          <g clip-path="url(#cp1)">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 320" overflow="hidden" style="background:#fff8f7;border-radius:8px">
+          <clipPath id="cp1"><rect width="560" height="320"/></clipPath>
+          <g clip-path="url(#cp1)" transform="translate(0,40)">
           <text x="28" y="30" font-family="Arial" font-size="10" fill="#aaa" letter-spacing="2">FUNDRAISING TOTALS — Q3 2020</text>
           <line x1="28" y1="195" x2="530" y2="195" stroke="#eee" stroke-width="1"/>
           <line x1="28" y1="155" x2="530" y2="155" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
@@ -1884,9 +1885,9 @@
         time: 'Yesterday',
         date: 'Mar 17, 2020, 4:51 PM',
         snippet: 'Lucius — Variant B outperformed on every metric. Your subject line call was right...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
-          <clipPath id="cp2"><rect width="560" height="240"/></clipPath>
-          <g clip-path="url(#cp2)">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 320" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
+          <clipPath id="cp2"><rect width="560" height="320"/></clipPath>
+          <g clip-path="url(#cp2)" transform="translate(0,40)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">A/B TEST — OCTOBER SEND</text>
           <rect x="40" y="44" width="220" height="168" fill="#fff" rx="8" stroke="#e8eaed" stroke-width="1"/>
           <rect x="300" y="44" width="220" height="168" fill="#fff" rx="8" stroke="#4285F4" stroke-width="2"/>
@@ -1918,12 +1919,12 @@
         time: 'Oct 28',
         date: 'Oct 28, 2019, 11:02 AM',
         snippet: 'Template staged and ready. Nothing deploys until you sign off...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
-          <clipPath id="cp3"><rect width="560" height="240"/></clipPath>
-          <g clip-path="url(#cp3)">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 320" overflow="hidden" style="background:#f6fff8;border-radius:8px">
+          <clipPath id="cp3"><rect width="560" height="320"/></clipPath>
+          <g clip-path="url(#cp3)" transform="translate(0,40)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">QA CHECKLIST — OCTOBER BROADCAST</text>
           <rect x="40" y="44" width="340" height="176" fill="#fff" rx="8" stroke="#e8eaed" stroke-width="1"/>
-          <clipPath id="chk3"><rect x="40" y="44" width="335" height="176"/></clipPath>
+          <clipPath id="chk3"><rect x="40" y="84" width="335" height="176"/></clipPath>
           <circle cx="68" cy="74"  r="10" fill="#34A853"/><text x="68"  y="79"  font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">✓</text>
           <g clip-path="url(#chk3)">
           <text x="90" y="79"  font-family="Arial" font-size="11" fill="#202124">Rendering — Gmail, Outlook, Apple Mail</text>
@@ -1960,9 +1961,9 @@
         time: 'Sep 12',
         date: 'Sep 12, 2019, 3:38 PM',
         snippet: 'Your HTML/CSS spec is built, QA\'d, and loaded. Renders clean on all clients...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
-          <clipPath id="cp4"><rect width="560" height="240"/></clipPath>
-          <g clip-path="url(#cp4)">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 320" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
+          <clipPath id="cp4"><rect width="560" height="320"/></clipPath>
+          <g clip-path="url(#cp4)" transform="translate(0,40)">
           <text x="28" y="30" font-family="monospace" font-size="11" fill="#555" letter-spacing="1">template_v3.html</text>
           <text x="28"  y="58"  font-family="monospace" font-size="12" fill="#569cd6">&lt;table</text>
           <text x="88"  y="58"  font-family="monospace" font-size="12" fill="#9cdcfe"> class</text>
@@ -2016,9 +2017,9 @@
         time: 'Aug 5',
         date: 'Aug 5, 2019, 1:22 PM',
         snippet: 'All final creative files are ready. Everything built in Photoshop and Illustrator...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
-          <clipPath id="cp5"><rect width="560" height="240"/></clipPath>
-          <g clip-path="url(#cp5)">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 320" overflow="hidden" style="background:#faf5ff;border-radius:8px">
+          <clipPath id="cp5"><rect width="560" height="320"/></clipPath>
+          <g clip-path="url(#cp5)" transform="translate(0,40)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">CREATIVE PACKAGE — FINAL DELIVERY</text>
           <rect x="30"  y="44" width="68" height="68" fill="#9C27B0" rx="6"/>
           <text x="64"  y="84" font-family="Arial" font-size="11" fill="rgba(255,255,255,.7)" text-anchor="middle" font-weight="bold">PSD</text>
@@ -2042,7 +2043,7 @@
           <rect x="292" y="148" width="52"  height="28" fill="#4CAF50" rx="0" style="border-radius:0 4px 4px 0"/>
           <text x="30"  y="196" font-family="Arial" font-size="10" fill="#aaa">All files: live text · organized layers · brand guide compliant</text>
           <rect x="370" y="44" width="158" height="96" fill="#fff" rx="8" stroke="#e0d4f5" stroke-width="1.5"/>
-          <clipPath id="dlv5"><rect x="372" y="46" width="154" height="92"/></clipPath>
+          <clipPath id="dlv5"><rect x="372" y="86" width="154" height="92"/></clipPath>
           <g clip-path="url(#dlv5)">
           <text x="449" y="70"  font-family="Arial" font-size="11" fill="#9C27B0" text-anchor="middle" letter-spacing="1">DELIVERABLES</text>
           <text x="380" y="90"  font-family="Arial" font-size="11" fill="#555">4 file types</text>
