@@ -1845,12 +1845,14 @@
         time: '9:14 AM',
         date: 'Mar 18, 2020, 9:14 AM',
         snippet: 'Lucius, the Q3 digital fundraising push hit $1.2M — well above target...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" style="background:#fff8f7;border-radius:8px">
-          <text x="28" y="36" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2">FUNDRAISING TOTALS — Q3 2020</text>
-          <line x1="28" y1="195" x2="532" y2="195" stroke="#eee" stroke-width="1"/>
-          <line x1="28" y1="155" x2="532" y2="155" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="28" y1="115" x2="532" y2="115" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="28" y1="75"  x2="532" y2="75"  stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
+          <clipPath id="cp1"><rect width="560" height="240"/></clipPath>
+          <g clip-path="url(#cp1)">
+          <text x="28" y="30" font-family="Arial" font-size="10" fill="#aaa" letter-spacing="2">FUNDRAISING TOTALS — Q3 2020</text>
+          <line x1="28" y1="195" x2="530" y2="195" stroke="#eee" stroke-width="1"/>
+          <line x1="28" y1="155" x2="530" y2="155" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="28" y1="115" x2="530" y2="115" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="28" y1="75"  x2="530" y2="75"  stroke="#f5f5f5" stroke-width="1" stroke-dasharray="4,4"/>
           <rect x="55"  y="168" width="36" height="27" fill="#EA4335" opacity=".3" rx="2"/>
           <rect x="100" y="158" width="36" height="37" fill="#4285F4" opacity=".3" rx="2"/>
           <rect x="145" y="163" width="36" height="32" fill="#34A853" opacity=".3" rx="2"/>
@@ -1860,13 +1862,15 @@
           <rect x="375" y="58"  width="36" height="137" fill="#EA4335" rx="3"/>
           <rect x="420" y="68"  width="36" height="127" fill="#4285F4" rx="3"/>
           <rect x="465" y="63"  width="36" height="132" fill="#34A853" rx="3"/>
-          <line x1="28" y1="108" x2="532" y2="108" stroke="#FBBC05" stroke-width="1.5" stroke-dasharray="6,3"/>
-          <text x="535" y="112" font-family="Arial" font-size="9" fill="#FBBC05">TARGET</text>
+          <line x1="28" y1="108" x2="510" y2="108" stroke="#FBBC05" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <rect x="474" y="98" width="56" height="16" fill="#fff8f7"/>
+          <text x="480" y="110" font-family="Arial" font-size="9" fill="#FBBC05">TARGET</text>
           <text x="128" y="215" font-family="Arial" font-size="10" fill="#bbb" text-anchor="middle">Q1</text>
           <text x="278" y="215" font-family="Arial" font-size="10" fill="#bbb" text-anchor="middle">Q2</text>
           <text x="428" y="215" font-family="Arial" font-size="11" fill="#EA4335" font-weight="bold" text-anchor="middle">Q3</text>
-          <rect x="355" y="42" width="120" height="28" fill="#EA4335" rx="4"/>
-          <text x="415" y="61" font-family="Arial" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">$1.2M ↑</text>
+          <rect x="340" y="40" width="106" height="24" fill="#EA4335" rx="4"/>
+          <text x="393" y="57" font-family="Arial" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">$1.2M ↑</text>
+          </g>
         </svg>`,
         photoLabel: 'Campaign results dashboard',
         body: `Lucius,\n\nWrapping up Q3 — wanted to get these numbers to you directly.\n\nThe fundraising total landed at $1.2M across the three campaigns you were running. Our stretch goal was $900K. You beat it by a third.\n\nWhat you built here wasn't just execution — it was a full digital operation. You owned the strategy, the sequencing, and the donor targeting from start to finish. The results speak for themselves, but so does the process you put in place.\n\nWorth noting for your records.\n\n— Sherry\nCampaign Director, New Blue Interactive`
@@ -1880,7 +1884,9 @@
         time: 'Yesterday',
         date: 'Mar 17, 2020, 4:51 PM',
         snippet: 'Lucius — Variant B outperformed on every metric. Your subject line call was right...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" style="background:#f5f8ff;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
+          <clipPath id="cp2"><rect width="560" height="240"/></clipPath>
+          <g clip-path="url(#cp2)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">A/B TEST — OCTOBER SEND</text>
           <rect x="40" y="44" width="220" height="168" fill="#fff" rx="8" stroke="#e8eaed" stroke-width="1"/>
           <rect x="300" y="44" width="220" height="168" fill="#fff" rx="8" stroke="#4285F4" stroke-width="2"/>
@@ -1898,6 +1904,7 @@
           <text x="340" y="198" font-family="Arial" font-size="20" fill="#4285F4" font-weight="bold">18%</text>
           <text x="412" y="198" font-family="Arial" font-size="11" fill="#34A853">↑</text>
           <text x="412" y="148" font-family="Arial" font-size="11" fill="#34A853">↑</text>
+          </g>
         </svg>`,
         photoLabel: 'A/B test comparison chart',
         body: `Lucius,\n\nNumbers are in from the October test. Your version won on every metric:\n\n• Opens: up 22%\n• Clicks: up 18%\n• Donor conversions: up 11%\n\nYou called the tone problem two weeks before we had the data to confirm it. The way you structured the test — isolating the subject line variable, controlling for send time and list segment — meant the results were actually usable. A lot of people run "tests" that prove nothing.\n\nI'm rewriting our internal playbook around your approach. This is the new baseline.\n\n— Tilapiana\nAccount Manager`
@@ -1911,7 +1918,9 @@
         time: 'Oct 28',
         date: 'Oct 28, 2019, 11:02 AM',
         snippet: 'Template staged and ready. Nothing deploys until you sign off...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" style="background:#f6fff8;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
+          <clipPath id="cp3"><rect width="560" height="240"/></clipPath>
+          <g clip-path="url(#cp3)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">QA CHECKLIST — OCTOBER BROADCAST</text>
           <rect x="40" y="44" width="340" height="176" fill="#fff" rx="8" stroke="#e8eaed" stroke-width="1"/>
           <circle cx="68" cy="74"  r="10" fill="#34A853"/><text x="68"  y="79"  font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">✓</text>
@@ -1928,6 +1937,7 @@
           <rect x="400" y="140" width="120" height="52" fill="#fff9e6" rx="8" stroke="#FBBC05" stroke-width="1.5"/>
           <text x="460" y="162" font-family="Arial" font-size="13" fill="#FBBC05" font-weight="bold" text-anchor="middle">2:00 PM</text>
           <text x="460" y="180" font-family="Arial" font-size="9"  fill="#FBBC05" text-anchor="middle" letter-spacing="1">DEPLOY WINDOW</text>
+          </g>
         </svg>`,
         photoLabel: 'Email QA checklist screenshot',
         body: `Lucius,\n\nOctober broadcast is staged and waiting on you. 104,211 people on this list — we don't touch the deploy button until you've been through it.\n\nHere's where we are:\n• Client rendering checked across Gmail, Outlook, Apple Mail ✓\n• Every link tested ✓\n• Unsubscribe flow confirmed active ✓\n• Personalization tokens — needs your eyes\n• Subject line and preview text locked ✓\n\nYou've caught things at this stage that would've been ugly at scale. That's exactly why this process exists. Aiming for a 2PM window — let me know when you're clear.\n\n— Prayfah\nContent Manager`
@@ -1941,7 +1951,9 @@
         time: 'Sep 12',
         date: 'Sep 12, 2019, 3:38 PM',
         snippet: 'Your HTML/CSS spec is built, QA\'d, and loaded. Renders clean on all clients...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" style="background:#1e1e1e;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
+          <clipPath id="cp4"><rect width="560" height="240"/></clipPath>
+          <g clip-path="url(#cp4)">
           <text x="28" y="30" font-family="monospace" font-size="11" fill="#555" letter-spacing="1">template_v3.html</text>
           <text x="28"  y="58"  font-family="monospace" font-size="12" fill="#569cd6">&lt;table</text>
           <text x="88"  y="58"  font-family="monospace" font-size="12" fill="#9cdcfe"> class</text>
@@ -1981,6 +1993,7 @@
           <line x1="28" y1="170" x2="420" y2="170" stroke="#333" stroke-width="1"/>
           <text x="28" y="190" font-family="monospace" font-size="12" fill="#d4d4d4">}</text>
           <rect x="28" y="200" width="8" height="16" fill="#aeafad"/>
+          </g>
         </svg>`,
         photoLabel: 'Responsive email template mockup',
         body: `Lucius,\n\nv3 is done. Your spec translated cleanly — here's what shipped:\n\n• Responsive across all breakpoints (320px through desktop)\n• Inline CSS throughout for Outlook\n• Dark mode tested on iOS Mail and the Gmail app — holds fine\n• Two-column layout folds to single-column on mobile without breaking\n\nHonestly, this was the easiest build we've had in a while. The structure you wrote was clean enough that we barely had to interpret anything — just execute. It's now the default template in the library.\n\n— Connie\nDev Desk`
@@ -1994,7 +2007,9 @@
         time: 'Aug 5',
         date: 'Aug 5, 2019, 1:22 PM',
         snippet: 'All final creative files are ready. Everything built in Photoshop and Illustrator...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" style="background:#faf5ff;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
+          <clipPath id="cp5"><rect width="560" height="240"/></clipPath>
+          <g clip-path="url(#cp5)">
           <text x="280" y="30" font-family="Arial" font-size="11" fill="#aaa" letter-spacing="2" text-anchor="middle">CREATIVE PACKAGE — FINAL DELIVERY</text>
           <rect x="30"  y="44" width="68" height="68" fill="#9C27B0" rx="6"/>
           <text x="64"  y="84" font-family="Arial" font-size="11" fill="rgba(255,255,255,.7)" text-anchor="middle" font-weight="bold">PSD</text>
@@ -2022,6 +2037,7 @@
           <text x="380" y="90"  font-family="Arial" font-size="11" fill="#555">4 file types</text>
           <text x="380" y="108" font-family="Arial" font-size="11" fill="#555">4 sizes / platform</text>
           <text x="380" y="126" font-family="Arial" font-size="11" fill="#555">Light + dark variants</text>
+          </g>
         </svg>`,
         photoLabel: 'Creative asset package preview',
         body: `Lucius,\n\nEverything's packaged and ready to hand off.\n\nWhat's in there:\n• Hero banner — layered PSD, every element separated\n• Icons — live vector AI files, nothing rasterized\n• Social formats — PNG exports cut to spec for each platform (4 sizes each)\n• Email headers — light and dark versions, both PSD\n\nAll the Photoshop and Illustrator work is built so the next person can actually use it. Live text, organized layers, named files. Copy changes are a two-minute job.\n\nThis campaign would've slipped two weeks without the production pace you kept.\n\n— Teaness\nCreative Director`
