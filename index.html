@@ -98,7 +98,7 @@
     .rv-sidebar .rv-section {
       display: flex;
       flex-wrap: wrap;
-      gap: 0 40px;
+      gap: 16px;
     }
     .rv-sidebar .rv-section-title {
       width: 100%;
@@ -106,24 +106,24 @@
     .rv-sidebar .rv-skill-group {
       min-width: 160px;
     }
-    .rv-section { margin-bottom: 40px; }
+    .rv-section { margin-bottom: 56px; }
     .rv-section-title {
       font-size: 0.65rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: #111;
-      margin-bottom: 20px;
-      padding-bottom: 8px;
+      margin-bottom: 28px;
+      padding-bottom: 10px;
       border-bottom: 1px solid #111;
     }
-    .rv-job { margin-bottom: 30px; }
+    .rv-job { margin-bottom: 44px; }
     .rv-job-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
     .rv-job-title {
       font-size: 0.95rem;
@@ -139,7 +139,7 @@
     .rv-job-company {
       font-size: 0.82rem;
       color: #111;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
     .rv-job-bullets {
       list-style: none;
@@ -148,10 +148,10 @@
     .rv-job-bullets li {
       font-size: 0.85rem;
       color: #111;
-      line-height: 1.65;
-      padding-left: 14px;
+      line-height: 1.75;
+      padding-left: 16px;
       position: relative;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .rv-job-bullets li::before {
       content: '•';
@@ -160,14 +160,21 @@
       color: #111;
     }
 
-    /* Sidebar */
-    .rv-skill-group { margin-bottom: 24px; }
+    /* Skills */
+    .rv-skill-group {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin-bottom: 0;
+    }
     .rv-skill-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #111;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-weight: 600;
     }
     .rv-skill-list {
       display: flex;
