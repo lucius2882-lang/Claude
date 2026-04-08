@@ -1712,37 +1712,63 @@
     splashEl.addEventListener('click', dismissSplash);
 
     document.getElementById('rv-download-btn').addEventListener('click', function() {
-      const content = document.querySelector('.rv-wrap').innerHTML;
-      const styles = `
-        body { margin: 14mm 16mm; font-family: 'Segoe UI', sans-serif; background: white; color: #111; }
+      const btn = this;
+      btn.textContent = 'Generating…';
+      btn.disabled = true;
+
+      // Build a styled clone for the PDF
+      const wrap = document.querySelector('.rv-wrap');
+      const clone = document.createElement('div');
+      clone.innerHTML = wrap.innerHTML;
+      clone.querySelector('#rv-download-btn').remove();
+
+      const css = `
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; color: #111; }
         .rv-header { border-bottom: 2px solid #111; padding-bottom: 10px; margin-bottom: 16px; }
         .rv-header-row { display: flex; justify-content: space-between; align-items: flex-start; }
-        .rv-name { font-size: 1.7rem; font-weight: 200; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; color: #111; }
-        .rv-headline { font-size: 0.72rem; color: #111; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; }
+        .rv-name { font-size: 1.7rem; font-weight: 200; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
+        .rv-headline { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; }
         .rv-contact { display: flex; gap: 14px; margin-top: 6px; flex-wrap: wrap; }
-        .rv-contact a, .rv-contact span { font-size: 0.72rem; color: #111; text-decoration: none; letter-spacing: 0.04em; }
-        .rv-download { display: none; }
+        .rv-contact a, .rv-contact span { font-size: 0.72rem; color: #111; text-decoration: none; }
         .rv-body { display: flex; flex-direction: column; }
         .rv-section { margin-bottom: 8px; }
-        .rv-section-title { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: #111; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #111; }
+        .rv-section-title { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #111; }
         .rv-job { margin-bottom: 10px; }
         .rv-job-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 2px; }
-        .rv-job-title { font-size: 0.78rem; font-weight: 600; color: #111; }
-        .rv-job-dates { font-size: 0.66rem; color: #111; white-space: nowrap; }
-        .rv-job-company { font-size: 0.7rem; color: #111; margin-bottom: 4px; }
-        .rv-job-bullets { list-style: none; padding: 0; margin: 0; }
-        .rv-job-bullets li { font-size: 0.68rem; color: #111; line-height: 1.4; padding-left: 12px; position: relative; margin-bottom: 1px; }
+        .rv-job-title { font-size: 0.78rem; font-weight: 600; }
+        .rv-job-dates { font-size: 0.66rem; }
+        .rv-job-company { font-size: 0.7rem; margin-bottom: 4px; }
+        .rv-job-bullets { list-style: none; padding: 0; margin: 2px 0 0; }
+        .rv-job-bullets li { font-size: 0.68rem; line-height: 1.4; padding-left: 12px; position: relative; margin-bottom: 1px; }
         .rv-job-bullets li::before { content: '–'; position: absolute; left: 0; color: #999; }
         .rv-sidebar .rv-section { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; }
         .rv-sidebar .rv-section-title { width: 100%; }
         .rv-skill-group { display: block; }
-        .rv-skill-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: #111; margin-bottom: 3px; font-weight: 600; }
+        .rv-skill-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 3px; font-weight: 600; }
         .rv-skill-list { display: flex; flex-wrap: wrap; gap: 3px; }
-        .rv-skill-tag { font-size: 0.6rem; color: #111; background: #ebebeb; border-radius: 3px; padding: 2px 6px; }
+        .rv-skill-tag { font-size: 0.6rem; background: #ebebeb; border-radius: 3px; padding: 2px 6px; }
       `;
-      const win = window.open('', '_blank');
-      win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Lucius Campany — Resume</title><style>${styles}</style></head><body><div class="rv-wrap">${content}</div></body></html>`);
-      win.document.close();
+      const styleEl = document.createElement('style');
+      styleEl.textContent = css;
+      clone.prepend(styleEl);
+
+      Object.assign(clone.style, {
+        position: 'fixed', top: '0', left: '-9999px',
+        width: '710px', background: 'white', padding: '0'
+      });
+      document.body.appendChild(clone);
+
+      html2pdf().set({
+        margin: [12, 14],
+        filename: 'lucius-campany-resume.pdf',
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+      }).from(clone).save().then(() => {
+        document.body.removeChild(clone);
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download`;
+        btn.disabled = false;
+      });
     });
 
     // Skip splash if opening a direct URL
@@ -2908,5 +2934,6 @@
       scrollHint.classList.toggle('hidden', window.scrollY > 60);
     }, { passive: true });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
