@@ -98,13 +98,13 @@
     .rv-sidebar .rv-section {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 8px;
+      align-items: flex-start;
+      align-content: flex-start;
     }
     .rv-sidebar .rv-section-title {
       width: 100%;
-    }
-    .rv-sidebar .rv-skill-group {
-      min-width: 160px;
+      margin-bottom: 12px;
     }
     .rv-section { margin-bottom: 56px; }
     .rv-section-title {
@@ -161,25 +161,10 @@
     }
 
     /* Skills */
-    .rv-skill-group {
-      background: #f0f0f0;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 16px 18px;
-      margin-bottom: 0;
-    }
-    .rv-skill-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #111;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
+    .rv-skill-group { display: contents; }
+    .rv-skill-label { display: none; }
     .rv-skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      display: contents;
     }
     .rv-skill-tag {
       font-size: 0.75rem;
@@ -239,23 +224,20 @@
       .rv-contact { margin-top: 5px !important; font-size: 0.7rem !important; gap: 10px !important; }
 
       /* Body layout */
-      .rv-sidebar .rv-skill-group { min-width: 100px !important; }
-      .rv-sidebar .rv-section { gap: 0 16px !important; }
-      .rv-section { margin-bottom: 0 !important; }
+      .rv-section { margin-bottom: 10px !important; }
       .rv-section-title { font-size: 0.6rem !important; margin-bottom: 6px !important; padding-bottom: 3px !important; }
 
       /* Jobs */
-      .rv-job { margin-bottom: 7px !important; }
+      .rv-job { margin-bottom: 8px !important; }
       .rv-job-title { font-size: 0.74rem !important; }
       .rv-job-dates { font-size: 0.64rem !important; }
-      .rv-job-company { font-size: 0.64rem !important; margin-bottom: 2px !important; }
-      .rv-job-bullets { margin-top: 2px !important; padding-left: 10px !important; }
-      .rv-job-bullets li { font-size: 0.63rem !important; margin-bottom: 1px !important; line-height: 1.3 !important; }
+      .rv-job-company { font-size: 0.64rem !important; margin-bottom: 3px !important; }
+      .rv-job-bullets { margin-top: 2px !important; }
+      .rv-job-bullets li { font-size: 0.63rem !important; margin-bottom: 1px !important; line-height: 1.3 !important; padding-left: 12px !important; }
 
       /* Skills */
-      .rv-skill-group { margin-bottom: 7px !important; }
-      .rv-skill-label { font-size: 0.6rem !important; margin-bottom: 3px !important; }
-      .rv-skill-tag { font-size: 0.62rem !important; padding: 2px 5px !important; margin: 1px !important; }
+      .rv-sidebar .rv-section { gap: 5px !important; margin-bottom: 0 !important; }
+      .rv-skill-tag { font-size: 0.6rem !important; padding: 2px 6px !important; }
     }
 
     /* ═══════════════════════════════════════════
