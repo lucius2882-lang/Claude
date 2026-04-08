@@ -230,9 +230,9 @@
       .rv-skill-label, .rv-skill-tag { color: #111 !important; }
       .rv-section-title { border-bottom-color: #111 !important; }
 
-      /* Body: keep sidebar grid, tighter */
-      .rv-body { grid-template-columns: 1fr 200px !important; gap: 24px !important; }
-      .rv-section { margin-bottom: 0 !important; }
+      /* Single column: skills below experience */
+      .rv-body { display: flex !important; flex-direction: column !important; gap: 0 !important; }
+      .rv-section { margin-bottom: 8px !important; }
       .rv-section-title { font-size: 0.58rem !important; margin-bottom: 8px !important; padding-bottom: 4px !important; }
 
       /* Jobs */
@@ -242,9 +242,12 @@
       .rv-job-company { font-size: 0.7rem !important; margin-bottom: 4px !important; }
       .rv-job-bullets li { font-size: 0.68rem !important; line-height: 1.4 !important; margin-bottom: 1px !important; padding-left: 12px !important; }
 
-      /* Skills sidebar */
-      .rv-skill-group { margin-bottom: 10px !important; }
-      .rv-skill-label { font-size: 0.6rem !important; margin-bottom: 4px !important; }
+      /* Skills flat row at bottom */
+      .rv-skill-group { display: contents !important; }
+      .rv-skill-label { display: none !important; }
+      .rv-skill-list { display: contents !important; }
+      .rv-sidebar .rv-section { display: flex !important; flex-wrap: wrap !important; gap: 4px !important; }
+      .rv-sidebar .rv-section-title { width: 100% !important; margin-bottom: 4px !important; }
       .rv-skill-tag { font-size: 0.62rem !important; padding: 2px 6px !important; }
     }
 
