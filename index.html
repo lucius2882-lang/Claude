@@ -246,10 +246,8 @@
        GRID
        ═══════════════════════════════════════════ */
     #grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      height: 100vh;
+      display: flex;
+      flex-direction: column;
       gap: 2px;
       padding: 2px;
     }
@@ -262,6 +260,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 4px;
+      height: 180px;
       background: rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
@@ -1337,41 +1336,6 @@
     <div class="splash-enter">Tap to enter</div>
   </div>
 
-  <div id="grid">
-    <div class="tile" data-role="maitre">
-      <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/yE5j1hd.jpg" alt="Happier">
-        <div class="tile-label">Maître D' & Events Producer</div>
-      </div>
-    </div>
-    <div class="tile" data-role="manager">
-      <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/LOqPyMn.jpg" alt="Lock Stock Bar & Grill">
-        <div class="tile-label">Floor & Closing Manager</div>
-      </div>
-    </div>
-    <div class="tile" data-role="marketing">
-      <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/GJMovjs.jpg" alt="Kepler">
-        <div class="tile-label">Digital Marketing Analyst</div>
-      </div>
-    </div>
-    <div class="tile" data-role="digital">
-      <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/3EdnKkj.jpg" alt="New Blue Interactive">
-        <div class="tile-label">Digital Strategy Assistant</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll hint -->
-  <div id="scroll-hint">
-    <span>Resume</span>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-      <polyline points="3,6 8,11 13,6"/>
-    </svg>
-  </div>
-
   <!-- Resume -->
   <section id="resume">
     <div class="rv-wrap">
@@ -1506,6 +1470,41 @@
       </div>
     </div>
   </section>
+
+  <!-- Scroll hint -->
+  <div id="scroll-hint">
+    <span>Work</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+      <polyline points="3,6 8,11 13,6"/>
+    </svg>
+  </div>
+
+  <div id="grid">
+    <div class="tile" data-role="maitre">
+      <div class="tile-inner">
+        <img class="tile-logo" src="https://i.imgur.com/yE5j1hd.jpg" alt="Happier">
+        <div class="tile-label">Maître D' & Events Producer</div>
+      </div>
+    </div>
+    <div class="tile" data-role="manager">
+      <div class="tile-inner">
+        <img class="tile-logo" src="https://i.imgur.com/LOqPyMn.jpg" alt="Lock Stock Bar & Grill">
+        <div class="tile-label">Floor & Closing Manager</div>
+      </div>
+    </div>
+    <div class="tile" data-role="marketing">
+      <div class="tile-inner">
+        <img class="tile-logo" src="https://i.imgur.com/GJMovjs.jpg" alt="Kepler">
+        <div class="tile-label">Digital Marketing Analyst</div>
+      </div>
+    </div>
+    <div class="tile" data-role="digital">
+      <div class="tile-inner">
+        <img class="tile-logo" src="https://i.imgur.com/3EdnKkj.jpg" alt="New Blue Interactive">
+        <div class="tile-label">Digital Strategy Assistant</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Reservation Book (Happier tile) -->
   <div id="bookview">
