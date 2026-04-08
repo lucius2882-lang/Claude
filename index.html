@@ -1210,9 +1210,14 @@
     #gm-email-view {
       display: none;
       flex-direction: column;
+      align-items: center;
       overflow-y: auto;
       flex: 1;
       padding: 24px 32px;
+    }
+    #gm-email-view > * {
+      width: 100%;
+      max-width: 640px;
     }
     #gm-email-view.open { display: flex; }
     .gm-ev-back {
