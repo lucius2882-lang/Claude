@@ -443,7 +443,7 @@
       transition: background 0.15s;
       border-left: 3px solid transparent;
     }
-    .bk-resv-row:hover { background: rgba(200,169,110,0.06); }
+    .bk-resv-row.clickable:hover { background: rgba(200,169,110,0.06); }
     .bk-resv-row.seated { border-left-color: #34A853; }
     .bk-resv-row.arrived { border-left-color: #FBBC05; }
     .bk-resv-row.reserved { border-left-color: #4285F4; }
@@ -910,6 +910,59 @@
     }
     .bm-page-full .bm-page-item:hover { transform: none; }
     .bm-page-full .bm-page-item-sub { color: #8a6a4a; }
+
+    /* Collage pages */
+    .bm-collage-page {
+      width: 100%;
+      height: 100%;
+      background: #fdf8f0;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 20px 12px;
+      gap: 10px;
+    }
+    .bm-collage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(232,168,32,0.35);
+      flex-shrink: 0;
+    }
+    .bm-collage-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 8px;
+      min-height: 0;
+    }
+    .bm-collage-slot {
+      border: 1.5px dashed rgba(92,45,12,0.22);
+      border-radius: 3px;
+      background: rgba(92,45,12,0.05);
+      overflow: hidden;
+      position: relative;
+    }
+    .bm-collage-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bm-collage-ph {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(92,45,12,0.25);
+    }
+    .bm-collage-ph svg { width: 28px; height: 28px; }
+
+    @media (max-width: 520px) {
+      .bm-collage-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+    }
 
     /* Nav bar */
     .bm-nav {
@@ -1888,7 +1941,8 @@
         html += `<div class="bk-shift-label">${shift.label}</div>`;
         rows.forEach((r, i) => {
           const idx = reservations.indexOf(r);
-          html += `<div class="bk-resv-row ${r.status}" data-resv="${idx}" style="cursor:pointer">
+          const clickable = r.status !== 'completed';
+          html += `<div class="bk-resv-row ${r.status}${clickable ? ' clickable' : ''}" data-resv="${idx}" style="cursor:${clickable ? 'pointer' : 'default'}">
             <div class="bk-time">${r.time}</div>
             <div class="bk-pax">${r.pax}👤</div>
             <div class="bk-guest">${r.guest}${r.note ? `<div class="bk-note">${r.note}</div>` : ''}</div>
@@ -1899,7 +1953,7 @@
       });
       panel.innerHTML = html;
 
-      panel.querySelectorAll('.bk-resv-row').forEach(row => {
+      panel.querySelectorAll('.bk-resv-row.clickable').forEach(row => {
         row.addEventListener('click', () => {
           const resv = reservations[parseInt(row.dataset.resv)];
           openResvPopup(resv);
@@ -2097,11 +2151,13 @@
     let bmSlideIndex = 0;
     let bmCurrentPage = 0;
 
-    // Spreads: 0 = cover, 1 = On Draft + Cocktails, 2 = Spirits + Special
+    // Spreads: 0 = cover, 1 = On Draft + Cocktails, 2 = Spirits + Special, 3-4 = collages
     const bmSpreads = [
       { type: 'cover' },
       { type: 'pages', left: barSections[0], right: barSections[1] },
-      { type: 'pages', left: barSections[2], right: barSections[3] }
+      { type: 'pages', left: barSections[2], right: barSections[3] },
+      { type: 'collage', title: 'Gallery I',  photos: Array(6).fill(null) },
+      { type: 'collage', title: 'Gallery II', photos: Array(6).fill(null) }
     ];
 
     function renderSpread(idx, direction) {
@@ -2136,6 +2192,28 @@
     }
 
     function buildSpreadHTML(spread) {
+      if (spread.type === 'collage') {
+        const slots = spread.photos.map((url, i) => `
+          <div class="bm-collage-slot" data-idx="${i}">
+            ${url
+              ? `<img src="${url}" alt="photo ${i+1}">`
+              : `<div class="bm-collage-ph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>`
+            }
+          </div>`).join('');
+        return `<div class="bm-collage-page">
+          <div class="bm-collage-header">
+            <div class="bm-page-title" style="margin-bottom:0">${spread.title}</div>
+            <div class="bm-page-orn" style="margin-bottom:0">— ✦ —</div>
+          </div>
+          <div class="bm-collage-grid">${slots}</div>
+        </div>`;
+      }
       if (spread.type === 'cover') {
         return `<div class="bm-cover">
           <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
@@ -2199,7 +2277,7 @@
     function updateNav(idx) {
       document.getElementById('bm-prev').disabled = idx === 0;
       document.getElementById('bm-next').disabled = idx === bmSpreads.length - 1;
-      const labels = ['Cover', 'On Draft & Cocktails', 'Spirits & Specials'];
+      const labels = ['Cover', 'On Draft & Cocktails', 'Spirits & Specials', 'Gallery I', 'Gallery II'];
       document.getElementById('bm-page-label').textContent = labels[idx];
       document.getElementById('bm-dots').innerHTML = bmSpreads
         .map((_, i) => `<div class="bm-dot${i === idx ? ' active' : ''}"></div>`)
