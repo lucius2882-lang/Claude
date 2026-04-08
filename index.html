@@ -209,33 +209,36 @@
     }
 
     @media print {
-      @page { margin: 14mm 16mm; }
+      @page { margin: 12mm 14mm; }
 
       body > *:not(#resume) { display: none !important; }
       #resume { padding: 0 !important; min-height: unset !important; background: white !important; }
       .rv-download { display: none !important; }
       .rv-wrap { padding: 0 !important; max-width: 100% !important; }
 
-      /* Header — same look, just tighter */
-      .rv-header { padding-bottom: 18px !important; margin-bottom: 24px !important; }
-      .rv-name { font-size: 2.2rem !important; }
-      .rv-headline { margin-top: 6px !important; }
-      .rv-contact { margin-top: 10px !important; gap: 18px !important; }
+      /* Header */
+      .rv-header { padding-bottom: 10px !important; margin-bottom: 16px !important; }
+      .rv-name { font-size: 1.7rem !important; }
+      .rv-headline { font-size: 0.72rem !important; margin-top: 4px !important; }
+      .rv-contact { margin-top: 6px !important; gap: 14px !important; }
+      .rv-contact a, .rv-contact span { font-size: 0.72rem !important; }
 
-      /* Keep website colors — no overrides needed */
-
-      /* Body: keep sidebar grid, narrower gap */
-      .rv-body { gap: 32px !important; }
-      .rv-section { margin-bottom: 20px !important; }
-      .rv-section-title { margin-bottom: 12px !important; padding-bottom: 6px !important; }
+      /* Body: keep sidebar grid, tighter */
+      .rv-body { grid-template-columns: 1fr 200px !important; gap: 24px !important; }
+      .rv-section { margin-bottom: 0 !important; }
+      .rv-section-title { font-size: 0.58rem !important; margin-bottom: 8px !important; padding-bottom: 4px !important; }
 
       /* Jobs */
-      .rv-job { margin-bottom: 16px !important; }
-      .rv-job-company { margin-bottom: 6px !important; }
-      .rv-job-bullets li { line-height: 1.5 !important; margin-bottom: 2px !important; }
+      .rv-job { margin-bottom: 10px !important; }
+      .rv-job-title { font-size: 0.78rem !important; }
+      .rv-job-dates { font-size: 0.66rem !important; }
+      .rv-job-company { font-size: 0.7rem !important; margin-bottom: 4px !important; }
+      .rv-job-bullets li { font-size: 0.68rem !important; line-height: 1.4 !important; margin-bottom: 1px !important; padding-left: 12px !important; }
 
-      /* Skills sidebar — keep as-is, just tighter */
-      .rv-skill-group { margin-bottom: 14px !important; }
+      /* Skills sidebar */
+      .rv-skill-group { margin-bottom: 10px !important; }
+      .rv-skill-label { font-size: 0.6rem !important; margin-bottom: 4px !important; }
+      .rv-skill-tag { font-size: 0.62rem !important; padding: 2px 6px !important; }
     }
 
     /* ═══════════════════════════════════════════
