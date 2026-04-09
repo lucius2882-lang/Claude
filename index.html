@@ -956,6 +956,12 @@
     }
     .bm-ps-cell { overflow: hidden; position: relative; min-width: 0; min-height: 0; }
     .bm-ps-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Photo grid alongside qualifications — 2 cols, auto rows */
+    .bm-ps-photo-grid {
+      flex: 1; min-width: 0; min-height: 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: #0a0500; overflow: hidden;
+    }
     .bm-ps-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 22px 16px 12px;
@@ -2650,16 +2656,10 @@
     const p = lsSlidePhotos;
     const bmSpreads = [
       { type: 'cover' },
-      { type: 'text-photo', section: barSections[0], photos: [p[1],  p[2]]  },
-      { type: 'photo-text', photos: [p[3],  p[4]],  section: barSections[1] },
-      { type: 'text-photo', section: barSections[2], photos: [p[5],  p[6]]  },
-      { type: 'photo-text', photos: [p[7],  p[8]],  section: barSections[3] },
-      { type: 'full',  photo: p[9],  caption: 'Bristol, New York · Est. 2019' },
-      { type: '2x2',  photos: [p[10], p[11], p[12], p[13]] },
-      { type: 'l1r2', photos: [p[14], p[15], p[16]] },
-      { type: 'l2r1', photos: [p[17], p[18], p[19]] },
-      { type: '2x2',  photos: [p[20], p[21], p[22], p[23]] },
-      { type: 'back', photos: [p[24], p[25]] },
+      { type: 'text-photo', section: barSections[0], photos: [p[1],  p[2],  p[3],  p[4],  p[5],  p[6]]  },
+      { type: 'photo-text', photos: [p[7],  p[8],  p[9],  p[10], p[11], p[12]], section: barSections[1] },
+      { type: 'text-photo', section: barSections[2], photos: [p[13], p[14], p[15], p[16], p[17], p[18]] },
+      { type: 'photo-text', photos: [p[19], p[20], p[21], p[22], p[23], p[24]], section: barSections[3] },
     ];
 
     function renderSpread(idx, direction) {
@@ -2698,12 +2698,12 @@
 
     function buildSpreadHTML(spread) {
       const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
-      const photoCol = photos => `<div class="bm-ps-col">${photos.map(u => `<div class="bm-ps-photo">${im(u)}</div>`).join('')}</div>`;
+      const photoGrid = photos => `<div class="bm-ps-photo-grid">${photos.map(u => `<div class="bm-ps-cell">${im(u)}</div>`).join('')}</div>`;
       if (spread.type === 'text-photo') {
-        return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoCol(spread.photos)}</div>`;
+        return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoGrid(spread.photos)}</div>`;
       }
       if (spread.type === 'photo-text') {
-        return `<div class="bm-ps">${photoCol(spread.photos)}<div class="bm-ps-gutter"></div>${buildTextPage(spread.section)}</div>`;
+        return `<div class="bm-ps">${photoGrid(spread.photos)}<div class="bm-ps-gutter"></div>${buildTextPage(spread.section)}</div>`;
       }
       if (spread.type === 'cover') {
         return `<div class="bm-ps-cover">
