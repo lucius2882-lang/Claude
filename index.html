@@ -2759,8 +2759,19 @@
       { type: 'cover' },
       { type: 'pages', left: barSections[0], right: barSections[1] },
       { type: 'pages', left: barSections[2], right: barSections[3] },
-      { type: 'collage', title: 'Gallery I',  photos: Array(6).fill(null) },
-      { type: 'collage', title: 'Gallery II', photos: Array(6).fill(null) }
+      { type: 'collage', title: 'Gallery I',  photos: [
+          "https://i.imgur.com/fRxXTtB.jpg",
+          "https://i.imgur.com/rtx4E5N.jpg",
+          "https://i.imgur.com/xPOir63.jpg",
+          "https://i.imgur.com/vPflhUi.jpg",
+          "https://i.imgur.com/9cLsFNU.jpg",
+          "https://i.imgur.com/bezajV9.jpg"
+        ] },
+      { type: 'collage', title: 'Gallery II', photos: [
+          "https://i.imgur.com/drbnvTj.jpg",
+          "https://i.imgur.com/7hvZo2W.jpg",
+          null, null, null, null
+        ] }
     ];
 
     function renderSpread(idx, direction) {
