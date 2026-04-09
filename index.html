@@ -810,8 +810,8 @@
     }
 
     .bm-book {
-      width: min(88vw, 720px);
-      height: min(78vh, 460px);
+      width: min(90vw, 820px);
+      height: min(84vh, 520px);
       display: flex;
       flex-direction: column;
       border-radius: 0;
@@ -955,208 +955,43 @@
     }
     @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
-    /* Content pages — lighter, warm white */
-    .bm-pages {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #fdf8f0;
-      position: relative;
+    /* Photo story spread types */
+    .bm-ps { width: 100%; height: 100%; display: flex; }
+    .bm-ps-gutter {
+      width: 3px; flex-shrink: 0;
+      background: linear-gradient(to bottom, #e8a820, rgba(232,168,32,0.12), #e8a820);
     }
-    .bm-pages::after {
-      content: '';
-      position: absolute;
-      left: 50%; top: 0; bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, #e8a820 0%, rgba(92,45,12,0.15) 20%, rgba(92,45,12,0.15) 80%, #e8a820 100%);
-      pointer-events: none;
+    .bm-ps-half { flex: 1; overflow: hidden; position: relative; }
+    .bm-ps-half img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bm-ps-col { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .bm-ps-photo { flex: 1; overflow: hidden; position: relative; min-height: 0; }
+    .bm-ps-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bm-ps-photo + .bm-ps-photo { border-top: 3px solid rgba(232,168,32,0.35); }
+    .bm-ps-full { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    .bm-ps-full img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bm-ps-grid {
+      width: 100%; height: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+      gap: 3px; background: #0a0500;
     }
-
-    .bm-page {
-      padding: 24px 22px;
-      background: #fdf8f0;
+    .bm-ps-cell { overflow: hidden; position: relative; min-width: 0; min-height: 0; }
+    .bm-ps-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bm-ps-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 22px 16px 12px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      color: rgba(232,168,32,0.9);
+      font-size: 0.58rem; letter-spacing: 0.32em;
+      text-transform: uppercase; font-family: 'Segoe UI', sans-serif;
+      pointer-events: none; text-align: center;
     }
-    .bm-page:first-child { background: linear-gradient(to right, #f8f2e6, #fdf8f0); }
-    .bm-page:last-child  { background: linear-gradient(to left,  #f8f2e6, #fdf8f0); }
-
-    .bm-page-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: #0a3a1e;
-      font-family: 'Segoe UI', sans-serif;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 3px;
-    }
-    .bm-page-orn {
-      text-align: center;
-      color: #e8a820;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 10px;
-    }
-
-    /* Page image slot */
-    .bm-page-img {
-      width: 100%;
-      height: 88px;
-      background: rgba(92,45,12,0.06);
-      border: 1.5px dashed rgba(92,45,12,0.22);
-      border-radius: 3px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
-      position: relative;
-    }
-    .bm-page-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .bm-page-img-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: rgba(92,45,12,0.3);
-      pointer-events: none;
-    }
-    .bm-page-img-placeholder svg {
-      width: 22px;
-      height: 22px;
-      opacity: 0.5;
-    }
-    .bm-page-img-placeholder span {
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    /* Full-width special page: wider image */
-    .bm-page-full .bm-page-img {
-      max-width: 500px;
-      margin: 0 auto 12px;
-      height: 100px;
-    }
-    .bm-page-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 10px;
-      margin-bottom: 4px;
-      border: 1px solid rgba(92,45,12,0.12);
-      border-radius: 4px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.6);
-      transition: all 0.15s ease;
-      gap: 8px;
-    }
-    .bm-page-item:hover {
-      background: #0a3a1e;
-      border-color: #0a3a1e;
-      transform: translateX(3px);
-      box-shadow: -3px 0 0 #e8a820;
-    }
-    .bm-page-item:hover .bm-page-item-name { color: #e8a820; }
-    .bm-page-item:hover .bm-page-item-sub  { color: rgba(232,168,32,0.6); }
-    .bm-page-item:hover .bm-page-item-arrow { opacity: 1; color: #e8a820; }
-
-    .bm-page-item-left { flex: 1; min-width: 0; }
-    .bm-page-item-name {
-      font-size: 0.92rem;
-      color: #2a1005;
-      display: block;
-      margin-bottom: 2px;
-      transition: color 0.15s;
-    }
-    .bm-page-item-sub {
-      font-size: 0.66rem;
-      color: #8a6a4a;
-      font-family: 'Segoe UI', sans-serif;
-      font-style: italic;
-      transition: color 0.15s;
-    }
-    .bm-page-item-arrow {
-      font-size: 1rem;
-      color: #c8a87a;
-      opacity: 0.3;
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-
-    /* Full-width page for specials */
-    .bm-page-full {
-      grid-column: 1 / -1;
-      padding: 20px 28px;
-      background: linear-gradient(to bottom, #fdf8f0, #f5ede0);
-      border-top: 2px solid #0a3a1e;
-    }
-    .bm-page-full .bm-page-item {
-      max-width: 500px;
-      margin: 0 auto;
-      background: rgba(92,45,12,0.06);
-      border-color: rgba(92,45,12,0.2);
-    }
-    .bm-page-full .bm-page-item:hover { transform: none; }
-    .bm-page-full .bm-page-item-sub { color: #8a6a4a; }
-
-    /* Collage pages */
-    .bm-collage-page {
-      width: 100%;
-      height: 100%;
-      background: #fdf8f0;
-      display: flex;
-      flex-direction: column;
-      padding: 16px 20px 12px;
-      gap: 10px;
-    }
-    .bm-collage-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(232,168,32,0.35);
-      flex-shrink: 0;
-    }
-    .bm-collage-grid {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 8px;
-      min-height: 0;
-    }
-    .bm-collage-slot {
-      border: 1.5px dashed rgba(92,45,12,0.22);
-      border-radius: 3px;
-      background: rgba(92,45,12,0.05);
-      overflow: hidden;
-      position: relative;
-    }
-    .bm-collage-slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .bm-collage-ph {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(92,45,12,0.25);
-    }
-    .bm-collage-ph svg { width: 28px; height: 28px; }
-
-    @media (max-width: 520px) {
-      .bm-collage-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+    .bm-ps-cover { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: pointer; }
+    .bm-ps-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bm-ps-cover-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(5,2,1,0.55) 55%, rgba(5,2,1,0.88) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      padding: 0 28px 30px; text-align: center;
     }
 
     /* Nav bar — hidden, arrows moved to sides */
@@ -2817,48 +2652,18 @@
     let bmCurrentPage = 0;
 
     // Spreads: 0 = cover, 1 = On Draft + Cocktails, 2 = Spirits + Special, 3-4 = collages
+    const p = lsSlidePhotos;
     const bmSpreads = [
       { type: 'cover' },
-      { type: 'pages', left: barSections[0], right: barSections[1] },
-      { type: 'pages', left: barSections[2], right: barSections[3] },
-      { type: 'collage', title: 'Gallery I',  photos: [
-          "https://i.imgur.com/fRxXTtB.jpg",
-          "https://i.imgur.com/rtx4E5N.jpg",
-          "https://i.imgur.com/xPOir63.jpg",
-          "https://i.imgur.com/vPflhUi.jpg",
-          "https://i.imgur.com/9cLsFNU.jpg",
-          "https://i.imgur.com/bezajV9.jpg"
-        ] },
-      { type: 'collage', title: 'Gallery II', photos: [
-          "https://i.imgur.com/drbnvTj.jpg",
-          "https://i.imgur.com/7hvZo2W.jpg",
-          "https://i.imgur.com/SNyA81z.jpg",
-          "https://i.imgur.com/6jrsk0b.jpg",
-          "https://i.imgur.com/oKJbIxw.jpg",
-          "https://i.imgur.com/kQ5Bjxd.jpg"
-        ] },
-      { type: 'collage', title: 'Gallery III', photos: [
-          "https://i.imgur.com/U5dfqKY.jpg",
-          "https://i.imgur.com/dOT4Jvg.jpg",
-          "https://i.imgur.com/qDKqWHc.jpg",
-          "https://i.imgur.com/uzi7OBV.jpg",
-          "https://i.imgur.com/Dorutbl.jpg",
-          "https://i.imgur.com/GJEipTx.jpg"
-        ] },
-      { type: 'collage', title: 'Gallery IV', photos: [
-          "https://i.imgur.com/oFLdSNd.jpg",
-          "https://i.imgur.com/eBGbR0X.jpg",
-          "https://i.imgur.com/ATBthDZ.jpg",
-          "https://i.imgur.com/HWDYPZ3.jpg",
-          "https://i.imgur.com/rQ6K1XS.jpg",
-          "https://i.imgur.com/trGWzh4.jpg"
-        ] },
-      { type: 'collage', title: 'Gallery V', photos: [
-          "https://i.imgur.com/Tm1uIwi.jpg",
-          "https://i.imgur.com/LQ1AlwZ.jpg",
-          "https://i.imgur.com/NZADuPW.jpg",
-          null, null, null
-        ] }
+      { type: 'l1r2', photos: [p[1],  p[2],  p[3]]  },
+      { type: 'l2r1', photos: [p[4],  p[5],  p[6]]  },
+      { type: 'full',  photo:  p[7],  caption: 'Bristol, New York · Est. 2019' },
+      { type: '2x2',  photos: [p[8],  p[9],  p[10], p[11]] },
+      { type: 'l1r2', photos: [p[12], p[13], p[14]] },
+      { type: 'l2r1', photos: [p[15], p[16], p[17]] },
+      { type: '2x2',  photos: [p[18], p[19], p[20], p[21]] },
+      { type: 'l1r2', photos: [p[22], p[23], p[24]] },
+      { type: 'back', photos: [p[25], p[26]] },
     ];
 
     function renderSpread(idx, direction) {
@@ -2880,94 +2685,74 @@
       }, 220);
     }
 
-    const imgPlaceholder = `<div class="bm-page-img-placeholder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-        <polyline points="21 15 16 10 5 21"/>
-      </svg>
-      <span>Add photo</span>
-    </div>`;
-
-    function buildImgSlot(url) {
-      if (!url) return '';
-      return `<div class="bm-page-img"><img src="${url}" alt=""></div>`;
-    }
-
     function buildSpreadHTML(spread) {
-      if (spread.type === 'collage') {
-        const slots = spread.photos.map((url, i) => `
-          <div class="bm-collage-slot" data-idx="${i}">
-            ${url
-              ? `<img src="${url}" alt="photo ${i+1}">`
-              : `<div class="bm-collage-ph">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                  </svg>
-                </div>`
-            }
-          </div>`).join('');
-        return `<div class="bm-collage-page">
-          <div class="bm-collage-header">
-            <div class="bm-page-title" style="margin-bottom:0">${spread.title}</div>
-            <div class="bm-page-orn" style="margin-bottom:0">— ✦ —</div>
-          </div>
-          <div class="bm-collage-grid">${slots}</div>
-        </div>`;
-      }
+      const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
       if (spread.type === 'cover') {
-        return `<div class="bm-cover">
-          <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
-          <div class="bm-cover-rule"></div>
-          <div class="bm-cover-sub">Bristol, New York &nbsp;·&nbsp; Est. 2019</div>
-          <div class="bm-cover-sub" style="margin-top:4px">Floor &amp; Closing Manager</div>
-          <div class="bm-cover-tag">Skills &amp; Experience</div>
-          <div class="bm-cover-tap">Open menu ›</div>
+        return `<div class="bm-ps-cover">
+          ${im(lsSlidePhotos[0])}
+          <div class="bm-ps-cover-overlay">
+            <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
+            <div class="bm-cover-rule"></div>
+            <div class="bm-cover-sub">Bristol, New York &nbsp;·&nbsp; Est. 2019</div>
+            <div class="bm-cover-sub" style="margin-top:4px">Floor &amp; Closing Manager</div>
+            <div class="bm-cover-tap" style="margin-top:20px">Open ›</div>
+          </div>
         </div>`;
       }
-      const pages = [spread.left, spread.right];
-      return pages.map((sec, pi) => {
-        if (sec.special) {
-          return `<div class="bm-page-full">
-            <div class="bm-page-title">${sec.title}</div>
-            <div class="bm-page-orn">${sec.ornament}</div>
-            ${buildImgSlot(sec.img)}
-            ${sec.items.map((item, i) => `
-              <div class="bm-page-item" data-sec="${sec.title}" data-item="${i}">
-                <div class="bm-page-item-left">
-                  <span class="bm-page-item-name">${item.name}</span>
-                  <div class="bm-page-item-sub">${item.desc}</div>
-                </div>
-                <span class="bm-page-item-arrow">›</span>
-              </div>`).join('')}
-          </div>`;
-        }
-        return `<div class="bm-page">
-          <div class="bm-page-title">${sec.title}</div>
-          <div class="bm-page-orn">${sec.ornament}</div>
-          ${buildImgSlot(sec.img)}
-          ${sec.items.map((item, i) => `
-            <div class="bm-page-item" data-sec="${sec.title}" data-item="${i}">
-              <div class="bm-page-item-left">
-                <span class="bm-page-item-name">${item.name}</span>
-                <div class="bm-page-item-sub">${item.desc}</div>
-              </div>
-              <span class="bm-page-item-arrow">›</span>
-            </div>`).join('')}
+      if (spread.type === 'full') {
+        return `<div class="bm-ps-full">
+          ${im(spread.photo)}
+          ${spread.caption ? `<div class="bm-ps-caption">${spread.caption}</div>` : ''}
         </div>`;
-      }).join('');
+      }
+      if (spread.type === 'l1r2') {
+        const [p1,p2,p3] = spread.photos;
+        return `<div class="bm-ps">
+          <div class="bm-ps-half">${im(p1)}</div>
+          <div class="bm-ps-gutter"></div>
+          <div class="bm-ps-col">
+            <div class="bm-ps-photo">${im(p2)}</div>
+            <div class="bm-ps-photo">${im(p3)}</div>
+          </div>
+        </div>`;
+      }
+      if (spread.type === 'l2r1') {
+        const [p1,p2,p3] = spread.photos;
+        return `<div class="bm-ps">
+          <div class="bm-ps-col">
+            <div class="bm-ps-photo">${im(p1)}</div>
+            <div class="bm-ps-photo">${im(p2)}</div>
+          </div>
+          <div class="bm-ps-gutter"></div>
+          <div class="bm-ps-half">${im(p3)}</div>
+        </div>`;
+      }
+      if (spread.type === '2x2') {
+        const [p1,p2,p3,p4] = spread.photos;
+        return `<div class="bm-ps-grid">
+          <div class="bm-ps-cell">${im(p1)}</div>
+          <div class="bm-ps-cell">${im(p2)}</div>
+          <div class="bm-ps-cell">${im(p3)}</div>
+          <div class="bm-ps-cell">${im(p4)}</div>
+        </div>`;
+      }
+      if (spread.type === 'back') {
+        const [p1,p2] = spread.photos;
+        return `<div class="bm-ps">
+          <div class="bm-ps-half" style="position:relative;">${im(p1)}
+            <div class="bm-ps-caption">Floor &amp; Closing Manager<br><span style="opacity:0.55;letter-spacing:0.12em">2019 – 2023</span></div>
+          </div>
+          <div class="bm-ps-gutter"></div>
+          <div class="bm-ps-half" style="position:relative;">${im(p2)}
+            <div class="bm-ps-caption">Lock Stock Bar &amp; Grill<br><span style="opacity:0.55;letter-spacing:0.12em">Bristol, New York</span></div>
+          </div>
+        </div>`;
+      }
+      return '';
     }
 
     function bindSpreadItems(spreadEl) {
-      spreadEl.querySelectorAll('.bm-page-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const sec = barSections.find(s => s.title === el.dataset.sec);
-          if (sec) openBmPopup(sec.items[parseInt(el.dataset.item)]);
-        });
-      });
-      // Cover: click to advance
-      const cover = spreadEl.querySelector('.bm-cover');
+      const cover = spreadEl.querySelector('.bm-ps-cover');
       if (cover) cover.addEventListener('click', () => {
         if (bmCurrentPage < bmSpreads.length - 1) {
           bmCurrentPage++;
