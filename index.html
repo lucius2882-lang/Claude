@@ -254,13 +254,6 @@
     /* ═══════════════════════════════════════════
        SPLASH PAGE
        ═══════════════════════════════════════════ */
-    #bm-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
     .bgs-slide {
       position: absolute;
       inset: 0;
@@ -744,7 +737,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(10, 5, 2, 0.45);
+      background: rgba(20, 10, 4, 0.92);
       opacity: 0;
       transition: opacity 0.3s ease;
       font-family: Georgia, 'Times New Roman', serif;
@@ -993,6 +986,39 @@
       display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
       padding: 0 28px 30px; text-align: center;
     }
+
+    /* Text / qualifications page */
+    .bm-text-page {
+      flex: 1; min-width: 0;
+      background: #fdf8f0;
+      display: flex; flex-direction: column;
+      padding: 22px 16px; overflow-y: auto;
+    }
+    .bm-text-page.special { background: linear-gradient(to bottom, #fdf8f0, #f5ede0); }
+    .bm-text-page-title {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: #0a3a1e; font-family: 'Segoe UI', sans-serif; font-weight: 700;
+      text-align: center; margin-bottom: 4px;
+    }
+    .bm-text-page-orn {
+      text-align: center; color: #e8a820; font-size: 0.8rem;
+      letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .bm-page-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 8px; margin-bottom: 4px;
+      border: 1px solid rgba(92,45,12,0.12); border-radius: 4px;
+      cursor: pointer; background: rgba(255,255,255,0.6);
+      transition: all 0.15s ease; gap: 8px;
+    }
+    .bm-page-item:hover { background:#0a3a1e; border-color:#0a3a1e; transform:translateX(3px); box-shadow:-3px 0 0 #e8a820; }
+    .bm-page-item:hover .bm-page-item-name { color:#e8a820; }
+    .bm-page-item:hover .bm-page-item-sub  { color:rgba(232,168,32,0.6); }
+    .bm-page-item:hover .bm-page-item-arrow { opacity:1; color:#e8a820; }
+    .bm-page-item-left { flex:1; min-width:0; }
+    .bm-page-item-name { font-size:0.88rem; color:#2a1005; display:block; margin-bottom:2px; transition:color 0.15s; }
+    .bm-page-item-sub  { font-size:0.63rem; color:#8a6a4a; font-family:'Segoe UI',sans-serif; font-style:italic; transition:color 0.15s; }
+    .bm-page-item-arrow { font-size:1rem; color:#c8a87a; opacity:0.3; transition:all 0.15s; flex-shrink:0; }
 
     /* Nav bar — hidden, arrows moved to sides */
     .bm-nav { display: none; }
@@ -1591,7 +1617,6 @@
 
   <!-- Bar Menu (Lock Stock tile) -->
   <div id="barmenu">
-    <div id="bm-bg"></div>
     <button class="bm-close-x" id="bm-back-btn">✕ Close</button>
     <div class="bm-book-wrap">
       <button class="bm-arr" id="bm-prev" disabled>&#8249;</button>
@@ -2655,15 +2680,16 @@
     const p = lsSlidePhotos;
     const bmSpreads = [
       { type: 'cover' },
-      { type: 'l1r2', photos: [p[1],  p[2],  p[3]]  },
-      { type: 'l2r1', photos: [p[4],  p[5],  p[6]]  },
-      { type: 'full',  photo:  p[7],  caption: 'Bristol, New York · Est. 2019' },
-      { type: '2x2',  photos: [p[8],  p[9],  p[10], p[11]] },
-      { type: 'l1r2', photos: [p[12], p[13], p[14]] },
-      { type: 'l2r1', photos: [p[15], p[16], p[17]] },
-      { type: '2x2',  photos: [p[18], p[19], p[20], p[21]] },
-      { type: 'l1r2', photos: [p[22], p[23], p[24]] },
-      { type: 'back', photos: [p[25], p[26]] },
+      { type: 'text-photo', section: barSections[0], photos: [p[1],  p[2]]  },
+      { type: 'photo-text', photos: [p[3],  p[4]],  section: barSections[1] },
+      { type: 'text-photo', section: barSections[2], photos: [p[5],  p[6]]  },
+      { type: 'photo-text', photos: [p[7],  p[8]],  section: barSections[3] },
+      { type: 'full',  photo: p[9],  caption: 'Bristol, New York · Est. 2019' },
+      { type: '2x2',  photos: [p[10], p[11], p[12], p[13]] },
+      { type: 'l1r2', photos: [p[14], p[15], p[16]] },
+      { type: 'l2r1', photos: [p[17], p[18], p[19]] },
+      { type: '2x2',  photos: [p[20], p[21], p[22], p[23]] },
+      { type: 'back', photos: [p[24], p[25]] },
     ];
 
     function renderSpread(idx, direction) {
@@ -2685,8 +2711,30 @@
       }, 220);
     }
 
+    function buildTextPage(sec) {
+      return `<div class="bm-text-page${sec.special ? ' special' : ''}">
+        <div class="bm-text-page-title">${sec.title}</div>
+        <div class="bm-text-page-orn">${sec.ornament}</div>
+        ${sec.items.map((item, i) => `
+          <div class="bm-page-item" data-sec="${sec.title}" data-item="${i}">
+            <div class="bm-page-item-left">
+              <span class="bm-page-item-name">${item.name}</span>
+              <div class="bm-page-item-sub">${item.desc}</div>
+            </div>
+            <span class="bm-page-item-arrow">›</span>
+          </div>`).join('')}
+      </div>`;
+    }
+
     function buildSpreadHTML(spread) {
       const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+      const photoCol = photos => `<div class="bm-ps-col">${photos.map(u => `<div class="bm-ps-photo">${im(u)}</div>`).join('')}</div>`;
+      if (spread.type === 'text-photo') {
+        return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoCol(spread.photos)}</div>`;
+      }
+      if (spread.type === 'photo-text') {
+        return `<div class="bm-ps">${photoCol(spread.photos)}<div class="bm-ps-gutter"></div>${buildTextPage(spread.section)}</div>`;
+      }
       if (spread.type === 'cover') {
         return `<div class="bm-ps-cover">
           ${im(lsSlidePhotos[0])}
@@ -2752,6 +2800,12 @@
     }
 
     function bindSpreadItems(spreadEl) {
+      spreadEl.querySelectorAll('.bm-page-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const sec = barSections.find(s => s.title === el.dataset.sec);
+          if (sec) openBmPopup(sec.items[parseInt(el.dataset.item)]);
+        });
+      });
       const cover = spreadEl.querySelector('.bm-ps-cover');
       if (cover) cover.addEventListener('click', () => {
         if (bmCurrentPage < bmSpreads.length - 1) {
@@ -2849,14 +2903,12 @@
       spreadEl.innerHTML = buildSpreadHTML(bmSpreads[0]);
       bindSpreadItems(spreadEl);
       updateNav(0);
-      startBgSlideshow();
       barmenuEl.style.display = 'flex';
       requestAnimationFrame(() => barmenuEl.classList.add('visible'));
     }
 
     function closeBarMenu() {
       if (bmPopup) { bmPopup.remove(); bmPopup = null; }
-      stopBgSlideshow();
       barmenuEl.classList.remove('visible');
       setTimeout(() => { barmenuEl.style.display = 'none'; }, 300);
     }
