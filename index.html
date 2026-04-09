@@ -254,11 +254,30 @@
     /* ═══════════════════════════════════════════
        SPLASH PAGE
        ═══════════════════════════════════════════ */
+    #bg-slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    #bg-slideshow.bgs-hidden { opacity: 0; }
+    .bgs-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    .bgs-slide.bgs-active { opacity: 1; }
+
     #splash {
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: #0a0a0a;
+      background: rgba(0,0,0,0.52);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1488,6 +1507,8 @@
 </head>
 <body>
 
+  <div id="bg-slideshow"></div>
+
   <div id="splash">
     <div class="splash-name">Lucius Campany</div>
     <div class="splash-rule"></div>
@@ -1790,11 +1811,40 @@
   <div id="overlay"></div>
 
   <script>
+    // --- Background slideshow ---
+    const bgsPhotos = [
+      "https://i.imgur.com/fRxXTtB.jpg","https://i.imgur.com/rtx4E5N.jpg","https://i.imgur.com/xPOir63.jpg",
+      "https://i.imgur.com/vPflhUi.jpg","https://i.imgur.com/9cLsFNU.jpg","https://i.imgur.com/bezajV9.jpg",
+      "https://i.imgur.com/drbnvTj.jpg","https://i.imgur.com/7hvZo2W.jpg","https://i.imgur.com/SNyA81z.jpg",
+      "https://i.imgur.com/6jrsk0b.jpg","https://i.imgur.com/oKJbIxw.jpg","https://i.imgur.com/kQ5Bjxd.jpg",
+      "https://i.imgur.com/U5dfqKY.jpg","https://i.imgur.com/dOT4Jvg.jpg","https://i.imgur.com/qDKqWHc.jpg",
+      "https://i.imgur.com/uzi7OBV.jpg","https://i.imgur.com/Dorutbl.jpg","https://i.imgur.com/GJEipTx.jpg",
+      "https://i.imgur.com/oFLdSNd.jpg","https://i.imgur.com/eBGbR0X.jpg","https://i.imgur.com/ATBthDZ.jpg",
+      "https://i.imgur.com/HWDYPZ3.jpg","https://i.imgur.com/rQ6K1XS.jpg","https://i.imgur.com/trGWzh4.jpg",
+      "https://i.imgur.com/Tm1uIwi.jpg","https://i.imgur.com/LQ1AlwZ.jpg","https://i.imgur.com/NZADuPW.jpg"
+    ];
+    const bgsEl = document.getElementById('bg-slideshow');
+    bgsPhotos.forEach((url, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'bgs-slide' + (i === 0 ? ' bgs-active' : '');
+      slide.style.backgroundImage = `url(${url})`;
+      bgsEl.appendChild(slide);
+    });
+    let bgsIdx = 0;
+    const bgsTimer = setInterval(() => {
+      const slides = bgsEl.querySelectorAll('.bgs-slide');
+      slides[bgsIdx].classList.remove('bgs-active');
+      bgsIdx = (bgsIdx + 1) % slides.length;
+      slides[bgsIdx].classList.add('bgs-active');
+    }, 4000);
+
     // --- Splash ---
     const splashEl = document.getElementById('splash');
     function dismissSplash() {
       splashEl.classList.add('fade-out');
-      setTimeout(() => { splashEl.style.display = 'none'; }, 700);
+      bgsEl.classList.add('bgs-hidden');
+      clearInterval(bgsTimer);
+      setTimeout(() => { splashEl.style.display = 'none'; bgsEl.style.display = 'none'; }, 800);
     }
     splashEl.addEventListener('click', dismissSplash);
 
@@ -1893,6 +1943,8 @@
     const initPath = window.location.pathname.replace(/^\//, '').toLowerCase();
     if (initPath && ['kepler','nbi','happier','lockstock'].includes(initPath)) {
       splashEl.style.display = 'none';
+      bgsEl.style.display = 'none';
+      clearInterval(bgsTimer);
     }
 
     const roles = {
