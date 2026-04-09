@@ -1920,14 +1920,11 @@
     };
 
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photo: null },
-      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photo: null },
-      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photo: null },
-      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photo: null },
-      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photo: null },
-      { label: "Campaign Work", type: "collage",
-        caption: "J.Crew · Fall 2021 Campaign · Tracee Ellis Ross",
-        photos: [null, null, null, null, null] }
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photos: [null, null, null] },
+      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photos: [null, null, null] },
+      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photos: [null, null, null] },
+      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photos: [null, null, null] },
+      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photos: [null, null, null] }
     ];
 
     // --- Detail panel ---
@@ -1957,132 +1954,106 @@
     // --- Kepler popup ---
     const overlay = document.getElementById('overlay');
     let currentPopup = null;
-    let currentSlideIndex = 0;
-
-    const tilts = [-2.5, 1.8, -1.2, 2.1, -0.8, 1.5, -1.9, 2.4];
-    let tiltIndex = 0;
+    let keplerActivePopups = [];
+    let keplerCurrentSlide = 0;
 
     function clampPos(x, y, w, h) {
-      const pad = 20;
+      const pad = 16;
       return {
         x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
         y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
       };
     }
 
-    function randomPos(w, h) {
-      const pad = 40;
-      return {
-        x: pad + Math.random() * Math.max(0, window.innerWidth - w - pad * 2),
-        y: pad + Math.random() * Math.max(0, window.innerHeight - h - pad * 2)
-      };
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+
+    function closeAllKeplerPopups(callback) {
+      if (!keplerActivePopups.length) { if (callback) callback(); return; }
+      let rem = keplerActivePopups.length;
+      keplerActivePopups.forEach(p => {
+        p.classList.add('closing');
+        p.addEventListener('animationend', () => {
+          p.remove();
+          if (--rem === 0) { keplerActivePopups = []; if (callback) callback(); }
+        }, { once: true });
+      });
     }
 
-    function nearbyPos(fromX, fromY, w, h) {
-      const nudge = 30 + Math.random() * 60;
-      const angle = Math.random() * Math.PI * 2;
-      return clampPos(fromX + Math.cos(angle) * nudge, fromY + Math.sin(angle) * nudge, w, h);
-    }
+    function openKeplerSlideSet(idx) {
+      const slide = keplerSlides[idx];
+      const isLast = idx === keplerSlides.length - 1;
+      keplerCurrentSlide = idx;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const imgPH = `<div class="popup-photo-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Add photo</div>`;
 
-    function photoHTML(slide) {
-      return slide.photo
-        ? `<img src="${slide.photo}" alt="${slide.label}">`
-        : `<div class="popup-photo-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            Add photo
-          </div>`;
-    }
+      // Three image popups scattered in different zones
+      const imgW = Math.min(210, vw * 0.27);
+      const imgH = Math.min(270, vh * 0.4);
+      const imgTilts = [rnd(-14, -4), rnd(4, 14), rnd(-7, 7)];
+      const zones = [
+        clampPos(rnd(vw * 0.02, vw * 0.16), rnd(vh * 0.06, vh * 0.24), imgW, imgH),
+        clampPos(rnd(vw * 0.60, vw * 0.76), rnd(vh * 0.06, vh * 0.24), imgW, imgH),
+        clampPos(rnd(vw * 0.28, vw * 0.52), rnd(vh * 0.55, vh * 0.72), imgW, imgH)
+      ];
 
-    function openKeplerSlide(slideIndex, fromPos) {
-      const slide = keplerSlides[slideIndex];
-      const isLast = slideIndex === keplerSlides.length - 1;
-      currentSlideIndex = slideIndex;
+      slide.photos.forEach((url, i) => {
+        const p = document.createElement('div');
+        p.className = 'popup';
+        p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;`;
+        p.innerHTML = `
+          <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.15);">
+            <div class="popup-title" style="color:rgba(255,255,255,0.6);font-size:0.72rem;letter-spacing:0.08em;">Campaign</div>
+            <div class="popup-controls"><button class="popup-btn kimg-x" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button></div>
+          </div>
+          <div class="popup-photo" style="background:#1B6B3A;flex:1;">${url ? `<img src="${url}" alt="">` : imgPH}</div>`;
+        p.querySelector('.kimg-x').addEventListener('click', () => {
+          p.classList.add('closing');
+          p.addEventListener('animationend', () => {
+            p.remove();
+            keplerActivePopups = keplerActivePopups.filter(x => x !== p);
+            if (!keplerActivePopups.length) overlay.classList.remove('active');
+          }, { once: true });
+        });
+        makeDraggable(p, p.querySelector('[data-drag]'));
+        document.body.appendChild(p);
+        keplerActivePopups.push(p);
+      });
 
-      const tilt = tilts[tiltIndex % tilts.length];
-      tiltIndex++;
-
-      const popup = document.createElement('div');
-      popup.className = 'popup';
-      popup.style.setProperty('--tilt', tilt + 'deg');
-      popup.style.visibility = 'hidden';
-      popup.style.left = '-9999px';
-      popup.style.top = '0';
-
-      const isCollage = slide.type === 'collage';
-      if (isCollage) popup.classList.add('popup-wide');
-
-      const collageHTML = isCollage ? `
-        <div class="popup-collage">
-          ${slide.photos.map(url => `
-            <div class="popup-collage-cell">
-              ${url ? `<img src="${url}" alt="">` : `<div class="popup-collage-ph">Photo</div>`}
-            </div>`).join('')}
-        </div>
-        <div class="popup-collage-caption" style="background:#155930;">${slide.caption}</div>
-      ` : `
-        <div class="popup-photo" style="background:#1B6B3A">
-          ${photoHTML(slide)}
-        </div>
-        <div class="popup-body" style="background:#1B6B3A;border-top:1px solid rgba(255,255,255,0.15);">
-          <div class="popup-label" style="color:rgba(255,255,255,0.65);">${slide.label}</div>
-          <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
-        </div>
-      `;
-
-      popup.innerHTML = `
+      // Text popup — centered, always on top
+      const txtW = Math.min(370, vw * 0.54);
+      const txtPos = clampPos(vw / 2 - txtW / 2, vh / 2 - 150, txtW, 300);
+      const tp = document.createElement('div');
+      tp.className = 'popup';
+      tp.style.cssText = `--tilt:0deg;left:${txtPos.x}px;top:${txtPos.y}px;width:${txtW}px;z-index:102;`;
+      tp.innerHTML = `
         <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
           <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
           <div class="popup-controls">
             <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">_</button>
             <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">□</button>
-            <button class="popup-btn close-btn" id="popup-close" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button>
+            <button class="popup-btn ktxt-x" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button>
           </div>
         </div>
-        ${collageHTML}
-        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);">
-          <span class="popup-counter" style="color:rgba(255,255,255,0.5);">${slideIndex + 1} of ${keplerSlides.length}</span>
+        <div class="popup-body" style="background:#1B6B3A;border-top:1px solid rgba(255,255,255,0.15);">
+          <div class="popup-label" style="color:rgba(255,255,255,0.65);">${slide.label}</div>
+          <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
         </div>
-      `;
+        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
+          <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${keplerSlides.length}</span>
+          ${!isLast
+            ? `<button class="knext-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;letter-spacing:0.05em;">Next →</button>`
+            : `<button class="kclose-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;">Close</button>`}
+        </div>`;
+      tp.querySelector('.ktxt-x').addEventListener('click', () => history.back());
+      const nb = tp.querySelector('.knext-btn');
+      if (nb) nb.addEventListener('click', () => closeAllKeplerPopups(() => openKeplerSlideSet(idx + 1)));
+      const cb = tp.querySelector('.kclose-btn');
+      if (cb) cb.addEventListener('click', () => history.back());
+      makeDraggable(tp, tp.querySelector('[data-drag]'));
+      document.body.appendChild(tp);
+      keplerActivePopups.push(tp);
 
-      document.body.appendChild(popup);
-
-      requestAnimationFrame(() => {
-        const w = popup.offsetWidth;
-        const h = popup.offsetHeight;
-        const pos = fromPos ? nearbyPos(fromPos.x, fromPos.y, w, h) : randomPos(w, h);
-        popup.style.left = pos.x + 'px';
-        popup.style.top = pos.y + 'px';
-        popup.style.visibility = 'visible';
-        popup._pos = pos;
-      });
-
-      // X → next slide nearby
-      popup.querySelector('#popup-close').addEventListener('click', () => {
-        if (!isLast) dismissPopup(popup, slideIndex, true); // slide transition
-        else history.back(); // actually closing
-      });
-
-      makeDraggable(popup, popup.querySelector('[data-drag]'));
       overlay.classList.add('active');
-      currentPopup = popup;
-    }
-
-    function dismissPopup(popup, slideIndex, goNext) {
-      const savedPos = popup._pos || { x: parseInt(popup.style.left) || 0, y: parseInt(popup.style.top) || 0 };
-      popup.classList.add('closing');
-      popup.addEventListener('animationend', () => {
-        popup.remove();
-        if (goNext && slideIndex + 1 < keplerSlides.length) {
-          setTimeout(() => openKeplerSlide(slideIndex + 1, savedPos), 80);
-        } else {
-          overlay.classList.remove('active');
-          currentPopup = null;
-        }
-      }, { once: true });
     }
 
     function makeDraggable(popup, handle) {
@@ -2986,9 +2957,7 @@
 
     function openPage(roleKey) {
       if (roleKey === 'marketing') {
-        if (currentPopup) { currentPopup.remove(); currentPopup = null; }
-        tiltIndex = 0;
-        openKeplerSlide(0);
+        closeAllKeplerPopups(() => openKeplerSlideSet(0));
       } else if (roleKey === 'digital') {
         openGmail();
       } else if (roleKey === 'maitre') {
@@ -2999,7 +2968,7 @@
     }
 
     function closeCurrent() {
-      if (currentPopup) { dismissPopup(currentPopup, currentSlideIndex, false); return; }
+      if (keplerActivePopups.length) { closeAllKeplerPopups(() => overlay.classList.remove('active')); return; }
       if (detail.classList.contains('visible')) {
         detail.classList.remove('visible');
         setTimeout(() => { detail.style.display = 'none'; }, 400);
@@ -3011,7 +2980,7 @@
     }
 
     function isAnyViewOpen() {
-      return currentPopup ||
+      return keplerActivePopups.length > 0 ||
         detail.classList.contains('visible') ||
         gmailEl.classList.contains('visible') ||
         bookviewEl.classList.contains('visible') ||
@@ -3030,7 +2999,7 @@
 
     // Overlay click closes Kepler via back
     overlay.addEventListener('click', e => {
-      if (e.target === overlay && currentPopup) history.back();
+      if (e.target === overlay && keplerActivePopups.length) history.back();
     });
 
     // Escape → back only when a view is open
