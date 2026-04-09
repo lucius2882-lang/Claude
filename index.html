@@ -504,6 +504,16 @@
       border: 2px dashed rgba(255,255,255,0.15);
     }
 
+    /* Kepler image-only popup — clean photo card */
+    .popup.kimg-popup {
+      border: 1px solid rgba(21, 89, 48, 0.65);
+      box-shadow: none;
+      overflow: visible;
+    }
+    .popup.kimg-popup .popup-photo {
+      border-radius: 0;
+    }
+
     /* Collage popup */
     .popup.popup-wide {
       width: min(94vw, 700px);
@@ -1998,14 +2008,11 @@
 
       slide.photos.forEach((url, i) => {
         const p = document.createElement('div');
-        p.className = 'popup';
-        p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;`;
+        p.className = 'popup kimg-popup';
+        p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;cursor:move;`;
         p.innerHTML = `
-          <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.15);">
-            <div class="popup-title" style="color:rgba(255,255,255,0.6);font-size:0.72rem;letter-spacing:0.08em;">Campaign</div>
-            <div class="popup-controls"><button class="popup-btn kimg-x" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button></div>
-          </div>
-          <div class="popup-photo" style="background:#1B6B3A;flex:1;">${url ? `<img src="${url}" alt="">` : imgPH}</div>`;
+          <button class="kimg-x" style="position:absolute;top:5px;right:5px;z-index:10;background:rgba(21,89,48,0.85);border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;">✕</button>
+          <div class="popup-photo" style="background:#1B6B3A;width:100%;height:100%;">${url ? `<img src="${url}" alt="">` : imgPH}</div>`;
         p.querySelector('.kimg-x').addEventListener('click', () => {
           p.classList.add('closing');
           p.addEventListener('animationend', () => {
@@ -2014,7 +2021,7 @@
             if (!keplerActivePopups.length) overlay.classList.remove('active');
           }, { once: true });
         });
-        makeDraggable(p, p.querySelector('[data-drag]'));
+        makeDraggable(p, p);
         document.body.appendChild(p);
         keplerActivePopups.push(p);
       });
@@ -2059,7 +2066,7 @@
     function makeDraggable(popup, handle) {
       let ox = 0, oy = 0, startX = 0, startY = 0, dragging = false;
       handle.addEventListener('mousedown', e => {
-        if (e.target.classList.contains('popup-btn')) return;
+        if (e.target.classList.contains('popup-btn') || e.target.classList.contains('kimg-x') || e.target.closest('.kimg-x')) return;
         dragging = true;
         startX = e.clientX; startY = e.clientY;
         ox = parseInt(popup.style.left) || 0;
