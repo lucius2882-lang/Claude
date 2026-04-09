@@ -2741,7 +2741,7 @@
     }
 
     function buildSpreadHTML(spread) {
-      const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+      const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:contain;background:#0a0500;display:block;">`;
       const photoGrid = photos => {
         const cls = photos.length === 4 ? 'bm-ps-photo-grid bm-ps-photo-grid-4' : 'bm-ps-photo-grid';
         return `<div class="${cls}">${photos.map(u => `<div class="bm-ps-cell">${im(u)}</div>`).join('')}</div>`;
