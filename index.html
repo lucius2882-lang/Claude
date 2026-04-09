@@ -509,6 +509,8 @@
       border: 1px solid rgba(21, 89, 48, 0.65);
       box-shadow: none;
       overflow: visible;
+      min-width: 0;
+      min-height: 0;
     }
     .popup.kimg-popup .popup-photo {
       border-radius: 0;
@@ -1930,11 +1932,11 @@
     };
 
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photos: [null, null, null] },
-      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photos: [null, null, null] },
-      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photos: [null, null, null] },
-      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photos: [null, null, null] },
-      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photos: [null, null, null] }
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photos: ["https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg"] },
+      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photos: ["https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg"] },
+      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photos: ["https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg"] },
+      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photos: ["https://i.imgur.com/V87MvMv.jpg","https://i.imgur.com/zooYfXs.jpg","https://i.imgur.com/oLraQCj.jpg"] },
+      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photos: ["https://i.imgur.com/PoZOPu5.jpg","https://i.imgur.com/yQy69wT.jpg","https://i.imgur.com/9Fw6aNL.jpg"] }
     ];
 
     // --- Detail panel ---
@@ -2001,9 +2003,9 @@
       const imgH = Math.min(270, vh * 0.4);
       const imgTilts = [rnd(-14, -4), rnd(4, 14), rnd(-7, 7)];
       const zones = [
-        clampPos(rnd(vw * 0.02, vw * 0.16), rnd(vh * 0.06, vh * 0.24), imgW, imgH),
-        clampPos(rnd(vw * 0.60, vw * 0.76), rnd(vh * 0.06, vh * 0.24), imgW, imgH),
-        clampPos(rnd(vw * 0.28, vw * 0.52), rnd(vh * 0.55, vh * 0.72), imgW, imgH)
+        clampPos(rnd(vw * 0.03, vw * 0.10), rnd(vh * 0.08, vh * 0.16), imgW, imgH),
+        clampPos(rnd(vw * 0.68, vw * 0.78), rnd(vh * 0.08, vh * 0.16), imgW, imgH),
+        clampPos(rnd(vw * 0.36, vw * 0.46), rnd(vh * 0.64, vh * 0.74), imgW, imgH)
       ];
 
       slide.photos.forEach((url, i) => {
@@ -2031,7 +2033,7 @@
       const txtPos = clampPos(vw / 2 - txtW / 2, vh / 2 - 150, txtW, 300);
       const tp = document.createElement('div');
       tp.className = 'popup';
-      tp.style.cssText = `--tilt:0deg;left:${txtPos.x}px;top:${txtPos.y}px;width:${txtW}px;z-index:102;`;
+      tp.style.cssText = `--tilt:0deg;left:${txtPos.x}px;top:${txtPos.y}px;width:${txtW}px;height:auto;min-height:0;z-index:102;`;
       tp.innerHTML = `
         <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
           <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
