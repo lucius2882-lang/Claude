@@ -254,15 +254,13 @@
     /* ═══════════════════════════════════════════
        SPLASH PAGE
        ═══════════════════════════════════════════ */
-    #bg-slideshow {
-      position: fixed;
+    #bm-bg {
+      position: absolute;
       inset: 0;
-      z-index: 199;
+      z-index: 0;
       overflow: hidden;
       pointer-events: none;
-      transition: opacity 0.8s ease;
     }
-    #bg-slideshow.bgs-hidden { opacity: 0; }
     .bgs-slide {
       position: absolute;
       inset: 0;
@@ -281,7 +279,7 @@
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(0,0,0,0.52);
+      background: #0a0a0a;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -746,7 +744,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(20, 10, 4, 0.88);
+      background: rgba(10, 5, 2, 0.45);
       opacity: 0;
       transition: opacity 0.3s ease;
       font-family: Georgia, 'Times New Roman', serif;
@@ -775,6 +773,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      position: relative;
+      z-index: 1;
     }
     .bm-arr {
       background: rgba(10,58,30,0.9);
@@ -1511,8 +1511,6 @@
 </head>
 <body>
 
-  <div id="bg-slideshow"></div>
-
   <div id="splash">
     <div class="splash-name">Lucius Campany</div>
     <div class="splash-rule"></div>
@@ -1758,6 +1756,7 @@
 
   <!-- Bar Menu (Lock Stock tile) -->
   <div id="barmenu">
+    <div id="bm-bg"></div>
     <button class="bm-close-x" id="bm-back-btn">✕ Close</button>
     <div class="bm-book-wrap">
       <button class="bm-arr" id="bm-prev" disabled>&#8249;</button>
@@ -1815,8 +1814,16 @@
   <div id="overlay"></div>
 
   <script>
-    // --- Background slideshow ---
-    const bgsPhotos = [
+    // --- Splash ---
+    const splashEl = document.getElementById('splash');
+    function dismissSplash() {
+      splashEl.classList.add('fade-out');
+      setTimeout(() => { splashEl.style.display = 'none'; }, 700);
+    }
+    splashEl.addEventListener('click', dismissSplash);
+
+    // --- Lock Stock background slideshow ---
+    const lsSlidePhotos = [
       "https://i.imgur.com/fRxXTtB.jpg","https://i.imgur.com/rtx4E5N.jpg","https://i.imgur.com/xPOir63.jpg",
       "https://i.imgur.com/vPflhUi.jpg","https://i.imgur.com/9cLsFNU.jpg","https://i.imgur.com/bezajV9.jpg",
       "https://i.imgur.com/drbnvTj.jpg","https://i.imgur.com/7hvZo2W.jpg","https://i.imgur.com/SNyA81z.jpg",
@@ -1827,33 +1834,31 @@
       "https://i.imgur.com/HWDYPZ3.jpg","https://i.imgur.com/rQ6K1XS.jpg","https://i.imgur.com/trGWzh4.jpg",
       "https://i.imgur.com/Tm1uIwi.jpg","https://i.imgur.com/LQ1AlwZ.jpg","https://i.imgur.com/NZADuPW.jpg"
     ];
-    const bgsEl = document.getElementById('bg-slideshow');
-    bgsPhotos.forEach((url, i) => {
+    const bmBgEl = document.getElementById('bm-bg');
+    lsSlidePhotos.forEach((url, i) => {
       const slide = document.createElement('div');
       slide.className = 'bgs-slide' + (i === 0 ? ' bgs-active' : '');
       const img = document.createElement('img');
-      img.src = url;
-      img.alt = '';
+      img.src = url; img.alt = '';
       slide.appendChild(img);
-      bgsEl.appendChild(slide);
+      bmBgEl.appendChild(slide);
     });
-    let bgsIdx = 0;
-    const bgsTimer = setInterval(() => {
-      const slides = bgsEl.querySelectorAll('.bgs-slide');
-      slides[bgsIdx].classList.remove('bgs-active');
-      bgsIdx = (bgsIdx + 1) % slides.length;
-      slides[bgsIdx].classList.add('bgs-active');
-    }, 4000);
-
-    // --- Splash ---
-    const splashEl = document.getElementById('splash');
-    function dismissSplash() {
-      splashEl.classList.add('fade-out');
-      bgsEl.classList.add('bgs-hidden');
-      clearInterval(bgsTimer);
-      setTimeout(() => { splashEl.style.display = 'none'; bgsEl.style.display = 'none'; }, 800);
+    let bgsIdx = 0, bgsTimer = null;
+    function startBgSlideshow() {
+      const slides = bmBgEl.querySelectorAll('.bgs-slide');
+      slides.forEach(s => s.classList.remove('bgs-active'));
+      bgsIdx = 0;
+      slides[0].classList.add('bgs-active');
+      bgsTimer = setInterval(() => {
+        slides[bgsIdx].classList.remove('bgs-active');
+        bgsIdx = (bgsIdx + 1) % slides.length;
+        slides[bgsIdx].classList.add('bgs-active');
+      }, 4000);
     }
-    splashEl.addEventListener('click', dismissSplash);
+    function stopBgSlideshow() {
+      clearInterval(bgsTimer);
+      bgsTimer = null;
+    }
 
     document.getElementById('rv-download-btn').addEventListener('click', function() {
       const btn = this;
@@ -1950,8 +1955,6 @@
     const initPath = window.location.pathname.replace(/^\//, '').toLowerCase();
     if (initPath && ['kepler','nbi','happier','lockstock'].includes(initPath)) {
       splashEl.style.display = 'none';
-      bgsEl.style.display = 'none';
-      clearInterval(bgsTimer);
     }
 
     const roles = {
@@ -3061,12 +3064,14 @@
       spreadEl.innerHTML = buildSpreadHTML(bmSpreads[0]);
       bindSpreadItems(spreadEl);
       updateNav(0);
+      startBgSlideshow();
       barmenuEl.style.display = 'flex';
       requestAnimationFrame(() => barmenuEl.classList.add('visible'));
     }
 
     function closeBarMenu() {
       if (bmPopup) { bmPopup.remove(); bmPopup = null; }
+      stopBgSlideshow();
       barmenuEl.classList.remove('visible');
       setTimeout(() => { barmenuEl.style.display = 'none'; }, 300);
     }
