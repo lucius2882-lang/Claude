@@ -1931,12 +1931,25 @@
       }
     };
 
+    // All campaign photos — add more URLs here; slides cycle through automatically
+    const keplerPhotos = [
+      "https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg",
+      "https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg",
+      "https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg",
+      "https://i.imgur.com/V87MvMv.jpg","https://i.imgur.com/zooYfXs.jpg","https://i.imgur.com/oLraQCj.jpg",
+      "https://i.imgur.com/PoZOPu5.jpg","https://i.imgur.com/nkJkTrq.jpg","https://i.imgur.com/9Fw6aNL.jpg",
+      "https://i.imgur.com/yQy69wT.jpg","https://i.imgur.com/9kCSEAw.jpg","https://i.imgur.com/9OZ0pfc.jpg",
+      "https://i.imgur.com/Q9zEVHQ.jpg","https://i.imgur.com/iyMfLOj.jpg","https://i.imgur.com/r7w7bcD.jpg",
+      "https://i.imgur.com/k5T6i51.jpg","https://i.imgur.com/7a0GApL.jpg","https://i.imgur.com/WCdJDmm.jpg",
+      "https://i.imgur.com/hCNI1s2.jpg","https://i.imgur.com/ovsxnx3.jpg","https://i.imgur.com/xJI4sxl.jpg"
+    ];
+
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy.", photos: ["https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg"] },
-      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut.", photos: ["https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg"] },
-      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns.", photos: ["https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg"] },
-      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis.", photos: ["https://i.imgur.com/V87MvMv.jpg","https://i.imgur.com/zooYfXs.jpg","https://i.imgur.com/oLraQCj.jpg"] },
-      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers.", photos: ["https://i.imgur.com/PoZOPu5.jpg","https://i.imgur.com/yQy69wT.jpg","https://i.imgur.com/9Fw6aNL.jpg"] }
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy." },
+      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut." },
+      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns." },
+      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis." },
+      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers." }
     ];
 
     // --- Detail panel ---
@@ -2008,7 +2021,10 @@
         clampPos(rnd(vw * 0.36, vw * 0.46), rnd(vh * 0.64, vh * 0.74), imgW, imgH)
       ];
 
-      slide.photos.forEach((url, i) => {
+      // Pick 3 photos from the pool for this slide
+      const slidePhotos = [0, 1, 2].map(i => keplerPhotos[(idx * 3 + i) % keplerPhotos.length]);
+
+      slidePhotos.forEach((url, i) => {
         const p = document.createElement('div');
         p.className = 'popup kimg-popup';
         p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;cursor:move;`;
