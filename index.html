@@ -257,7 +257,7 @@
     #bg-slideshow {
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 199;
       overflow: hidden;
       pointer-events: none;
       transition: opacity 0.8s ease;
@@ -266,12 +266,16 @@
     .bgs-slide {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center;
       opacity: 0;
       transition: opacity 2s ease;
     }
     .bgs-slide.bgs-active { opacity: 1; }
+    .bgs-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
     #splash {
       position: fixed;
@@ -1827,7 +1831,10 @@
     bgsPhotos.forEach((url, i) => {
       const slide = document.createElement('div');
       slide.className = 'bgs-slide' + (i === 0 ? ' bgs-active' : '');
-      slide.style.backgroundImage = `url(${url})`;
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = '';
+      slide.appendChild(img);
       bgsEl.appendChild(slide);
     });
     let bgsIdx = 0;
