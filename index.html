@@ -307,6 +307,53 @@
       opacity: 0;
       animation: splash-rise 1s ease 1.4s forwards, splash-pulse 3s ease 2.4s infinite;
     }
+    .splash-about {
+      max-width: 480px;
+      text-align: center;
+      margin-top: 28px;
+      padding: 0 24px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: splash-rise 1s ease 1.1s forwards;
+    }
+    .splash-about p {
+      font-size: clamp(0.72rem, 1.6vw, 0.88rem);
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.42);
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
+    .splash-about-divider {
+      width: 28px; height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 18px auto 18px;
+    }
+    .splash-stats {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: splash-rise 1s ease 1.3s forwards;
+    }
+    .splash-stat {
+      text-align: center;
+    }
+    .splash-stat-num {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 200;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.06em;
+    }
+    .splash-stat-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-top: 3px;
+    }
     @keyframes splash-rise {
       to { opacity: 1; transform: translateY(0); }
     }
@@ -1439,6 +1486,24 @@
     <div class="splash-name">Lucius Campany</div>
     <div class="splash-rule"></div>
     <div class="splash-title">Hospitality &amp; Marketing Specialist</div>
+    <div class="splash-about">
+      <p>Five years across hospitality and digital marketing — running floors, leading teams, managing million-dollar campaigns, and building the kind of guest experiences people come back for.</p>
+      <div class="splash-about-divider"></div>
+    </div>
+    <div class="splash-stats">
+      <div class="splash-stat">
+        <div class="splash-stat-num">5+</div>
+        <div class="splash-stat-label">Years Experience</div>
+      </div>
+      <div class="splash-stat">
+        <div class="splash-stat-num">4</div>
+        <div class="splash-stat-label">Roles</div>
+      </div>
+      <div class="splash-stat">
+        <div class="splash-stat-num">$1M+</div>
+        <div class="splash-stat-label">Campaigns Managed</div>
+      </div>
+    </div>
     <div class="splash-enter">Tap to enter</div>
   </div>
 
