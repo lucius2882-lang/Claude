@@ -495,10 +495,10 @@
     .tile:hover .tile-label { letter-spacing: 0.2em; }
 
     .tile-outcome {
-      color: rgba(0,0,0,0.38);
-      font-size: clamp(0.62rem, 1.2vw, 0.82rem);
-      font-weight: 300;
-      letter-spacing: 0.1em;
+      color: rgba(0,0,0,0.58);
+      font-size: clamp(0.68rem, 1.4vw, 0.88rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-align: center;
     }
