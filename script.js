@@ -4,6 +4,9 @@
       splashEl.classList.add('fade-out');
       setTimeout(() => { splashEl.style.display = 'none'; }, 700);
     }
+    // Button click (desktop) + tap anywhere (mobile)
+    const splashBtn = document.getElementById('splash-enter-btn');
+    if (splashBtn) splashBtn.addEventListener('click', e => { e.stopPropagation(); dismissSplash(); });
     splashEl.addEventListener('click', dismissSplash);
 
     // --- Lock Stock background slideshow ---
@@ -1266,20 +1269,3 @@
     window.addEventListener('scroll', () => {
       scrollHint.classList.toggle('hidden', window.scrollY > 60);
     }, { passive: true });
-
-    (function(){
-      const grid = document.getElementById('photo-key-grid');
-      lsSlidePhotos.forEach((url, i) => {
-        const card = document.createElement('div');
-        card.style.cssText = 'background:#1a1008;border-radius:6px;overflow:hidden;';
-        card.innerHTML = `<img src="${url}" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
-          <div style="text-align:center;padding:7px 0;font-family:sans-serif;font-weight:bold;font-size:13px;color:#e8a820;letter-spacing:1px;">Photo ${i}</div>`;
-        grid.appendChild(card);
-      });
-      document.addEventListener('keydown', e => {
-        if (e.key === 'k' || e.key === 'K') {
-          const ov = document.getElementById('photo-key-overlay');
-          ov.style.display = ov.style.display === 'none' ? 'block' : 'none';
-        }
-      });
-    })();

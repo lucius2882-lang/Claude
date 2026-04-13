@@ -30,7 +30,7 @@
         <div class="splash-stat-label">Campaigns Managed</div>
       </div>
     </div>
-    <div class="splash-enter">Tap to enter</div>
+    <button class="splash-enter-btn" id="splash-enter-btn">Enter Here</button>
   </div>
 
   <!-- Resume -->
@@ -327,15 +327,6 @@
 
   <div id="overlay"></div>
 
-
-
-  <!-- Photo Key Overlay (press K to open) -->
-  <div id="photo-key-overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.96);overflow-y:auto;padding:30px 20px;">
-    <div style="max-width:900px;margin:0 auto;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-        <h2 style="color:#e8a820;font-family:sans-serif;letter-spacing:3px;margin:0;font-size:18px;">PHOTO REFERENCE KEY</h2>
-        <button onclick="document.getElementById('photo-key-overlay').style.display='none'" style="background:none;border:1px solid #e8a820;color:#e8a820;padding:6px 14px;cursor:pointer;font-size:13px;letter-spacing:1px;">CLOSE ✕</button>
-      </div>
       <div id="photo-key-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
     </div>
   </div>
