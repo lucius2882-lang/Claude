@@ -125,33 +125,33 @@
         title: "Guest Experience & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Guest experience lead and events producer at Happier New York — a members-only wellness concept in Manhattan. Responsible for the full guest journey: from first impression through departure, and everything in between." },
-          { heading: "Running the Room", text: "Led a team of 5 FOH staff through full-day service — managing the floor, supporting the host stand, and making real-time seating calls to keep the guest experience seamless from open to close." },
-          { heading: "Guest Relationships", text: "Served as the primary point of contact for members and regulars. Building relationships was the job — knowing names, preferences, and handling anything that went sideways with composure." },
-          { heading: "Experience Production", text: "Produced brand experiences and private activations end-to-end across multiple properties — from first inquiry through day-of execution. Coordinated with HR, Facilities, and Comms to deliver seamless guest journeys." },
-          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and people management." }
+          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Events producer and guest experience lead at a members-only wellness concept in Manhattan. Responsible for producing private events, coordinating activations, and managing the full guest journey from pre-production through day-of execution." },
+          { heading: "Running the Show", text: "Led a team of 5 through full-day live service — managing the floor, directing the host stand, and making real-time calls to keep every production running on schedule from open to close." },
+          { heading: "Guest Relationships", text: "Served as the primary on-site point of contact for VIP guests, talent, and founding members. Knowing names, preferences, and handling anything that went sideways with composure — that was the role." },
+          { heading: "Event Production", text: "Produced brand activations and private events end-to-end — from first inquiry through day-of execution across multiple properties. Coordinated with HR, Facilities, and Comms. Single point of accountability for every production." },
+          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts production coordination, logistics, and people management." }
         ]
       },
       manager: {
         title: "Floor & Closing Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at Lock Stock Bar & Grill — a high-volume spot running lunch, dinner, and late-night. Fast pace, full house, no shortcuts." },
-          { heading: "Owning the Shift", text: "Kept service flowing across all dayparts — lunch rushes, dinner covers, late-night crowds. Standards stayed consistent regardless of volume. That was the job." },
-          { heading: "Closing the Night", text: "Every close meant financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
-          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a team that could adapt on the fly — which mattered a lot when COVID hit." },
-          { heading: "COVID Pivot", text: "Led the team through a full operational rebuild — we rewrote the SOPs together, retrained on every new protocol, and kept service quality intact through every phase of reopening." }
+          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a high-volume venue running three daily dayparts. Think of it as producing a live show from load-in to strike — three times a day, every day, no room for error." },
+          { heading: "Owning the Shift", text: "Coordinated staffing, setup, and execution across lunch, dinner, and late-night. Standards stayed consistent regardless of volume or venue pressure. That was the production." },
+          { heading: "Closing the Night", text: "Every close meant nightly financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The production wasn't wrapped until everything was signed off." },
+          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly — which mattered a lot when the playbook had to be rewritten entirely." },
+          { heading: "COVID Pivot", text: "Led the team through a full operational rebuild — we rewrote the SOPs together, retrained on every new protocol, and kept production quality intact through every phase of reopening." }
         ]
       },
       digital: {
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at New Blue Interactive — a political digital agency running fundraising and communications for local and state campaigns." },
-          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections. Every email, every ask, every subject line mattered — campaigns live or die on their fundraising numbers." },
-          { heading: "Writing & Testing", text: "Drafted fundraising emails and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a deep understanding of what moves donors to act." },
-          { heading: "Scale & QA", text: "Ran quality assurance on marketing materials going to email lists of 100,000+. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off." },
-          { heading: "Technical + Creative", text: "Built emails in HTML and CSS for CRM deployment, and handled all creative production in Adobe Photoshop and Illustrator. Both sides of the work lived in the same role." }
+          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency — supporting production of fundraising campaigns and communications for local and state candidates. Early training in production pipelines, QA, and creative execution under real deadlines." },
+          { heading: "The Stakes", text: "Supported million-dollar digital fundraising productions for real elections. Every asset, every ask, every subject line mattered — campaigns live or die on their output quality." },
+          { heading: "Writing & Testing", text: "Drafted campaign copy and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a clear understanding of what moves people to act." },
+          { heading: "Production QA", text: "Managed quality assurance on assets going to lists of 100,000+ subscribers. One broken link or rendering error at that scale is a real problem — nothing shipped without full sign-off." },
+          { heading: "Technical + Creative", text: "Built email templates in HTML and CSS for CRM deployment, and handled all creative production in Adobe Photoshop and Illustrator. Both sides of the production pipeline lived in the same role." }
         ]
       }
     };
@@ -170,11 +170,11 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler — a data-driven performance marketing agency. Part campaign management, part audience analytics, part brand strategy. Every campaign was a live experiment in how digital touchpoints drive real-world behaviour." },
-      { label: "The Budget", text: "Purchased ad inventory across 6 social platforms inside a $250K monthly client budget. Every dollar tied back to audience behaviour — allocation decisions were backed by 5 years of performance data, not gut." },
-      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns." },
-      { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis." },
-      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers." }
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler — a data-driven performance marketing agency. Part campaign production, part audience analytics, part brand strategy. Managed concurrent productions across 6 platforms, coordinating assets, timelines, and client approvals from pre-launch through live optimization." },
+      { label: "The Budget", text: "Managed ad inventory production across 6 social platforms inside a $250K monthly client budget. Every allocation decision was backed by 5 years of performance data — creative gut-checks ran through the numbers first." },
+      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete production decisions for active campaigns." },
+      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing presentations. The job was as much production management as it was analysis." },
+      { label: "Platforms", text: "Coordinated production across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own creative formats, asset specs, and delivery requirements." }
     ];
 
     // --- Detail panel ---
