@@ -295,6 +295,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top: 28px;
       margin-bottom: 14px;
       opacity: 0;
       animation: splash-rise 1s ease 1.2s forwards;
