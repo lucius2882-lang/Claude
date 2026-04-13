@@ -155,31 +155,36 @@
     };
 
     // --- J.Crew × Kepler — Pop-Up Storm ---
+    const jcrewPhotos = [
+      "https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg",
+      "https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg",
+      "https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg",
+      "https://i.imgur.com/V87MvMv.jpg","https://i.imgur.com/zooYfXs.jpg","https://i.imgur.com/oLraQCj.jpg",
+      "https://i.imgur.com/PoZOPu5.jpg","https://i.imgur.com/nkJkTrq.jpg","https://i.imgur.com/9Fw6aNL.jpg",
+      "https://i.imgur.com/yQy69wT.jpg","https://i.imgur.com/9kCSEAw.jpg","https://i.imgur.com/9OZ0pfc.jpg",
+      "https://i.imgur.com/Q9zEVHQ.jpg","https://i.imgur.com/iyMfLOj.jpg","https://i.imgur.com/r7w7bcD.jpg",
+      "https://i.imgur.com/k5T6i51.jpg","https://i.imgur.com/7a0GApL.jpg","https://i.imgur.com/WCdJDmm.jpg"
+    ];
+
+    function photoGrid(indices, h) {
+      return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#ddd;">
+        ${indices.map(i => `<img src="${jcrewPhotos[i]}" loading="lazy" style="width:100%;height:${h}px;object-fit:cover;display:block;">`).join('')}
+      </div>`;
+    }
+
     const jcrewDefs = [
       {
         url: 'meta.com/ads/jcrew_fw21', color: '#1877F2',
         stat: 'Meta · The workhorse · ~⅓ of monthly spend',
-        w: 262, tilt: -2.5, z: 25,
+        w: 255, tilt: -2.5, z: 25,
         body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 10px 6px;">
-            <div style="width:34px;height:34px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:12px;flex-shrink:0;">J</div>
-            <div>
-              <div style="font-size:11px;font-weight:bold;color:#050505;">J.Crew</div>
-              <div style="font-size:9px;color:#65676B;">Sponsored · 🌐 Everyone</div>
-            </div>
+          ${photoGrid([0,1,2,3], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">J</div>
+            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#65676B;font-size:9px;">· Sponsored</span></div>
           </div>
-          <div style="font-size:10px;color:#050505;padding:0 10px 8px;line-height:1.4;">The pieces you forgot you loved. New arrivals, same craft.</div>
-          <div style="background:linear-gradient(135deg,#f5e6d3,#ddc9ad);height:148px;display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;">
-              <div style="font-family:Georgia,serif;font-size:20px;font-weight:bold;letter-spacing:0.22em;color:#1a1a2e;">J.CREW</div>
-              <div style="font-size:7px;letter-spacing:0.15em;color:#6b5040;margin-top:5px;">FALL COLLECTION</div>
-            </div>
-          </div>
-          <div style="background:#f0f2f5;border-top:1px solid #ddd;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="font-size:9px;color:#65676B;">JCREW.COM</div>
-            <div style="background:#1877F2;color:#fff;font-size:9px;padding:3px 9px;border-radius:3px;">Shop Now</div>
-          </div>
-          <div style="display:flex;gap:14px;padding:7px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">The biggest allocation in the mix — about a third of monthly spend. Built lookalike audiences off J.Crew's existing buyer pool and layered retargeting to close the gap between discovery and purchase. Consistently above the ROAS floor for two years.</div>
+          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
             <span>👍 Like</span><span>💬 Comment</span><span>↗ Share</span>
           </div>
         </div>`
@@ -187,122 +192,79 @@
       {
         url: 'tiktok.com/jcrewofficial', color: '#010101',
         stat: 'TikTok · Where the rebrand actually landed',
-        w: 172, tilt: 2.0, z: 24,
-        body: `<div style="background:#000;height:296px;position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:linear-gradient(170deg,#1a1a2e 0%,#2c1810 55%,#111 100%);"></div>
-          <div style="position:absolute;inset:0;background:repeating-linear-gradient(transparent 0,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 20px);"></div>
-          <div style="position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="font-size:9px;color:rgba(255,255,255,0.75);font-family:Arial;">@jcrewofficial</div>
-            <div style="font-size:8px;background:rgba(255,255,255,0.15);color:#fff;padding:2px 6px;border-radius:2px;">Ad</div>
+        w: 255, tilt: 2.0, z: 24,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          ${photoGrid([4,5,6,7], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:4px;background:#010101;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">♪</div>
+            <div style="font-size:10px;font-weight:bold;color:#050505;">@jcrewofficial <span style="font-weight:normal;color:#888;font-size:9px;">· Ad</span></div>
           </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);text-align:center;">
-            <div style="font-family:Georgia,serif;font-size:22px;letter-spacing:0.22em;color:#fff;font-weight:bold;">J.CREW</div>
-            <div style="font-size:7px;letter-spacing:0.14em;color:rgba(255,255,255,0.6);margin-top:5px;">NEW COLLECTION</div>
-          </div>
-          <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;align-items:center;color:#fff;font-family:Arial;">
-            <div style="text-align:center;"><div style="font-size:18px;">♥</div><div style="font-size:7px;">42K</div></div>
-            <div style="text-align:center;"><div style="font-size:18px;">💬</div><div style="font-size:7px;">381</div></div>
-            <div style="text-align:center;"><div style="font-size:16px;">➦</div><div style="font-size:7px;">Share</div></div>
-          </div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,0.7));">
-            <div style="font-size:9px;color:rgba(255,255,255,0.75);margin-bottom:5px;font-family:Arial;">Fall must-haves are here 🍂</div>
-            <div style="text-align:center;border:1px solid rgba(255,255,255,0.4);color:#fff;font-size:9px;padding:4px;font-family:Arial;">▲ Shop Now</div>
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Where the rebrand actually landed culturally. The algorithm didn't care about the bankruptcy — it cared about content that held attention. Product in motion, real styling, platform-native creative. Discovery engine, not a direct-response play.</div>
+          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
+            <span>♥ 42K</span><span>💬 381</span><span>➦ Share</span>
           </div>
         </div>`
       },
       {
         url: 'pinterest.com/jcrew/fall-essentials', color: '#e60023',
         stat: 'Pinterest · Long-tail discovery · Highest-intent traffic',
-        w: 185, tilt: -1.5, z: 23,
+        w: 255, tilt: -1.5, z: 23,
         body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          <div style="background:linear-gradient(150deg,#f0e4d4 0%,#ddd0be 40%,#ede0d0 100%);height:228px;display:flex;align-items:center;justify-content:center;position:relative;">
-            <div style="text-align:center;">
-              <div style="font-family:Georgia,serif;font-size:19px;letter-spacing:0.2em;color:#2c1810;">J.CREW</div>
-              <div style="width:28px;height:1px;background:#8b7355;margin:8px auto;"></div>
-              <div style="font-size:7px;letter-spacing:0.12em;color:#8b7355;">FALL ESSENTIALS</div>
-              <div style="font-size:7px;color:#8b7355;margin-top:5px;">Shop the Edit</div>
-            </div>
-            <div style="position:absolute;top:8px;right:8px;background:#e60023;color:#fff;font-size:9px;font-weight:bold;padding:4px 11px;border-radius:20px;">Save</div>
+          ${photoGrid([8,9,10,11], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#e60023;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;">📌</div>
+            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Promoted Pin</span></div>
           </div>
-          <div style="padding:7px 10px 4px;">
-            <div style="font-size:10px;font-weight:bold;color:#111;">J.Crew Fall Essentials — The Full Edit</div>
-            <div style="font-size:9px;color:#767676;margin-top:2px;">jcrew.com</div>
-          </div>
-          <div style="display:flex;gap:3px;padding:4px 6px 7px;">
-            <div style="flex:1;height:38px;background:#e8d5c0;border-radius:3px;"></div>
-            <div style="flex:1;height:38px;background:#d4c4b0;border-radius:3px;"></div>
-            <div style="flex:1;height:38px;background:#c8b8a4;border-radius:3px;"></div>
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Long-tail discovery with the highest-intent traffic in the mix. People on Pinterest are actively looking for what to buy next — J.Crew's catalog aesthetic translated directly into that intent. The click quality was different here than anywhere else.</div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
+            <span>💾 Save</span><span>↗ Send</span><span>jcrew.com</span>
           </div>
         </div>`
       },
       {
         url: 'ads.snapchat.com/jcrew_holiday', color: '#FFFC00',
         stat: 'Snapchat · Younger audience pull · Brand awareness lever',
-        w: 172, tilt: 3.0, z: 22,
-        body: `<div style="background:#000;height:296px;position:relative;overflow:hidden;font-family:Arial,sans-serif;">
-          <div style="position:absolute;inset:0;background:linear-gradient(160deg,#f5d020 0%,#f53803 55%,#1a003a 100%);opacity:0.82;"></div>
-          <div style="position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:center;">
-            <div style="width:28px;height:28px;border-radius:50%;background:#FFFC00;display:flex;align-items:center;justify-content:center;font-size:13px;">👻</div>
-            <div style="font-size:8px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.25);padding:2px 7px;border-radius:2px;">Ad</div>
+        w: 255, tilt: 3.0, z: 22,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          ${photoGrid([12,13,14,15], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#FFFC00;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">👻</div>
+            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Sponsored Story</span></div>
           </div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);text-align:center;">
-            <div style="font-family:Georgia,serif;font-size:20px;letter-spacing:0.2em;color:#fff;font-weight:bold;text-shadow:0 1px 6px rgba(0,0,0,0.4);">J.CREW</div>
-            <div style="font-size:7px;letter-spacing:0.14em;color:rgba(255,255,255,0.75);margin-top:5px;">HOLIDAY COLLECTION</div>
-          </div>
-          <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;">
-            <div style="font-size:9px;color:rgba(255,255,255,0.7);margin-bottom:3px;">Swipe up to shop</div>
-            <div style="color:#fff;font-size:16px;">⌃</div>
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Full-screen, no competition for attention. The brand awareness lever for an audience that didn't have a J.Crew relationship yet. Not where conversions happened — where brand memory got made. You don't close on Snapchat. You introduce.</div>
+          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
+            <span>↑ Swipe up</span><span>💬 Reply</span><span>↗ Share</span>
           </div>
         </div>`
       },
       {
         url: 'ads.twitter.com/jcrew_promo', color: '#000000',
         stat: 'X · Tactical lever · Cultural moments and drops',
-        w: 265, tilt: -3.0, z: 26,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;padding:10px;">
-          <div style="display:flex;gap:8px;margin-bottom:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#e8a820;font-weight:bold;font-size:12px;flex-shrink:0;">J</div>
-            <div>
-              <div style="font-size:11px;font-weight:bold;color:#0F1419;">J.Crew</div>
-              <div style="font-size:9px;color:#536471;">@JCrew · <span style="background:#e8a820;color:#fff;font-size:7px;padding:1px 4px;border-radius:2px;">Ad</span></div>
-            </div>
+        w: 255, tilt: -3.0, z: 26,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          ${photoGrid([16,17,18,19], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:11px;flex-shrink:0;">𝕏</div>
+            <div style="font-size:10px;font-weight:bold;color:#0F1419;">@JCrew <span style="font-weight:normal;color:#536471;font-size:9px;">· Promoted</span></div>
           </div>
-          <div style="font-size:10px;color:#0F1419;line-height:1.5;margin-bottom:9px;">The closet you meant to have. New arrivals from the Fall collection — the pieces that always looked better in person.</div>
-          <div style="border:1px solid #e1e8ed;border-radius:8px;overflow:hidden;">
-            <div style="background:linear-gradient(135deg,#f5e6d3,#ddc9ad);height:74px;display:flex;align-items:center;justify-content:center;">
-              <div style="font-family:Georgia,serif;font-size:17px;letter-spacing:0.22em;color:#1a1a2e;">J.CREW</div>
-            </div>
-            <div style="padding:5px 8px;background:#fff;">
-              <div style="font-size:8px;color:#536471;">jcrew.com</div>
-              <div style="font-size:10px;font-weight:bold;color:#0F1419;">Shop the Fall Collection</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:14px;margin-top:8px;padding-top:6px;border-top:1px solid #e8e8e8;font-size:9px;color:#536471;">
-            <span>💬 128</span><span>🔁 344</span><span>♥ 2.1K</span><span>📊</span>
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Tactical. J.Crew coming back from bankruptcy was a story the fashion industry was watching. X put the brand inside that conversation as it happened — drops, announcements, moment adjacency. The spend was small relative to the reach it earned.</div>
+          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#536471;">
+            <span>💬 128</span><span>🔁 344</span><span>♥ 2.1K</span>
           </div>
         </div>`
       },
       {
         url: 'linkedin.com/company/jcrew/ads', color: '#0A66C2',
         stat: 'LinkedIn · Brand and recruiting plays · The unexpected channel',
-        w: 265, tilt: 1.5, z: 21,
+        w: 255, tilt: 1.5, z: 21,
         body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          <div style="display:flex;gap:8px;align-items:flex-start;padding:10px 10px 6px;">
-            <div style="width:38px;height:38px;border-radius:4px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#e8a820;font-weight:bold;font-size:13px;flex-shrink:0;">J</div>
-            <div>
-              <div style="font-size:11px;font-weight:bold;color:#000;">J.Crew</div>
-              <div style="font-size:8px;color:#666;">Apparel &amp; Fashion · 842,000 followers</div>
-              <div style="font-size:8px;color:#0A66C2;">Promoted</div>
-            </div>
+          ${photoGrid([20,21,22,23], 76)}
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
+            <div style="width:26px;height:26px;border-radius:4px;background:#0A66C2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">in</div>
+            <div style="font-size:10px;font-weight:bold;color:#000;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Promoted · 842K followers</span></div>
           </div>
-          <div style="font-size:10px;color:#191919;line-height:1.5;padding:0 10px 8px;">How J.Crew is rebuilding a beloved American brand — and what the new collection signals about where the company is going.</div>
-          <div style="background:linear-gradient(135deg,#f5e6d3 0%,#1a1a2e 100%);height:86px;display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;">
-              <div style="font-family:Georgia,serif;font-size:19px;letter-spacing:0.22em;color:#fff;">J.CREW</div>
-              <div style="font-size:7px;letter-spacing:0.12em;color:rgba(255,255,255,0.65);margin-top:4px;">REIMAGINED</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:10px;padding:6px 10px;border-top:1px solid #e0e0e0;font-size:9px;color:#666;">
+          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">The unexpected one. A brand rebuilding after bankruptcy is a business story, not just a fashion story. The LinkedIn audience — people in retail, brand, and fashion strategy — was paying attention. Earned organic reach layered on top of the paid placement.</div>
+          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e0e0e0;font-size:9px;color:#666;">
             <span>👍 Like</span><span>💬 Comment</span><span>↗ Repost</span>
           </div>
         </div>`
