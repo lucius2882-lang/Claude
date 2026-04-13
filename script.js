@@ -731,7 +731,8 @@
       { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved', photos: ['https://i.imgur.com/FPLyO64.jpg','https://i.imgur.com/jW8Su7Y.jpg'], slides: [
         { label: 'The Skill', text: 'Coordinated regularly with HR, Facilities, and Communications teams to execute events and resolve operational issues across Happier\'s properties.' },
         { label: 'How It Worked', text: 'Hospitality doesn\'t operate in a silo. Getting the right things done meant knowing who to call, communicating clearly, and following through without being chased.' }
-      ]}
+      ]},
+      { time: '8:00 PM', pax: 4, guest: 'Chalet · 4 top', note: 'Member mentioned Studio Skate after dinner', table: 'Tbl 6', status: 'reserved' }
     ];
 
     const shifts = [
