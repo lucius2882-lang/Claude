@@ -171,7 +171,7 @@
       { label: "The Role", text: "Managed paid social for J.Crew during their post-bankruptcy rebrand — buying inventory across six platforms inside a $250K monthly budget. This is where I learned what acquisition at scale actually means." },
       { label: "The Dashboards", text: "Lived in the data: optimized daily against ROAS, kept campaigns above the three-dollar return floor, and presented results to client and internal teams every week. The number had to make sense before anything else did." },
       { label: "The Data", text: "Pulled five years of historical campaign performance to find the patterns nobody had time to look for, then used them to inform live optimization. The job was making the archive useful." },
-      { label: "The Platforms", text: "Worked Meta, Pinterest, TikTok, Snapchat, X, and LinkedIn simultaneously. Learned the hard way which platform deserves which dollar — and why the answer changes every quarter." },
+      { label: "The Platforms", text: "Worked Meta, Pinterest, TikTok, Snapchat, X, and LinkedIn simultaneously. Learned through trials and data which platform deserves which dollar — and why the answer changes every quarter." },
       { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, QA, and client-facing performance presentations. The job was as much communication as it was analysis." }
     ];
 
