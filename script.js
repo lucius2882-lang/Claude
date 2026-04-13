@@ -686,10 +686,10 @@
         { label: 'The Skill', text: 'Stewarded relationships with founding members, regulars, and high-value guests. Primary point of contact across every service period.' },
         { label: 'How It Worked', text: 'Tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. Joy is the strongest engine of brand memory. That was the strategy.' }
       ]},
-      { time: '12:00 PM', pax: 6, guest: 'Brand Activation & Event Production', note: 'End-to-end activation from inquiry through day-of', table: 'Tbl 10', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Produced private events and brand activations from first inquiry through day-of execution, coordinating logistics, guest experience, and on-site management as the single point of accountability.' },
-        { label: 'How It Worked', text: 'Every activation required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. The coordination stayed invisible. The experience didn\'t.' },
-        { label: 'The Result', text: 'Activations that materialized the membership\'s value in the room. Guests experienced something singular: the kind of moment that only existed once, in that space, with those people.' }
+      { time: '12:00 PM', pax: 6, guest: 'Studio Skate — Ice Activation', note: 'Five-event series · 1,000+ invite list · Chalet → rink conversion', table: 'Event', status: 'completed', slides: [
+        { label: 'The Activation', text: 'Produced Studio Skate — a five-event ice skating series built to convert Chalet dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, and day-of execution start to finish.' },
+        { label: 'The Audience Build', text: 'Built a 1,000+ person invite list from scratch and managed live conversion of pop-up walk-bys into rink guests on the night. The event was the marketing.' },
+        { label: 'The Result', text: 'Five events. Delivered end-to-end. The kind of activation that only works when every piece is coordinated — and that becomes a membership story people actually tell.' }
       ]},
       { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed', slides: [
         { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable, balancing capacity, pacing, and the guest experience from the host stand.' },
@@ -718,9 +718,10 @@
         { label: 'How It Worked', text: 'Knowing the systems meant the team could lean on me for troubleshooting during service, and I could pull accurate reporting at close without delays.' },
         { label: 'The Result', text: 'Faster service, cleaner data, and a team that wasn\'t blocked by technology issues during high-volume periods.' }
       ]},
-      { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
-        { label: 'The Skill', text: 'Produced large-scale activations across multiple Happier properties, managing logistics, vendor coordination, and cross-departmental communication from inquiry through execution.' },
-        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show. I kept every function aligned and moving toward the same deadline. Five activations in a single month at peak season.' }
+      { time: '3:00 PM', pax: 20, guest: 'Tyla · OBJ · Luar', note: 'Release parties, birthdays, fashion activations — floor-level', table: 'Main Floor', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
+        { label: 'In the Room', text: 'Worked events on the floor including Tyla\'s release party, Odell Beckham Jr.\'s birthday, and Luar fashion shows. The members club was where the culture was happening — the job was making sure it felt that way for everyone in it.' },
+        { label: 'What That Requires', text: 'High-profile events don\'t run themselves. Seating, flow, VIP handling, real-time problem solving — the floor work is what makes the room feel effortless. Nobody in the room should ever see the coordination behind it.' },
+        { label: 'The Standard', text: 'The names on the booking didn\'t change the standard. They raised the stakes.' }
       ]},
       { time: '5:00 PM', pax: 2, guest: 'Service Standards', note: 'Brand delivery from first cover to last', table: 'Tbl 5', status: 'completed', slides: [
         { label: 'The Skill', text: 'Held Happier\'s brand standard across every service period, from the first cover of the day through the last. The brand doesn\'t live in a deck. It lives in the room.' },
@@ -960,9 +961,9 @@
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
           { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. We rebuilt it.', detail: 'Spring 2020', slides: [
-            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed overnight. This was a family-owned operation — alongside family ownership, the task was keeping it alive and rebuilding from scratch while the industry reinvented itself in real time.' },
-            { label: 'The Work', text: 'Built out takeout ordering systems, digital marketing workflows, and fulfillment coordination from zero while the dining room was closed. Rewrote the SOPs as a team, retrained on every new protocol, and ran operations through every phase of reopening.' },
-            { label: 'The Result', text: 'The business stayed operational through the full crisis. Service quality held when the dining room reopened. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan.' }
+            { label: 'The Situation', text: 'COVID hit in March 2020. The dining room closed overnight. The playbook disappeared. We rebuilt the whole operation from scratch while the industry figured out what it even was anymore.' },
+            { label: 'The Work', text: 'Stood up the online ordering system, ran the digital marketing that brought takeout customers in, coordinated fulfillment from kitchen to curb. Wrote the reopening SOPs. Retrained the team for every phase of coming back to dine-in.' },
+            { label: 'The Result', text: 'The business stayed operational through the full crisis. Service quality held when the dining room reopened. The lesson: a brand survives or dies on whether you can hold the experience together when nothing is going to plan.' }
           ]}
         ]
       }
