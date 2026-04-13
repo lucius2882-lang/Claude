@@ -125,33 +125,31 @@
         title: "Guest Experience & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Maître D' and Events Producer at a Brooklyn wellness members club. The brand wasn't a logo or a campaign. It was the membership itself. Every interaction was simultaneously selling and delivering the brand promise." },
-          { heading: "Stewarding the Room", text: "Led a team of 5 through full-day service, managing the floor, directing the host stand, making real-time calls. Primary point of contact for founding members, regulars, and VIP guests across every service period." },
-          { heading: "Brand in the Room", text: "Coordinated brand collaborations with fashion and art partners: singular activations designed to materialize the membership's value beyond the physical space. Supported the openings of two new venues, Habibi and SAA." },
-          { heading: "Event Activation", text: "Produced private events and corporate activations end-to-end across multiple properties, coordinating with HR, Facilities, and Communications. Delivered five activations in a single month at peak season." },
-          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and brand stewardship." }
+          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Ran the floor and led a team of five at a Brooklyn members club. The brand was the membership — and every shift was an activation." },
+          { heading: "Studio Skate", text: "Produced a five-event ice skating activation at The Chalet built to convert dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, day-of execution, and the audience build: 1,000+ invite list plus live conversion of pop-up walk-bys into rink guests." },
+          { heading: "In the Room", text: "Worked events on the floor including Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows. The members club was where the culture was happening — the job was making sure it felt that way for everyone in the room." },
+          { heading: "The Openings", text: "Helped open two new venues under the same hospitality group — Habibi and SAA — from buildout walk-throughs to opening-week service. Every new opening is a brand launch. Treated it that way." },
+          { heading: "The Relationships", text: "Held the relationships with founding members, regulars, and VIPs. Coordinated with HR, Facilities, and Comms on corporate buyouts. Daily ops on Resy, OpenTable, and Toast." }
         ]
       },
       manager: {
         title: "Floor & Closing Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a family-owned bar and grill, run alongside family ownership. Front of house, digital marketing, takeout fulfillment, staff direction. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan." },
-          { heading: "Owning the Shift", text: "Ran service across all dayparts: lunch rushes, dinner covers, late-night crowds. Coordinated staffing and execution from open to close. Standards held regardless of volume because that was the only option." },
-          { heading: "The COVID Pivot", text: "Built out takeout ordering systems, digital marketing, and fulfillment workflows during COVID closure. Led team retraining across every phase of reopening. Rewrote the SOPs alongside the team, together, not from above." },
-          { heading: "Closing the Night", text: "Every close meant nightly financial reports, cash reconciliation, scheduling reviews, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
-          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly. That turned out to be the most important thing." }
+          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Ran floor operations across lunch, dinner, and late-night at a high-volume venue alongside family ownership. The brand was local and personal — everything depended on whether you could hold the experience together on a bad night." },
+          { heading: "The COVID Pivot", text: "When COVID hit, rebuilt the whole operation: stood up the online ordering system, ran the digital marketing that brought takeout customers in, coordinated fulfillment from kitchen to curb. The dining room was closed. The business wasn't." },
+          { heading: "The Reopening", text: "Wrote the reopening SOPs and retrained the team for every phase of coming back to dine-in. Kept the standards intact through a period when nobody had a playbook." },
+          { heading: "Closing the Night", text: "Closed every night — financial reports, cash reconciliation, Health Department walk-throughs, the whole shift-end stack. Cross-trained staff across every FOH role and ran ongoing coaching throughout." }
         ]
       },
       digital: {
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency where I first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
-          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections at the local and state level. Every ask, every subject line, every send mattered. Campaigns live or die on whether attention converts." },
-          { heading: "Writing & Testing", text: "Drafted fundraising copy across channels and ran A/B tests on tone, subject lines, and ask amounts, informed by years of list performance data and a clear understanding of what moves people to act." },
-          { heading: "Scale & QA", text: "Managed QA pipelines for campaign assets going to 100,000+ subscriber lists. One broken link or rendering error at that scale is a real problem. Nothing shipped without sign-off." },
-          { heading: "Technical + Creative", text: "Built HTML/CSS email templates for CRM deployment and handled creative production in Adobe Photoshop and Illustrator. The acquisition discipline and the craft lived in the same role." }
+          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital fundraising for state and local political candidates. Million-dollar lift, 100,000+ subscriber lists, real money on the line every send. This is where I learned that persuasion is a discipline, not a vibe." },
+          { heading: "The Testing", text: "Drafted fundraising emails and A/B tested everything: subject lines, tone, ask amounts, the order of the buttons. Every variable was a hypothesis. Every send was data." },
+          { heading: "The Technical Work", text: "Built HTML/CSS email templates for CRM deployment and handled creative production in Photoshop and Illustrator. The acquisition work and the craft lived in the same role." },
+          { heading: "The Lesson", text: "Political fundraising is just marketing under maximum pressure. Every open, every click, every dollar raised is a conversion. And every conversion is a vote you might actually win." }
         ]
       }
     };
@@ -170,11 +168,11 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Digital Marketing Analyst at Kepler, a data-driven performance marketing agency. This is where I formalized my understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
-      { label: "The Budget", text: "Managed paid social inventory across six platforms within a $250K monthly client budget. Maintained consistent 3+ dollar ROAS across campaign portfolios. Every allocation decision was backed by five years of performance data. Gut-checks ran through the numbers first." },
-      { label: "Reading the Data", text: "Pulled insights from five years of campaign performance data to surface audience trends, then translated those findings into concrete optimization decisions for live campaigns." },
-      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing performance presentations. The job was as much communication and coordination as it was analysis." },
-      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own creative logic, audience behavior, and optimization levers." }
+      { label: "The Role", text: "Managed paid social for J.Crew during their post-bankruptcy rebrand — buying inventory across six platforms inside a $250K monthly budget. This is where I learned what acquisition at scale actually means." },
+      { label: "The Dashboards", text: "Lived in the data: optimized daily against ROAS, kept campaigns above the three-dollar return floor, and presented results to client and internal teams every week. The number had to make sense before anything else did." },
+      { label: "The Data", text: "Pulled five years of historical campaign performance to find the patterns nobody had time to look for, then used them to inform live optimization. The job was making the archive useful." },
+      { label: "The Platforms", text: "Worked Meta, Pinterest, TikTok, Snapchat, X, and LinkedIn simultaneously. Learned the hard way which platform deserves which dollar — and why the answer changes every quarter." },
+      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, QA, and client-facing performance presentations. The job was as much communication as it was analysis." }
     ];
 
     // --- Detail panel ---
