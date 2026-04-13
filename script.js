@@ -154,25 +154,159 @@
       }
     };
 
-    // All campaign photos — add more URLs here; slides cycle through automatically
-    const keplerPhotos = [
-      "https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg",
-      "https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg",
-      "https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg",
-      "https://i.imgur.com/V87MvMv.jpg","https://i.imgur.com/zooYfXs.jpg","https://i.imgur.com/oLraQCj.jpg",
-      "https://i.imgur.com/PoZOPu5.jpg","https://i.imgur.com/nkJkTrq.jpg","https://i.imgur.com/9Fw6aNL.jpg",
-      "https://i.imgur.com/yQy69wT.jpg","https://i.imgur.com/9kCSEAw.jpg","https://i.imgur.com/9OZ0pfc.jpg",
-      "https://i.imgur.com/Q9zEVHQ.jpg","https://i.imgur.com/iyMfLOj.jpg","https://i.imgur.com/r7w7bcD.jpg",
-      "https://i.imgur.com/k5T6i51.jpg","https://i.imgur.com/7a0GApL.jpg","https://i.imgur.com/WCdJDmm.jpg",
-      "https://i.imgur.com/hCNI1s2.jpg","https://i.imgur.com/ovsxnx3.jpg","https://i.imgur.com/xJI4sxl.jpg"
-    ];
-
-    const keplerSlides = [
-      { label: "The Role", text: "Managed paid social for J.Crew during their post-bankruptcy rebrand — buying inventory across six platforms inside a $250K monthly budget. This is where I learned what acquisition at scale actually means." },
-      { label: "The Dashboards", text: "Lived in the data: optimized daily against ROAS, kept campaigns above the three-dollar return floor, and presented results to client and internal teams every week. The number had to make sense before anything else did." },
-      { label: "The Data", text: "Pulled five years of historical campaign performance to find the patterns nobody had time to look for, then used them to inform live optimization. The job was making the archive useful." },
-      { label: "The Platforms", text: "Worked Meta, Pinterest, TikTok, Snapchat, X, and LinkedIn simultaneously. Learned through trials and data which platform deserves which dollar — and why the answer changes every quarter." },
-      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, QA, and client-facing performance presentations. The job was as much communication as it was analysis." }
+    // --- J.Crew × Kepler — Pop-Up Storm ---
+    const jcrewDefs = [
+      {
+        url: 'meta.com/ads/jcrew_fw21', color: '#1877F2',
+        stat: 'Meta · The workhorse · ~⅓ of monthly spend',
+        w: 262, tilt: -2.5, z: 25,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 10px 6px;">
+            <div style="width:34px;height:34px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:12px;flex-shrink:0;">J</div>
+            <div>
+              <div style="font-size:11px;font-weight:bold;color:#050505;">J.Crew</div>
+              <div style="font-size:9px;color:#65676B;">Sponsored · 🌐 Everyone</div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:#050505;padding:0 10px 8px;line-height:1.4;">The pieces you forgot you loved. New arrivals, same craft.</div>
+          <div style="background:linear-gradient(135deg,#f5e6d3,#ddc9ad);height:148px;display:flex;align-items:center;justify-content:center;">
+            <div style="text-align:center;">
+              <div style="font-family:Georgia,serif;font-size:20px;font-weight:bold;letter-spacing:0.22em;color:#1a1a2e;">J.CREW</div>
+              <div style="font-size:7px;letter-spacing:0.15em;color:#6b5040;margin-top:5px;">FALL COLLECTION</div>
+            </div>
+          </div>
+          <div style="background:#f0f2f5;border-top:1px solid #ddd;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:9px;color:#65676B;">JCREW.COM</div>
+            <div style="background:#1877F2;color:#fff;font-size:9px;padding:3px 9px;border-radius:3px;">Shop Now</div>
+          </div>
+          <div style="display:flex;gap:14px;padding:7px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
+            <span>👍 Like</span><span>💬 Comment</span><span>↗ Share</span>
+          </div>
+        </div>`
+      },
+      {
+        url: 'tiktok.com/jcrewofficial', color: '#010101',
+        stat: 'TikTok · Where the rebrand actually landed',
+        w: 172, tilt: 2.0, z: 24,
+        body: `<div style="background:#000;height:296px;position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:linear-gradient(170deg,#1a1a2e 0%,#2c1810 55%,#111 100%);"></div>
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(transparent 0,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 20px);"></div>
+          <div style="position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.75);font-family:Arial;">@jcrewofficial</div>
+            <div style="font-size:8px;background:rgba(255,255,255,0.15);color:#fff;padding:2px 6px;border-radius:2px;">Ad</div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);text-align:center;">
+            <div style="font-family:Georgia,serif;font-size:22px;letter-spacing:0.22em;color:#fff;font-weight:bold;">J.CREW</div>
+            <div style="font-size:7px;letter-spacing:0.14em;color:rgba(255,255,255,0.6);margin-top:5px;">NEW COLLECTION</div>
+          </div>
+          <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;align-items:center;color:#fff;font-family:Arial;">
+            <div style="text-align:center;"><div style="font-size:18px;">♥</div><div style="font-size:7px;">42K</div></div>
+            <div style="text-align:center;"><div style="font-size:18px;">💬</div><div style="font-size:7px;">381</div></div>
+            <div style="text-align:center;"><div style="font-size:16px;">➦</div><div style="font-size:7px;">Share</div></div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,0.7));">
+            <div style="font-size:9px;color:rgba(255,255,255,0.75);margin-bottom:5px;font-family:Arial;">Fall must-haves are here 🍂</div>
+            <div style="text-align:center;border:1px solid rgba(255,255,255,0.4);color:#fff;font-size:9px;padding:4px;font-family:Arial;">▲ Shop Now</div>
+          </div>
+        </div>`
+      },
+      {
+        url: 'pinterest.com/jcrew/fall-essentials', color: '#e60023',
+        stat: 'Pinterest · Long-tail discovery · Highest-intent traffic',
+        w: 185, tilt: -1.5, z: 23,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          <div style="background:linear-gradient(150deg,#f0e4d4 0%,#ddd0be 40%,#ede0d0 100%);height:228px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="text-align:center;">
+              <div style="font-family:Georgia,serif;font-size:19px;letter-spacing:0.2em;color:#2c1810;">J.CREW</div>
+              <div style="width:28px;height:1px;background:#8b7355;margin:8px auto;"></div>
+              <div style="font-size:7px;letter-spacing:0.12em;color:#8b7355;">FALL ESSENTIALS</div>
+              <div style="font-size:7px;color:#8b7355;margin-top:5px;">Shop the Edit</div>
+            </div>
+            <div style="position:absolute;top:8px;right:8px;background:#e60023;color:#fff;font-size:9px;font-weight:bold;padding:4px 11px;border-radius:20px;">Save</div>
+          </div>
+          <div style="padding:7px 10px 4px;">
+            <div style="font-size:10px;font-weight:bold;color:#111;">J.Crew Fall Essentials — The Full Edit</div>
+            <div style="font-size:9px;color:#767676;margin-top:2px;">jcrew.com</div>
+          </div>
+          <div style="display:flex;gap:3px;padding:4px 6px 7px;">
+            <div style="flex:1;height:38px;background:#e8d5c0;border-radius:3px;"></div>
+            <div style="flex:1;height:38px;background:#d4c4b0;border-radius:3px;"></div>
+            <div style="flex:1;height:38px;background:#c8b8a4;border-radius:3px;"></div>
+          </div>
+        </div>`
+      },
+      {
+        url: 'ads.snapchat.com/jcrew_holiday', color: '#FFFC00',
+        stat: 'Snapchat · Younger audience pull · Brand awareness lever',
+        w: 172, tilt: 3.0, z: 22,
+        body: `<div style="background:#000;height:296px;position:relative;overflow:hidden;font-family:Arial,sans-serif;">
+          <div style="position:absolute;inset:0;background:linear-gradient(160deg,#f5d020 0%,#f53803 55%,#1a003a 100%);opacity:0.82;"></div>
+          <div style="position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#FFFC00;display:flex;align-items:center;justify-content:center;font-size:13px;">👻</div>
+            <div style="font-size:8px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.25);padding:2px 7px;border-radius:2px;">Ad</div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);text-align:center;">
+            <div style="font-family:Georgia,serif;font-size:20px;letter-spacing:0.2em;color:#fff;font-weight:bold;text-shadow:0 1px 6px rgba(0,0,0,0.4);">J.CREW</div>
+            <div style="font-size:7px;letter-spacing:0.14em;color:rgba(255,255,255,0.75);margin-top:5px;">HOLIDAY COLLECTION</div>
+          </div>
+          <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.7);margin-bottom:3px;">Swipe up to shop</div>
+            <div style="color:#fff;font-size:16px;">⌃</div>
+          </div>
+        </div>`
+      },
+      {
+        url: 'ads.twitter.com/jcrew_promo', color: '#000000',
+        stat: 'X · Tactical lever · Cultural moments and drops',
+        w: 265, tilt: -3.0, z: 26,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;padding:10px;">
+          <div style="display:flex;gap:8px;margin-bottom:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#e8a820;font-weight:bold;font-size:12px;flex-shrink:0;">J</div>
+            <div>
+              <div style="font-size:11px;font-weight:bold;color:#0F1419;">J.Crew</div>
+              <div style="font-size:9px;color:#536471;">@JCrew · <span style="background:#e8a820;color:#fff;font-size:7px;padding:1px 4px;border-radius:2px;">Ad</span></div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:#0F1419;line-height:1.5;margin-bottom:9px;">The closet you meant to have. New arrivals from the Fall collection — the pieces that always looked better in person.</div>
+          <div style="border:1px solid #e1e8ed;border-radius:8px;overflow:hidden;">
+            <div style="background:linear-gradient(135deg,#f5e6d3,#ddc9ad);height:74px;display:flex;align-items:center;justify-content:center;">
+              <div style="font-family:Georgia,serif;font-size:17px;letter-spacing:0.22em;color:#1a1a2e;">J.CREW</div>
+            </div>
+            <div style="padding:5px 8px;background:#fff;">
+              <div style="font-size:8px;color:#536471;">jcrew.com</div>
+              <div style="font-size:10px;font-weight:bold;color:#0F1419;">Shop the Fall Collection</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;margin-top:8px;padding-top:6px;border-top:1px solid #e8e8e8;font-size:9px;color:#536471;">
+            <span>💬 128</span><span>🔁 344</span><span>♥ 2.1K</span><span>📊</span>
+          </div>
+        </div>`
+      },
+      {
+        url: 'linkedin.com/company/jcrew/ads', color: '#0A66C2',
+        stat: 'LinkedIn · Brand and recruiting plays · The unexpected channel',
+        w: 265, tilt: 1.5, z: 21,
+        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
+          <div style="display:flex;gap:8px;align-items:flex-start;padding:10px 10px 6px;">
+            <div style="width:38px;height:38px;border-radius:4px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#e8a820;font-weight:bold;font-size:13px;flex-shrink:0;">J</div>
+            <div>
+              <div style="font-size:11px;font-weight:bold;color:#000;">J.Crew</div>
+              <div style="font-size:8px;color:#666;">Apparel &amp; Fashion · 842,000 followers</div>
+              <div style="font-size:8px;color:#0A66C2;">Promoted</div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:#191919;line-height:1.5;padding:0 10px 8px;">How J.Crew is rebuilding a beloved American brand — and what the new collection signals about where the company is going.</div>
+          <div style="background:linear-gradient(135deg,#f5e6d3 0%,#1a1a2e 100%);height:86px;display:flex;align-items:center;justify-content:center;">
+            <div style="text-align:center;">
+              <div style="font-family:Georgia,serif;font-size:19px;letter-spacing:0.22em;color:#fff;">J.CREW</div>
+              <div style="font-size:7px;letter-spacing:0.12em;color:rgba(255,255,255,0.65);margin-top:4px;">REIMAGINED</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:6px 10px;border-top:1px solid #e0e0e0;font-size:9px;color:#666;">
+            <span>👍 Like</span><span>💬 Comment</span><span>↗ Repost</span>
+          </div>
+        </div>`
+      }
     ];
 
     // --- Detail panel ---
@@ -199,112 +333,110 @@
       requestAnimationFrame(() => detail.classList.add('visible'));
     }
 
-    // --- Kepler popup ---
-    const overlay = document.getElementById('overlay');
-    let currentPopup = null;
-    let keplerActivePopups = [];
-    let keplerCurrentSlide = 0;
+    // --- J.Crew × Kepler popup ---
+    const jcrewEl = document.getElementById('jcrew');
+    let jcOpenCount = 0;
+    let jcSession = 0;
 
-    function clampPos(x, y, w, h) {
-      const pad = 16;
-      return {
-        x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
-        y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
-      };
-    }
-
-    function rnd(a, b) { return a + Math.random() * (b - a); }
-
-    function closeAllKeplerPopups(callback) {
-      if (!keplerActivePopups.length) { if (callback) callback(); return; }
-      let rem = keplerActivePopups.length;
-      keplerActivePopups.forEach(p => {
-        p.classList.add('closing');
-        p.addEventListener('animationend', () => {
-          p.remove();
-          if (--rem === 0) { keplerActivePopups = []; if (callback) callback(); }
-        }, { once: true });
-      });
-    }
-
-    function openKeplerSlideSet(idx) {
-      const slide = keplerSlides[idx];
-      const isLast = idx === keplerSlides.length - 1;
-      keplerCurrentSlide = idx;
-      const vw = window.innerWidth, vh = window.innerHeight;
-      const imgPH = `<div class="popup-photo-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Add photo</div>`;
-
-      // Five image popups scattered around the edges
-      const imgW = Math.min(vw > 900 ? 420 : 190, vw * 0.30);
-      const imgH = Math.min(vw > 900 ? 540 : 245, vh * 0.62);
-      const imgTilts = [rnd(-14,-5), rnd(5,14), rnd(-10,-2), rnd(3,12), rnd(-6,6)];
-      const zones = [
-        clampPos(rnd(vw*0.02, vw*0.10), rnd(vh*0.06, vh*0.18), imgW, imgH),  // top-left
-        clampPos(rnd(vw*0.67, vw*0.78), rnd(vh*0.06, vh*0.18), imgW, imgH),  // top-right
-        clampPos(rnd(vw*0.01, vw*0.08), rnd(vh*0.46, vh*0.60), imgW, imgH),  // left-mid
-        clampPos(rnd(vw*0.72, vw*0.82), rnd(vh*0.46, vh*0.60), imgW, imgH),  // right-mid
-        clampPos(rnd(vw*0.36, vw*0.46), rnd(vh*0.68, vh*0.78), imgW, imgH)   // bottom-center
-      ];
-
-      // Pick 5 photos from the pool for this slide
-      const slidePhotos = [0,1,2,3,4].map(i => keplerPhotos[(idx * 5 + i) % keplerPhotos.length]);
-
-      slidePhotos.forEach((url, i) => {
-        const p = document.createElement('div');
-        p.className = 'popup kimg-popup';
-        p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;cursor:move;`;
-        p.innerHTML = `
-          <button class="kimg-x" style="position:absolute;top:5px;right:5px;z-index:10;background:rgba(21,89,48,0.85);border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;">✕</button>
-          <div class="popup-photo" style="background:#1B6B3A;width:100%;height:100%;">${url ? `<img src="${url}" alt="" loading="lazy">` : imgPH}</div>`;
-        p.querySelector('.kimg-x').addEventListener('click', () => {
-          p.classList.add('closing');
-          p.addEventListener('animationend', () => {
-            p.remove();
-            keplerActivePopups = keplerActivePopups.filter(x => x !== p);
-            if (!keplerActivePopups.length) overlay.classList.remove('active');
-          }, { once: true });
-        });
-        makeDraggable(p, p);
-        document.body.appendChild(p);
-        keplerActivePopups.push(p);
-      });
-
-      // Text popup — centered, always on top
-      const txtW = Math.min(vw > 900 ? 600 : 370, vw * 0.60);
-      const txtPos = clampPos(vw / 2 - txtW / 2, vh / 2 - 150, txtW, 300);
-      const tp = document.createElement('div');
-      tp.className = 'popup';
-      tp.style.cssText = `--tilt:0deg;left:${txtPos.x}px;top:${txtPos.y}px;width:${txtW}px;height:auto;min-height:0;z-index:102;`;
-      tp.innerHTML = `
-        <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
-          <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
-          <div class="popup-controls">
-            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">_</button>
-            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">□</button>
-            <button class="popup-btn ktxt-x" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button>
+    function buildJCPopup(def) {
+      const el = document.createElement('div');
+      el.className = 'jc-popup';
+      el.style.setProperty('--tilt', def.tilt + 'deg');
+      el.style.setProperty('--z', def.z);
+      el.style.left = def.x + 'px';
+      el.style.top  = def.y + 'px';
+      el.style.width = def.w + 'px';
+      el.innerHTML = `
+        <div class="jc-titlebar">
+          <div class="jc-titlebar-left">
+            <div class="jc-favicon" style="background:${def.color};"></div>
+            <span class="jc-url">${def.url}</span>
           </div>
+          <button class="jc-close-x">✕</button>
         </div>
-        <div class="popup-body" style="background:#1B6B3A;border-top:1px solid rgba(255,255,255,0.15);">
-          <div class="popup-label" style="color:rgba(255,255,255,0.65);">${slide.label}</div>
-          <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
-        </div>
-        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
-          <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${keplerSlides.length}</span>
-          ${!isLast
-            ? `<button class="knext-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;letter-spacing:0.05em;">Next →</button>`
-            : `<button class="kclose-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;">Close</button>`}
-        </div>`;
-      tp.querySelector('.ktxt-x').addEventListener('click', () => history.back());
-      const nb = tp.querySelector('.knext-btn');
-      if (nb) nb.addEventListener('click', () => closeAllKeplerPopups(() => openKeplerSlideSet(idx + 1)));
-      const cb = tp.querySelector('.kclose-btn');
-      if (cb) cb.addEventListener('click', () => history.back());
-      makeDraggable(tp, tp.querySelector('[data-drag]'));
-      document.body.appendChild(tp);
-      keplerActivePopups.push(tp);
-
-      overlay.classList.add('active');
+        <div class="jc-ad-body">${def.body}</div>`;
+      el.querySelector('.jc-close-x').addEventListener('click', () => {
+        el.classList.add('closing');
+        setTimeout(() => {
+          showJCStatFlash(el, def.stat);
+          el.remove();
+          jcOpenCount--;
+          if (jcOpenCount <= 0) {
+            const hint = document.getElementById('jc-hint');
+            if (hint) hint.style.opacity = '0';
+            setTimeout(() => document.getElementById('jc-final').classList.add('visible'), 500);
+          }
+        }, 220);
+      });
+      return el;
     }
+
+    function showJCStatFlash(popup, stat) {
+      const desktop = document.getElementById('jc-desktop');
+      const dRect = desktop.getBoundingClientRect();
+      const pRect = popup.getBoundingClientRect();
+      const flash = document.createElement('div');
+      flash.className = 'jc-stat-flash';
+      flash.textContent = stat;
+      flash.style.left = (pRect.left - dRect.left + pRect.width / 2) + 'px';
+      flash.style.top  = (pRect.top  - dRect.top  + pRect.height / 2) + 'px';
+      flash.style.transform = 'translateX(-50%) translateY(-50%)';
+      desktop.appendChild(flash);
+      requestAnimationFrame(() => {
+        flash.classList.add('fade');
+        flash.addEventListener('transitionend', () => flash.remove(), { once: true });
+      });
+    }
+
+    function openJCrew() {
+      const mySession = ++jcSession;
+      jcOpenCount = jcrewDefs.length;
+      const finalEl  = document.getElementById('jc-final');
+      const hintEl   = document.getElementById('jc-hint');
+      const popupsEl = document.getElementById('jc-popups');
+      finalEl.classList.remove('visible');
+      hintEl.style.opacity = '';
+      popupsEl.innerHTML = '';
+      jcrewEl.style.display = 'block';
+      requestAnimationFrame(() => jcrewEl.classList.add('visible'));
+      const desktop = document.getElementById('jc-desktop');
+      const vw = desktop.offsetWidth, vh = desktop.offsetHeight;
+      const isMobile = vw < 680;
+      const positions = [
+        { fx: 0.03, fy: 0.06 }, // Meta
+        { fx: 0.27, fy: 0.04 }, // TikTok
+        { fx: 0.54, fy: 0.06 }, // Pinterest
+        { fx: 0.72, fy: 0.10 }, // Snapchat
+        { fx: 0.07, fy: 0.46 }, // X
+        { fx: 0.46, fy: 0.44 }, // LinkedIn
+      ];
+      jcrewDefs.forEach((def, i) => {
+        setTimeout(() => {
+          if (jcSession !== mySession) return;
+          if (!isMobile) {
+            const p = positions[i];
+            def.x = Math.max(8, Math.min(Math.round(p.fx * vw), vw - def.w - 8));
+            def.y = Math.max(8, Math.min(Math.round(p.fy * vh), vh - 320 - 8));
+          } else {
+            def.x = 0; def.y = 0;
+          }
+          const popup = buildJCPopup(def);
+          popupsEl.appendChild(popup);
+          requestAnimationFrame(() => popup.classList.add('loaded'));
+        }, i * 110);
+      });
+    }
+
+    function closeJCrew() {
+      jcSession++;
+      jcrewEl.classList.remove('visible');
+      setTimeout(() => {
+        jcrewEl.style.display = 'none';
+        document.getElementById('jc-popups').innerHTML = '';
+        document.getElementById('jc-final').classList.remove('visible');
+      }, 300);
+    }
+
 
     function makeDraggable(popup, handle) {
       let ox = 0, oy = 0, startX = 0, startY = 0, dragging = false;
@@ -864,6 +996,8 @@
       }
     }
 
+    document.getElementById('jc-close-btn').addEventListener('click', () => history.back());
+    document.getElementById('jc-exit-btn').addEventListener('click', () => history.back());
     document.getElementById('bk-close-btn').addEventListener('click', () => history.back());
 
     document.querySelectorAll('.bk-checklist-item').forEach(item => {
@@ -1203,7 +1337,7 @@
 
     function openPage(roleKey) {
       if (roleKey === 'marketing') {
-        closeAllKeplerPopups(() => openKeplerSlideSet(0));
+        openJCrew();
       } else if (roleKey === 'digital') {
         openGmail();
       } else if (roleKey === 'maitre') {
@@ -1214,7 +1348,7 @@
     }
 
     function closeCurrent() {
-      if (keplerActivePopups.length) { closeAllKeplerPopups(() => overlay.classList.remove('active')); return; }
+      if (jcrewEl.classList.contains('visible')) { closeJCrew(); return; }
       if (detail.classList.contains('visible')) {
         detail.classList.remove('visible');
         setTimeout(() => { detail.style.display = 'none'; }, 400);
@@ -1226,7 +1360,7 @@
     }
 
     function isAnyViewOpen() {
-      return keplerActivePopups.length > 0 ||
+      return jcrewEl.classList.contains('visible') ||
         detail.classList.contains('visible') ||
         gmailEl.classList.contains('visible') ||
         bookviewEl.classList.contains('visible') ||
@@ -1241,11 +1375,6 @@
         history.pushState({ page: roleKey }, '', '/' + slug);
         openPage(roleKey);
       });
-    });
-
-    // Overlay click closes Kepler via back
-    overlay.addEventListener('click', e => {
-      if (e.target === overlay && keplerActivePopups.length) history.back();
     });
 
     // Escape → back only when a view is open
