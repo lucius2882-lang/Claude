@@ -379,13 +379,17 @@
       margin: 18px auto 18px;
     }
     .splash-stats {
-      display: flex;
-      gap: 32px;
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      gap: 20px 36px;
       justify-content: center;
       margin-top: 20px;
       opacity: 0;
       transform: translateY(8px);
       animation: splash-rise 1s ease 1.3s forwards;
+    }
+    @media (max-width: 480px) {
+      .splash-stats { grid-template-columns: repeat(2, auto); gap: 20px 40px; }
     }
     .splash-stat {
       text-align: center;
