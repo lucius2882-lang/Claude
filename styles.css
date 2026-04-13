@@ -1531,6 +1531,88 @@
     }
 
     /* ═══════════════════════════════════════════
+       EXPERIENCE & SKILLS
+       ═══════════════════════════════════════════ */
+    #experience, #skills {
+      background: #f8f8f8;
+      padding: 72px 20px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .ex-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .ex-heading {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.38);
+      margin: 0 0 40px;
+    }
+    .role {
+      margin-bottom: 36px;
+    }
+    .role:last-child {
+      margin-bottom: 0;
+    }
+    .role-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #111;
+      margin: 0 0 4px;
+      letter-spacing: 0.01em;
+    }
+    .meta {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(0,0,0,0.45);
+      margin: 0 0 10px;
+    }
+    .role ul {
+      margin: 0;
+      padding-left: 18px;
+      list-style: disc;
+    }
+    .role ul li {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(0,0,0,0.7);
+      line-height: 1.65;
+      margin-bottom: 3px;
+    }
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px 40px;
+    }
+    .skill-group-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    .skill-group ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .skill-group ul li {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(0,0,0,0.65);
+      line-height: 1.7;
+    }
+    @media (max-width: 480px) {
+      .skill-grid { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════
        CONTACT FORM
        ═══════════════════════════════════════════ */
     #contact {
