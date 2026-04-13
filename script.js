@@ -61,7 +61,7 @@
           bullets:["Led FOH team of 5 through full-day service at a members-only wellness concept in Manhattan","Managed private event inquiries end-to-end across multiple properties \u2014 from inquiry through day-of execution","Served as primary point of contact for founding members, regulars, and VIP guests","Coordinated cross-functionally with HR, Facilities, and Communications on corporate events","Daily operation of Resy, OpenTable, and Toast POS; ran staff training and performance reviews"] },
         { title:"Digital Marketing Analyst", dates:"Mar 2021 \u2013 Apr 2023", company:"Kepler  \u00b7  New York, NY",
           bullets:["Purchased ad inventory across 6 social platforms within a $250K monthly client budget","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
-        { title:"Floor & Closing Manager", dates:"Nov 2019 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Bristol, NY",
+        { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
           bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 rewrote SOPs and retrained team for reopening"] },
         { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
           bullets:["Supported million-dollar digital fundraising campaigns for local and state political candidates","Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts","Ran QA on marketing materials distributed to lists of 100,000+ subscribers","Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop & Illustrator"] }
@@ -136,7 +136,7 @@
         title: "Floor & Closing Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Bristol, NY · Nov 2019 – Mar 2021", text: "Floor and closing manager at Lock Stock Bar & Grill — a high-volume spot running lunch, dinner, and late-night. Fast pace, full house, no shortcuts." },
+          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at Lock Stock Bar & Grill — a high-volume spot running lunch, dinner, and late-night. Fast pace, full house, no shortcuts." },
           { heading: "Owning the Shift", text: "Kept service flowing across all dayparts — lunch rushes, dinner covers, late-night crowds. Standards stayed consistent regardless of volume. That was the job." },
           { heading: "Closing the Night", text: "Every close meant financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
           { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a team that could adapt on the fly — which mattered a lot when COVID hit." },
@@ -1032,7 +1032,7 @@
           <div class="bm-ps-cover-overlay">
             <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
             <div class="bm-cover-rule"></div>
-            <div class="bm-cover-sub">Bristol, New York &nbsp;·&nbsp; Est. 2019</div>
+            <div class="bm-cover-sub">Canandaigua, NY &nbsp;·&nbsp; Est. 2019</div>
             <div class="bm-cover-sub" style="margin-top:4px">Floor &amp; Closing Manager</div>
             <div class="bm-cover-tap" style="margin-top:20px">Open ›</div>
           </div>
@@ -1083,7 +1083,7 @@
           </div>
           <div class="bm-ps-gutter"></div>
           <div class="bm-ps-half" style="position:relative;">${im(p2)}
-            <div class="bm-ps-caption">Lock Stock Bar &amp; Grill<br><span style="opacity:0.55;letter-spacing:0.12em">Bristol, New York</span></div>
+            <div class="bm-ps-caption">Lock Stock Bar &amp; Grill<br><span style="opacity:0.55;letter-spacing:0.12em">Canandaigua, NY</span></div>
           </div>
         </div>`;
       }
