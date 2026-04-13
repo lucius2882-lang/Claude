@@ -85,7 +85,7 @@
       sectionHead('SKILLS');
 
       const groups = [
-        { label:'Events & Hospitality', tags:['Private Events','Guest Relations','VIP Management','Resy','OpenTable','Toast POS'] },
+        { label:'Events & Brand Activation', tags:['Brand Activation','Guest Relations','VIP Management','Experiential Programming','Resy','OpenTable','Toast POS'] },
         { label:'Marketing', tags:['Paid Social','Campaign Management','A/B Testing','Performance Analytics','Email Marketing'] },
         { label:'Platforms', tags:['Meta','TikTok','LinkedIn','Pinterest','Snapchat'] },
         { label:'Operations', tags:['Team Leadership','Staff Training','Scheduling','Financial Reporting','Compliance'] },
@@ -125,33 +125,33 @@
         title: "Guest Experience & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Events producer and guest experience lead at a members-only wellness concept in Manhattan. Responsible for producing private events, coordinating activations, and managing the full guest journey from pre-production through day-of execution." },
-          { heading: "Running the Show", text: "Led a team of 5 through full-day live service — managing the floor, directing the host stand, and making real-time calls to keep every production running on schedule from open to close." },
-          { heading: "Guest Relationships", text: "Served as the primary on-site point of contact for VIP guests, talent, and founding members. Knowing names, preferences, and handling anything that went sideways with composure — that was the role." },
-          { heading: "Event Production", text: "Produced brand activations and private events end-to-end — from first inquiry through day-of execution across multiple properties. Coordinated with HR, Facilities, and Comms. Single point of accountability for every production." },
-          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts production coordination, logistics, and people management." }
+          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Maître D' and Events Producer at a Brooklyn wellness members club. The brand wasn't a logo or a campaign — it was the membership itself. Every interaction was simultaneously selling and delivering the brand promise." },
+          { heading: "Stewarding the Room", text: "Led a team of 5 through full-day service — managing the floor, directing the host stand, making real-time calls. Primary point of contact for founding members, regulars, and VIP guests across every service period." },
+          { heading: "Brand in the Room", text: "Coordinated brand collaborations with fashion and art partners — singular activations designed to materialize the membership's value beyond the physical space. Supported the openings of two new venues: Habibi and SAA." },
+          { heading: "Event Activation", text: "Produced private events and corporate activations end-to-end across multiple properties, coordinating with HR, Facilities, and Communications. Delivered five activations in a single month at peak season." },
+          { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and brand stewardship." }
         ]
       },
       manager: {
         title: "Floor & Closing Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a high-volume venue running three daily dayparts. Think of it as producing a live show from load-in to strike — three times a day, every day, no room for error." },
-          { heading: "Owning the Shift", text: "Coordinated staffing, setup, and execution across lunch, dinner, and late-night. Standards stayed consistent regardless of volume or venue pressure. That was the production." },
-          { heading: "Closing the Night", text: "Every close meant nightly financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The production wasn't wrapped until everything was signed off." },
-          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly — which mattered a lot when the playbook had to be rewritten entirely." },
-          { heading: "COVID Pivot", text: "Led the team through a full operational rebuild — we rewrote the SOPs together, retrained on every new protocol, and kept production quality intact through every phase of reopening." }
+          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a family-owned bar and grill — run alongside family ownership. The full system: front of house, digital marketing, takeout fulfillment, staff direction. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan." },
+          { heading: "Owning the Shift", text: "Ran service across all dayparts — lunch rushes, dinner covers, late-night crowds. Coordinated staffing and execution from open to close. Standards held regardless of volume because that was the only option." },
+          { heading: "The COVID Pivot", text: "Built out takeout ordering systems, digital marketing, and fulfillment workflows during COVID closure. Led team retraining across every phase of reopening. Rewrote the SOPs alongside the team — together, not from above." },
+          { heading: "Closing the Night", text: "Every close meant nightly financial reports, cash reconciliation, scheduling reviews, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
+          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly — which turned out to be the most important thing." }
         ]
       },
       digital: {
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency — supporting production of fundraising campaigns and communications for local and state candidates. Early training in production pipelines, QA, and creative execution under real deadlines." },
-          { heading: "The Stakes", text: "Supported million-dollar digital fundraising productions for real elections. Every asset, every ask, every subject line mattered — campaigns live or die on their output quality." },
-          { heading: "Writing & Testing", text: "Drafted campaign copy and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a clear understanding of what moves people to act." },
-          { heading: "Production QA", text: "Managed quality assurance on assets going to lists of 100,000+ subscribers. One broken link or rendering error at that scale is a real problem — nothing shipped without full sign-off." },
-          { heading: "Technical + Creative", text: "Built email templates in HTML and CSS for CRM deployment, and handled all creative production in Adobe Photoshop and Illustrator. Both sides of the production pipeline lived in the same role." }
+          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency — where Lucius first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
+          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections at the local and state level. Every ask, every subject line, every send mattered — campaigns live or die on whether attention converts." },
+          { heading: "Writing & Testing", text: "Drafted fundraising copy across channels and ran A/B tests on tone, subject lines, and ask amounts — informed by years of list performance data and a clear understanding of what moves people to act." },
+          { heading: "Scale & QA", text: "Managed QA pipelines for campaign assets going to 100,000+ subscriber lists. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off." },
+          { heading: "Technical + Creative", text: "Built HTML/CSS email templates for CRM deployment and handled creative production in Adobe Photoshop and Illustrator. The acquisition discipline and the craft lived in the same role." }
         ]
       }
     };
@@ -170,11 +170,11 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler — a data-driven performance marketing agency. Part campaign production, part audience analytics, part brand strategy. Managed concurrent productions across 6 platforms, coordinating assets, timelines, and client approvals from pre-launch through live optimization." },
-      { label: "The Budget", text: "Managed ad inventory production across 6 social platforms inside a $250K monthly client budget. Every allocation decision was backed by 5 years of performance data — creative gut-checks ran through the numbers first." },
-      { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete production decisions for active campaigns." },
-      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing presentations. The job was as much production management as it was analysis." },
-      { label: "Platforms", text: "Coordinated production across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own creative formats, asset specs, and delivery requirements." }
+      { label: "The Role", text: "Digital Marketing Analyst at Kepler — a data-driven performance marketing agency. This is where Lucius formalized his understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
+      { label: "The Budget", text: "Managed paid social inventory across six platforms within a $250K monthly client budget. Maintained consistent 3+ dollar ROAS across campaign portfolios. Every allocation decision was backed by five years of performance data — gut-checks ran through the numbers first." },
+      { label: "Reading the Data", text: "Pulled insights from five years of campaign performance data to surface audience trends — then translated those findings into concrete optimization decisions for live campaigns." },
+      { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing performance presentations. The job was as much communication and coordination as it was analysis." },
+      { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own creative logic, audience behavior, and optimization levers." }
     ];
 
     // --- Detail panel ---
