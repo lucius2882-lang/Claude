@@ -147,7 +147,7 @@
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency where Lucius first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
+          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency where I first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
           { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections at the local and state level. Every ask, every subject line, every send mattered. Campaigns live or die on whether attention converts." },
           { heading: "Writing & Testing", text: "Drafted fundraising copy across channels and ran A/B tests on tone, subject lines, and ask amounts, informed by years of list performance data and a clear understanding of what moves people to act." },
           { heading: "Scale & QA", text: "Managed QA pipelines for campaign assets going to 100,000+ subscriber lists. One broken link or rendering error at that scale is a real problem. Nothing shipped without sign-off." },
@@ -170,7 +170,7 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Digital Marketing Analyst at Kepler, a data-driven performance marketing agency. This is where Lucius formalized his understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
+      { label: "The Role", text: "Digital Marketing Analyst at Kepler, a data-driven performance marketing agency. This is where I formalized my understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
       { label: "The Budget", text: "Managed paid social inventory across six platforms within a $250K monthly client budget. Maintained consistent 3+ dollar ROAS across campaign portfolios. Every allocation decision was backed by five years of performance data. Gut-checks ran through the numbers first." },
       { label: "Reading the Data", text: "Pulled insights from five years of campaign performance data to surface audience trends, then translated those findings into concrete optimization decisions for live campaigns." },
       { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing performance presentations. The job was as much communication and coordination as it was analysis." },
