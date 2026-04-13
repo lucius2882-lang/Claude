@@ -378,7 +378,7 @@
           </g>
         </svg>`,
         photoLabel: 'Campaign results dashboard',
-        body: `Lucius,\n\nWrapping up Q3 — wanted to get these numbers to you directly.\n\nThe fundraising total landed at $1.2M across the three campaigns you were running. Our stretch goal was $900K. You beat it by a third.\n\nWhat you built here wasn't just execution — it was a full digital operation. You owned the strategy, the sequencing, and the donor targeting from start to finish. The results speak for themselves, but so does the process you put in place.\n\nWorth noting for your records.\n\n— Sherry\nCampaign Director, New Blue Interactive`
+        body: `Lucius,\n\nWrapping up Q3 — wanted to get these numbers to you directly.\n\nThe fundraising total landed at $1.2M across the three campaigns you were running. Our stretch goal was $900K. You beat it by a third.\n\nWhat you built here wasn't just execution — it was a full acquisition operation. You owned the strategy, the sequencing, and the donor targeting from start to finish. The results speak for themselves, but so does the process you put in place.\n\nWorth noting for your records.\n\n— Sherry\nCampaign Director, New Blue Interactive`
       },
       {
         id: 2,
@@ -674,24 +674,24 @@
     const bookviewEl = document.getElementById('bookview');
 
     const reservations = [
-      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Led team of 5 from open to close', table: 'Tbl 3', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Led a front-of-house team of 5 as an active, hands-on manager — working directly alongside staff from the moment doors opened to the last table clearing.' },
-        { label: 'How It Worked', text: 'Real leadership meant being on the floor, not behind a desk. Every shift I was the last line of quality control — for the guest experience, the team\'s execution, and the overall energy of the room.' },
-        { label: 'The Result', text: 'A team that operated with consistency and confidence. Service standards stayed high regardless of volume because the expectation was set from the top down, every day.' }
+      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Stewarded team of 5 from open to close', table: 'Tbl 3', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Stewarded a front-of-house team of 5 through every service period — active on the floor from open to close, working directly alongside staff rather than directing from a distance.' },
+        { label: 'How It Worked', text: 'The team knew where the standard was because they could see it being held every shift. I was the last line of quality control for the guest experience, the team\'s execution, and the energy of the room.' },
+        { label: 'The Result', text: 'A team that operated with consistency and confidence. Consistency is what converts a good visit into a membership — and it starts with the people holding the floor.' }
       ]},
       { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Designed and executed training programs for incoming FOH team members, covering service standards, product knowledge, and member-first hospitality.' },
-        { label: 'How It Worked', text: 'Training wasn\'t a one-time event — it was ongoing. I gave real-time feedback during shifts and conducted formal performance reviews to keep the team developing.' },
-        { label: 'The Result', text: 'Staff who could represent Happier\'s brand without constant supervision. Lower turnover, higher confidence on the floor, and members who noticed the consistency.' }
+        { label: 'The Skill', text: 'Designed and executed onboarding and training for incoming FOH staff — covering service standards, product knowledge, and what it means to steward a members club.' },
+        { label: 'How It Worked', text: 'Training wasn\'t a one-time event — it was ongoing. Real-time feedback during shifts, formal performance reviews each season. Small corrections compounded into real improvement.' },
+        { label: 'The Result', text: 'Staff who could hold the brand standard without constant supervision. Members noticed the consistency because it was built into the team, not policed from above.' }
       ]},
-      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for members & regulars', table: 'Tbl 1', status: 'vip', photos: ['https://i.imgur.com/3SM2sT5.jpg','https://i.imgur.com/G1PYxXJ.jpg'], slides: [
-        { label: 'The Skill', text: 'Served as the primary point of contact for founding members, regulars, and high-value guests — building relationships that kept them coming back.' },
-        { label: 'How It Worked', text: 'I tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. The personal touch was the product.' }
+      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for founding members & regulars', table: 'Tbl 1', status: 'vip', photos: ['https://i.imgur.com/3SM2sT5.jpg','https://i.imgur.com/G1PYxXJ.jpg'], slides: [
+        { label: 'The Skill', text: 'Stewarded relationships with founding members, regulars, and high-value guests — primary point of contact across every service period.' },
+        { label: 'How It Worked', text: 'Tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. Joy is the strongest engine of brand memory. That was the strategy.' }
       ]},
-      { time: '12:00 PM', pax: 6, guest: 'Brand Experience & Event Production', note: 'End-to-end activation from inquiry through day-of', table: 'Tbl 10', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Managed private event inquiries from first contact through day-of execution — covering logistics, guest coordination, and on-site management.' },
-        { label: 'How It Worked', text: 'Every event required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. I was the single point of accountability.' },
-        { label: 'The Result', text: 'Events that ran without visible effort. Guests experienced seamless hospitality; the coordination that made it happen stayed entirely behind the scenes.' }
+      { time: '12:00 PM', pax: 6, guest: 'Brand Activation & Event Production', note: 'End-to-end activation from inquiry through day-of', table: 'Tbl 10', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Produced private events and brand activations from first inquiry through day-of execution — coordinating logistics, guest experience, and on-site management as the single point of accountability.' },
+        { label: 'How It Worked', text: 'Every activation required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. The coordination stayed invisible. The experience didn\'t.' },
+        { label: 'The Result', text: 'Activations that materialized the membership\'s value in the room. Guests experienced something singular — the kind of moment that only existed once, in that space, with those people.' }
       ]},
       { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed', slides: [
         { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable — balancing capacity, pacing, and the guest experience from the host stand.' },
@@ -699,13 +699,13 @@
         { label: 'The Result', text: 'Smooth service pacing that protected both the kitchen and the guest experience — maximizing covers without sacrificing the quality of each visit.' }
       ]},
       { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated', photos: ['https://i.imgur.com/xMJo2FG.jpg','https://i.imgur.com/cXqqkq2.jpg'], slides: [
-        { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor — resolving complaints, de-escalating tension, and turning negative experiences into positive ones in real time.' },
-        { label: 'How It Worked', text: 'The key was speed and ownership. I never passed a problem to someone else. I made the call on the floor, handled it personally, and followed up before the guest left.' }
+        { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor — resolving complaints, de-escalating tension, and converting a negative experience into a reason to return.' },
+        { label: 'How It Worked', text: 'Speed and ownership. Never passed a problem to someone else. Made the call on the floor, handled it personally, and followed up before the guest left. A guest who got it handled right often becomes more loyal than one who never had an issue.' }
       ]},
-      { time: '1:00 PM', pax: 8, guest: 'Corporate Events', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Coordinated corporate events across multiple Happier properties, working cross-functionally with HR, Facilities, and the Communications team.' },
-        { label: 'How It Worked', text: 'These weren\'t just dinner reservations — they were full productions involving space setup, custom menus, AV, and internal stakeholder alignment before a single guest arrived.' },
-        { label: 'The Result', text: 'Events that reflected well on both the company hosting them and on Happier. Repeat corporate bookings became a consistent revenue stream.' }
+      { time: '1:00 PM', pax: 8, guest: 'Corporate Activations', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Produced corporate events across multiple Happier properties — coordinating cross-functionally with HR, Facilities, and Communications from first contact through execution.' },
+        { label: 'How It Worked', text: 'These weren\'t dinner reservations — they were full activations involving space setup, custom programming, and internal stakeholder alignment before a single guest arrived.' },
+        { label: 'The Result', text: 'Events that materialized the brand for the companies hosting them. Repeat corporate bookings followed because the experience delivered on what the brand had promised.' }
       ]},
       { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived', photos: ['https://i.imgur.com/9eoB4jd.jpg','https://i.imgur.com/biMncas.jpg'], slides: [
         { label: 'The Skill', text: 'Maintained live control of seating flow throughout each shift — reading the room, anticipating bottlenecks, and adjusting table assignments before problems developed.' },
@@ -721,13 +721,13 @@
         { label: 'The Result', text: 'Faster service, cleaner data, and a team that wasn\'t blocked by technology issues during high-volume periods.' }
       ]},
       { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
-        { label: 'The Skill', text: 'Produced large-scale events across multiple Happier properties — managing logistics, vendor coordination, and cross-departmental communication from inquiry to execution.' },
-        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show — I kept all of it aligned and moving toward the same deadline.' }
+        { label: 'The Skill', text: 'Produced large-scale activations across multiple Happier properties — managing logistics, vendor coordination, and cross-departmental communication from inquiry through execution.' },
+        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show — I kept every function aligned and moving toward the same deadline. Five activations in a single month at peak season.' }
       ]},
-      { time: '5:00 PM', pax: 2, guest: 'Service Standards Enforcement', note: 'Product quality & guest experience, open to close', table: 'Tbl 5', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Maintained Happier\'s service and product standards across every shift — from the first cover of the day through the last.' },
-        { label: 'How It Worked', text: 'Standards don\'t enforce themselves. I walked the floor constantly, coached in the moment, and set the expectation through my own presence and behavior.' },
-        { label: 'The Result', text: 'A consistent guest experience that members could count on regardless of the day, the server, or the volume. Consistency is what turns visitors into members.' }
+      { time: '5:00 PM', pax: 2, guest: 'Service Standards', note: 'Brand delivery from first cover to last', table: 'Tbl 5', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Held Happier\'s brand standard across every service period — from the first cover of the day through the last. The brand doesn\'t live in a deck. It lives in the room.' },
+        { label: 'How It Worked', text: 'Standards don\'t enforce themselves. Active floor presence, in-the-moment coaching, and setting the expectation through my own behavior — every shift, every cover.' },
+        { label: 'The Result', text: 'A consistent guest experience that members could count on regardless of the day, the volume, or the server. Consistency is what converts a visit into a membership.' }
       ]},
       { time: '5:30 PM', pax: 4, guest: 'Performance Management', note: 'Ongoing feedback & staff development', table: 'Tbl 9', status: 'reserved', photos: ['https://i.imgur.com/tgnJSKo.jpg','https://i.imgur.com/UUfdzuI.jpg'], slides: [
         { label: 'The Skill', text: 'Provided ongoing performance feedback to FOH staff and contributed to formal reviews — keeping the team accountable and growing throughout each season.' },
@@ -962,9 +962,9 @@
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
           { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. We rebuilt it.', detail: 'Spring 2020', slides: [
-            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed overnight. New distancing rules, sanitation standards, capacity limits — the old playbook was gone and we had to build a new one.' },
-            { label: 'The Work', text: 'We rewrote the SOPs from scratch, retrained together on every new protocol, and kept service quality intact through every phase of reopening. Zero to operational in two weeks.' },
-            { label: 'The Result', text: 'Service quality held through every phase. The team adapted without complaint because the expectation and the training were clear from day one. We didn\'t just survive the pivot — we ran well.' }
+            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed overnight. This was a family-owned operation — alongside family ownership, the task was keeping it alive and rebuilding from scratch while the industry reinvented itself in real time.' },
+            { label: 'The Work', text: 'Built out takeout ordering systems, digital marketing workflows, and fulfillment coordination from zero while the dining room was closed. Rewrote the SOPs as a team, retrained on every new protocol, and ran operations through every phase of reopening.' },
+            { label: 'The Result', text: 'The business stayed operational through the full crisis. Service quality held when the dining room reopened. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan.' }
           ]}
         ]
       }
