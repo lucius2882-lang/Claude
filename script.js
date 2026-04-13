@@ -62,7 +62,7 @@
         { title:"Digital Marketing Analyst", dates:"Mar 2021 \u2013 Apr 2023", company:"Kepler  \u00b7  New York, NY",
           bullets:["Purchased ad inventory across 6 social platforms within a $250K monthly client budget","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
         { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
-          bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 rewrote SOPs and retrained team for reopening"] },
+          bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 team rebuilt SOPs and retrained together for reopening"] },
         { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
           bullets:["Supported million-dollar digital fundraising campaigns for local and state political candidates","Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts","Ran QA on marketing materials distributed to lists of 100,000+ subscribers","Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop & Illustrator"] }
       ];
@@ -140,7 +140,7 @@
           { heading: "Owning the Shift", text: "Kept service flowing across all dayparts — lunch rushes, dinner covers, late-night crowds. Standards stayed consistent regardless of volume. That was the job." },
           { heading: "Closing the Night", text: "Every close meant financial reports, scheduling reviews, facilities checks, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
           { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a team that could adapt on the fly — which mattered a lot when COVID hit." },
-          { heading: "COVID Pivot", text: "Led the operational restructuring when the restaurant reopened — rewrote SOPs, retrained the full FOH team, and maintained service quality through every phase of reopening." }
+          { heading: "COVID Pivot", text: "Led the team through a full operational rebuild — we rewrote the SOPs together, retrained on every new protocol, and kept service quality intact through every phase of reopening." }
         ]
       },
       digital: {
@@ -928,8 +928,8 @@
           ]},
           { name: 'Feedback That Actually Landed', desc: 'In the moment, every shift — not waiting for review season.', detail: 'In-Shift · Reviews', slides: [
             { label: 'The Skill', text: 'Provided real-time coaching during shifts and contributed to formal performance reviews — keeping the team growing throughout the season.' },
-            { label: 'In Practice', text: 'Feedback that waits for review season is too late. I gave it in the moment — a quick word after a table, a debrief at the end of a shift. Small corrections compounded into real improvement.' },
-            { label: 'The Standard', text: 'A staff that gets honest, consistent feedback performs better and stays longer. The team knew where they stood — and that I was invested in where they were going.' }
+            { label: 'In Practice', text: 'Feedback that waits for review season is too late. We handled it in the moment — a quick word after a table, a debrief at end of shift. Small corrections compounded into real improvement across the whole team.' },
+            { label: 'The Standard', text: 'A staff that gets honest, consistent feedback performs better and stays longer. The team knew where they stood — and that everyone was invested in where we were going.' }
           ]},
           { name: 'The Schedule as Strategy', desc: 'Right people, right shifts — labor costs in line, floor always covered.', detail: 'Weekly', slides: [
             { label: 'The Skill', text: 'Built the weekly schedule balancing staff availability, projected covers, and labor cost targets — keeping the floor covered without overstaffing slow periods.' },
@@ -961,9 +961,9 @@
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. I rewrote it.', detail: 'Spring 2020', slides: [
-            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed. Distancing rules, new sanitation standards, reduced capacity — the old way of running the floor was gone.' },
-            { label: 'The Work', text: 'I rewrote the SOPs from scratch, retrained the full FOH team on every new protocol, and led the reopening through multiple phases as restrictions evolved. Zero to operational in two weeks.' },
+          { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. We rebuilt it.', detail: 'Spring 2020', slides: [
+            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed overnight. New distancing rules, sanitation standards, capacity limits — the old playbook was gone and we had to build a new one.' },
+            { label: 'The Work', text: 'We rewrote the SOPs from scratch, retrained together on every new protocol, and kept service quality intact through every phase of reopening. Zero to operational in two weeks.' },
             { label: 'The Result', text: 'Service quality held through every phase. The team adapted without complaint because the expectation and the training were clear from day one. We didn\'t just survive the pivot — we ran well.' }
           ]}
         ]
