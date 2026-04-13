@@ -154,8 +154,8 @@
       }
     };
 
-    // --- J.Crew × Kepler — Pop-Up Storm ---
-    const jcrewPhotos = [
+    // --- J.Crew × Kepler — scatter popup system ---
+    const keplerPhotos = [
       "https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg",
       "https://i.imgur.com/IO4OwGE.jpg","https://i.imgur.com/cHiGT5x.jpg","https://i.imgur.com/bOGMvQJ.jpg",
       "https://i.imgur.com/tO5rNmz.jpg","https://i.imgur.com/auZftfT.jpg","https://i.imgur.com/6HgxeER.jpg",
@@ -166,109 +166,13 @@
       "https://i.imgur.com/k5T6i51.jpg","https://i.imgur.com/7a0GApL.jpg","https://i.imgur.com/WCdJDmm.jpg"
     ];
 
-    function photoGrid(indices, h) {
-      return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#ddd;">
-        ${indices.map(i => `<img src="${jcrewPhotos[i]}" loading="lazy" style="width:100%;height:${h}px;object-fit:cover;display:block;">`).join('')}
-      </div>`;
-    }
-
-    const jcrewDefs = [
-      {
-        url: 'meta.com/ads/jcrew_fw21', color: '#1877F2',
-        stat: 'Meta · The workhorse · ~⅓ of monthly spend',
-        w: 255, tilt: -2.5, z: 25,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([0,1,2,3], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">J</div>
-            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#65676B;font-size:9px;">· Sponsored</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">The biggest allocation in the mix — about a third of monthly spend. Built lookalike audiences off J.Crew's existing buyer pool and layered retargeting to close the gap between discovery and purchase. Consistently above the ROAS floor for two years.</div>
-          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
-            <span>👍 Like</span><span>💬 Comment</span><span>↗ Share</span>
-          </div>
-        </div>`
-      },
-      {
-        url: 'tiktok.com/jcrewofficial', color: '#010101',
-        stat: 'TikTok · Where the rebrand actually landed',
-        w: 255, tilt: 2.0, z: 24,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([4,5,6,7], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:4px;background:#010101;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">♪</div>
-            <div style="font-size:10px;font-weight:bold;color:#050505;">@jcrewofficial <span style="font-weight:normal;color:#888;font-size:9px;">· Ad</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Where the rebrand actually landed culturally. The algorithm didn't care about the bankruptcy — it cared about content that held attention. Product in motion, real styling, platform-native creative. Discovery engine, not a direct-response play.</div>
-          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
-            <span>♥ 42K</span><span>💬 381</span><span>➦ Share</span>
-          </div>
-        </div>`
-      },
-      {
-        url: 'pinterest.com/jcrew/fall-essentials', color: '#e60023',
-        stat: 'Pinterest · Long-tail discovery · Highest-intent traffic',
-        w: 255, tilt: -1.5, z: 23,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([8,9,10,11], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:50%;background:#e60023;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;">📌</div>
-            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Promoted Pin</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Long-tail discovery with the highest-intent traffic in the mix. People on Pinterest are actively looking for what to buy next — J.Crew's catalog aesthetic translated directly into that intent. The click quality was different here than anywhere else.</div>
-          <div style="display:flex;justify-content:space-between;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
-            <span>💾 Save</span><span>↗ Send</span><span>jcrew.com</span>
-          </div>
-        </div>`
-      },
-      {
-        url: 'ads.snapchat.com/jcrew_holiday', color: '#FFFC00',
-        stat: 'Snapchat · Younger audience pull · Brand awareness lever',
-        w: 255, tilt: 3.0, z: 22,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([12,13,14,15], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:50%;background:#FFFC00;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">👻</div>
-            <div style="font-size:10px;font-weight:bold;color:#050505;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Sponsored Story</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Full-screen, no competition for attention. The brand awareness lever for an audience that didn't have a J.Crew relationship yet. Not where conversions happened — where brand memory got made. You don't close on Snapchat. You introduce.</div>
-          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#65676B;">
-            <span>↑ Swipe up</span><span>💬 Reply</span><span>↗ Share</span>
-          </div>
-        </div>`
-      },
-      {
-        url: 'ads.twitter.com/jcrew_promo', color: '#000000',
-        stat: 'X · Tactical lever · Cultural moments and drops',
-        w: 255, tilt: -3.0, z: 26,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([16,17,18,19], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:11px;flex-shrink:0;">𝕏</div>
-            <div style="font-size:10px;font-weight:bold;color:#0F1419;">@JCrew <span style="font-weight:normal;color:#536471;font-size:9px;">· Promoted</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">Tactical. J.Crew coming back from bankruptcy was a story the fashion industry was watching. X put the brand inside that conversation as it happened — drops, announcements, moment adjacency. The spend was small relative to the reach it earned.</div>
-          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e8e8e8;font-size:9px;color:#536471;">
-            <span>💬 128</span><span>🔁 344</span><span>♥ 2.1K</span>
-          </div>
-        </div>`
-      },
-      {
-        url: 'linkedin.com/company/jcrew/ads', color: '#0A66C2',
-        stat: 'LinkedIn · Brand and recruiting plays · The unexpected channel',
-        w: 255, tilt: 1.5, z: 21,
-        body: `<div style="background:#fff;font-family:Arial,sans-serif;">
-          ${photoGrid([20,21,22,23], 76)}
-          <div style="display:flex;align-items:center;gap:7px;padding:7px 10px 5px;">
-            <div style="width:26px;height:26px;border-radius:4px;background:#0A66C2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:10px;flex-shrink:0;">in</div>
-            <div style="font-size:10px;font-weight:bold;color:#000;">J.Crew <span style="font-weight:normal;color:#888;font-size:9px;">· Promoted · 842K followers</span></div>
-          </div>
-          <div style="font-size:10px;color:#111;line-height:1.55;padding:0 10px 8px;">The unexpected one. A brand rebuilding after bankruptcy is a business story, not just a fashion story. The LinkedIn audience — people in retail, brand, and fashion strategy — was paying attention. Earned organic reach layered on top of the paid placement.</div>
-          <div style="display:flex;gap:12px;padding:6px 10px;border-top:1px solid #e0e0e0;font-size:9px;color:#666;">
-            <span>👍 Like</span><span>💬 Comment</span><span>↗ Repost</span>
-          </div>
-        </div>`
-      }
+    const keplerSlides = [
+      { label: "Meta", text: "The biggest allocation in the mix — about a third of monthly spend. Built lookalike audiences off J.Crew's existing buyer pool and layered retargeting to close the gap between discovery and purchase. Consistently above the ROAS floor for two years." },
+      { label: "TikTok", text: "Where the rebrand actually landed culturally. The algorithm didn't care about the bankruptcy — it cared about content that held attention. Product in motion, real styling, platform-native creative. Discovery engine, not a direct-response play." },
+      { label: "Pinterest", text: "Long-tail discovery with the highest-intent traffic in the mix. People on Pinterest are actively looking for what to buy next — J.Crew's catalog aesthetic translated directly into that intent. The click quality was different here than anywhere else." },
+      { label: "Snapchat", text: "Full-screen, no competition for attention. The brand awareness lever for an audience that didn't have a J.Crew relationship yet. Not where conversions happened — where brand memory got made. You don't close on Snapchat. You introduce." },
+      { label: "X", text: "Tactical. J.Crew coming back from bankruptcy was a story the fashion industry was watching. X put the brand inside that conversation as it happened — drops, announcements, moment adjacency. The spend was small relative to the reach it earned." },
+      { label: "LinkedIn", text: "The unexpected one. A brand rebuilding after bankruptcy is a business story, not just a fashion story. The LinkedIn audience — people in retail, brand, and fashion strategy — was paying attention. Earned organic reach layered on top of the paid placement." }
     ];
 
     // --- Detail panel ---
@@ -295,108 +199,108 @@
       requestAnimationFrame(() => detail.classList.add('visible'));
     }
 
-    // --- J.Crew × Kepler popup ---
-    const jcrewEl = document.getElementById('jcrew');
-    let jcOpenCount = 0;
-    let jcSession = 0;
+    // --- Kepler popup ---
+    const overlay = document.getElementById('overlay');
+    let keplerActivePopups = [];
+    let keplerCurrentSlide = 0;
 
-    function buildJCPopup(def) {
-      const el = document.createElement('div');
-      el.className = 'jc-popup';
-      el.style.setProperty('--tilt', def.tilt + 'deg');
-      el.style.setProperty('--z', def.z);
-      el.style.left = def.x + 'px';
-      el.style.top  = def.y + 'px';
-      el.style.width = def.w + 'px';
-      el.innerHTML = `
-        <div class="jc-titlebar">
-          <div class="jc-titlebar-left">
-            <div class="jc-favicon" style="background:${def.color};"></div>
-            <span class="jc-url">${def.url}</span>
-          </div>
-          <button class="jc-close-x">✕</button>
-        </div>
-        <div class="jc-ad-body">${def.body}</div>`;
-      el.querySelector('.jc-close-x').addEventListener('click', () => {
-        el.classList.add('closing');
-        setTimeout(() => {
-          showJCStatFlash(el, def.stat);
-          el.remove();
-          jcOpenCount--;
-          if (jcOpenCount <= 0) {
-            const hint = document.getElementById('jc-hint');
-            if (hint) hint.style.opacity = '0';
-            setTimeout(() => document.getElementById('jc-final').classList.add('visible'), 500);
-          }
-        }, 220);
-      });
-      return el;
+    function clampPos(x, y, w, h) {
+      const pad = 16;
+      return {
+        x: Math.max(pad, Math.min(x, window.innerWidth - w - pad)),
+        y: Math.max(pad, Math.min(y, window.innerHeight - h - pad))
+      };
     }
 
-    function showJCStatFlash(popup, stat) {
-      const desktop = document.getElementById('jc-desktop');
-      const dRect = desktop.getBoundingClientRect();
-      const pRect = popup.getBoundingClientRect();
-      const flash = document.createElement('div');
-      flash.className = 'jc-stat-flash';
-      flash.textContent = stat;
-      flash.style.left = (pRect.left - dRect.left + pRect.width / 2) + 'px';
-      flash.style.top  = (pRect.top  - dRect.top  + pRect.height / 2) + 'px';
-      flash.style.transform = 'translateX(-50%) translateY(-50%)';
-      desktop.appendChild(flash);
-      requestAnimationFrame(() => {
-        flash.classList.add('fade');
-        flash.addEventListener('transitionend', () => flash.remove(), { once: true });
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+
+    function closeAllKeplerPopups(callback) {
+      if (!keplerActivePopups.length) { if (callback) callback(); return; }
+      let rem = keplerActivePopups.length;
+      keplerActivePopups.forEach(p => {
+        p.classList.add('closing');
+        p.addEventListener('animationend', () => {
+          p.remove();
+          if (--rem === 0) { keplerActivePopups = []; if (callback) callback(); }
+        }, { once: true });
       });
     }
 
-    function openJCrew() {
-      const mySession = ++jcSession;
-      jcOpenCount = jcrewDefs.length;
-      const finalEl  = document.getElementById('jc-final');
-      const hintEl   = document.getElementById('jc-hint');
-      const popupsEl = document.getElementById('jc-popups');
-      finalEl.classList.remove('visible');
-      hintEl.style.opacity = '';
-      popupsEl.innerHTML = '';
-      jcrewEl.style.display = 'block';
-      requestAnimationFrame(() => jcrewEl.classList.add('visible'));
-      const desktop = document.getElementById('jc-desktop');
-      const vw = desktop.offsetWidth, vh = desktop.offsetHeight;
-      const isMobile = vw < 680;
-      const positions = [
-        { fx: 0.03, fy: 0.06 }, // Meta
-        { fx: 0.27, fy: 0.04 }, // TikTok
-        { fx: 0.54, fy: 0.06 }, // Pinterest
-        { fx: 0.72, fy: 0.10 }, // Snapchat
-        { fx: 0.07, fy: 0.46 }, // X
-        { fx: 0.46, fy: 0.44 }, // LinkedIn
+    function openKeplerSlideSet(idx) {
+      const slide = keplerSlides[idx];
+      const isLast = idx === keplerSlides.length - 1;
+      keplerCurrentSlide = idx;
+      const vw = window.innerWidth, vh = window.innerHeight;
+
+      // Five image popups scattered around the edges
+      const imgW = Math.min(vw > 900 ? 420 : 190, vw * 0.30);
+      const imgH = Math.min(vw > 900 ? 540 : 245, vh * 0.62);
+      const imgTilts = [rnd(-14,-5), rnd(5,14), rnd(-10,-2), rnd(3,12), rnd(-6,6)];
+      const zones = [
+        clampPos(rnd(vw*0.02, vw*0.10), rnd(vh*0.06, vh*0.18), imgW, imgH),
+        clampPos(rnd(vw*0.67, vw*0.78), rnd(vh*0.06, vh*0.18), imgW, imgH),
+        clampPos(rnd(vw*0.01, vw*0.08), rnd(vh*0.46, vh*0.60), imgW, imgH),
+        clampPos(rnd(vw*0.72, vw*0.82), rnd(vh*0.46, vh*0.60), imgW, imgH),
+        clampPos(rnd(vw*0.36, vw*0.46), rnd(vh*0.68, vh*0.78), imgW, imgH)
       ];
-      jcrewDefs.forEach((def, i) => {
-        setTimeout(() => {
-          if (jcSession !== mySession) return;
-          if (!isMobile) {
-            const p = positions[i];
-            def.x = Math.max(8, Math.min(Math.round(p.fx * vw), vw - def.w - 8));
-            def.y = Math.max(8, Math.min(Math.round(p.fy * vh), vh - 320 - 8));
-          } else {
-            def.x = 0; def.y = 0;
-          }
-          const popup = buildJCPopup(def);
-          popupsEl.appendChild(popup);
-          requestAnimationFrame(() => popup.classList.add('loaded'));
-        }, i * 110);
-      });
-    }
 
-    function closeJCrew() {
-      jcSession++;
-      jcrewEl.classList.remove('visible');
-      setTimeout(() => {
-        jcrewEl.style.display = 'none';
-        document.getElementById('jc-popups').innerHTML = '';
-        document.getElementById('jc-final').classList.remove('visible');
-      }, 300);
+      const slidePhotos = [0,1,2,3,4].map(i => keplerPhotos[(idx * 5 + i) % keplerPhotos.length]);
+
+      slidePhotos.forEach((url, i) => {
+        const p = document.createElement('div');
+        p.className = 'popup kimg-popup';
+        p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;cursor:move;`;
+        p.innerHTML = `
+          <button class="kimg-x" style="position:absolute;top:5px;right:5px;z-index:10;background:rgba(21,89,48,0.85);border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;">✕</button>
+          <div class="popup-photo" style="background:#1B6B3A;width:100%;height:100%;"><img src="${url}" alt="" loading="lazy"></div>`;
+        p.querySelector('.kimg-x').addEventListener('click', () => {
+          p.classList.add('closing');
+          p.addEventListener('animationend', () => {
+            p.remove();
+            keplerActivePopups = keplerActivePopups.filter(x => x !== p);
+            if (!keplerActivePopups.length) overlay.classList.remove('active');
+          }, { once: true });
+        });
+        makeDraggable(p, p);
+        document.body.appendChild(p);
+        keplerActivePopups.push(p);
+      });
+
+      // Text popup — centered, always on top
+      const txtW = Math.min(vw > 900 ? 600 : 370, vw * 0.60);
+      const txtPos = clampPos(vw / 2 - txtW / 2, vh / 2 - 150, txtW, 300);
+      const tp = document.createElement('div');
+      tp.className = 'popup';
+      tp.style.cssText = `--tilt:0deg;left:${txtPos.x}px;top:${txtPos.y}px;width:${txtW}px;height:auto;min-height:0;z-index:102;`;
+      tp.innerHTML = `
+        <div class="popup-titlebar" data-drag style="background:#155930;border-bottom:1px solid rgba(255,255,255,0.2);">
+          <div class="popup-title" style="color:#fff;letter-spacing:0.06em;">Digital Marketing Analyst — Kepler</div>
+          <div class="popup-controls">
+            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">_</button>
+            <button class="popup-btn" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">□</button>
+            <button class="popup-btn ktxt-x" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;">✕</button>
+          </div>
+        </div>
+        <div class="popup-body" style="background:#1B6B3A;border-top:1px solid rgba(255,255,255,0.15);">
+          <div class="popup-label" style="color:rgba(255,255,255,0.65);">${slide.label}</div>
+          <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
+        </div>
+        <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
+          <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${keplerSlides.length}</span>
+          ${!isLast
+            ? `<button class="knext-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;letter-spacing:0.05em;">Next →</button>`
+            : `<button class="kclose-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;">Close</button>`}
+        </div>`;
+      tp.querySelector('.ktxt-x').addEventListener('click', () => history.back());
+      const nb = tp.querySelector('.knext-btn');
+      if (nb) nb.addEventListener('click', () => closeAllKeplerPopups(() => openKeplerSlideSet(idx + 1)));
+      const cb = tp.querySelector('.kclose-btn');
+      if (cb) cb.addEventListener('click', () => history.back());
+      makeDraggable(tp, tp.querySelector('[data-drag]'));
+      document.body.appendChild(tp);
+      keplerActivePopups.push(tp);
+
+      overlay.classList.add('active');
     }
 
 
@@ -958,8 +862,6 @@
       }
     }
 
-    document.getElementById('jc-close-btn').addEventListener('click', () => history.back());
-    document.getElementById('jc-exit-btn').addEventListener('click', () => history.back());
     document.getElementById('bk-close-btn').addEventListener('click', () => history.back());
 
     document.querySelectorAll('.bk-checklist-item').forEach(item => {
@@ -1299,7 +1201,7 @@
 
     function openPage(roleKey) {
       if (roleKey === 'marketing') {
-        openJCrew();
+        closeAllKeplerPopups(() => openKeplerSlideSet(0));
       } else if (roleKey === 'digital') {
         openGmail();
       } else if (roleKey === 'maitre') {
@@ -1310,7 +1212,7 @@
     }
 
     function closeCurrent() {
-      if (jcrewEl.classList.contains('visible')) { closeJCrew(); return; }
+      if (keplerActivePopups.length) { closeAllKeplerPopups(() => overlay.classList.remove('active')); return; }
       if (detail.classList.contains('visible')) {
         detail.classList.remove('visible');
         setTimeout(() => { detail.style.display = 'none'; }, 400);
@@ -1322,7 +1224,7 @@
     }
 
     function isAnyViewOpen() {
-      return jcrewEl.classList.contains('visible') ||
+      return keplerActivePopups.length > 0 ||
         detail.classList.contains('visible') ||
         gmailEl.classList.contains('visible') ||
         bookviewEl.classList.contains('visible') ||
@@ -1337,6 +1239,10 @@
         history.pushState({ page: roleKey }, '', '/' + slug);
         openPage(roleKey);
       });
+    });
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay && keplerActivePopups.length) history.back();
     });
 
     // Escape → back only when a view is open
