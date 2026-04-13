@@ -212,7 +212,7 @@
       /* Header */
       .rv-header { padding-bottom: 10px !important; margin-bottom: 16px !important; }
       .rv-name { font-size: 1.7rem !important; }
-      .rv-headline { font-size: 0.65rem !important; letter-spacing: 0.12em !important; margin-top: 4px !important; }
+      .rv-headline { font-size: 0.72rem !important; margin-top: 4px !important; }
       .rv-contact { margin-top: 6px !important; gap: 14px !important; }
       .rv-contact a, .rv-contact span { font-size: 0.72rem !important; }
 
