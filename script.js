@@ -167,12 +167,10 @@
     ];
 
     const keplerSlides = [
-      { label: "Meta", text: "The biggest allocation in the mix — about a third of monthly spend. Built lookalike audiences off J.Crew's existing buyer pool and layered retargeting to close the gap between discovery and purchase. Consistently above the ROAS floor for two years." },
-      { label: "TikTok", text: "Where the rebrand actually landed culturally. The algorithm didn't care about the bankruptcy — it cared about content that held attention. Product in motion, real styling, platform-native creative. Discovery engine, not a direct-response play." },
-      { label: "Pinterest", text: "Long-tail discovery with the highest-intent traffic in the mix. People on Pinterest are actively looking for what to buy next — J.Crew's catalog aesthetic translated directly into that intent. The click quality was different here than anywhere else." },
-      { label: "Snapchat", text: "Full-screen, no competition for attention. The brand awareness lever for an audience that didn't have a J.Crew relationship yet. Not where conversions happened — where brand memory got made. You don't close on Snapchat. You introduce." },
-      { label: "X", text: "Tactical. J.Crew coming back from bankruptcy was a story the fashion industry was watching. X put the brand inside that conversation as it happened — drops, announcements, moment adjacency. The spend was small relative to the reach it earned." },
-      { label: "LinkedIn", text: "The unexpected one. A brand rebuilding after bankruptcy is a business story, not just a fashion story. The LinkedIn audience — people in retail, brand, and fashion strategy — was paying attention. Earned organic reach layered on top of the paid placement." }
+      { label: "The Brief", text: "J.Crew hired Kepler to run paid social during the post-bankruptcy rebrand. Six platforms, a $250K monthly budget, two years. The brand was in public recovery — the campaigns were live while J.Crew was still figuring out what it was again." },
+      { label: "The Work", text: "Daily optimization against a ROAS floor. Weekly client reporting. Asset coordination, QA, and constant decisions about where the money should go. The job was keeping six live campaigns accountable while the brand rebuilt around them." },
+      { label: "The Channels", text: "Meta carried the acquisition load: lookalike audiences, retargeting, direct response. TikTok and Snapchat were reach and brand memory for audiences who didn't have a J.Crew relationship yet. Pinterest pulled high-intent traffic — different click quality than anywhere else." },
+      { label: "The Lesson", text: "A brand recovery isn't won on one channel. Each platform does a different job, and knowing which job belongs where is the whole game. I spent two years learning that from the data, then proving it in client presentations every week." }
     ];
 
     // --- Detail panel ---
