@@ -724,7 +724,7 @@
         { label: 'The Skill', text: 'Coordinated regularly with HR, Facilities, and Communications teams to execute events and resolve operational issues across Happier\'s properties.' },
         { label: 'How It Worked', text: 'Hospitality doesn\'t operate in a silo. Getting the right things done meant knowing who to call, communicating clearly, and following through without being chased.' }
       ]},
-      { time: '8:00 PM', pax: 4, guest: 'Chalet · 4 top', note: 'Member mentioned Studio Skate after dinner', table: 'Tbl 6', status: 'reserved', photos: ['https://i.imgur.com/FPLyO64.jpg','https://i.imgur.com/3SM2sT5.jpg'], slides: [
+      { time: '8:00 PM', pax: 4, guest: 'Chalet · 4 top', note: 'Member mentioned Studio Skate after dinner', table: 'Tbl 6', status: 'reserved', photos: ['https://i.imgur.com/J7oOK2g.jpg','https://i.imgur.com/OPATVq7.jpg'], slides: [
         { label: 'The Setup', text: 'Chalet was Happier\'s winter dining experience, running alongside Studio Skate in the same building on the same nights. My job was managing the Chalet floor while pitching the transition — moving dinner guests into the skating activation at the right moment.' },
         { label: 'The Conversion', text: 'The pitch window was 9:00–9:15, after the main course. Soft, not pushy — the ones who went almost always came back. That\'s the job: make a dinner into an evening, and an evening into a membership story.' }
       ]}
