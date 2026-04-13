@@ -60,7 +60,7 @@
         { title:"Maitre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  New York, NY",
           bullets:["Led FOH team of 5 through full-day service at a members-only wellness concept in Manhattan","Managed private event inquiries end-to-end across multiple properties \u2014 from inquiry through day-of execution","Served as primary point of contact for founding members, regulars, and VIP guests","Coordinated cross-functionally with HR, Facilities, and Communications on corporate events","Daily operation of Resy, OpenTable, and Toast POS; ran staff training and performance reviews"] },
         { title:"Digital Marketing Analyst", dates:"Mar 2021 \u2013 Apr 2023", company:"Kepler  \u00b7  New York, NY",
-          bullets:["Purchased ad inventory across 6 social platforms within a $250K monthly client budget","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
+          bullets:["Managed $250K monthly ad budget across 6 platforms — allocating spend based on audience behaviour and campaign performance data","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
         { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
           bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 team rebuilt SOPs and retrained together for reopening"] },
         { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
@@ -122,13 +122,13 @@
 
     const roles = {
       maitre: {
-        title: "Maître D' & Events Producer",
+        title: "Guest Experience & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Front-of-house lead and events producer at Happier New York — a members-only wellness concept in Manhattan. Every shift started before the first guest arrived and ended long after the last one left." },
+          { heading: "Happier New York · New York, NY · Jun 2023 – Oct 2024", text: "Guest experience lead and events producer at Happier New York — a members-only wellness concept in Manhattan. Responsible for the full guest journey: from first impression through departure, and everything in between." },
           { heading: "Running the Room", text: "Led a team of 5 FOH staff through full-day service — managing the floor, supporting the host stand, and making real-time seating calls to keep the guest experience seamless from open to close." },
           { heading: "Guest Relationships", text: "Served as the primary point of contact for members and regulars. Building relationships was the job — knowing names, preferences, and handling anything that went sideways with composure." },
-          { heading: "Events", text: "Managed private event inquiries end-to-end across multiple properties — from first inquiry through day-of execution, coordinating with HR, Facilities, and Communications to pull it all together." },
+          { heading: "Experience Production", text: "Produced brand experiences and private activations end-to-end across multiple properties — from first inquiry through day-of execution. Coordinated with HR, Facilities, and Comms to deliver seamless guest journeys." },
           { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and people management." }
         ]
       },
@@ -170,8 +170,8 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Optimization & Innovation analyst at Kepler in New York — a data-driven performance marketing agency. Part campaign management, part data science, part strategy." },
-      { label: "The Budget", text: "Purchased ad inventory across 6 social media platforms inside a $250K monthly client budget. Every dollar had to work. Allocation decisions were backed by data, not gut." },
+      { label: "The Role", text: "Optimization & Innovation analyst at Kepler — a data-driven performance marketing agency. Part campaign management, part audience analytics, part brand strategy. Every campaign was a live experiment in how digital touchpoints drive real-world behaviour." },
+      { label: "The Budget", text: "Purchased ad inventory across 6 social platforms inside a $250K monthly client budget. Every dollar tied back to audience behaviour — allocation decisions were backed by 5 years of performance data, not gut." },
       { label: "Reading the Data", text: "Pulled insights from 5 years of campaign performance data to identify brand marketing trends — then translated those findings into concrete optimization moves for active campaigns." },
       { label: "Day-to-Day", text: "Daily check-ins with the team, ongoing campaign adjustments, and regular presentations of performance data. The job was as much communication as it was analysis." },
       { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own logic — different creative formats, audiences, and optimization levers." }
@@ -688,7 +688,7 @@
         { label: 'The Skill', text: 'Served as the primary point of contact for founding members, regulars, and high-value guests — building relationships that kept them coming back.' },
         { label: 'How It Worked', text: 'I tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. The personal touch was the product.' }
       ]},
-      { time: '12:00 PM', pax: 6, guest: 'Private Event Execution', note: 'End-to-end inquiry through day-of ops', table: 'Tbl 10', status: 'completed', slides: [
+      { time: '12:00 PM', pax: 6, guest: 'Brand Experience & Event Production', note: 'End-to-end activation from inquiry through day-of', table: 'Tbl 10', status: 'completed', slides: [
         { label: 'The Skill', text: 'Managed private event inquiries from first contact through day-of execution — covering logistics, guest coordination, and on-site management.' },
         { label: 'How It Worked', text: 'Every event required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. I was the single point of accountability.' },
         { label: 'The Result', text: 'Events that ran without visible effort. Guests experienced seamless hospitality; the coordination that made it happen stayed entirely behind the scenes.' }
