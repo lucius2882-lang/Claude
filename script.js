@@ -1032,7 +1032,7 @@
           <div class="bm-ps-cover-overlay">
             <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
             <div class="bm-cover-rule"></div>
-            <div class="bm-cover-sub">Canandaigua, NY &nbsp;·&nbsp; Est. 2019</div>
+            <div class="bm-cover-sub">Canandaigua, NY &nbsp;·&nbsp; Est. 2020</div>
             <div class="bm-cover-sub" style="margin-top:4px">Floor &amp; Closing Manager</div>
             <div class="bm-cover-tap" style="margin-top:20px">Open ›</div>
           </div>
