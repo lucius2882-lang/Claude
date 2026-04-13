@@ -490,6 +490,15 @@
 
     .tile:hover .tile-label { letter-spacing: 0.2em; }
 
+    .tile-outcome {
+      color: rgba(0,0,0,0.38);
+      font-size: clamp(0.62rem, 1.2vw, 0.82rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
     /* All tiles — warm golden glow */
     .tile {
       border: 1px solid rgba(200, 169, 110, 0.5) !important;
