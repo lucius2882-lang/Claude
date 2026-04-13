@@ -60,7 +60,7 @@
           bullets:["Purchased ad inventory across 6 social platforms within a $250K monthly client budget","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
         { title:"Floor & Closing Manager", dates:"Nov 2019 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Bristol, NY",
           bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 rewrote SOPs and retrained team for reopening"] },
-        { title:"Digital Strategy Assistant", dates:"Jun 2019 \u2013 May 2020", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
+        { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
           bullets:["Supported million-dollar digital fundraising campaigns for local and state political candidates","Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts","Ran QA on marketing materials distributed to lists of 100,000+ subscribers","Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop & Illustrator"] }
       ];
 
@@ -144,7 +144,7 @@
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2019 – May 2020", text: "Digital Strategy Assistant at New Blue Interactive — a political digital agency running fundraising and communications for local and state campaigns." },
+          { heading: "New Blue Interactive · Washington DC-Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at New Blue Interactive — a political digital agency running fundraising and communications for local and state campaigns." },
           { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections. Every email, every ask, every subject line mattered — campaigns live or die on their fundraising numbers." },
           { heading: "Writing & Testing", text: "Drafted fundraising emails and ran A/B tests on tone, subject lines, and ask amounts — informed by years of performance data and a deep understanding of what moves donors to act." },
           { heading: "Scale & QA", text: "Ran quality assurance on marketing materials going to email lists of 100,000+. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off." },
