@@ -1057,7 +1057,11 @@
       border: 1px solid rgba(232,168,32,0.1);
       pointer-events: none;
     }
-    .bm-text-page.special { background: linear-gradient(145deg, #071a07 0%, #030d03 100%); }
+    .bm-text-page.special { background: linear-gradient(145deg, #1a0a02 0%, #0d0400 100%); }
+    .bm-text-page.special .bm-page-item-name { color: #f0c050; font-size: 0.96rem; }
+    .bm-text-page.special .bm-page-item-sub { color: rgba(240,200,120,0.9); font-size: 0.76rem; font-weight: 500; }
+    .bm-text-page.special .bm-text-page-title { color: #f0c050; letter-spacing: 0.7em; }
+    .bm-text-page.special .bm-text-page-orn { color: rgba(240,192,64,0.5); }
     .bm-text-page-title {
       font-size: 0.54rem; letter-spacing: 0.55em; text-transform: uppercase;
       color: #e8a820; font-family: 'Segoe UI', sans-serif; font-weight: 400;
@@ -1071,16 +1075,13 @@
       flex: 1; display: flex; flex-direction: column; justify-content: center;
       padding: 8px 0; margin: 0;
       border: none; border-bottom: 1px solid rgba(232,168,32,0.1);
-      cursor: pointer; background: transparent;
-      transition: padding-left 0.2s ease;
+      cursor: default; background: transparent;
     }
     .bm-page-item:first-of-type { border-top: 1px solid rgba(232,168,32,0.1); }
-    .bm-page-item:hover { padding-left: 7px; }
-    .bm-page-item:hover .bm-page-item-name { color: #e8a820; }
-    .bm-page-item-header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-bottom: 3px; }
-    .bm-page-item-name { font-size: 0.87rem; color: #e0cfa0; font-family: Georgia, serif; font-style: italic; transition: color 0.2s; }
-    .bm-page-item-detail { font-size: 0.53rem; color: rgba(232,168,32,0.38); font-family: 'Segoe UI', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
-    .bm-page-item-sub  { font-size: 0.62rem; color: rgba(200,175,130,0.42); font-family: 'Segoe UI', sans-serif; line-height: 1.45; }
+    .bm-page-item-header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+    .bm-page-item-name { font-size: 0.9rem; color: #e8d8a8; font-family: Georgia, serif; font-style: italic; }
+    .bm-page-item-detail { font-size: 0.55rem; color: rgba(232,168,32,0.5); font-family: 'Segoe UI', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .bm-page-item-sub { font-size: 0.72rem; color: rgba(220,195,145,0.85); font-family: 'Segoe UI', sans-serif; line-height: 1.5; }
 
     /* Nav bar — hidden, arrows moved to sides */
     .bm-nav { display: none; }
@@ -2696,10 +2697,10 @@
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'We Didn\'t Just Reopen — We Ran Well', desc: 'Rewrote the playbook, retrained the team, back open in two weeks.', detail: 'Spring 2020', slides: [
-            { label: 'The Situation', text: 'When Lock Stock reopened after COVID-19 closures, the entire operating model had changed. Distancing rules, sanitation requirements, and capacity limits meant the old playbook was gone.' },
-            { label: 'The Work', text: 'I rewrote the SOPs, retrained the full FOH team on every new protocol, and managed the reopening rollout through multiple phases as restrictions evolved. The team went from zero to operational in two weeks.' },
-            { label: 'The Result', text: 'Service quality held through every reopening phase. The team adapted without complaint because the expectation and the training were both clear from day one. We didn\'t just reopen — we ran well.' }
+          { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. I rewrote it.', detail: 'Spring 2020', slides: [
+            { label: 'The Situation', text: 'When Lock Stock closed for COVID-19, everything changed. Distancing rules, new sanitation standards, reduced capacity — the old way of running the floor was gone.' },
+            { label: 'The Work', text: 'I rewrote the SOPs from scratch, retrained the full FOH team on every new protocol, and led the reopening through multiple phases as restrictions evolved. Zero to operational in two weeks.' },
+            { label: 'The Result', text: 'Service quality held through every phase. The team adapted without complaint because the expectation and the training were clear from day one. We didn\'t just survive the pivot — we ran well.' }
           ]}
         ]
       }
@@ -2826,12 +2827,6 @@
     }
 
     function bindSpreadItems(spreadEl) {
-      spreadEl.querySelectorAll('.bm-page-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const sec = barSections.find(s => s.title === el.dataset.sec);
-          if (sec) openBmPopup(sec.items[parseInt(el.dataset.item)]);
-        });
-      });
       const cover = spreadEl.querySelector('.bm-ps-cover');
       if (cover) cover.addEventListener('click', () => {
         if (bmCurrentPage < bmSpreads.length - 1) {
