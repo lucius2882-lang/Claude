@@ -125,9 +125,9 @@
         title: "Guest Experience & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Maître D' and Events Producer at a Brooklyn wellness members club. The brand wasn't a logo or a campaign — it was the membership itself. Every interaction was simultaneously selling and delivering the brand promise." },
-          { heading: "Stewarding the Room", text: "Led a team of 5 through full-day service — managing the floor, directing the host stand, making real-time calls. Primary point of contact for founding members, regulars, and VIP guests across every service period." },
-          { heading: "Brand in the Room", text: "Coordinated brand collaborations with fashion and art partners — singular activations designed to materialize the membership's value beyond the physical space. Supported the openings of two new venues: Habibi and SAA." },
+          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Maître D' and Events Producer at a Brooklyn wellness members club. The brand wasn't a logo or a campaign. It was the membership itself. Every interaction was simultaneously selling and delivering the brand promise." },
+          { heading: "Stewarding the Room", text: "Led a team of 5 through full-day service, managing the floor, directing the host stand, making real-time calls. Primary point of contact for founding members, regulars, and VIP guests across every service period." },
+          { heading: "Brand in the Room", text: "Coordinated brand collaborations with fashion and art partners: singular activations designed to materialize the membership's value beyond the physical space. Supported the openings of two new venues, Habibi and SAA." },
           { heading: "Event Activation", text: "Produced private events and corporate activations end-to-end across multiple properties, coordinating with HR, Facilities, and Communications. Delivered five activations in a single month at peak season." },
           { heading: "Tools of the Trade", text: "Resy, OpenTable, and Toast POS daily. Ran staff training programs and performance reviews. Equal parts hospitality, logistics, and brand stewardship." }
         ]
@@ -136,21 +136,21 @@
         title: "Floor & Closing Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a family-owned bar and grill — run alongside family ownership. The full system: front of house, digital marketing, takeout fulfillment, staff direction. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan." },
-          { heading: "Owning the Shift", text: "Ran service across all dayparts — lunch rushes, dinner covers, late-night crowds. Coordinated staffing and execution from open to close. Standards held regardless of volume because that was the only option." },
-          { heading: "The COVID Pivot", text: "Built out takeout ordering systems, digital marketing, and fulfillment workflows during COVID closure. Led team retraining across every phase of reopening. Rewrote the SOPs alongside the team — together, not from above." },
+          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Floor and closing manager at a family-owned bar and grill, run alongside family ownership. Front of house, digital marketing, takeout fulfillment, staff direction. The lesson was permanent: a brand survives or dies on whether you can hold the experience together when nothing is going to plan." },
+          { heading: "Owning the Shift", text: "Ran service across all dayparts: lunch rushes, dinner covers, late-night crowds. Coordinated staffing and execution from open to close. Standards held regardless of volume because that was the only option." },
+          { heading: "The COVID Pivot", text: "Built out takeout ordering systems, digital marketing, and fulfillment workflows during COVID closure. Led team retraining across every phase of reopening. Rewrote the SOPs alongside the team, together, not from above." },
           { heading: "Closing the Night", text: "Every close meant nightly financial reports, cash reconciliation, scheduling reviews, and Health Department compliance walk-throughs. The shift wasn't done until everything was signed off." },
-          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly — which turned out to be the most important thing." }
+          { heading: "The Team", text: "Cross-trained staff across every FOH role and ran ongoing coaching throughout each shift. Built a crew that could adapt on the fly. That turned out to be the most important thing." }
         ]
       },
       digital: {
         title: "Digital Strategy Assistant",
         color: "#533483",
         sections: [
-          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency — where Lucius first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
-          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections at the local and state level. Every ask, every subject line, every send mattered — campaigns live or die on whether attention converts." },
-          { heading: "Writing & Testing", text: "Drafted fundraising copy across channels and ran A/B tests on tone, subject lines, and ask amounts — informed by years of list performance data and a clear understanding of what moves people to act." },
-          { heading: "Scale & QA", text: "Managed QA pipelines for campaign assets going to 100,000+ subscriber lists. One broken link or rendering error at that scale is a real problem — nothing shipped without sign-off." },
+          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital Strategy Assistant at a political digital agency where Lucius first learned that persuasion is a discipline, not a vibe. Political fundraising is marketing under maximum pressure. Every email is a test of whether you can move people to act." },
+          { heading: "The Stakes", text: "Supported million-dollar digital fundraising campaigns for real elections at the local and state level. Every ask, every subject line, every send mattered. Campaigns live or die on whether attention converts." },
+          { heading: "Writing & Testing", text: "Drafted fundraising copy across channels and ran A/B tests on tone, subject lines, and ask amounts, informed by years of list performance data and a clear understanding of what moves people to act." },
+          { heading: "Scale & QA", text: "Managed QA pipelines for campaign assets going to 100,000+ subscriber lists. One broken link or rendering error at that scale is a real problem. Nothing shipped without sign-off." },
           { heading: "Technical + Creative", text: "Built HTML/CSS email templates for CRM deployment and handled creative production in Adobe Photoshop and Illustrator. The acquisition discipline and the craft lived in the same role." }
         ]
       }
@@ -170,9 +170,9 @@
     ];
 
     const keplerSlides = [
-      { label: "The Role", text: "Digital Marketing Analyst at Kepler — a data-driven performance marketing agency. This is where Lucius formalized his understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
-      { label: "The Budget", text: "Managed paid social inventory across six platforms within a $250K monthly client budget. Maintained consistent 3+ dollar ROAS across campaign portfolios. Every allocation decision was backed by five years of performance data — gut-checks ran through the numbers first." },
-      { label: "Reading the Data", text: "Pulled insights from five years of campaign performance data to surface audience trends — then translated those findings into concrete optimization decisions for live campaigns." },
+      { label: "The Role", text: "Digital Marketing Analyst at Kepler, a data-driven performance marketing agency. This is where Lucius formalized his understanding of acquisition at scale. Real budgets, real platforms, real accountability for ROAS." },
+      { label: "The Budget", text: "Managed paid social inventory across six platforms within a $250K monthly client budget. Maintained consistent 3+ dollar ROAS across campaign portfolios. Every allocation decision was backed by five years of performance data. Gut-checks ran through the numbers first." },
+      { label: "Reading the Data", text: "Pulled insights from five years of campaign performance data to surface audience trends, then translated those findings into concrete optimization decisions for live campaigns." },
       { label: "Day-to-Day", text: "Daily team check-ins, asset coordination, ongoing campaign adjustments, and regular client-facing performance presentations. The job was as much communication and coordination as it was analysis." },
       { label: "Platforms", text: "Worked across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn. Each platform had its own creative logic, audience behavior, and optimization levers." }
     ];
@@ -675,62 +675,62 @@
 
     const reservations = [
       { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Stewarded team of 5 from open to close', table: 'Tbl 3', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Stewarded a front-of-house team of 5 through every service period — active on the floor from open to close, working directly alongside staff rather than directing from a distance.' },
+        { label: 'The Skill', text: 'Stewarded a front-of-house team of 5 through every service period, active on the floor from open to close, working directly alongside staff rather than directing from a distance.' },
         { label: 'How It Worked', text: 'The team knew where the standard was because they could see it being held every shift. I was the last line of quality control for the guest experience, the team\'s execution, and the energy of the room.' },
-        { label: 'The Result', text: 'A team that operated with consistency and confidence. Consistency is what converts a good visit into a membership — and it starts with the people holding the floor.' }
+        { label: 'The Result', text: 'A team that operated with consistency and confidence. Consistency is what converts a good visit into a membership. It starts with the people holding the floor.' }
       ]},
       { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Designed and executed onboarding and training for incoming FOH staff — covering service standards, product knowledge, and what it means to steward a members club.' },
-        { label: 'How It Worked', text: 'Training wasn\'t a one-time event — it was ongoing. Real-time feedback during shifts, formal performance reviews each season. Small corrections compounded into real improvement.' },
+        { label: 'The Skill', text: 'Designed and executed onboarding and training for incoming FOH staff, covering service standards, product knowledge, and what it means to steward a members club.' },
+        { label: 'How It Worked', text: 'Training wasn\'t a one-time event. It was ongoing. Real-time feedback during shifts, formal performance reviews each season. Small corrections compounded into real improvement.' },
         { label: 'The Result', text: 'Staff who could hold the brand standard without constant supervision. Members noticed the consistency because it was built into the team, not policed from above.' }
       ]},
       { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for founding members & regulars', table: 'Tbl 1', status: 'vip', photos: ['https://i.imgur.com/3SM2sT5.jpg','https://i.imgur.com/G1PYxXJ.jpg'], slides: [
-        { label: 'The Skill', text: 'Stewarded relationships with founding members, regulars, and high-value guests — primary point of contact across every service period.' },
+        { label: 'The Skill', text: 'Stewarded relationships with founding members, regulars, and high-value guests. Primary point of contact across every service period.' },
         { label: 'How It Worked', text: 'Tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. Joy is the strongest engine of brand memory. That was the strategy.' }
       ]},
       { time: '12:00 PM', pax: 6, guest: 'Brand Activation & Event Production', note: 'End-to-end activation from inquiry through day-of', table: 'Tbl 10', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Produced private events and brand activations from first inquiry through day-of execution — coordinating logistics, guest experience, and on-site management as the single point of accountability.' },
+        { label: 'The Skill', text: 'Produced private events and brand activations from first inquiry through day-of execution, coordinating logistics, guest experience, and on-site management as the single point of accountability.' },
         { label: 'How It Worked', text: 'Every activation required aligning multiple teams: kitchen, front-of-house, facilities, and sometimes external vendors. The coordination stayed invisible. The experience didn\'t.' },
-        { label: 'The Result', text: 'Activations that materialized the membership\'s value in the room. Guests experienced something singular — the kind of moment that only existed once, in that space, with those people.' }
+        { label: 'The Result', text: 'Activations that materialized the membership\'s value in the room. Guests experienced something singular: the kind of moment that only existed once, in that space, with those people.' }
       ]},
       { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable — balancing capacity, pacing, and the guest experience from the host stand.' },
+        { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable, balancing capacity, pacing, and the guest experience from the host stand.' },
         { label: 'How It Worked', text: 'I actively supported the host throughout each shift, making real-time adjustments to seating assignments to keep covers moving without guests feeling rushed.' },
-        { label: 'The Result', text: 'Smooth service pacing that protected both the kitchen and the guest experience — maximizing covers without sacrificing the quality of each visit.' }
+        { label: 'The Result', text: 'Smooth service pacing that protected both the kitchen and the guest experience, maximizing covers without sacrificing the quality of each visit.' }
       ]},
       { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated', photos: ['https://i.imgur.com/xMJo2FG.jpg','https://i.imgur.com/cXqqkq2.jpg'], slides: [
-        { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor — resolving complaints, de-escalating tension, and converting a negative experience into a reason to return.' },
+        { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor: resolving complaints, de-escalating tension, and converting a negative experience into a reason to return.' },
         { label: 'How It Worked', text: 'Speed and ownership. Never passed a problem to someone else. Made the call on the floor, handled it personally, and followed up before the guest left. A guest who got it handled right often becomes more loyal than one who never had an issue.' }
       ]},
       { time: '1:00 PM', pax: 8, guest: 'Corporate Activations', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Produced corporate events across multiple Happier properties — coordinating cross-functionally with HR, Facilities, and Communications from first contact through execution.' },
-        { label: 'How It Worked', text: 'These weren\'t dinner reservations — they were full activations involving space setup, custom programming, and internal stakeholder alignment before a single guest arrived.' },
+        { label: 'The Skill', text: 'Produced corporate events across multiple Happier properties, coordinating cross-functionally with HR, Facilities, and Communications from first contact through execution.' },
+        { label: 'How It Worked', text: 'These weren\'t dinner reservations. They were full activations involving space setup, custom programming, and internal stakeholder alignment before a single guest arrived.' },
         { label: 'The Result', text: 'Events that materialized the brand for the companies hosting them. Repeat corporate bookings followed because the experience delivered on what the brand had promised.' }
       ]},
       { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived', photos: ['https://i.imgur.com/9eoB4jd.jpg','https://i.imgur.com/biMncas.jpg'], slides: [
-        { label: 'The Skill', text: 'Maintained live control of seating flow throughout each shift — reading the room, anticipating bottlenecks, and adjusting table assignments before problems developed.' },
+        { label: 'The Skill', text: 'Maintained live control of seating flow throughout each shift, reading the room, anticipating bottlenecks, and adjusting table assignments before problems developed.' },
         { label: 'How It Worked', text: 'I stayed at or near the host stand during peak periods, tracking turn times, kitchen pacing, and server sections to keep everything balanced in real time.' }
       ]},
       { time: '2:00 PM', pax: 4, guest: 'Member Onboarding', note: 'New member experience & relationship building', table: 'Tbl 8', status: 'reserved', photos: ['https://i.imgur.com/sbxAUZl.jpg','https://i.imgur.com/yTlUbxT.jpg'], slides: [
-        { label: 'The Skill', text: 'Led the in-person onboarding experience for new Happier members — introducing them to the space, the team, and the standard of service they could expect.' },
+        { label: 'The Skill', text: 'Led the in-person onboarding experience for new Happier members, introducing them to the space, the team, and the standard of service they could expect.' },
         { label: 'How It Worked', text: 'First impressions set the tone for the entire membership. I personally greeted new members, walked them through the space, and made sure their first visit was memorable.' }
       ]},
       { time: '2:00 PM', pax: 2, guest: 'Toast POS Operations', note: 'Daily platform management & reporting', table: 'Tbl 1', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Operated Toast POS daily for order management, payment processing, and end-of-shift reporting — alongside Resy and OpenTable for reservations.' },
+        { label: 'The Skill', text: 'Operated Toast POS daily for order management, payment processing, and end-of-shift reporting, alongside Resy and OpenTable for reservations.' },
         { label: 'How It Worked', text: 'Knowing the systems meant the team could lean on me for troubleshooting during service, and I could pull accurate reporting at close without delays.' },
         { label: 'The Result', text: 'Faster service, cleaner data, and a team that wasn\'t blocked by technology issues during high-volume periods.' }
       ]},
       { time: '3:00 PM', pax: 20, guest: 'Multi-Property Event Production', note: 'Facilities, HR & Comms cross-functional alignment', table: 'Event', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
-        { label: 'The Skill', text: 'Produced large-scale activations across multiple Happier properties — managing logistics, vendor coordination, and cross-departmental communication from inquiry through execution.' },
-        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show — I kept every function aligned and moving toward the same deadline. Five activations in a single month at peak season.' }
+        { label: 'The Skill', text: 'Produced large-scale activations across multiple Happier properties, managing logistics, vendor coordination, and cross-departmental communication from inquiry through execution.' },
+        { label: 'How It Worked', text: 'I was the hub. HR needed headcount, Facilities needed a setup window, Comms needed a run-of-show. I kept every function aligned and moving toward the same deadline. Five activations in a single month at peak season.' }
       ]},
       { time: '5:00 PM', pax: 2, guest: 'Service Standards', note: 'Brand delivery from first cover to last', table: 'Tbl 5', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Held Happier\'s brand standard across every service period — from the first cover of the day through the last. The brand doesn\'t live in a deck. It lives in the room.' },
-        { label: 'How It Worked', text: 'Standards don\'t enforce themselves. Active floor presence, in-the-moment coaching, and setting the expectation through my own behavior — every shift, every cover.' },
+        { label: 'The Skill', text: 'Held Happier\'s brand standard across every service period, from the first cover of the day through the last. The brand doesn\'t live in a deck. It lives in the room.' },
+        { label: 'How It Worked', text: 'Standards don\'t enforce themselves. Active floor presence, in-the-moment coaching, and setting the expectation through my own behavior. Every shift, every cover.' },
         { label: 'The Result', text: 'A consistent guest experience that members could count on regardless of the day, the volume, or the server. Consistency is what converts a visit into a membership.' }
       ]},
       { time: '5:30 PM', pax: 4, guest: 'Performance Management', note: 'Ongoing feedback & staff development', table: 'Tbl 9', status: 'reserved', photos: ['https://i.imgur.com/tgnJSKo.jpg','https://i.imgur.com/UUfdzuI.jpg'], slides: [
-        { label: 'The Skill', text: 'Provided ongoing performance feedback to FOH staff and contributed to formal reviews — keeping the team accountable and growing throughout each season.' },
+        { label: 'The Skill', text: 'Provided ongoing performance feedback to FOH staff and contributed to formal reviews, keeping the team accountable and growing throughout each season.' },
         { label: 'How It Worked', text: 'Feedback happened in real time, not just at review cycles. A quick note after service about what went well or what to adjust is more effective than a quarterly conversation.' }
       ]},
       { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved', photos: ['https://i.imgur.com/FPLyO64.jpg','https://i.imgur.com/jW8Su7Y.jpg'], slides: [
