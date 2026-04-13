@@ -257,7 +257,7 @@
         p.style.cssText = `--tilt:${imgTilts[i]}deg;left:${zones[i].x}px;top:${zones[i].y}px;width:${imgW}px;height:${imgH}px;z-index:100;cursor:move;`;
         p.innerHTML = `
           <button class="kimg-x" style="position:absolute;top:5px;right:5px;z-index:10;background:rgba(21,89,48,0.85);border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;">✕</button>
-          <div class="popup-photo" style="background:#1B6B3A;width:100%;height:100%;">${url ? `<img src="${url}" alt="">` : imgPH}</div>`;
+          <div class="popup-photo" style="background:#1B6B3A;width:100%;height:100%;">${url ? `<img src="${url}" alt="" loading="lazy">` : imgPH}</div>`;
         p.querySelector('.kimg-x').addEventListener('click', () => {
           p.classList.add('closing');
           p.addEventListener('animationend', () => {
@@ -826,7 +826,7 @@
           </div>
         </div>
         <div class="popup-photo" style="background:#111;border-bottom:1px solid #2a2a2a;">
-          ${(resv.photos && resv.photos[idx]) ? `<img src="${resv.photos[idx]}" alt="" style="width:100%;height:100%;object-fit:contain;background:#111;">` : `<div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.2);color:rgba(200,169,110,0.3);">
+          ${(resv.photos && resv.photos[idx]) ? `<img src="${resv.photos[idx]}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:#111;">` : `<div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.2);color:rgba(200,169,110,0.3);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -1019,7 +1019,7 @@
     }
 
     function buildSpreadHTML(spread) {
-      const im = url => `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:contain;background:#0a0500;display:block;">`;
+      const im = url => `<img src="${url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:#0a0500;display:block;">`;
       const photoGrid = photos => `<div class="bm-ps-photo-grid">${photos.map(u => `<div class="bm-ps-cell">${im(u)}</div>`).join('')}</div>`;
       if (spread.type === 'text-photo') {
         return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoGrid(spread.photos)}</div>`;

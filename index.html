@@ -8,13 +8,14 @@
   <meta name="keywords" content="Lucius Campany, guest experience, experiential marketing, hospitality, brand activation, portfolio" />
   <meta name="author" content="Lucius Campany" />
   <link rel="canonical" href="https://luciuscampany.com/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://luciuscampany.com/" />
   <meta property="og:title" content="Lucius Campany — Guest Experience &amp; Experiential Marketing" />
   <meta property="og:description" content="Five years designing guest experiences and running data-driven marketing — from live brand activations and VIP member programs to million-dollar digital campaigns." />
-  <meta property="og:image" content="https://luciuscampany.com/og-preview.jpg" />
+  <meta property="og:image" content="https://i.imgur.com/fRxXTtB.jpg" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -28,7 +29,7 @@
     "@type": "Person",
     "name": "Lucius Campany",
     "jobTitle": "Guest Experience & Experiential Marketing",
-    "email": "campanylucius@gmail.com",
+    "email": "lucius@luciuscampany.com",
     "url": "https://luciuscampany.com/",
     "sameAs": [
       "https://www.linkedin.com/in/lucius-campany-215008149"
@@ -67,7 +68,7 @@
       </div>
     </div>
     <div class="splash-links">
-      <a class="splash-link" href="mailto:campanylucius@gmail.com">campanylucius@gmail.com</a>
+      <a class="splash-link" href="mailto:lucius@luciuscampany.com">lucius@luciuscampany.com</a>
       <span class="splash-link-divider">·</span>
       <a class="splash-link" href="https://www.linkedin.com/in/lucius-campany-215008149" target="_blank" rel="noopener">LinkedIn</a>
     </div>
@@ -97,7 +98,7 @@
         </div>
         <div class="rv-contact">
           <span>New York, NY</span>
-          <a href="mailto:campanylucius@gmail.com">campanylucius@gmail.com</a>
+          <a href="mailto:lucius@luciuscampany.com">lucius@luciuscampany.com</a>
           <a href="https://luciuscampany.com">luciuscampany.com</a>
           <a href="https://www.linkedin.com/in/lucius-campany-215008149" target="_blank" rel="noopener">LinkedIn</a>
         </div>
@@ -246,25 +247,25 @@
   <div id="grid">
     <div class="tile" data-role="maitre">
       <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/yE5j1hd.jpg" alt="Happier">
+        <img class="tile-logo" src="https://i.imgur.com/yE5j1hd.jpg" alt="Happier" loading="lazy">
         <div class="tile-label">Maître D' & Events Producer</div>
       </div>
     </div>
     <div class="tile" data-role="marketing">
       <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/GJMovjs.jpg" alt="Kepler">
+        <img class="tile-logo" src="https://i.imgur.com/GJMovjs.jpg" alt="Kepler" loading="lazy">
         <div class="tile-label">Digital Marketing Analyst</div>
       </div>
     </div>
     <div class="tile" data-role="manager">
       <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/LOqPyMn.jpg" alt="Lock Stock Bar & Grill">
+        <img class="tile-logo" src="https://i.imgur.com/LOqPyMn.jpg" alt="Lock Stock Bar & Grill" loading="lazy">
         <div class="tile-label">Floor & Closing Manager</div>
       </div>
     </div>
     <div class="tile" data-role="digital">
       <div class="tile-inner">
-        <img class="tile-logo" src="https://i.imgur.com/3EdnKkj.jpg" alt="New Blue Interactive">
+        <img class="tile-logo" src="https://i.imgur.com/3EdnKkj.jpg" alt="New Blue Interactive" loading="lazy">
         <div class="tile-label">Digital Strategy Assistant</div>
       </div>
     </div>
@@ -382,9 +383,20 @@
 
   <div id="overlay"></div>
 
-      <div id="photo-key-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
+  <!-- Contact -->
+  <section id="contact">
+    <div class="cf-wrap">
+      <div class="cf-heading">Get in Touch</div>
+      <p class="cf-sub">Open to opportunities in guest experience and experiential marketing.</p>
+      <form name="contact" method="POST" data-netlify="true" class="cf-form">
+        <input type="hidden" name="form-name" value="contact" />
+        <input class="cf-input" type="text" name="name" placeholder="Your name" required />
+        <input class="cf-input" type="email" name="email" placeholder="Your email" required />
+        <textarea class="cf-input cf-textarea" name="message" placeholder="Message" rows="4" required></textarea>
+        <button class="cf-submit" type="submit">Send Message</button>
+      </form>
     </div>
-  </div>
+  </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
