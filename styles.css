@@ -925,10 +925,18 @@
       .bm-ps-half, .bm-ps-col, .bm-ps-full,
       .bm-ps-photo-grid { flex: 0 0 46%; max-height: 46%; }
       .bm-spread > .bm-ps-cover { flex: 1 1 100%; max-height: 100%; width: 100%; }
-      .bm-ps-photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+      .bm-ps-photo-grid { position: relative; grid-template-columns: 1fr; grid-template-rows: 1fr; }
+      .bm-ps-photo-grid .bm-ps-cell { position: absolute; inset: 0; }
+      .bm-ps-photo-grid .bm-ps-cell:nth-child(1) { animation: bm-photo-cycle 4s infinite; }
+      .bm-ps-photo-grid .bm-ps-cell:nth-child(2) { animation: bm-photo-cycle 4s -2s infinite; }
       .bm-text-page { flex: 1; padding: 14px 14px 10px; }
       .bm-page-item-name { font-size: 1.05rem; }
       .bm-page-item-sub { font-size: 0.82rem; }
+    }
+    @keyframes bm-photo-cycle {
+      0%, 40%  { opacity: 1; }
+      50%, 90% { opacity: 0; }
+      100%     { opacity: 1; }
     }
 
     .bm-book {
