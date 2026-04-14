@@ -923,7 +923,8 @@
       .bm-ps { flex-direction: column; }
       .bm-ps-gutter { display: none; }
       .bm-ps-half, .bm-ps-col, .bm-ps-full,
-      .bm-ps-photo-grid, .bm-ps-cover { flex: 0 0 38%; max-height: 38%; }
+      .bm-ps-photo-grid, .bm-ps-cover { flex: 0 0 46%; max-height: 46%; }
+      .bm-ps-photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
       .bm-text-page { flex: 1; padding: 14px 14px 10px; }
       .bm-page-item-name { font-size: 1.05rem; }
       .bm-page-item-sub { font-size: 0.82rem; }

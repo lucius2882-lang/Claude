@@ -965,10 +965,8 @@
     let bmSlideIndex = 0;
     let bmCurrentPage = 0;
 
-    // Spreads: 0 = cover, 1 = On Draft + Cocktails, 2 = Spirits + Special, 3-4 = collages
     const p = lsSlidePhotos;
     const bmSpreads = [
-      { type: 'cover' },
       { type: 'text-photo', section: barSections[0], photos: [p[0],  p[2]]  },
       { type: 'photo-text', photos: [p[7], p[10]], positions: ['50% 33%', null], section: barSections[1] },
       { type: 'text-photo', section: barSections[2], photos: [p[13], p[27]] },
