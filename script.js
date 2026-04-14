@@ -39,19 +39,19 @@
         doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
       };
       const secHead = (title) => {
-        sf(5.5, 'bold', 120,120,120); doc.text(title, ml, y); y += 3;
-        doc.setDrawColor(185,185,185); doc.setLineWidth(0.18); doc.line(ml, y, ml+cw, y);
-        y += 4.5;
+        sf(7, 'bold', 120,120,120); doc.text(title, ml, y); y += 3.8;
+        doc.setDrawColor(185,185,185); doc.setLineWidth(0.2); doc.line(ml, y, ml+cw, y);
+        y += 5.5;
       };
 
       // Centered header
-      sf(20, 'bold');
-      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 6.5;
-      sf(7, 'normal', 85,85,85);
-      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, y, { align: 'center' }); y += 4.8;
-      sf(6.5, 'normal', 120,120,120);
-      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 5;
-      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 6.5;
+      sf(24, 'bold');
+      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 8;
+      sf(8.5, 'normal', 85,85,85);
+      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, y, { align: 'center' }); y += 6;
+      sf(7.5, 'normal', 120,120,120);
+      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 6;
+      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 8;
 
       // Experience
       secHead('EXPERIENCE');
@@ -90,26 +90,26 @@
       ];
 
       jobs.forEach((job, ji) => {
-        sf(7.5, 'bold'); doc.text(job.title, ml, y);
-        sf(6.2, 'normal', 100,100,100);
+        sf(9, 'bold'); doc.text(job.title, ml, y);
+        sf(7.5, 'normal', 100,100,100);
         doc.text(job.dates, ml + cw - doc.getTextWidth(job.dates), y);
-        y += 4;
-        sf(6.5, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 3.8;
+        y += 5;
+        sf(8, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 4.8;
         job.bullets.forEach(b => {
-          sf(6.5, 'normal', 17,17,17);
+          sf(8, 'normal', 17,17,17);
           const lines = doc.splitTextToSize('\u2013  ' + b, cw - 3);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += 3.6; });
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += 4.4; });
         });
-        if (ji < jobs.length - 1) y += 2.8;
+        if (ji < jobs.length - 1) y += 3.5;
       });
 
-      y += 6;
+      y += 7;
 
       // Education
       secHead('EDUCATION');
-      sf(7, 'bold'); doc.text('George Washington University', ml, y); y += 4;
-      sf(6.5, 'normal', 100,100,100);
-      doc.text('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', ml, y); y += 8;
+      sf(8.5, 'bold'); doc.text('George Washington University', ml, y); y += 5;
+      sf(8, 'normal', 100,100,100);
+      doc.text('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', ml, y); y += 9;
 
       // Skills (5 equal columns)
       secHead('SKILLS');
@@ -125,15 +125,15 @@
       groups.forEach((grp, gi) => {
         const gx = ml + gi * gw;
         let gy = baseY;
-        sf(5.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), gx, gy); gy += 4;
+        sf(6.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), gx, gy); gy += 5;
         let tx = gx;
         grp.tags.forEach(tag => {
-          sf(5, 'normal', 17,17,17);
-          const tw = doc.getTextWidth(tag) + 3;
-          if (tx + tw > gx + gw - 1) { tx = gx; gy += 5; }
+          sf(6, 'normal', 17,17,17);
+          const tw = doc.getTextWidth(tag) + 4;
+          if (tx + tw > gx + gw - 1) { tx = gx; gy += 6; }
           doc.setFillColor(238,238,238);
-          doc.roundedRect(tx, gy - 2.6, tw, 3.8, 0.5, 0.5, 'F');
-          doc.text(tag, tx + 1.5, gy); tx += tw + 1;
+          doc.roundedRect(tx, gy - 3.2, tw, 4.5, 0.6, 0.6, 'F');
+          doc.text(tag, tx + 2, gy); tx += tw + 1.5;
         });
       });
 
