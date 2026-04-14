@@ -918,6 +918,14 @@
       .bm-book-wrap { flex-wrap: wrap; justify-content: center; width: 100%; }
       .bm-book-wrap > .bm-arr { flex: 1; max-width: 80px; order: 2; }
       .bm-book-wrap > .bm-book { order: 1; width: 100%; }
+      .bm-book { height: min(78vh, 520px); }
+      /* Hide photo half on mobile — let text fill full width */
+      .bm-ps-gutter { display: none; }
+      .bm-ps-half, .bm-ps-col, .bm-ps-full, .bm-ps-photo,
+      .bm-ps-grid, .bm-ps-photo-grid, .bm-ps-cover { display: none !important; }
+      .bm-text-page { padding: 18px 16px 12px; }
+      .bm-page-item-name { font-size: 1.05rem; }
+      .bm-page-item-sub { font-size: 0.82rem; }
     }
 
     .bm-book {
