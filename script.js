@@ -32,31 +32,29 @@
       const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
       const pageW = 215.9;
       const ml = 15, mr = 15;
-      const lw = 120, gap = 7;
-      const rw = pageW - ml - mr - lw - gap;
-      const rx = ml + lw + gap;
-      let ly = 15, ry = 15;
+      const cw = pageW - ml - mr;
+      let y = 15;
 
       const sf = (size, style='normal', r=17, g=17, b=17) => {
         doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
       };
-      const secHead = (title, x, w, y) => {
-        sf(5.5, 'bold', 120,120,120); doc.text(title, x, y); y += 3;
-        doc.setDrawColor(185,185,185); doc.setLineWidth(0.18); doc.line(x, y, x+w, y);
-        return y + 4.5;
+      const secHead = (title) => {
+        sf(5.5, 'bold', 120,120,120); doc.text(title, ml, y); y += 3;
+        doc.setDrawColor(185,185,185); doc.setLineWidth(0.18); doc.line(ml, y, ml+cw, y);
+        y += 4.5;
       };
 
       // Centered header
       sf(20, 'bold');
-      doc.text('LUCIUS CAMPANY', pageW / 2, ly, { align: 'center' }); ly += 6.5; ry += 6.5;
+      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 6.5;
       sf(7, 'normal', 85,85,85);
-      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, ly, { align: 'center' }); ly += 4.8; ry += 4.8;
+      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, y, { align: 'center' }); y += 4.8;
       sf(6.5, 'normal', 120,120,120);
-      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, ly, { align: 'center' }); ly += 5; ry += 5;
-      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, ly, pageW-mr, ly); ly += 6.5; ry += 6.5;
+      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 5;
+      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 6.5;
 
-      // LEFT: Experience
-      ly = secHead('EXPERIENCE', ml, lw, ly);
+      // Experience
+      secHead('EXPERIENCE');
 
       const jobs = [
         { title:"Ma\u00eetre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  Brooklyn, NY",
@@ -92,29 +90,29 @@
       ];
 
       jobs.forEach((job, ji) => {
-        sf(7.5, 'bold'); doc.text(job.title, ml, ly);
+        sf(7.5, 'bold'); doc.text(job.title, ml, y);
         sf(6.2, 'normal', 100,100,100);
-        doc.text(job.dates, ml + lw - doc.getTextWidth(job.dates), ly);
-        ly += 4;
-        sf(6.5, 'normal', 100,100,100); doc.text(job.company, ml, ly); ly += 3.8;
+        doc.text(job.dates, ml + cw - doc.getTextWidth(job.dates), y);
+        y += 4;
+        sf(6.5, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 3.8;
         job.bullets.forEach(b => {
           sf(6.5, 'normal', 17,17,17);
-          const lines = doc.splitTextToSize('\u2013  ' + b, lw - 3);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), ly); ly += 3.6; });
+          const lines = doc.splitTextToSize('\u2013  ' + b, cw - 3);
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += 3.6; });
         });
-        if (ji < jobs.length - 1) ly += 2.8;
+        if (ji < jobs.length - 1) y += 2.8;
       });
 
-      // RIGHT: Education
-      ry = secHead('EDUCATION', rx, rw, ry);
-      sf(7, 'bold'); doc.text('George Washington University', rx, ry); ry += 4;
-      sf(6.2, 'normal', 100,100,100);
-      doc.splitTextToSize('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', rw)
-        .forEach(l => { doc.text(l, rx, ry); ry += 3.6; });
-      ry += 5;
+      y += 6;
 
-      // RIGHT: Skills
-      ry = secHead('SKILLS', rx, rw, ry);
+      // Education
+      secHead('EDUCATION');
+      sf(7, 'bold'); doc.text('George Washington University', ml, y); y += 4;
+      sf(6.5, 'normal', 100,100,100);
+      doc.text('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', ml, y); y += 8;
+
+      // Skills (5 equal columns)
+      secHead('SKILLS');
       const groups = [
         { label:'Events & Activation', tags:['Event Production','Run of Show','Brand Activations','Day-of Execution','Guest Relations','Vendor Coordination','Experiential Programming'] },
         { label:'Marketing', tags:['Paid Social','Campaign Management','A/B Testing','Performance Analytics','Email Marketing'] },
@@ -122,19 +120,21 @@
         { label:'Operations', tags:['Team Leadership','Staff Training','Scheduling','Financial Reporting','Compliance'] },
         { label:'Tools', tags:['Adobe Photoshop','Illustrator','Google Analytics'] }
       ];
-
-      groups.forEach(grp => {
-        sf(5.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), rx, ry); ry += 3.5;
-        let tx = rx;
+      const gw = cw / groups.length;
+      const baseY = y;
+      groups.forEach((grp, gi) => {
+        const gx = ml + gi * gw;
+        let gy = baseY;
+        sf(5.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), gx, gy); gy += 4;
+        let tx = gx;
         grp.tags.forEach(tag => {
           sf(5, 'normal', 17,17,17);
           const tw = doc.getTextWidth(tag) + 3;
-          if (tx + tw > rx + rw + 1) { tx = rx; ry += 5; }
+          if (tx + tw > gx + gw - 1) { tx = gx; gy += 5; }
           doc.setFillColor(238,238,238);
-          doc.roundedRect(tx, ry - 2.6, tw, 3.8, 0.5, 0.5, 'F');
-          doc.text(tag, tx + 1.5, ry); tx += tw + 1;
+          doc.roundedRect(tx, gy - 2.6, tw, 3.8, 0.5, 0.5, 'F');
+          doc.text(tag, tx + 1.5, gy); tx += tw + 1;
         });
-        ry += 6;
       });
 
       doc.save('lucius-campany-resume.pdf');
