@@ -929,8 +929,8 @@
     }
 
     .bm-book {
-      width: min(90vw, 820px);
-      height: min(84vh, 520px);
+      width: min(92vw, 1020px);
+      height: min(86vh, 640px);
       display: flex;
       flex-direction: column;
       border-radius: 0;
@@ -1167,7 +1167,7 @@
       flex: 1; min-width: 0;
       background: linear-gradient(145deg, #1c0f05 0%, #0d0601 100%);
       display: flex; flex-direction: column;
-      padding: 14px 14px 10px; overflow: hidden;
+      padding: 22px 22px 16px; overflow: hidden;
       position: relative;
     }
     .bm-text-page::before {
@@ -1198,9 +1198,9 @@
     }
     .bm-page-item:first-of-type { border-top: 1px solid rgba(232,168,32,0.1); }
     .bm-page-item-header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-bottom: 3px; }
-    .bm-page-item-name { font-size: 1.0rem; color: #e8d8a8; font-family: Georgia, serif; font-style: italic; }
-    .bm-page-item-detail { font-size: 0.6rem; color: rgba(232,168,32,0.5); font-family: 'Segoe UI', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
-    .bm-page-item-sub { font-size: 0.8rem; color: rgba(220,195,145,0.85); font-family: 'Segoe UI', sans-serif; line-height: 1.45; }
+    .bm-page-item-name { font-size: 1.15rem; color: #ede0b8; font-family: Georgia, serif; font-style: italic; }
+    .bm-page-item-detail { font-size: 0.65rem; color: rgba(232,168,32,0.6); font-family: 'Segoe UI', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .bm-page-item-sub { font-size: 0.88rem; color: rgba(230,205,160,0.92); font-family: 'Segoe UI', sans-serif; line-height: 1.5; }
 
     /* Nav bar — hidden, arrows moved to sides */
     .bm-nav { display: none; }
