@@ -970,9 +970,9 @@
     const bmSpreads = [
       { type: 'cover' },
       { type: 'text-photo', section: barSections[0], photos: [p[0],  p[2]]  },
-      { type: 'photo-text', photos: [p[4], p[10]], section: barSections[1] },
+      { type: 'photo-text', photos: [p[4], p[10]], positions: ['top', null], section: barSections[1] },
       { type: 'text-photo', section: barSections[2], photos: [p[13], p[27]] },
-      { type: 'photo-text', photos: [p[19], p[20]], section: barSections[3] },
+      { type: 'photo-text', photos: [p[7], p[20]], section: barSections[3] },
     ];
 
     function renderSpread(idx, direction) {
@@ -1010,13 +1010,13 @@
     }
 
     function buildSpreadHTML(spread) {
-      const im = url => `<img src="${url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;background:#0a0500;display:block;">`;
-      const photoGrid = photos => `<div class="bm-ps-photo-grid">${photos.map(u => `<div class="bm-ps-cell">${im(u)}</div>`).join('')}</div>`;
+      const im = (url, pos) => `<img src="${url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:${pos||'center'};background:#0a0500;display:block;">`;
+      const photoGrid = (photos, positions) => `<div class="bm-ps-photo-grid">${photos.map((u, i) => `<div class="bm-ps-cell">${im(u, positions && positions[i])}</div>`).join('')}</div>`;
       if (spread.type === 'text-photo') {
-        return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoGrid(spread.photos)}</div>`;
+        return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoGrid(spread.photos, spread.positions)}</div>`;
       }
       if (spread.type === 'photo-text') {
-        return `<div class="bm-ps">${photoGrid(spread.photos)}<div class="bm-ps-gutter"></div>${buildTextPage(spread.section)}</div>`;
+        return `<div class="bm-ps">${photoGrid(spread.photos, spread.positions)}<div class="bm-ps-gutter"></div>${buildTextPage(spread.section)}</div>`;
       }
       if (spread.type === 'cover') {
         return `<div class="bm-ps-cover bm-leather-cover">
