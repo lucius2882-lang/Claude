@@ -1187,11 +1187,6 @@
       border: 1px solid rgba(232,168,32,0.1);
       pointer-events: none;
     }
-    .bm-text-page.special { background: linear-gradient(145deg, #1a0a02 0%, #0d0400 100%); }
-    .bm-text-page.special .bm-page-item-name { color: #f0c050; font-size: 0.96rem; }
-    .bm-text-page.special .bm-page-item-sub { color: rgba(240,200,120,0.9); font-size: 0.76rem; font-weight: 500; }
-    .bm-text-page.special .bm-text-page-title { color: #f0c050; letter-spacing: 0.7em; }
-    .bm-text-page.special .bm-text-page-orn { color: rgba(240,192,64,0.5); }
     .bm-text-page-title {
       font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase;
       color: #e8a820; font-family: 'Segoe UI', sans-serif; font-weight: 400;

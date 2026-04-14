@@ -950,7 +950,7 @@
         ]
       },
       {
-        title: "Tonight's Special", ornament: '— ✦ —', special: true,
+        title: "Tonight's Special", ornament: '— ✦ —',
         items: [
           { name: 'The COVID Pivot', desc: 'COVID closed the dining room overnight. Everything we\'d built for in-house service had to be rebuilt for a model we\'d never run.', detail: 'March 2020', slides: [
             { label: 'Before', text: 'By early 2020, Lock Stock had the systems any well-run restaurant puts in place — floor protocols, trained staff, close procedures, compliance built into the nightly routine. The operation was running the way it was supposed to.' },
