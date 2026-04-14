@@ -918,12 +918,13 @@
       .bm-book-wrap { flex-wrap: wrap; justify-content: center; width: 100%; }
       .bm-book-wrap > .bm-arr { flex: 1; max-width: 80px; order: 2; }
       .bm-book-wrap > .bm-book { order: 1; width: 100%; }
-      .bm-book { height: min(78vh, 520px); }
-      /* Hide photo half on mobile — let text fill full width */
+      .bm-book { height: min(88vh, 640px); }
+      /* Stack photo on top, text below */
+      .bm-ps { flex-direction: column; }
       .bm-ps-gutter { display: none; }
-      .bm-ps-half, .bm-ps-col, .bm-ps-full, .bm-ps-photo,
-      .bm-ps-grid, .bm-ps-photo-grid, .bm-ps-cover { display: none !important; }
-      .bm-text-page { padding: 18px 16px 12px; }
+      .bm-ps-half, .bm-ps-col, .bm-ps-full,
+      .bm-ps-photo-grid, .bm-ps-cover { flex: 0 0 38%; max-height: 38%; }
+      .bm-text-page { flex: 1; padding: 14px 14px 10px; }
       .bm-page-item-name { font-size: 1.05rem; }
       .bm-page-item-sub { font-size: 0.82rem; }
     }
