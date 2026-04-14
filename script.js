@@ -44,7 +44,7 @@
 
       // Header
       sf(22, 'bold'); doc.text('LUCIUS CAMPANY', ml, y); y += 9;
-      sf(7.5, 'normal', 80,80,80); doc.text('HOSPITALITY & MARKETING SPECIALIST', ml, y); y += 6;
+      sf(7.5, 'normal', 80,80,80); doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', ml, y); y += 6;
       sf(7, 'normal', 80,80,80); doc.text('New York, NY   \u00b7   lucius@luciuscampany.com   \u00b7   luciuscampany.com', ml, y); y += 5.5;
       hline(17,17,17,0.5); y += 11;
 
@@ -57,14 +57,36 @@
       sectionHead('EXPERIENCE');
 
       const jobs = [
-        { title:"Maitre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  New York, NY",
-          bullets:["Led FOH team of 5 through full-day service at a members-only wellness concept in Manhattan","Managed private event inquiries end-to-end across multiple properties \u2014 from inquiry through day-of execution","Served as primary point of contact for founding members, regulars, and VIP guests","Coordinated cross-functionally with HR, Facilities, and Communications on corporate events","Daily operation of Resy, OpenTable, and Toast POS; ran staff training and performance reviews"] },
+        { title:"Ma\u00eetre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  Brooklyn, NY",
+          bullets:[
+            "Produced Studio Skate, a five-event experiential activation series at 99 Scott designed to convert Chalet dinner guests into a second-half-of-night experience: vendor coordination, programming, day-of execution, 1,000+ person invite list",
+            "Ran the floor and led a five-person team at a Brooklyn members club where the brand was the membership and every shift was a brand activation",
+            "Opened Habibi and SAA alongside the flagship: buildout walk-throughs, service-flow design, FOH training, opening-week ops",
+            "Worked the floor for Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows",
+            "Managed founding member, regular, and VIP relationships; at a members club, that's the actual product",
+            "Coordinated corporate buyouts with HR, Facilities, and Comms; daily ops on Resy, OpenTable, and Toast"
+          ]},
         { title:"Digital Marketing Analyst", dates:"Mar 2021 \u2013 Apr 2023", company:"Kepler  \u00b7  New York, NY",
-          bullets:["Managed $250K monthly ad budget across 6 platforms — allocating spend based on audience behaviour and campaign performance data","Analyzed 5 years of campaign performance data to identify brand marketing trends and inform optimization","Managed active campaigns across Meta, Pinterest, TikTok, Snapchat, Twitter/X, and LinkedIn","Delivered regular performance presentations to internal teams and clients"] },
+          bullets:[
+            "Managed paid social for J.Crew's post-bankruptcy rebrand across six platforms (Meta, TikTok, Pinterest, Snapchat, X, LinkedIn) inside a $250K monthly budget",
+            "Pulled daily optimizations against ROAS, handled weekly client reporting, and called platform shifts in real time while the brand was rewriting its own story in public",
+            "Dug through five years of historical campaign data, found patterns nobody had flagged, and put them to work in live optimization",
+            "Watched brand recovery happen up close at one of the more scrutinized retail comebacks of the era"
+          ]},
         { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
-          bullets:["Managed floor operations across lunch, dinner, and late-night service at a high-volume venue","Completed nightly financial reports, cash reconciliation, and Health Department compliance walk-throughs","Cross-trained FOH staff across all roles; ran ongoing shift-level coaching and formal performance reviews","Led full COVID-19 operational restructuring \u2014 team rebuilt SOPs and retrained together for reopening"] },
+          bullets:[
+            "Ran the floor across lunch, dinner, and late-night at a high-volume bar, day-one through close alongside family ownership",
+            "When COVID hit, rebuilt the entire operation: online ordering, digital marketing to bring takeout customers in, kitchen-to-curb fulfillment built from scratch",
+            "Wrote the SOPs for every reopening phase and retrained the team each time the restrictions changed",
+            "Closed every night: financial reports, cash reconciliation, Health Department walk-throughs, the whole shift-end stack"
+          ]},
         { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
-          bullets:["Supported million-dollar digital fundraising campaigns for local and state political candidates","Drafted fundraising emails and ran A/B tests on subject lines, tone, and ask amounts","Ran QA on marketing materials distributed to lists of 100,000+ subscribers","Built HTML/CSS emails for CRM deployment; handled creative production in Adobe Photoshop & Illustrator"] }
+          bullets:[
+            "Ran digital fundraising for state and local political candidates at six-figure list scale: 100,000+ subscribers, real money on the line every send",
+            "Drafted fundraising emails and A/B tested everything: subject lines, tone, ask amounts, button order",
+            "Built the HTML/CSS templates that went out through the CRM; creative production in Photoshop and Illustrator",
+            "Learned that political fundraising is just marketing under maximum pressure; every conversion is a vote you might actually win"
+          ]}
       ];
 
       jobs.forEach(job => {
