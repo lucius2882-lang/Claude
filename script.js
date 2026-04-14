@@ -30,36 +30,38 @@
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
-      const ml = 25.4, mr = 25.4, pageW = 215.9;
-      const cw = pageW - ml - mr;
-      let y = 25.4;
+      const pageW = 215.9;
+      const ml = 15, mr = 15;
+      const lw = 120, gap = 7;
+      const rw = pageW - ml - mr - lw - gap;
+      const rx = ml + lw + gap;
+      let ly = 15, ry = 15;
 
       const sf = (size, style='normal', r=17, g=17, b=17) => {
         doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
       };
-      const hline = (r=17,g=17,b=17,w=0.4) => {
-        doc.setDrawColor(r,g,b); doc.setLineWidth(w);
-        doc.line(ml, y, pageW - mr, y);
+      const secHead = (title, x, w, y) => {
+        sf(5.5, 'bold', 120,120,120); doc.text(title, x, y); y += 3;
+        doc.setDrawColor(185,185,185); doc.setLineWidth(0.18); doc.line(x, y, x+w, y);
+        return y + 4.5;
       };
 
-      // Header
-      sf(22, 'bold'); doc.text('LUCIUS CAMPANY', ml, y); y += 9;
-      sf(7.5, 'normal', 80,80,80); doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', ml, y); y += 6;
-      sf(7, 'normal', 80,80,80); doc.text('New York, NY   \u00b7   lucius@luciuscampany.com   \u00b7   luciuscampany.com', ml, y); y += 5.5;
-      hline(17,17,17,0.5); y += 11;
+      // Centered header
+      sf(20, 'bold');
+      doc.text('LUCIUS CAMPANY', pageW / 2, ly, { align: 'center' }); ly += 6.5; ry += 6.5;
+      sf(7, 'normal', 85,85,85);
+      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, ly, { align: 'center' }); ly += 4.8; ry += 4.8;
+      sf(6.5, 'normal', 120,120,120);
+      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, ly, { align: 'center' }); ly += 5; ry += 5;
+      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, ly, pageW-mr, ly); ly += 6.5; ry += 6.5;
 
-      // Section heading helper
-      const sectionHead = (title) => {
-        sf(6, 'bold', 130,130,130); doc.text(title, ml, y); y += 3.5;
-        hline(200,200,200,0.2); y += 6;
-      };
-
-      sectionHead('EXPERIENCE');
+      // LEFT: Experience
+      ly = secHead('EXPERIENCE', ml, lw, ly);
 
       const jobs = [
         { title:"Ma\u00eetre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  Brooklyn, NY",
           bullets:[
-            "Produced Studio Skate, a five-event experiential activation series at 99 Scott designed to convert Chalet dinner guests into a second-half-of-night experience: vendor coordination, programming, day-of execution, 1,000+ person invite list",
+            "Produced Studio Skate, a five-event experiential series at 99 Scott converting Chalet dinner guests into a second-half-of-night experience: vendor coordination, programming, day-of execution, 1,000+ person invite list",
             "Ran the floor and led a five-person team at a Brooklyn members club where the brand was the membership and every shift was a brand activation",
             "Opened Habibi and SAA alongside the flagship: buildout walk-throughs, service-flow design, FOH training, opening-week ops",
             "Worked the floor for Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows",
@@ -70,7 +72,7 @@
           bullets:[
             "Managed paid social for J.Crew's post-bankruptcy rebrand across six platforms (Meta, TikTok, Pinterest, Snapchat, X, LinkedIn) inside a $250K monthly budget",
             "Pulled daily optimizations against ROAS, handled weekly client reporting, and called platform shifts in real time while the brand was rewriting its own story in public",
-            "Dug through five years of historical campaign data, found patterns nobody had flagged, and put them to work in live optimization",
+            "Dug through five years of historical campaign data, found patterns nobody had flagged, put them to work in live optimization",
             "Watched brand recovery happen up close at one of the more scrutinized retail comebacks of the era"
           ]},
         { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
@@ -80,7 +82,7 @@
             "Wrote the SOPs for every reopening phase and retrained the team each time the restrictions changed",
             "Closed every night: financial reports, cash reconciliation, Health Department walk-throughs, the whole shift-end stack"
           ]},
-        { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington DC \u2013 Baltimore Area",
+        { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington, DC",
           bullets:[
             "Ran digital fundraising for state and local political candidates at six-figure list scale: 100,000+ subscribers, real money on the line every send",
             "Drafted fundraising emails and A/B tested everything: subject lines, tone, ask amounts, button order",
@@ -89,46 +91,50 @@
           ]}
       ];
 
-      jobs.forEach(job => {
-        sf(8.5, 'bold'); doc.text(job.title, ml, y);
-        sf(7, 'normal', 80,80,80);
-        doc.text(job.dates, pageW - mr - doc.getTextWidth(job.dates), y);
-        y += 5.5;
-        sf(7.5, 'normal', 80,80,80); doc.text(job.company, ml, y); y += 5.5;
+      jobs.forEach((job, ji) => {
+        sf(7.5, 'bold'); doc.text(job.title, ml, ly);
+        sf(6.2, 'normal', 100,100,100);
+        doc.text(job.dates, ml + lw - doc.getTextWidth(job.dates), ly);
+        ly += 4;
+        sf(6.5, 'normal', 100,100,100); doc.text(job.company, ml, ly); ly += 3.8;
         job.bullets.forEach(b => {
-          sf(7.5, 'normal');
-          const lines = doc.splitTextToSize('\u2013  ' + b, cw - 4);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 4 : 0), y); y += 4.7; });
+          sf(6.5, 'normal', 17,17,17);
+          const lines = doc.splitTextToSize('\u2013  ' + b, lw - 3);
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), ly); ly += 3.6; });
         });
-        y += 4.5;
+        if (ji < jobs.length - 1) ly += 2.8;
       });
 
-      y += 3.5;
-      sectionHead('SKILLS');
+      // RIGHT: Education
+      ry = secHead('EDUCATION', rx, rw, ry);
+      sf(7, 'bold'); doc.text('George Washington University', rx, ry); ry += 4;
+      sf(6.2, 'normal', 100,100,100);
+      doc.splitTextToSize('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', rw)
+        .forEach(l => { doc.text(l, rx, ry); ry += 3.6; });
+      ry += 5;
 
+      // RIGHT: Skills
+      ry = secHead('SKILLS', rx, rw, ry);
       const groups = [
-        { label:'Events & Brand Activation', tags:['Brand Activation','Guest Relations','VIP Management','Experiential Programming','Resy','OpenTable','Toast POS'] },
+        { label:'Events & Activation', tags:['Event Production','Run of Show','Brand Activations','Day-of Execution','Guest Relations','Vendor Coordination','Experiential Programming'] },
         { label:'Marketing', tags:['Paid Social','Campaign Management','A/B Testing','Performance Analytics','Email Marketing'] },
         { label:'Platforms', tags:['Meta','TikTok','LinkedIn','Pinterest','Snapchat'] },
         { label:'Operations', tags:['Team Leadership','Staff Training','Scheduling','Financial Reporting','Compliance'] },
-        { label:'Tools', tags:['HTML/CSS','Adobe Photoshop','Illustrator','Google Analytics'] }
+        { label:'Tools', tags:['Adobe Photoshop','Illustrator','Google Analytics'] }
       ];
 
-      const gw = cw / groups.length;
-      const baseY = y;
-      groups.forEach((grp, gi) => {
-        const gx = ml + gi * gw;
-        let gy = baseY;
-        sf(6, 'bold'); doc.text(grp.label.toUpperCase(), gx, gy); gy += 6;
-        let tx = gx;
+      groups.forEach(grp => {
+        sf(5.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), rx, ry); ry += 3.5;
+        let tx = rx;
         grp.tags.forEach(tag => {
-          sf(6, 'normal');
-          const tw = doc.getTextWidth(tag) + 4;
-          if (tx + tw > gx + gw - 1) { tx = gx; gy += 7.5; }
-          doc.setFillColor(235,235,235);
-          doc.roundedRect(tx, gy - 3.2, tw, 4.5, 0.6, 0.6, 'F');
-          doc.text(tag, tx + 2, gy); tx += tw + 1.5;
+          sf(5, 'normal', 17,17,17);
+          const tw = doc.getTextWidth(tag) + 3;
+          if (tx + tw > rx + rw + 1) { tx = rx; ry += 5; }
+          doc.setFillColor(238,238,238);
+          doc.roundedRect(tx, ry - 2.6, tw, 3.8, 0.5, 0.5, 'F');
+          doc.text(tag, tx + 1.5, ry); tx += tw + 1;
         });
+        ry += 6;
       });
 
       doc.save('lucius-campany-resume.pdf');
