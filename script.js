@@ -892,70 +892,70 @@
       {
         title: 'On Draft', ornament: '— ⬥ —',
         items: [
-          { name: 'Keeping the Room Moving', desc: 'Lunch to last call — the floor never stopped. Neither did I.', detail: 'All Dayparts', slides: [
-            { label: 'The Skill', text: 'Maintained the flow of service across high-volume lunch, dinner, and late-night shifts — keeping tables moving, servers supported, and guests satisfied through every period.' },
-            { label: 'In Practice', text: 'No two shifts ran the same. I read the room constantly — adjusting pacing when the kitchen backed up, redistributing floor coverage when a section got slammed, and stepping in wherever the service chain needed support.' },
-            { label: 'The Standard', text: 'Standards didn\'t slip when it got busy. That was the whole point. Anyone can run a smooth slow night — the job is keeping quality consistent when it\'s full and loud and moving fast.' }
+          { name: 'No Playbook', desc: 'Lock Stock was a new restaurant. The floor protocols didn\'t exist yet — we wrote them.', detail: 'Year One', slides: [
+            { label: 'The Reality', text: 'When a new restaurant opens, there\'s no established way of doing things. There\'s only what works and what doesn\'t, discovered in real time. We figured out service flow, table pacing, and FOH-BOH coordination through repetition and adjustment, shift by shift.' },
+            { label: 'How It Worked', text: 'Every issue that surfaced became a protocol. A table waited too long once — so we built a check system. The kitchen got backed up during a rush — so we changed how we paced tickets. The floor improved because we paid attention to what it was telling us.' },
+            { label: 'The Result', text: 'By the end of the first year, we had something that looked like a real operation. Not because we copied it from somewhere else — because we built it ourselves.' }
           ]},
-          { name: 'Eyes on the Floor', desc: 'Problems handled before guests noticed them.', detail: 'FOH · BOH · Bar', slides: [
-            { label: 'The Skill', text: 'Active floor presence throughout every shift — not managing from a distance, but working the room alongside the team to catch problems before guests noticed them.' },
-            { label: 'In Practice', text: 'I was the constant in an always-changing room. If a table waited too long, I knew before they flagged someone. If a server was in the weeds, I was already there. The floor ran better because I was on it.' },
-            { label: 'The Standard', text: 'Good floor management is invisible. When it\'s working, guests just have a great experience — they never see the coordination that made it happen.' }
+          { name: 'Learning the Room', desc: 'You can\'t manage a floor you\'ve never seen at full capacity — until you have.', detail: 'All Shifts', slides: [
+            { label: 'The Reality', text: 'You can\'t manage a room you\'ve never seen fully booked. The early months were about learning the space — which sections got overwhelming, where the choke points were, how the floor changed when the bar got busy.' },
+            { label: 'How It Worked', text: 'Active presence wasn\'t optional. I was in the room every shift, watching, adjusting, staying ahead of problems before guests felt them. That awareness compounded — the more shifts I ran, the more I could see what was coming.' },
+            { label: 'The Result', text: 'A floor you understand is a floor you can control. It took time to get there. We got there.' }
           ]},
-          { name: 'The Recovery', desc: 'Something goes wrong every shift. I owned it and fixed it.', detail: 'Every Table', slides: [
-            { label: 'The Skill', text: 'Handled all guest issues directly — from minor service hiccups to full escalations — with composure and a bias toward resolution over explanation.' },
-            { label: 'In Practice', text: 'At a high-volume bar, something goes wrong every shift. The question is how fast you own it and fix it. I made the call on the floor, handled it personally, and followed up before the guest left.' },
-            { label: 'The Standard', text: 'A guest who had a problem and got it handled right is often more loyal than one who never had an issue. Recovery done well builds trust.' }
+          { name: 'Holding the Standard', desc: 'Standards are only real if they hold when everything is in motion.', detail: 'Every Table', slides: [
+            { label: 'The Reality', text: 'A new restaurant has a gap between what it aspires to be and what it actually is on a slammed Friday. Closing that gap required enforcing the same standard on a chaotic night that we had on a slow one.' },
+            { label: 'How It Worked', text: 'Every table got the experience we\'d committed to, regardless of what else was happening. That\'s not easy when you\'re running a room that\'s still figuring itself out — but it\'s the only way to build a reputation.' },
+            { label: 'The Result', text: 'The standard held. Guests came back. That\'s the whole job.' }
           ]}
         ]
       },
       {
         title: 'Cocktails', ornament: '— ⬥ —',
         items: [
-          { name: 'A Team That Could Cover Itself', desc: 'Trained every FOH role so nobody was a single point of failure.', detail: 'All Roles', slides: [
-            { label: 'The Skill', text: 'Trained staff across every FOH role — host, server, barback, bar — so the team could flex to cover gaps without service dropping.' },
-            { label: 'In Practice', text: 'A team that only knows one role is fragile. I cross-trained everyone so a no-call-no-show didn\'t break the shift. Adaptability was built into the team by design.' },
-            { label: 'The Standard', text: 'The best shifts were the ones where nobody noticed we were short — because the team knew how to cover each other without being asked.' }
+          { name: 'Hiring Into Something New', desc: 'You can\'t train people into a system that hasn\'t been written yet.', detail: 'All Roles', slides: [
+            { label: 'The Reality', text: 'Staffing a new restaurant means asking people to join something still being built. You\'re not teaching them how we do things here — you\'re figuring that out alongside them.' },
+            { label: 'How It Worked', text: 'Cross-training was built in from day one. Every FOH staff member learned every role because the operation needed flexibility the playbook couldn\'t provide yet. No one could be a single point of failure in a place still finding its shape.' },
+            { label: 'The Result', text: 'What got built wasn\'t just a staff. It was a team that could adapt — which mattered more than anyone knew at the time.' }
           ]},
-          { name: 'Feedback That Actually Landed', desc: 'In the moment, every shift — not waiting for review season.', detail: 'In-Shift · Reviews', slides: [
-            { label: 'The Skill', text: 'Provided real-time coaching during shifts and contributed to formal performance reviews — keeping the team growing throughout the season.' },
-            { label: 'In Practice', text: 'Feedback that waits for review season is too late. We handled it in the moment — a quick word after a table, a debrief at end of shift. Small corrections compounded into real improvement across the whole team.' },
-            { label: 'The Standard', text: 'A staff that gets honest, consistent feedback performs better and stays longer. The team knew where they stood — and that everyone was invested in where we were going.' }
+          { name: 'Feedback as Foundation', desc: 'In a new operation, how you give feedback is how culture gets made.', detail: 'In-Shift · Weekly', slides: [
+            { label: 'The Reality', text: 'There was no established culture to inherit. Whatever the team became, it became because of how we ran it — and that started with honest, real-time feedback every shift.' },
+            { label: 'How It Worked', text: 'Small corrections compounded. A note after a table became a habit two weeks later. We didn\'t wait for formal review cycles — if something needed to be said, it got said that night.' },
+            { label: 'The Result', text: 'By year one, the team was coaching itself. Because we\'d built the expectation that getting better was part of the job.' }
           ]},
-          { name: 'The Schedule as Strategy', desc: 'Right people, right shifts — labor costs in line, floor always covered.', detail: 'Weekly', slides: [
-            { label: 'The Skill', text: 'Built the weekly schedule balancing staff availability, projected covers, and labor cost targets — keeping the floor covered without overstaffing slow periods.' },
-            { label: 'In Practice', text: 'Good scheduling is risk management. I tracked patterns — which nights ran long, which sections needed double coverage, when to cut early. The schedule was a live document, not a formality.' },
-            { label: 'The Standard', text: 'The floor was always appropriately staffed. Staff got consistent hours. Labor costs stayed in line. That\'s what a schedule is supposed to do.' }
+          { name: 'Scheduling a Floor in Progress', desc: 'The schedule was one of the first things that told staff what kind of operation this was.', detail: 'Weekly', slides: [
+            { label: 'The Reality', text: 'In a new restaurant, everything is provisional — including how many people you need on a given night. The schedule required constant adjustment as we learned the volume patterns and figured out where coverage gaps were actually happening.' },
+            { label: 'How It Worked', text: 'We tracked patterns closely and built in what we learned. Which nights ran long. Which sections needed double coverage. When to cut early. The schedule became a document that reflected what the floor actually needed.' },
+            { label: 'The Result', text: 'Staff got consistent hours. Labor costs stayed in line. The floor was always appropriately covered. That predictability built trust faster than almost anything else we did.' }
           ]}
         ]
       },
       {
         title: 'Spirits', ornament: '— ⬥ —',
         items: [
-          { name: 'Clean Books, Every Night', desc: 'Shift wasn\'t done until the numbers were right. No exceptions.', detail: 'Nightly Close', slides: [
-            { label: 'The Skill', text: 'Completed end-of-night financial reports as part of every closing — reconciling cash drawers, accounting for comps and voids, and submitting accurate close documentation.' },
-            { label: 'In Practice', text: 'Closing wasn\'t done until the numbers were right. I ran the reconciliation, flagged discrepancies, and filed the report before leaving — no exceptions, regardless of what time it was.' },
-            { label: 'The Standard', text: 'Clean books every night. Management had accurate data every morning because closing was treated as seriously as service.' }
+          { name: 'The Close, Every Night', desc: 'Financial discipline isn\'t inherited in a new operation — it\'s built from the first shift.', detail: 'Nightly Close', slides: [
+            { label: 'The Reality', text: 'There were no established close procedures when we opened. We built the routine from scratch — cash reconciliation, comps, voids, documentation — and held to it every single night regardless of how late it ran.' },
+            { label: 'How It Worked', text: 'The report was filed before anyone went home. Clean books meant management had accurate information every morning. You can\'t make decisions for a young business on guesswork.' },
+            { label: 'The Result', text: 'That financial discipline became infrastructure. It was part of the culture before we even called it that.' }
           ]},
-          { name: 'Inspection Ready', desc: 'Not once a year — built into every close, every night.', detail: 'DOH Standards', slides: [
-            { label: 'The Skill', text: 'Conducted compliance walk-throughs as part of every close — checking food storage, temperature logs, sanitation stations, and any flagged items from the previous inspection.' },
-            { label: 'In Practice', text: 'Compliance isn\'t a once-a-year event before the inspector shows up. I built it into the close routine so the kitchen and bar stayed inspection-ready at all times.' },
-            { label: 'The Standard', text: 'No violations. No surprises. A clean inspection is the result of consistent nightly habits — not a scramble the day the inspector walks in.' }
+          { name: 'Compliance From Day One', desc: 'A new restaurant gets inspected. We made sure we were always ready.', detail: 'DOH Standards', slides: [
+            { label: 'The Reality', text: 'Opening a new food service operation means starting the compliance clock immediately. We built regulatory standards into the close routine from the first week — not as a response to inspections, but as part of how the operation ran.' },
+            { label: 'How It Worked', text: 'Food storage, temperature logs, sanitation stations — checked every night as habit. The philosophy was simple: nothing about our operation should change when the inspector shows up.' },
+            { label: 'The Result', text: 'No violations. No surprises. A clean inspection is a byproduct of consistent nightly habits.' }
           ]},
-          { name: 'When Things Break', desc: 'I knew what could wait and what needed a call that night.', detail: 'As Needed', slides: [
-            { label: 'The Skill', text: 'Identified and coordinated facilities issues — logging maintenance needs, communicating with vendors, and ensuring repairs happened without disrupting service.' },
-            { label: 'In Practice', text: 'Things break in a bar. The job is knowing what can wait until tomorrow and what needs a call tonight. I managed the triage and made sure nothing fell through the cracks.' },
-            { label: 'The Standard', text: 'The space stayed operational. Issues got resolved. Staff didn\'t have to work around broken equipment because it was tracked and actioned before it became a real problem.' }
+          { name: 'Keeping the Space Operational', desc: 'A new build means constant maintenance. The job was staying ahead of it.', detail: 'As Needed', slides: [
+            { label: 'The Reality', text: 'A newly opened restaurant is a construction project that never fully ends. Equipment fails, systems need adjustment, the building reveals itself over time. The job was making sure none of that became the guest\'s problem.' },
+            { label: 'How It Worked', text: 'We built a triage system — logged everything, sorted by urgency, actioned before issues cascaded. Staff worked in a functional space because we made that a priority, not an afterthought.' },
+            { label: 'The Result', text: 'The operation ran clean. That made everything else easier.' }
           ]}
         ]
       },
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'The COVID Pivot', desc: 'March 2020 — the playbook disappeared overnight. We rebuilt it.', detail: 'Spring 2020', slides: [
-            { label: 'The Situation', text: 'COVID hit in March 2020. The dining room closed overnight. The playbook disappeared. We rebuilt the whole operation from scratch while the industry figured out what it even was anymore.' },
-            { label: 'The Work', text: 'Stood up the online ordering system, ran the digital marketing that brought takeout customers in, coordinated fulfillment from kitchen to curb. Wrote the reopening SOPs. Retrained the team for every phase of coming back to dine-in.' },
-            { label: 'The Result', text: 'The business stayed operational through the full crisis. Service quality held when the dining room reopened. The lesson: a brand survives or dies on whether you can hold the experience together when nothing is going to plan.' }
+          { name: 'March 2020', desc: 'Everything we\'d spent a year building — we had 30 days to build it again.', detail: 'Spring 2020', slides: [
+            { label: 'The Setup', text: 'We\'d spent a year building Lock Stock from nothing — the floor protocols, the trained staff, the operational systems. It had come from scratch and finally felt like something. Then COVID hit in March 2020, and the dining room closed overnight.' },
+            { label: 'The Work', text: 'Online ordering stood up. Digital marketing brought takeout customers in. Fulfillment ran from kitchen to curb. New SOPs written for a model we\'d never operated. Every phase of reopening — limited capacity, then full dine-in — required retraining a team that had just been retrained. The protocols we\'d built for a dining room didn\'t translate. We wrote new ones.' },
+            { label: 'The Lesson', text: 'Every system you build is provisional. What actually carries you is the ability to build it again — under pressure, faster, with less runway. Lock Stock made it through. The team held. The business stayed operational. That\'s what you find out when nothing is going to plan.' }
           ]}
         ]
       }
