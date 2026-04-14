@@ -967,6 +967,7 @@
 
     const p = lsSlidePhotos;
     const bmSpreads = [
+      { type: 'cover' },
       { type: 'text-photo', section: barSections[0], photos: [p[0],  p[2]]  },
       { type: 'photo-text', photos: [p[7], p[10]], positions: ['50% 33%', null], section: barSections[1] },
       { type: 'text-photo', section: barSections[2], photos: [p[13], p[27]] },
