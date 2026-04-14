@@ -952,7 +952,7 @@
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'Reinventing the Operation', desc: 'The dining room closed overnight. Everything we\'d built for in-house service had to be rebuilt for a model we\'d never run.', detail: 'March 2020', slides: [
+          { name: 'Reinventing the Operation', desc: 'COVID closed the dining room overnight. Everything we\'d built for in-house service had to be rebuilt for a model we\'d never run.', detail: 'March 2020', slides: [
             { label: 'Before', text: 'By early 2020, Lock Stock had the systems any well-run restaurant puts in place — floor protocols, trained staff, close procedures, compliance built into the nightly routine. The operation was running the way it was supposed to.' },
             { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. None of those systems applied anymore. We rebuilt the operation for takeout from scratch — online ordering stood up, kitchen-to-curb fulfillment designed, new SOPs written for a model we\'d never operated. Every management process had to be rethought for a fundamentally different kind of service.' },
             { label: 'The Shift', text: 'Managing a takeout operation isn\'t managing a dining room with the tables removed. The pacing is different, the handoffs are different, the quality control points are different. We figured out what the new version of each system needed to look like — and we did it fast.' }
