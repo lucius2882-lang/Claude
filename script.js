@@ -1010,7 +1010,7 @@
     }
 
     function buildSpreadHTML(spread) {
-      const im = url => `<img src="${url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:#0a0500;display:block;">`;
+      const im = url => `<img src="${url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;background:#0a0500;display:block;">`;
       const photoGrid = photos => `<div class="bm-ps-photo-grid">${photos.map(u => `<div class="bm-ps-cell">${im(u)}</div>`).join('')}</div>`;
       if (spread.type === 'text-photo') {
         return `<div class="bm-ps">${buildTextPage(spread.section)}<div class="bm-ps-gutter"></div>${photoGrid(spread.photos)}</div>`;
