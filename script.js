@@ -952,10 +952,10 @@
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'March 2020', desc: 'Everything we\'d spent a year building — we had 30 days to build it again.', detail: 'Spring 2020', slides: [
-            { label: 'The Setup', text: 'We\'d spent a year building Lock Stock from nothing — the floor protocols, the trained staff, the operational systems. It had come from scratch and finally felt like something. Then COVID hit in March 2020, and the dining room closed overnight.' },
-            { label: 'The Work', text: 'Online ordering stood up. Digital marketing brought takeout customers in. Fulfillment ran from kitchen to curb. New SOPs written for a model we\'d never operated. Every phase of reopening — limited capacity, then full dine-in — required retraining a team that had just been retrained. The protocols we\'d built for a dining room didn\'t translate. We wrote new ones.' },
-            { label: 'The Lesson', text: 'Every system you build is provisional. What actually carries you is the ability to build it again — under pressure, faster, with less runway. Lock Stock made it through. The team held. The business stayed operational. That\'s what you find out when nothing is going to plan.' }
+          { name: 'March 2020', desc: 'We had the systems. Then we had to throw them out. Then we had to get them back.', detail: 'Spring 2020', slides: [
+            { label: 'Before', text: 'By early 2020, Lock Stock ran the way a well-managed restaurant is supposed to. Floor protocols established. Staff trained across every role. Close procedures locked in. The operational systems any solid restaurant manager puts in place — we had them, and they were working.' },
+            { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. Everything we\'d built for in-house service became irrelevant overnight. We reinvented the operation for takeout — stood up online ordering, ran digital marketing to bring customers in, built fulfillment SOPs for kitchen-to-curb, and retrained a team that had just been trained to do something completely different.' },
+            { label: 'The Return', text: 'Getting back was the harder part. Each reopening phase — limited capacity, then full dine-in — meant reestablishing the restaurant systems we\'d had before, while absorbing what we\'d learned from operating a different model. The playbook got rewritten twice. The team had to be retrained twice. The operation came back because the people running it knew how to build something from scratch — because they\'d already done it.' }
           ]}
         ]
       }
