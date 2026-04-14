@@ -972,7 +972,7 @@
       { type: 'text-photo', section: barSections[0], photos: [p[0],  p[2]]  },
       { type: 'photo-text', photos: [p[7], p[10]], positions: ['top', null], section: barSections[1] },
       { type: 'text-photo', section: barSections[2], photos: [p[13], p[27]] },
-      { type: 'photo-text', photos: [p[3], p[20]], section: barSections[3] },
+      { type: 'photo-text', photos: [p[5], p[20]], section: barSections[3] },
     ];
 
     function renderSpread(idx, direction) {
