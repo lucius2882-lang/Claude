@@ -1192,8 +1192,8 @@
       margin-bottom: 10px;
     }
     .bm-page-item {
-      flex: 1; display: flex; flex-direction: column; justify-content: center;
-      padding: 5px 0; margin: 0;
+      flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center;
+      padding: 10px 0; margin: 0;
       border: none; border-bottom: 1px solid rgba(232,168,32,0.1);
       cursor: default; background: transparent;
     }
