@@ -952,10 +952,20 @@
       {
         title: "Tonight's Special", ornament: '— ✦ —', special: true,
         items: [
-          { name: 'March 2020', desc: 'We had the systems. Then we had to throw them out. Then we had to get them back.', detail: 'Spring 2020', slides: [
-            { label: 'Before', text: 'By early 2020, Lock Stock ran the way a well-managed restaurant is supposed to. Floor protocols established. Staff trained across every role. Close procedures locked in. The operational systems any solid restaurant manager puts in place — we had them, and they were working.' },
-            { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. Everything we\'d built for in-house service became irrelevant overnight. We reinvented the operation for takeout — stood up online ordering, ran digital marketing to bring customers in, built fulfillment SOPs for kitchen-to-curb, and retrained a team that had just been trained to do something completely different.' },
-            { label: 'The Return', text: 'Getting back was the harder part. Each reopening phase — limited capacity, then full dine-in — meant reestablishing the restaurant systems we\'d had before, while absorbing what we\'d learned from operating a different model. The playbook got rewritten twice. The team had to be retrained twice. The operation came back because the people running it knew how to build something from scratch — because they\'d already done it.' }
+          { name: 'Reinventing the Operation', desc: 'The dining room closed overnight. Everything we\'d built for in-house service had to be rebuilt for a model we\'d never run.', detail: 'March 2020', slides: [
+            { label: 'Before', text: 'By early 2020, Lock Stock had the systems any well-run restaurant puts in place — floor protocols, trained staff, close procedures, compliance built into the nightly routine. The operation was running the way it was supposed to.' },
+            { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. None of those systems applied anymore. We rebuilt the operation for takeout from scratch — online ordering stood up, kitchen-to-curb fulfillment designed, new SOPs written for a model we\'d never operated. Every management process had to be rethought for a fundamentally different kind of service.' },
+            { label: 'The Shift', text: 'Managing a takeout operation isn\'t managing a dining room with the tables removed. The pacing is different, the handoffs are different, the quality control points are different. We figured out what the new version of each system needed to look like — and we did it fast.' }
+          ]},
+          { name: 'Marketing a Restaurant That Couldn\'t Open', desc: 'We had to give people a reason to come back when coming in wasn\'t an option.', detail: 'Digital · Social', slides: [
+            { label: 'The Problem', text: 'A restaurant that can\'t seat guests still has rent, staff, and a kitchen. The only path through was volume — and volume meant making sure the community knew we were still operating, still worth ordering from, and still worth supporting.' },
+            { label: 'The Work', text: 'Ran digital marketing across social and local channels to promote the takeout program — positioning Lock Stock as the go-to option in Canandaigua for the duration of restrictions. Built campaigns around the menu, turnaround times, and the fact that we were local and staying open.' },
+            { label: 'The Result', text: 'The marketing worked. Takeout volume sustained the business through the closure period. Customers who found us through that channel came back when the dining room reopened — the pivot extended the customer base rather than just preserving it.' }
+          ]},
+          { name: 'Rebuilding the Team', desc: 'Every reopening phase meant a different version of the operation — and a different version of the staff.', detail: 'Phased Return', slides: [
+            { label: 'The Reality', text: 'Restrictions didn\'t lift all at once. Each phase — outdoor only, limited indoor, full capacity — required a different staffing model, different floor protocols, and a team that had to be retrained for a new set of rules every few months.' },
+            { label: 'The Work', text: 'Staff had been reduced, cross-trained for takeout, and then gradually brought back as each phase allowed more service. Every return meant reestablishing the dine-in systems we\'d had before — table flow, section coverage, service standards — with a team that was partially new and partially coming back from a long time away from full restaurant work.' },
+            { label: 'The Result', text: 'The operation came back intact. The standards held. What made it possible wasn\'t any single decision — it was having built a team that knew how to adapt, and systems flexible enough to be rebuilt more than once.' }
           ]}
         ]
       }
