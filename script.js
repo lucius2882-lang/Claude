@@ -604,7 +604,7 @@
     ];
 
     const spamEmails = [
-      { color: '#F4B400', from: 'Prince Adebayo Okonkwo', subject: '🤝 CONFIDENTIAL BUSINESS PROPOSAL — $4.7M USD Awaiting Transfer', time: 'Mar 14', snippet: 'Dear Friend, I am a Nigerian prince in urgent need of your bank account...' },
+      { color: '#F4B400', from: 'Crypto Wealth Academy', subject: '🚀 I Turned $500 Into $2.4M In 11 Days — Here\'s Exactly How (Free Webinar)', time: 'Mar 14', snippet: 'This is not a drill. A retired teacher from Ohio discovered a single loophole that Wall Street doesn\'t want you to know about...' },
       { color: '#DB4437', from: 'LinkedIn', subject: 'Lucius, you have 847 profile views this week! 🔥', time: 'Mar 13', snippet: 'Recruiters are looking at your profile. Upgrade to Premium to see who...' },
       { color: '#4285F4', from: 'Groupon', subject: '94% OFF Laser Hair Removal — TODAY ONLY (Expires in 00:47:22)', time: 'Mar 12', snippet: 'Don\'t miss this deal! 47 people are looking at this right now...' },
       { color: '#0F9D58', from: 'Amazon', subject: 'Your package has been delayed 🚨 Action Required', time: 'Mar 11', snippet: 'We were unable to deliver your package. Click here to reschedule. (You have no order)' },
