@@ -428,13 +428,12 @@
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; right:0; bottom:0; width:0; height:0; border:0; background:transparent; z-index:9999;"
+    style="position:fixed; right:0; bottom:0; left:auto; top:auto; width:0; height:0; border:0; background:transparent; z-index:9999; transition: box-shadow 0.3s;"
   ></iframe>
   <script>
   (function () {
     var frame = document.getElementById('lucy-frame');
     var origin = 'https://claudelucy.netlify.app';
-
     var hasOpened = false;
 
     function setState(state) {
@@ -442,13 +441,47 @@
         hasOpened = true;
         frame.style.width = 'min(440px, 95vw)';
         frame.style.height = 'min(680px, 88vh)';
+        frame.style.right = 'auto';
+        frame.style.bottom = 'auto';
+        frame.style.left = '50%';
+        frame.style.top = '50%';
+        frame.style.transform = 'translate(-50%, -50%)';
+        frame.style.borderRadius = '0';
+        frame.style.boxShadow = 'none';
       } else if (state === 'bubble') {
         hasOpened = true;
         frame.style.width = '380px';
         frame.style.height = '320px';
+        frame.style.right = '0';
+        frame.style.bottom = '0';
+        frame.style.left = 'auto';
+        frame.style.top = 'auto';
+        frame.style.transform = 'none';
+        frame.style.borderRadius = '0';
+        frame.style.boxShadow = 'none';
+      } else if (state === 'minimized') {
+        hasOpened = true;
+        frame.style.width = '56px';
+        frame.style.height = '56px';
+        frame.style.right = '20px';
+        frame.style.bottom = '20px';
+        frame.style.left = 'auto';
+        frame.style.top = 'auto';
+        frame.style.transform = 'none';
+        frame.style.borderRadius = '50%';
+        frame.style.boxShadow = '0 0 18px 6px rgba(255,200,80,0.65), 0 0 6px 2px rgba(255,200,80,0.4)';
       } else {
-        frame.style.width = hasOpened ? '380px' : '0';
-        frame.style.height = hasOpened ? '320px' : '0';
+        var w = hasOpened ? '380px' : '0';
+        var h = hasOpened ? '320px' : '0';
+        frame.style.width = w;
+        frame.style.height = h;
+        frame.style.right = '0';
+        frame.style.bottom = '0';
+        frame.style.left = 'auto';
+        frame.style.top = 'auto';
+        frame.style.transform = 'none';
+        frame.style.borderRadius = '0';
+        frame.style.boxShadow = 'none';
       }
     }
 
