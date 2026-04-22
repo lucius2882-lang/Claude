@@ -435,16 +435,20 @@
     var frame = document.getElementById('lucy-frame');
     var origin = 'https://claudelucy.netlify.app';
 
+    var hasOpened = false;
+
     function setState(state) {
       if (state === 'popup') {
+        hasOpened = true;
         frame.style.width = '100vw';
         frame.style.height = '100vh';
       } else if (state === 'bubble') {
+        hasOpened = true;
         frame.style.width = '380px';
         frame.style.height = '320px';
       } else {
-        frame.style.width = '0';
-        frame.style.height = '0';
+        frame.style.width = hasOpened ? '380px' : '0';
+        frame.style.height = hasOpened ? '320px' : '0';
       }
     }
 
