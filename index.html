@@ -425,10 +425,42 @@
 
   <!-- Lucy -->
   <iframe
+    id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    allow="clipboard-write"
-    style="position:fixed; inset:0; width:100%; height:100%; border:0; background:transparent; pointer-events:none; z-index:9999;"
+    style="position:fixed; right:0; bottom:0; width:0; height:0; border:0; background:transparent; z-index:9999;"
   ></iframe>
+  <script>
+  (function () {
+    var frame = document.getElementById('lucy-frame');
+    var origin = 'https://claudelucy.netlify.app';
+
+    function setState(state) {
+      if (state === 'popup') {
+        frame.style.width = '100vw';
+        frame.style.height = '100vh';
+      } else if (state === 'bubble') {
+        frame.style.width = '380px';
+        frame.style.height = '320px';
+      } else {
+        frame.style.width = '0';
+        frame.style.height = '0';
+      }
+    }
+
+    window.addEventListener('message', function (e) {
+      if (e.origin !== origin) return;
+      if (!e.data || e.data.type !== 'lucy:state') return;
+      setState(e.data.state);
+    });
+
+    function openLucy() {
+      frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
+    }
+
+    var enterBtn = document.getElementById('splash-enter-btn');
+    if (enterBtn) enterBtn.addEventListener('click', openLucy);
+  })();
+  </script>
 </body>
 </html>
