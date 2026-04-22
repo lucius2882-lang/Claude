@@ -440,8 +440,8 @@
     function setState(state) {
       if (state === 'popup') {
         hasOpened = true;
-        frame.style.width = '100vw';
-        frame.style.height = '100vh';
+        frame.style.width = 'min(440px, 95vw)';
+        frame.style.height = 'min(680px, 88vh)';
       } else if (state === 'bubble') {
         hasOpened = true;
         frame.style.width = '380px';
