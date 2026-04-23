@@ -424,32 +424,40 @@
   <script src="script.js"></script>
 
   <!-- Lucy -->
+  <!-- button starts hidden; only shown after Lucy has been opened+closed once -->
   <button id="lucy-launcher" aria-label="Talk to Lucy"
-    style="position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999; box-shadow:0 4px 16px rgba(0,0,0,0.25);">L</button>
+    style="display:none; position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999; box-shadow:0 4px 16px rgba(0,0,0,0.25);">L</button>
+  <!-- iframe loads immediately so contentWindow is ready; hidden via opacity not display -->
   <iframe
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; right:20px; bottom:80px; width:380px; height:520px; max-width:calc(100vw - 40px); max-height:50vh; border:0; background:transparent; z-index:9999; display:none;"
+    style="position:fixed; right:20px; bottom:80px; width:380px; height:520px; max-width:calc(100vw - 40px); max-height:50vh; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
   ></iframe>
   <script>
   (function () {
-    var frame = document.getElementById('lucy-frame');
-    var dot = document.getElementById('lucy-launcher');
+    var frame  = document.getElementById('lucy-frame');
+    var dot    = document.getElementById('lucy-launcher');
     var origin = 'https://claudelucy.netlify.app';
+    var ready  = false;
+
+    frame.addEventListener('load', function () { ready = true; }, { once: true });
+
+    function send() {
+      frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
+    }
 
     function open() {
-      frame.style.display = 'block';
+      frame.style.opacity = '1';
+      frame.style.pointerEvents = 'auto';
       dot.style.display = 'none';
-      var send = function () {
-        frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
-      };
-      if (frame.dataset.ready === '1') send();
-      else frame.addEventListener('load', function onload() { frame.dataset.ready = '1'; send(); }, { once: true });
+      if (ready) send();
+      else frame.addEventListener('load', function () { ready = true; send(); }, { once: true });
     }
 
     function close() {
-      frame.style.display = 'none';
+      frame.style.opacity = '0';
+      frame.style.pointerEvents = 'none';
       dot.style.display = 'block';
     }
 
