@@ -424,15 +424,13 @@
   <script src="script.js"></script>
 
   <!-- Lucy -->
-  <!-- button starts hidden; only shown after Lucy has been opened+closed once -->
   <button id="lucy-launcher" aria-label="Talk to Lucy"
-    style="display:none; position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999; box-shadow:0 4px 16px rgba(0,0,0,0.25);">L</button>
-  <!-- iframe loads immediately so contentWindow is ready; hidden via opacity not display -->
+    style="display:none; position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999; box-shadow:0 0 18px 6px rgba(255,200,80,0.65), 0 0 6px 2px rgba(255,200,80,0.4);">L</button>
   <iframe
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; right:20px; bottom:80px; width:380px; height:520px; max-width:calc(100vw - 40px); max-height:50vh; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
+    style="position:fixed; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
   ></iframe>
   <script>
   (function () {
@@ -443,11 +441,31 @@
 
     frame.addEventListener('load', function () { ready = true; }, { once: true });
 
+    function applySize() {
+      var mobile = window.innerWidth < 768;
+      if (mobile) {
+        frame.style.left   = '0';  frame.style.right  = '0';
+        frame.style.bottom = '0';  frame.style.top    = 'auto';
+        frame.style.width  = '100%';
+        frame.style.height = '33vh';
+        frame.style.maxWidth = ''; frame.style.maxHeight = '';
+        frame.style.borderRadius = '12px 12px 0 0';
+      } else {
+        frame.style.left   = 'auto'; frame.style.right  = '20px';
+        frame.style.bottom = '80px'; frame.style.top    = 'auto';
+        frame.style.width  = '380px';
+        frame.style.height = '520px';
+        frame.style.maxWidth = 'calc(100vw - 40px)'; frame.style.maxHeight = '50vh';
+        frame.style.borderRadius = '12px';
+      }
+    }
+
     function send() {
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
     }
 
     function open() {
+      applySize();
       frame.style.opacity = '1';
       frame.style.pointerEvents = 'auto';
       dot.style.display = 'none';
@@ -463,8 +481,13 @@
 
     dot.addEventListener('click', open);
 
+    // Enter button (stopPropagation prevents it bubbling to splash)
     var enterBtn = document.getElementById('splash-enter-btn');
     if (enterBtn) enterBtn.addEventListener('click', open);
+
+    // Tap anywhere else on splash also opens Lucy
+    var splashEl = document.getElementById('splash');
+    if (splashEl) splashEl.addEventListener('click', open);
 
     window.addEventListener('message', function (e) {
       if (e.origin !== origin) return;
