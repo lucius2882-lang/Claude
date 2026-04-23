@@ -424,65 +424,45 @@
   <script src="script.js"></script>
 
   <!-- Lucy -->
+  <button id="lucy-launcher" aria-label="Talk to Lucy"
+    style="position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999; box-shadow:0 4px 16px rgba(0,0,0,0.25);">L</button>
   <iframe
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; left:0; right:0; bottom:0; top:auto; width:0; height:0; border:0; background:transparent; z-index:9999; border-radius:12px 12px 0 0;"
+    style="position:fixed; right:20px; bottom:80px; width:380px; height:520px; max-width:calc(100vw - 40px); max-height:50vh; border:0; background:transparent; z-index:9999; display:none;"
   ></iframe>
-  <!-- L logo dot shown when closed -->
-  <button id="lucy-l-btn" aria-label="Open Lucy" style="display:none; position:fixed; right:20px; bottom:20px; z-index:10000; width:56px; height:56px; border-radius:50%; background:#111; color:#e8d9b0; border:none; cursor:pointer; font-family:Georgia,'Times New Roman',serif; font-size:26px; font-style:italic; font-weight:400; line-height:56px; text-align:center; padding:0; box-shadow:0 0 18px 6px rgba(255,200,80,0.65), 0 0 6px 2px rgba(255,200,80,0.4);">L</button>
   <script>
   (function () {
-    var frame  = document.getElementById('lucy-frame');
-    var lBtn   = document.getElementById('lucy-l-btn');
+    var frame = document.getElementById('lucy-frame');
+    var dot = document.getElementById('lucy-launcher');
     var origin = 'https://claudelucy.netlify.app';
-    var hasOpened = false;
 
-    function showSheet() {
-      var mobile = window.innerWidth < 768;
-      frame.style.width  = mobile ? '100%' : '380px';
-      frame.style.height = mobile ? '33vh' : '50vh';
-      frame.style.left   = mobile ? '0' : 'auto';
-      frame.style.right  = '0';
-      frame.style.borderRadius = mobile ? '12px 12px 0 0' : '12px 0 0 0';
-      lBtn.style.display = 'none';
+    function open() {
+      frame.style.display = 'block';
+      dot.style.display = 'none';
+      var send = function () {
+        frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
+      };
+      if (frame.dataset.ready === '1') send();
+      else frame.addEventListener('load', function onload() { frame.dataset.ready = '1'; send(); }, { once: true });
     }
 
-    function showDot() {
-      frame.style.width  = '0';
-      frame.style.height = '0';
-      lBtn.style.display = 'block';
+    function close() {
+      frame.style.display = 'none';
+      dot.style.display = 'block';
     }
 
-    function setState(state) {
-      if (state === 'popup' || state === 'bubble') {
-        hasOpened = true;
-        showSheet();
-      } else if (state === 'closed') {
-        if (hasOpened) showDot();
-      }
-    }
+    dot.addEventListener('click', open);
+
+    var enterBtn = document.getElementById('splash-enter-btn');
+    if (enterBtn) enterBtn.addEventListener('click', open);
 
     window.addEventListener('message', function (e) {
       if (e.origin !== origin) return;
       if (!e.data || e.data.type !== 'lucy:state') return;
-      setState(e.data.state);
+      if (e.data.state === 'closed') close();
     });
-
-    lBtn.addEventListener('click', function () {
-      showSheet();
-      frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
-    });
-
-    function openLucy() {
-      hasOpened = true;
-      showSheet();
-      frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
-    }
-
-    var enterBtn = document.getElementById('splash-enter-btn');
-    if (enterBtn) enterBtn.addEventListener('click', openLucy);
   })();
   </script>
 </body>
