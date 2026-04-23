@@ -2,6 +2,7 @@
     const splashEl = document.getElementById('splash');
     function dismissSplash() {
       splashEl.classList.add('fade-out');
+      window.scrollTo(0, 0);
       setTimeout(() => { splashEl.style.display = 'none'; }, 700);
     }
     // Button click (desktop) + tap anywhere (mobile)
