@@ -428,82 +428,50 @@
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; right:0; bottom:0; left:auto; top:auto; width:0; height:0; border:0; background:transparent; z-index:9999; transition: box-shadow 0.3s;"
+    style="position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); width:0; height:0; border:0; background:transparent; z-index:9999;"
   ></iframe>
-  <!-- close button sits above the bubble; dot overlay captures clicks on the glowing dot -->
-  <button id="lucy-close-btn" aria-label="Minimize Lucy" style="display:none; position:fixed; right:10px; bottom:296px; z-index:10000; width:24px; height:24px; border-radius:50%; background:rgba(15,15,15,0.82); color:#bbb; border:1px solid rgba(255,255,255,0.12); cursor:pointer; font-size:15px; line-height:24px; padding:0; text-align:center;">×</button>
-  <div id="lucy-dot-overlay" style="display:none; position:fixed; right:20px; bottom:20px; width:56px; height:56px; border-radius:50%; z-index:10000; cursor:pointer;"></div>
+  <!-- transparent backdrop: click outside Lucy to close -->
+  <div id="lucy-backdrop" style="display:none; position:fixed; inset:0; z-index:9998;"></div>
+  <!-- L logo dot shown when minimized -->
+  <button id="lucy-l-btn" aria-label="Open Lucy" style="display:none; position:fixed; right:20px; bottom:20px; z-index:10000; width:56px; height:56px; border-radius:50%; background:#111; color:#e8d9b0; border:none; cursor:pointer; font-family:Georgia,'Times New Roman',serif; font-size:26px; font-style:italic; font-weight:400; line-height:56px; text-align:center; padding:0; box-shadow:0 0 18px 6px rgba(255,200,80,0.65), 0 0 6px 2px rgba(255,200,80,0.4);">L</button>
   <script>
   (function () {
-    var frame     = document.getElementById('lucy-frame');
-    var closeBtn  = document.getElementById('lucy-close-btn');
-    var dotOverlay = document.getElementById('lucy-dot-overlay');
-    var origin = 'https://claudelucy.netlify.app';
-    var hasFirstOpened = false;
+    var frame    = document.getElementById('lucy-frame');
+    var backdrop = document.getElementById('lucy-backdrop');
+    var lBtn     = document.getElementById('lucy-l-btn');
+    var origin   = 'https://claudelucy.netlify.app';
+    var hasOpened = false;
 
-    function showDot() {
-      frame.style.width = '56px';
-      frame.style.height = '56px';
-      frame.style.right = '20px';
-      frame.style.bottom = '20px';
-      frame.style.left = 'auto';
-      frame.style.top = 'auto';
-      frame.style.transform = 'none';
-      frame.style.borderRadius = '50%';
-      frame.style.boxShadow = '0 0 18px 6px rgba(255,200,80,0.65), 0 0 6px 2px rgba(255,200,80,0.4)';
-      closeBtn.style.display = 'none';
-      dotOverlay.style.display = 'block';
+    function showPopup() {
+      frame.style.width  = 'min(440px, 95vw)';
+      frame.style.height = 'min(680px, 88vh)';
+      backdrop.style.display = 'block';
+      lBtn.style.display = 'none';
     }
 
-    function showBubble() {
-      frame.style.width = '380px';
-      frame.style.height = '320px';
-      frame.style.right = '0';
-      frame.style.bottom = '0';
-      frame.style.left = 'auto';
-      frame.style.top = 'auto';
-      frame.style.transform = 'none';
-      frame.style.borderRadius = '0';
-      frame.style.boxShadow = 'none';
-      closeBtn.style.display = 'block';
-      dotOverlay.style.display = 'none';
+    function showDot() {
+      frame.style.width  = '0';
+      frame.style.height = '0';
+      backdrop.style.display = 'none';
+      lBtn.style.display = 'block';
+    }
+
+    function hideAll() {
+      frame.style.width  = '0';
+      frame.style.height = '0';
+      backdrop.style.display = 'none';
+      lBtn.style.display = 'none';
     }
 
     function setState(state) {
-      if (state === 'popup') {
-        if (!hasFirstOpened) {
-          hasFirstOpened = true;
-          frame.style.width = 'min(440px, 95vw)';
-          frame.style.height = 'min(680px, 88vh)';
-          frame.style.right = 'auto';
-          frame.style.bottom = 'auto';
-          frame.style.left = '50%';
-          frame.style.top = '50%';
-          frame.style.transform = 'translate(-50%, -50%)';
-          frame.style.borderRadius = '0';
-          frame.style.boxShadow = 'none';
-          closeBtn.style.display = 'none';
-          dotOverlay.style.display = 'none';
-        } else {
-          showBubble();
-        }
-      } else if (state === 'bubble') {
-        hasFirstOpened = true;
-        showBubble();
+      if (state === 'popup' || state === 'bubble') {
+        hasOpened = true;
+        showPopup();
       } else if (state === 'minimized') {
-        hasFirstOpened = true;
+        hasOpened = true;
         showDot();
       } else {
-        if (hasFirstOpened) {
-          showDot();
-        } else {
-          frame.style.width = '0';
-          frame.style.height = '0';
-          frame.style.boxShadow = 'none';
-          frame.style.borderRadius = '0';
-          closeBtn.style.display = 'none';
-          dotOverlay.style.display = 'none';
-        }
+        if (hasOpened) showDot(); else hideAll();
       }
     }
 
@@ -513,14 +481,16 @@
       setState(e.data.state);
     });
 
-    closeBtn.addEventListener('click', function () { showDot(); });
+    backdrop.addEventListener('click', showDot);
 
-    dotOverlay.addEventListener('click', function () {
-      showBubble();
+    lBtn.addEventListener('click', function () {
+      showPopup();
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
     });
 
     function openLucy() {
+      hasOpened = true;
+      showPopup();
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
     }
 
