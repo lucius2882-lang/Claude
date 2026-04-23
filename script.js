@@ -208,6 +208,7 @@
     const detailBody = document.getElementById('detail-body');
     document.getElementById('close-btn').addEventListener('click', () => {
       detail.classList.remove('visible');
+      document.body.style.overflow = '';
       setTimeout(() => { detail.style.display = 'none'; }, 400);
     });
 
@@ -222,6 +223,7 @@
         </div>
       `).join('');
       detail.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => detail.classList.add('visible'));
     }
 
@@ -242,6 +244,7 @@
 
     function closeAllKeplerPopups(callback) {
       if (!keplerActivePopups.length) { if (callback) callback(); return; }
+      document.body.style.overflow = '';
       let rem = keplerActivePopups.length;
       keplerActivePopups.forEach(p => {
         p.classList.add('closing');
@@ -327,6 +330,7 @@
       keplerActivePopups.push(tp);
 
       overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
 
@@ -684,11 +688,13 @@
       gmInbox.style.display = 'flex';
       gmInbox.style.flexDirection = 'column';
       gmailEl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => gmailEl.classList.add('visible'));
     }
 
     function closeGmail() {
       gmailEl.classList.remove('visible');
+      document.body.style.overflow = '';
       setTimeout(() => { gmailEl.style.display = 'none'; }, 300);
     }
 
@@ -809,6 +815,7 @@
 
     function openResvPopup(resv) {
       if (resvPopup) { resvPopup.remove(); resvPopup = null; }
+      document.body.style.overflow = 'hidden';
 
       const popup = document.createElement('div');
       popup.className = 'popup resv-popup';
@@ -870,6 +877,7 @@
     function bindResvPopupBtns(popup, resv) {
       popup.querySelector('.resv-close-btn').addEventListener('click', () => {
         popup.classList.add('closing');
+        document.body.style.overflow = '';
         popup.addEventListener('animationend', () => { popup.remove(); resvPopup = null; }, { once: true });
       });
       const nextBtn = popup.querySelector('.resv-next-btn');
@@ -905,11 +913,13 @@
     function openBook() {
       renderBook();
       bookviewEl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => bookviewEl.classList.add('visible'));
     }
 
     function closeBook() {
       bookviewEl.classList.remove('visible');
+      document.body.style.overflow = '';
       setTimeout(() => { bookviewEl.style.display = 'none'; }, 300);
     }
 

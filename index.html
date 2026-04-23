@@ -440,8 +440,18 @@
     var hasOpened = false;
 
     function showSheet() {
-      frame.style.width  = '100%';
-      frame.style.height = '33vh';
+      var mobile = window.innerWidth < 768;
+      if (mobile) {
+        frame.style.width  = '100%';
+        frame.style.height = '33vh';
+        frame.style.left   = '0';
+        frame.style.right  = '0';
+      } else {
+        frame.style.width  = '380px';
+        frame.style.height = '50vh';
+        frame.style.left   = 'auto';
+        frame.style.right  = '0';
+      }
       lBtn.style.display = 'none';
     }
 
