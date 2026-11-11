@@ -441,31 +441,96 @@
 
     frame.addEventListener('load', function () { ready = true; }, { once: true });
 
-    function applySize() {
-      var mobile = window.innerWidth < 768;
+    var isOpen = false;
+    var vv = window.visualViewport || null;
+    var MOBILE_GAP = 0;    // panel sits flush on the bottom edge on phones
+    var DESKTOP_GAP = 80;  // clears the launcher dot on desktop
+    var TOP_ROOM = 12;     // never let the panel touch the top of what's visible
+    var tallest = 0;       // tallest keyboard-free viewport seen at this width
+    var lastWidth = 0;
+    var rafId = 0;
+
+    // The part of the page the user can actually see, in the same coordinates
+    // position:fixed uses (the layout viewport). When the on-screen keyboard is
+    // open, iOS Safari / Chrome on iPhone / Chrome on Android shrink the
+    // *visual* viewport but leave the layout viewport alone, so a fixed
+    // bottom:0 element ends up behind the keyboard. visualViewport tells us
+    // where the visible area really ends.
+    function visibleArea() {
+      var layoutH = window.innerHeight;
+      // Pinch-zoomed: don't chase the zoomed view, just behave like a normal
+      // fixed panel.
+      if (!vv || vv.scale > 1.01) return { top: 0, height: layoutH, layoutH: layoutH };
+      return { top: Math.max(0, vv.offsetTop), height: vv.height, layoutH: layoutH };
+    }
+
+    function layout() {
+      rafId = 0;
+      if (!isOpen) return;
+      var w = window.innerWidth;
+      var mobile = w < 768;
+      var area = visibleArea();
+
+      // Remember the full keyboard-free height so the panel's resting size
+      // doesn't shrink on browsers that resize the layout viewport for the
+      // keyboard (older Chrome / Samsung Internet). Reset on rotation.
+      if (w !== lastWidth) { lastWidth = w; tallest = 0; }
+      tallest = Math.max(tallest, area.layoutH);
+
+      var gap, baseH;
       if (mobile) {
-        frame.style.left   = '0';  frame.style.right  = '0';
-        frame.style.bottom = '0';  frame.style.top    = 'auto';
-        frame.style.width  = '100%';
-        frame.style.height = '33vh';
-        frame.style.maxWidth = ''; frame.style.maxHeight = '';
+        gap = MOBILE_GAP;
+        baseH = Math.round(tallest * 0.33);
+        frame.style.left = '0'; frame.style.right = '0';
+        frame.style.width = '100%';
+        frame.style.maxWidth = '';
         frame.style.borderRadius = '12px 12px 0 0';
       } else {
-        frame.style.left   = 'auto'; frame.style.right  = '20px';
-        frame.style.bottom = '80px'; frame.style.top    = 'auto';
-        frame.style.width  = '380px';
-        frame.style.height = '520px';
-        frame.style.maxWidth = 'calc(100vw - 40px)'; frame.style.maxHeight = '50vh';
+        gap = DESKTOP_GAP;
+        baseH = Math.min(520, Math.round(tallest * 0.5));
+        frame.style.left = 'auto'; frame.style.right = '20px';
+        frame.style.width = '380px';
+        frame.style.maxWidth = 'calc(100vw - 40px)';
         frame.style.borderRadius = '12px';
       }
+
+      // Keyboard (or anything else) eating the bottom of the screen: move the
+      // gap out of the way first, then shrink the panel so the input and
+      // Send button stay above the keyboard. It stays a floating panel —
+      // never taller than its normal size.
+      var keyboard = Math.max(0, area.layoutH - area.top - area.height);
+      if (keyboard > 0 && !mobile) gap = Math.min(gap, 12);
+      var h = Math.max(0, Math.min(baseH, area.height - gap - TOP_ROOM));
+      var top = area.top + area.height - gap - h;
+
+      frame.style.bottom = 'auto';
+      frame.style.maxHeight = '';
+      frame.style.height = h + 'px';
+      frame.style.top = top + 'px';
     }
+
+    function schedule() {
+      if (!isOpen || rafId) return;
+      rafId = window.requestAnimationFrame(layout);
+    }
+
+    if (vv) {
+      vv.addEventListener('resize', schedule);
+      vv.addEventListener('scroll', schedule);
+    }
+    window.addEventListener('resize', schedule);
+    window.addEventListener('orientationchange', schedule);
+    // iOS sometimes scrolls the page under an open keyboard without a
+    // visualViewport scroll event.
+    window.addEventListener('scroll', schedule, { passive: true });
 
     function send() {
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
     }
 
     function open() {
-      applySize();
+      isOpen = true;
+      layout();
       frame.style.opacity = '1';
       frame.style.pointerEvents = 'auto';
       dot.style.display = 'none';
@@ -474,6 +539,7 @@
     }
 
     function close() {
+      isOpen = false;
       frame.style.opacity = '0';
       frame.style.pointerEvents = 'none';
       dot.style.display = 'block';
