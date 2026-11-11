@@ -68,18 +68,19 @@
     var lucyFrame = document.getElementById('lucy-frame');
     if (!lucyFrame || !touchScreen) return;
     var vv = window.visualViewport || null;
-    var restY = window.scrollY;   // where the visitor last left the page
-    var lastPageTouch = 0;        // last time a finger was on the page (not on Lucy)
+    var anchorY = window.scrollY;          // where the page should stay
+    var dragging = false, dragTimer = 0;   // the visitor is moving the page themselves
     var pinnedAt = null, sawKeyboard = false, pinTimer = 0;
 
     function keyboardUp() { return !!vv && window.innerHeight - vv.height > 120; }
     function lucyHasFocus() { return document.activeElement === lucyFrame; }
-    function touched() { lastPageTouch = Date.now(); }
+    function dragStart() { dragging = true; clearTimeout(dragTimer); }
+    function dragEnd(ms) { clearTimeout(dragTimer); dragTimer = setTimeout(function () { dragging = false; }, ms); }
 
     function pin() {
       if (pinnedAt !== null) return;
       if (document.body.style.overflow === 'hidden') return;   // a full-screen view is open
-      pinnedAt = restY;
+      pinnedAt = anchorY;
       sawKeyboard = keyboardUp();
       var b = document.body.style;
       b.position = 'fixed'; b.top = -pinnedAt + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
@@ -95,23 +96,29 @@
       var b = document.body.style;
       b.position = b.top = b.left = b.right = b.width = '';
       window.scrollTo(0, y);
-      restY = y;
+      anchorY = y;
     }
 
     window.addEventListener('scroll', function () {
-      // moves the keyboard causes do not count; only the visitor's own scrolling does
-      if (pinnedAt === null && (!lucyHasFocus() || Date.now() - lastPageTouch < 1600)) restY = window.scrollY;
+      // While Lucy has the cursor, only the visitor's own dragging counts as
+      // scrolling; anything else is the keyboard pushing the page around.
+      if (pinnedAt === null && (!lucyHasFocus() || dragging)) anchorY = window.scrollY;
     }, { passive: true });
     document.addEventListener('touchstart', function (e) {
-      touched();
-      if (pinnedAt !== null && e.target !== lucyFrame) unpin();
+      if (pinnedAt !== null && e.target !== lucyFrame) unpin();   // a finger on the page frees it
     }, { passive: true, capture: true });
-    document.addEventListener('touchmove', touched, { passive: true, capture: true });
-    document.addEventListener('touchend', touched, { passive: true, capture: true });
+    document.addEventListener('touchmove', dragStart, { passive: true, capture: true });
+    document.addEventListener('touchend', function () { dragEnd(1200); }, { passive: true, capture: true });
+    document.addEventListener('wheel', function () { dragStart(); dragEnd(300); }, { passive: true, capture: true });
 
     // focus moving into her frame is the tap on her text box
     window.addEventListener('blur', function () {
-      setTimeout(function () { if (lucyHasFocus()) pin(); }, 0);
+      var y = window.scrollY;      // read now, before the keyboard can move anything
+      setTimeout(function () {
+        if (!lucyHasFocus() || pinnedAt !== null) return;
+        anchorY = y;
+        pin();
+      }, 0);
     });
     // focus coming back to the page itself (not just the window waking up) frees it
     window.addEventListener('focus', function () {
