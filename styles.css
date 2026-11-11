@@ -201,6 +201,12 @@
       .rv-download { padding: 7px 14px; font-size: 0.72rem; }
     }
 
+    /* Very narrow phones (iPhone SE 1st gen, Galaxy Fold): Download drops
+       below the name instead of pushing the page wider than the screen */
+    @media (max-width: 359px) {
+      .rv-header-row { flex-wrap: wrap; gap: 12px; }
+    }
+
     @media print {
       @page { margin: 12mm 14mm; }
 
