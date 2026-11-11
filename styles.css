@@ -2435,7 +2435,7 @@
     }
 
     /* ---------- tighter spacing everywhere ---------- */
-    #resume { min-height: 0; padding: 54px 0 22px; }
+    #resume { min-height: 0; padding: 54px 0 12px; }
     .rv-header { padding-bottom: 22px; margin-bottom: 30px; }
     .rv-body { gap: 44px; }
     .rv-section { margin-bottom: 24px; }
@@ -2445,12 +2445,17 @@
     .rv-job-bullets li { line-height: 1.55; margin-bottom: 2px; }
     .rv-skill-group { margin-bottom: 15px; }
     .rv-skill-label { margin-bottom: 7px; }
-    #grid { gap: 8px; padding: 8px; }
-    .tile { min-height: 0; padding: 24px 18px 22px; }
-    .tile-inner { gap: .6rem; }
-    .tile-logo, .tile-uc .tile-logo { max-height: 92px; max-width: 180px; }
-    .tile-label { padding: 0 1rem; }
-    #contact { padding: 40px 20px 36px; }
+    /* every tile is the same size; they just sit closer together, with less
+       empty space above the first one and below the last one */
+    #grid { gap: 6px; padding: 6px; }
+    .tile { height: 260px; min-height: 0; padding: 0 18px; }
+    .tile-inner { gap: .8rem; }
+    .tile-logo, .tile-uc .tile-logo { max-height: 104px; max-width: 200px; }
+    .tile-label { padding: .1rem 1rem; }
+    .rv-main > .rv-section:last-child, .rv-sidebar > .rv-section:last-child { margin-bottom: 0; }
+    .rv-section > .rv-job:last-child { margin-bottom: 4px; }
+    .rv-skill-group:last-child { margin-bottom: 4px; }
+    #contact { padding: 22px 20px 34px; }
     .cf-heading { margin-bottom: 8px; }
     .cf-sub { margin-bottom: 18px; }
     .cf-form { gap: 4px; }
@@ -2459,7 +2464,7 @@
     .cf-submit { margin-top: 16px; }
     #site-footer { padding: 18px 20px 22px; }
     @media (max-width: 700px) {
-      #resume { padding: 34px 0 12px; }
+      #resume { padding: 34px 0 8px; }
       .rv-header { margin-bottom: 24px; }
       .rv-body { gap: 0; }
       #site-footer { padding-bottom: 82px; }
