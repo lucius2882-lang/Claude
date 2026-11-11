@@ -602,7 +602,10 @@
     window.addEventListener('orientationchange', schedule);
     // iOS sometimes scrolls the page under an open keyboard without a
     // visualViewport scroll event.
-    window.addEventListener('scroll', schedule, { passive: true });
+    // Only while the keyboard is up, so ordinary scrolling does no layout work.
+    window.addEventListener('scroll', function () {
+      if (!vv || window.innerHeight - vv.height > 60) schedule();
+    }, { passive: true });
 
     function send() {
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
