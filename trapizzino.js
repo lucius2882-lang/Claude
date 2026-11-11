@@ -253,7 +253,7 @@
     layer.innerHTML =
       '<div class="trap-sign">' +
         '<div class="trap-word"><div class="trap-haze"></div>' + mark.svg + '</div>' +
-        '<div class="trap-sub">Trapizzino · Server · Mar 2025 – Present</div>' +
+        '<div class="trap-sub">Trapizzino · Waitress · Mar 2025 – Present</div>' +
       '</div>';
     sign = layer.firstChild;
     var haze = sign.querySelector('.trap-haze');
