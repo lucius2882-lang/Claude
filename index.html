@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    // Always open at the top. Without this, a reload puts the page back where it was
+    // last scrolled to, sometimes seconds after the splash has been dismissed.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
   <title>Lucius Campany — Data-Driven Front-of-House Hospitality</title>
   <meta name="description" content="Portfolio of Lucius Campany: a data-driven front-of-house hospitality leader with six years across fine dining, private events, and high-profile pop-ups. 150-cover nights, two venue openings, and a $250K monthly paid social budget." />
   <meta name="keywords" content="Lucius Campany, front of house, hospitality, maître d', event production, guest experience, experiential marketing, brand activation, portfolio" />
