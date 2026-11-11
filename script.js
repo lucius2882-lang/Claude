@@ -773,24 +773,39 @@
       cw.mail.hidden = !on;
       if (on) cw.mail.href = mailtoLink(cwValues());
     }
-    // On phones the window is a full sheet. Keep it exactly on the part of the
-    // screen that is visible, so it sits still when the keyboard comes and goes.
+    // On phones the window is a full sheet that never moves. The page behind it
+    // is locked so the browser has nothing to drag around when the keyboard
+    // changes, every field sits above where the keyboard comes up, and the only
+    // thing the keyboard changes is how much room is left at the bottom.
+    let cwLockY = null;
+    function lockPage() {
+      if (cwLockY !== null) return;
+      cwLockY = window.scrollY;
+      const b = document.body.style;
+      b.position = 'fixed'; b.top = -cwLockY + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+    }
+    function unlockPage() {
+      if (cwLockY === null) return;
+      const y = cwLockY;
+      cwLockY = null;
+      const b = document.body.style;
+      b.position = b.top = b.left = b.right = b.width = '';
+      window.scrollTo(0, y);
+    }
     function fitCompose() {
       if (!gmCw.classList.contains('sheet') || gmCw.hidden) return;
       const vv = window.visualViewport;
       if (!vv) return;
-      gmCw.style.top = Math.max(0, vv.offsetTop) + 'px';
-      gmCw.style.height = vv.height + 'px';
+      gmCw.style.setProperty('--kb', Math.max(0, window.innerHeight - vv.height - vv.offsetTop) + 'px');
     }
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', fitCompose);
-      window.visualViewport.addEventListener('scroll', fitCompose);
-    }
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', fitCompose);
 
     function openCompose() {
       gmCw.hidden = false;
-      gmCw.classList.toggle('sheet', window.matchMedia('(max-width: 700px)').matches);
+      const sheet = window.matchMedia('(max-width: 700px)').matches;
+      gmCw.classList.toggle('sheet', sheet);
       document.body.classList.add('gm-composing');     // hides the Lucy button while writing
+      if (sheet) lockPage();
       fitCompose();
       requestAnimationFrame(() => gmCw.classList.add('open'));
       // Desktop gets a cursor straight away. On a touch screen the visitor taps the
@@ -801,10 +816,11 @@
       if (gmCw.contains(document.activeElement)) document.activeElement.blur();
       gmCw.classList.remove('open');
       document.body.classList.remove('gm-composing');
+      unlockPage();
       setTimeout(() => {
         if (gmCw.classList.contains('open')) return;
         gmCw.hidden = true;
-        gmCw.style.top = gmCw.style.height = '';
+        gmCw.style.removeProperty('--kb');
       }, 300);
     }
     function showGmToast(text) {
@@ -815,6 +831,15 @@
     }
 
     document.querySelectorAll('.gm-compose, #gm-fab').forEach(b => b.addEventListener('click', openCompose));
+    // A tap anywhere on a row lands in its field, and a tap on empty space keeps
+    // the cursor where it is, so the keyboard never drops and comes back.
+    gmCw.addEventListener('mousedown', e => {
+      if (e.target.closest('input, textarea, button, a')) return;
+      e.preventDefault();
+      const row = e.target.closest('.gm-cw-row');
+      const field = row && row.querySelector('input');
+      if (field) field.focus({ preventScroll: true });
+    });
     document.getElementById('gm-cw-close').addEventListener('click', closeCompose);
     gmCw.addEventListener('input', () => {
       if (!cw.mail.hidden) cw.mail.href = mailtoLink(cwValues());   // keep the mail link current

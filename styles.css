@@ -2397,7 +2397,20 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
         cursor: pointer;
       }
-      .gm-cw { position: fixed; inset: auto; left: 0; right: 0; top: 0; width: 100%; height: 100%; border-radius: 0; transform: none; overscroll-behavior: contain; }
+      .gm-cw {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        transform: none;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        padding-bottom: var(--kb, 0px);     /* room the keyboard is covering */
+      }
+      /* short enough to stay above the keyboard, so tapping it never moves the sheet */
+      .gm-cw-body { flex: none; height: min(34vh, 220px); min-height: 110px; }
       /* Send goes to the top on phones, where the keyboard or the Lucy chat can't cover it */
       .gm-cw-foot { order: 1; flex-direction: row-reverse; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid #eceff1; }
       .gm-cw-row { order: 2; }
@@ -2597,4 +2610,18 @@
       .resv-popup .popup-photo { flex: none; height: min(58vw, 250px); }
       .resv-popup .popup-body { flex-shrink: 1; padding: .8rem 1rem .6rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
       .resv-popup .popup-text { font-size: .93rem; line-height: 1.55; }
+    }
+
+    /* ---------- last touches ---------- */
+    /* the splash lifts away with a fade and a slight zoom only; no blur, so it stays smooth on phones */
+    #splash { transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    #splash.fade-out { filter: none; transform: scale(1.03); }
+    /* on phones the Kepler text card sits dead centre and uses the width it has */
+    @media (max-width: 700px) {
+      .popup:not(.kimg-popup):not(.resv-popup) {
+        left: 50% !important;
+        translate: -50% 0;
+        width: min(90vw, 400px) !important;
+        min-width: 0;
+      }
     }
