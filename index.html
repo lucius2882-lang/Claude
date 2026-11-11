@@ -17,7 +17,7 @@
   <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
   <link rel="icon" href="/favicon-96.png?v=2" type="image/png" sizes="96x96" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -434,6 +434,8 @@
 
     <!-- Compose: a real message to Lucius. The floating button is for phones, where the sidebar is hidden. -->
     <button class="gm-fab" id="gm-fab" type="button">✏ &nbsp;Compose</button>
+    <!-- The way back to the list. It stays on screen for as long as an email is open. -->
+    <button class="gm-backfab" id="gm-backfab" type="button">← &nbsp;Inbox</button>
     <form class="gm-cw" id="gm-cw" hidden novalidate>
       <div class="gm-cw-bar">
         <span>New Message</span>
@@ -494,7 +496,7 @@
     id="lucy-frame"
     src="https://claudelucy.netlify.app?embed=1"
     title="Lucy"
-    style="position:fixed; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
+    style="position:fixed; border:0; background:transparent; z-index:9999; opacity:0; visibility:hidden; pointer-events:none; transition:opacity 0.2s;"
   ></iframe>
   <div id="lucy-grip" role="separator" aria-orientation="horizontal" aria-label="Resize Lucy" tabindex="0"
     style="display:none; position:fixed; z-index:10000; width:96px; height:40px; margin-left:-48px; margin-top:-14px; border-radius:20px; cursor:ns-resize; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;">
@@ -620,8 +622,12 @@
       frame.contentWindow && frame.contentWindow.postMessage({ type: 'lucy:open' }, origin);
     }
 
+    var hideTimer = 0;
+
     function open() {
       isOpen = true;
+      clearTimeout(hideTimer);
+      frame.style.visibility = 'visible';
       layout();
       frame.style.opacity = '1';
       frame.style.pointerEvents = 'auto';
@@ -636,6 +642,16 @@
       frame.style.opacity = '0';
       frame.style.pointerEvents = 'none';
       dot.style.display = 'block';
+      // Once she has faded out, take the panel off the screen altogether. Left in
+      // place it is an invisible sheet across the bottom third of a phone, and on
+      // iPhones a see-through frame can still catch the finger, so whatever scrolls
+      // underneath it (an email, the reservation book) feels stuck.
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () {
+        if (isOpen) return;
+        frame.style.visibility = 'hidden';
+        frame.style.top = '-200vh';
+      }, 220);
     }
 
     // ---- Drag the grab bar to make Lucy taller / shorter ----

@@ -399,7 +399,7 @@
         subject: 'Campaign Results — 1.2 Million Raised, Target Exceeded',
         time: '9:14 AM',
         date: 'Nov 8, 2018, 9:14 AM',
-        snippet: 'One point two million dollars. I said it out loud in the elevator and a man got off at the wrong floor out of respect...',
+        snippet: 'One point two million dollars. The goal was $900K, which I now understand was a number for children. The money is here...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
           <clipPath id="cp1"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp1)">
@@ -437,7 +437,7 @@
           </g>
         </svg>`,
         photoLabel: 'Campaign results dashboard',
-        body: `Lucius,\n\nOne point two million dollars. I said it out loud in the elevator and a man got off at the wrong floor out of respect.\n\nThe goal was $900K. We drew the fundraising thermometer on the wall in red marker, like civilized people. On Tuesday it went through the top of the poster, across the ceiling and, sul sul, into the dentist's office upstairs. The dentist has been gracious. The dentist would like to know, hooba noobie, if it plans to stop.\n\nThe extra $300K showed up like a cousin nobody invited to the wedding who then whippna choba dog pays for the wedding. Accounting counted it twice by hand, once by weight and once, yibs, by smell. Gloria fainted directly onto a spreadsheet and we are treating the imprint as her signature.\n\nI have not slept since the first million. I see the number in the carpet, in a bagel, in last night's chum cha. A pigeon looked at me through the window this morning and I swear it mouthed "one point two, wabadebadoo."\n\nThree campaigns, all yours: the strategy, the sequencing, the benzi chibna looble bazebni gweb donor targeting. Whatever you said to those donors, please say it to my landlord.\n\nCome get your thermometer.\n\nStill counting, dag dag,\nSherry\nCampaign Director, New Blue Interactive`
+        body: `Lucius,\n\nOne point two million dollars. The goal was $900K, which I now understand was a number for children.\n\nThe money is here. Physically. Nobody ordered it physical. It came up through the floor vents on Tuesday, sul sul, in ones, and by noon the interns were wearing it. The extra $300K has formed its own department. Its manager is a twenty named Dennis and Dennis does not respect me.\n\nAccounting weighed the total and it weighs exactly four walruses. They will not say how they know. Gloria tried to count it by hand, whispered "whippna choba dog," and rose slowly off the floor. She is still up there. We pass her snacks on a broom.\n\nI have not slept since the first million. I see the number in the carpet, in a bagel, in last night's chum cha. A pigeon landed on my desk, looked me dead in the eye and said "one point two, wabadebadoo." Then it invoiced me.\n\nThree campaigns, all yours: the strategy, the sequencing, the benzi chibna looble bazebni gweb donor targeting. I don't know what you said to those donors. I know that seven of them have since named a child Lucius and two have named a boat.\n\nI live in the money now. It is warm in here. I pay for things with eye contact.\n\nStill counting, dag dag,\nSherry\nCampaign Director, New Blue Interactive`
       },
       {
         id: 2,
@@ -447,7 +447,7 @@
         subject: 'A/B Test Results — "Tuna is taking it at the market" +22% Open Rate, 18% CTR',
         time: 'Yesterday',
         date: 'Nov 7, 2018, 4:51 PM',
-        snippet: 'The results are in and I need you to sit down, sul sul, ideally near water. Nobody knows what it means...',
+        snippet: 'The results are in and I need you to sit down, sul sul, ideally in a body of water. Variant A was mine: "Friend, a quick...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
           <clipPath id="cp2"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp2)">
@@ -479,7 +479,7 @@
           </g>
         </svg>`,
         photoLabel: 'A/B test comparison chart',
-        body: `Lucius,\n\nThe results are in and I need you to sit down, sul sul, ideally near water.\n\nVariant A was mine: "Friend, a quick update." Professional. Dignified. It performed the way a beige wall performs.\n\nVariant B was yours: "Tuna is taking it at the market." Nobody knows what it means. The client called to ask what it means. I said data does not mean, data wins, dag dag, and hung up, and then I had to call back because I work for them.\n\n22% open rate. 18% click-through. 11% of them gave money, on purpose, litzergam. A fishmonger in Baltimore sent $40 and asked us, respectfully, to shoo flee. A man named Gary replied only "which market" and donated anyway. Three people forwarded it to their mothers. One mother forwarded it back. The tuna has declined to comment.\n\nI think about the tuna constantly. What market. Taking what. Is the tuna okay, oh feebee lay, does the tuna have representation.\n\nAs a Tilapiana I recused myself from anything involving a rival fish, and the tuna STILL za woka genava swept. Same list, same send time, one variable. You even controlled for me.\n\nI have rewritten the internal playbook. It is one page now. The page says "ask Lucius."\n\nSwimming upstream,\nTilapiana\nAccount Manager`
+        body: `Lucius,\n\nThe results are in and I need you to sit down, sul sul, ideally in a body of water.\n\nVariant A was mine: "Friend, a quick update." People opened it the way you open a bill. A lighthouse unsubscribed.\n\nVariant B was yours: "Tuna is taking it at the market." 22% open rate. 18% click-through. 11% gave money, on purpose, litzergam. Nobody knows what it means. The client called to ask what it means and I said data does not mean, data wins, dag dag, and hung up. Then the phone rang again and it was the tuna.\n\nThe tuna has representation now. The tuna would like it known that it is not "taking" anything, that the market was like that when it got there, and that it expects points on the back end.\n\nA fishmonger in Baltimore sent $40 and begged us to shoo flee. A man named Gary replied "which market" every day for nine days, then sent a photo of himself at a market, looking around. A woman in Delaware printed the email and ate it. She gives monthly now.\n\nAs a Tilapiana I recused myself from anything involving a rival fish, and the tuna STILL za woka genava swept. I have seen its numbers. I have seen its eyes, oh feebee lay, and they have seen mine.\n\nI rewrote the internal playbook. It is one page. The page is wet. The page says "ask Lucius."\n\nSwimming upstream,\nTilapiana\nAccount Manager`
       },
       {
         id: 3,
@@ -489,7 +489,7 @@
         subject: 'QA Sign-Off Needed — October Broadcast (104,211 subscribers)',
         time: 'Oct 29',
         date: 'Oct 29, 2018, 11:02 AM',
-        snippet: 'I have not touched the send button. I have placed a small traffic cone on the send button...',
+        snippet: 'The October broadcast is staged. 104,211 people. I have not touched the send button. I put a small traffic cone on the send...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
           <clipPath id="cp3"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp3)">
@@ -524,7 +524,7 @@
           </g>
         </svg>`,
         photoLabel: 'Email QA checklist screenshot',
-        body: `Lucius,\n\nThe October broadcast is staged. 104,211 people. I have not touched the send button. I have placed a small traffic cone on the send button. Derek touched the cone and Derek, boobasnot, no longer works on this floor.\n\nYou remember the last time somebody sent without your sign-off. 104,211 people opened an email that began "Dear {{FIRST_NAME}}." One man had it legally changed. Mr. Firstname gives $5 a month now and we can never, ever, neib, fix it.\n\nWhere we are:\n• Rendering checked in Gmail, Outlook and Apple Mail ✓\n• All 84 links clicked by me, by hand, twice, while whispering benzi chibna looble bazebni gweb ✓\n• Unsubscribe footer present and, frankly, smug ✓\n• Personalization tokens: need your eyes. A test went to "Dear NULL" and NULL wrote back. NULL is doing well. NULL has a boat.\n\nI checked the checklist. Then I checked that I checked it. Then I called my mother to ask if she thinks I checked it and she said "hooba noobie, who is this."\n\nThe window is 2:00 PM. I have lit a candle, fliblia, and the candle is also waiting on you.\n\nPray for me,\nPrayfah\nContent Manager`
+        body: `Lucius,\n\nThe October broadcast is staged. 104,211 people. I have not touched the send button. I put a small traffic cone on the send button and a larger traffic cone on the small traffic cone. Derek touched the cone and Derek, boobasnot, is a lamp now. He is a good lamp. We keep him by the printer.\n\nYou remember the last time somebody sent without your sign-off. 104,211 people got an email that began "Dear {{FIRST_NAME}}." One man had it legally changed. Mr. Firstname gives $5 a month and we can never, ever, neib, fix it.\n\nWhere we are:\n• Rendering checked in Gmail, Outlook and Apple Mail ✓\n• All 84 links clicked by me, by hand, twice, while whispering benzi chibna looble bazebni gweb. Link 37 goes to a field. Not a page. A field. I stood in it. It was nice ✓\n• Unsubscribe footer present and, frankly, smug ✓\n• Personalization tokens: need your eyes. A test went to "Dear NULL" and NULL wrote back. NULL is doing well. NULL has a boat. NULL is running for city council and, hooba noobie, I think NULL might win.\n\nI have started learning all 104,211 names so I can apologize in person. I am on the B's.\n\nThe window is 2:00 PM. I lit a candle, fliblia, and the candle is also waiting on you. It asked me not to rush you. Then it asked me what year it is.\n\nPray for me,\nPrayfah\nContent Manager`
       },
       {
         id: 4,
@@ -534,7 +534,7 @@
         subject: 'HTML Email Build Complete — Responsive Template v3 in CRM',
         time: 'Sep 12',
         date: 'Sep 12, 2018, 3:38 PM',
-        snippet: 'v3 is alive. v1 was a table inside a table inside a table inside a cry for help...',
+        snippet: 'v3 is alive. I mean that. It blinked. For the record: v1 was a table inside a table inside a table inside a cry for help. v2 is...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
           <clipPath id="cp4"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp4)">
@@ -586,7 +586,7 @@
           </g>
         </svg>`,
         photoLabel: 'Responsive email template mockup',
-        body: `Lucius,\n\nv3 is alive.\n\nFor the record: v1 was a table inside a table inside a table inside a cry for help. v2 is buried behind the building and we do not, shoo flee, say its name. v3 I built straight from your spec, and it works, and I am not comfortable with how well it works.\n\nEvery style is inline, sewn on by hand like sequins on a truck, and Outlook renders it. I don't know what you promised Outlook. I suspect it was za woka genava. Outlook has not cooperated with a living person since 2007.\n\nI tested it at 320 pixels. I tested it on a desktop, a phone, a smart fridge, the calculator at my aunt's house and, sul sul, the scoreboard at a middle school volleyball game. Home team lost. The template held. Two columns fold into one like a lawn chair. A beautiful, obedient, whippna choba dog lawn chair.\n\nFor dark mode I turned off every light in the server room and the template just sat there, legible, glowing softly, like a responsible ghost.\n\nIt is in the CRM now. The CRM purred. It is the default template, which means my own nooboo technically outranks me.\n\nYes, I coded it, vadish,\nConnie\nDev Desk`
+        body: `Lucius,\n\nv3 is alive. I mean that. It blinked.\n\nFor the record: v1 was a table inside a table inside a table inside a cry for help. v2 is buried behind the building and some nights, shoo flee, it knocks. v3 I built straight from your spec and it is the most responsive template I have ever seen. I said good morning and it said "is it?"\n\nEvery style is inline, sewn on by hand like sequins on a truck, and Outlook renders it. Outlook has not cooperated with a living person since 2007. I don't know what you promised it. I suspect it was za woka genava.\n\nI tested it at 320 pixels. I tested it on a desktop, a phone, a smart fridge, the calculator at my aunt's house and, sul sul, the scoreboard at a middle school volleyball game. Home team lost. The template held. Two columns fold into one like a lawn chair. A beautiful, obedient, whippna choba dog lawn chair. A referee wept.\n\nFor dark mode I turned off every light in the server room and it just sat there, legible, glowing softly, humming a song I have only ever heard in dreams.\n\nIt is in the CRM now. The CRM purred, then asked about dental. It is the default template, which means my own nooboo outranks me, and it knows, and it has started cc'ing me on things.\n\nYes, I coded it, vadish,\nConnie\nDev Desk`
       },
       {
         id: 5,
@@ -596,7 +596,7 @@
         subject: 'Creative Package Delivered — PSD, AI, and All Platform Exports',
         time: 'Aug 6',
         date: 'Aug 6, 2018, 1:22 PM',
-        snippet: 'Sit down. The files are in and I have tea. The hero banner PSD has 214 layers and every single one, yibs, has a name...',
+        snippet: 'Sit down. The files are in and I have tea. The hero banner PSD has 214 layers and every single one, yibs, has a name. Not...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
           <clipPath id="cp5"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp5)">
@@ -636,7 +636,7 @@
           </g>
         </svg>`,
         photoLabel: 'Creative asset package preview',
-        body: `Lucius,\n\nSit down. The files are in and I have tea.\n\nThe hero banner PSD has 214 layers and every single one, yibs, has a name. Not "Layer 4 copy copy FINAL." A name. Like a child. Like a hurricane. I opened it and cried so hard that facilities came up to check the humidity.\n\nThe tea: the file we inherited was called final_FINAL_v7_useThisOne_REAL(2).psd. It has been, dag dag, escorted from the building.\n\nThe icons are live vector AI files. AI means Adobe Illustrator and I assume, benzi chibna looble, it always will. They scale to any size. I checked. There is now a barn in Maryland with our donate button on the side of it, and the farmer is confused but whippna choba dog supportive.\n\nSocial cuts come in four sizes per platform, including one for a platform that does not exist yet. It is called Blorp. We are ready. Email headers come in light and dark. Dark is for donors who are, oh feebee lay, going through something.\n\nYou kept a pace that should have taken two of you. I looked. There is one. I counted again.\n\nSip sip,\nTeaness\nCreative Director`
+        body: `Lucius,\n\nSit down. The files are in and I have tea.\n\nThe hero banner PSD has 214 layers and every single one, yibs, has a name. Not "Layer 4 copy copy FINAL." A name. Like a child. Like a hurricane. Layer 9 is called Deborah. Layer 10 is called The Shadow Behind Deborah. I opened it and cried so hard that facilities came up to check the humidity.\n\nThe tea: the file we inherited was called final_FINAL_v7_useThisOne_REAL(2).psd. It has been, dag dag, escorted from the building. It is on the bench outside, vaping. Do not make eye contact.\n\nThe icons are live vector AI files. AI means Adobe Illustrator and I assume, benzi chibna looble, it always will. They scale to any size. I checked. There is now a barn in Maryland with our donate button on the side of it. It is visible from space. An astronaut called to say she likes the kerning.\n\nSocial cuts come in four sizes per platform, including one for a platform that does not exist yet. It is called Blorp. We are ready. The PNGs are transparent. I can see through them. I can see through everything now, oh feebee lay, including you.\n\nEmail headers come in light and dark. Dark is for donors who are going through something.\n\nYou kept a pace that should have taken two of you. I looked. There is one. I counted again and there were three. I have stopped counting.\n\nSip sip,\nTeaness\nCreative Director`
       }
     ];
 
@@ -703,17 +703,36 @@
         row.querySelector('.gm-email-time').style.fontWeight = '400';
       }
 
+      inboxScroll = gmInbox.scrollTop;
       gmInbox.style.display = 'none';
       gmEmailView.classList.add('open');
+      gmailEl.classList.add('gm-reading');
+      gmailEl.classList.remove('gm-scrolled');
+      // every email opens at its first line, not wherever the last one was left
+      gmEmailView.scrollTop = 0;
+      requestAnimationFrame(() => { gmEmailView.scrollTop = 0; });
     }
 
+    let inboxScroll = 0;                            // where the list was when an email was opened
+
+    // At the top of an email the blue "Back to Inbox" link is right there. Once it has
+    // scrolled out of sight, the blue Inbox button takes over at the bottom of the screen.
+    gmEmailView.addEventListener('scroll', () => {
+      gmailEl.classList.toggle('gm-scrolled', gmEmailView.scrollTop > 70);
+    }, { passive: true });
+
     function showInbox() {
+      gmEmailView.scrollTop = 0;
       gmEmailView.classList.remove('open');
+      gmailEl.classList.remove('gm-reading', 'gm-scrolled');
       gmInbox.style.display = 'flex';
       gmInbox.style.flexDirection = 'column';
+      gmInbox.scrollTop = inboxScroll;              // back to the row they came from
     }
-    document.getElementById('gm-inbox-btn').addEventListener('click', showInbox);
-    document.getElementById('gm-nav-inbox').addEventListener('click', showInbox);
+    // the link above an email, the blue button that floats over it, and Inbox in the sidebar
+    ['gm-inbox-btn', 'gm-backfab', 'gm-nav-inbox'].forEach(id => {
+      document.getElementById(id).addEventListener('click', showInbox);
+    });
 
     // --- Sending a message to Lucius (Compose window and the contact form) ---
     // Both post to the site's "contact" form on Netlify. If Netlify does not take
@@ -925,17 +944,20 @@
 
     function openGmail() {
       renderInbox();
+      inboxScroll = 0;
       gmEmailView.classList.remove('open');
+      gmailEl.classList.remove('gm-reading', 'gm-scrolled');
       gmInbox.style.display = 'flex';
       gmInbox.style.flexDirection = 'column';
       gmailEl.style.display = 'flex';
+      gmInbox.scrollTop = 0;
       document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => gmailEl.classList.add('visible'));
     }
 
     function closeGmail() {
       closeCompose();
-      gmailEl.classList.remove('visible');
+      gmailEl.classList.remove('visible', 'gm-reading', 'gm-scrolled');
       document.body.style.overflow = '';
       setTimeout(() => { gmailEl.style.display = 'none'; }, 300);
     }
