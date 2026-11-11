@@ -433,9 +433,13 @@
     style="position:fixed; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
   ></iframe>
   <div id="lucy-grip" role="separator" aria-orientation="horizontal" aria-label="Resize Lucy" tabindex="0"
-    style="display:none; position:fixed; z-index:10000; width:96px; height:24px; margin-left:-48px; cursor:ns-resize; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;">
-    <span style="position:absolute; left:30px; right:30px; top:7px; height:4px; border-radius:2px; background:rgba(255,255,255,0.45);"></span>
+    style="display:none; position:fixed; z-index:10000; width:96px; height:40px; margin-left:-48px; margin-top:-14px; border-radius:20px; cursor:ns-resize; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;">
+    <span style="position:absolute; left:30px; right:30px; top:20px; height:4px; border-radius:2px; background:rgba(255,255,255,0.45);"></span>
   </div>
+  <style>
+    #lucy-grip:focus { outline: none; }
+    #lucy-grip:focus-visible { outline: 2px solid #f0ede7; outline-offset: -6px; }
+  </style>
   <script>
   (function () {
     var frame  = document.getElementById('lucy-frame');
@@ -472,6 +476,15 @@
       return { top: Math.max(0, vv.offsetTop), height: vv.height, layoutH: layoutH };
     }
 
+    // Space between the panel and the bottom of what's visible.
+    function bottomGap(area, mobile) {
+      if (mobile) return MOBILE_GAP;
+      // Keyboard up, or a short screen (landscape phone, small window): the
+      // launcher dot is hidden while Lucy is open, so give her the room.
+      var keyboard = area.layoutH - area.top - area.height > 60;  // ignore sub-pixel / toolbar slop
+      return keyboard || area.layoutH < 600 ? 12 : DESKTOP_GAP;
+    }
+
     function layout() {
       rafId = 0;
       if (!isOpen) return;
@@ -485,16 +498,14 @@
       if (w !== lastWidth) { lastWidth = w; tallest = 0; }
       tallest = Math.max(tallest, area.layoutH);
 
-      var gap, baseH;
+      var gap = bottomGap(area, mobile), baseH;
       if (mobile) {
-        gap = MOBILE_GAP;
         baseH = userH || Math.round(tallest * 0.33);
         frame.style.left = '0'; frame.style.right = '0';
         frame.style.width = '100%';
         frame.style.maxWidth = '';
         frame.style.borderRadius = '12px 12px 0 0';
       } else {
-        gap = DESKTOP_GAP;
         baseH = userH || Math.min(520, Math.round(tallest * 0.5));
         frame.style.left = 'auto'; frame.style.right = '20px';
         frame.style.width = '380px';
@@ -502,12 +513,9 @@
         frame.style.borderRadius = '12px';
       }
 
-      // Keyboard (or anything else) eating the bottom of the screen: move the
-      // gap out of the way first, then shrink the panel so the input and
-      // Send button stay above the keyboard. It stays a floating panel —
-      // never taller than its normal size.
-      var keyboard = Math.max(0, area.layoutH - area.top - area.height);
-      if (keyboard > 0 && !mobile) gap = Math.min(gap, 12);
+      // Bottom edge sits on the bottom of what's visible (on top of the
+      // keyboard when it's up). Shrink only if there isn't room, and always
+      // leave TOP_ROOM above her so she's a floating panel, never full-screen.
       var h = Math.max(0, Math.min(baseH, area.height - gap - TOP_ROOM));
       var top = area.top + area.height - gap - h;
 
@@ -521,6 +529,9 @@
       grip.style.top = r.top + 'px';
       grip.style.left = (r.left + r.width / 2) + 'px';
       grip.style.display = 'block';
+      grip.setAttribute('aria-valuemin', String(Math.min(MIN_H, h)));
+      grip.setAttribute('aria-valuemax', String(Math.max(MIN_H, Math.round(area.height - gap - TOP_ROOM))));
+      grip.setAttribute('aria-valuenow', String(Math.round(h)));
     }
 
     function schedule() {
@@ -565,8 +576,7 @@
     // up grows her. Capped so she never covers the whole visible area.
     function maxH() {
       var a = visibleArea();
-      var gap = window.innerWidth < 768 ? MOBILE_GAP : 12;
-      return Math.max(MIN_H, a.height - gap - TOP_ROOM);
+      return Math.max(MIN_H, a.height - bottomGap(a, window.innerWidth < 768) - TOP_ROOM);
     }
     function setUserH(h) {
       userH = Math.round(Math.max(MIN_H, Math.min(maxH(), h)));
