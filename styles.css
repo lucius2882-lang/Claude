@@ -2523,7 +2523,7 @@
     #schedview {
       position: fixed;
       inset: 0;
-      z-index: 60;
+      z-index: 10001;               /* above everything else on the page, Lucy included */
       display: none;
       flex-direction: column;
       background: #f7f2e9;
@@ -2531,6 +2531,10 @@
       transition: opacity .3s ease;
     }
     #schedview.visible { opacity: 1; }
+    /* Nothing of Lucy's may sit over the schedule maker, seen or unseen. She comes back when it closes. */
+    body.sv-open #lucy-launcher,
+    body.sv-open #lucy-frame,
+    body.sv-open #lucy-grip { display: none !important; }
     .sv-bar {
       flex: none;
       height: 52px;
