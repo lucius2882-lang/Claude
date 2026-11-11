@@ -1918,7 +1918,6 @@
       background: var(--ivory);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
     }
     ::selection { background: var(--gold); color: #111; }
     :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
@@ -2502,4 +2501,100 @@
         padding-bottom: 96px;        /* the last rows can scroll clear of the Lucy button */
       }
       .bk-resv-panel { flex: none; overflow: visible; }
+    }
+
+    /* ═══════════════════════════════════════════
+       BUTTER — nothing repaints while the page scrolls
+       ═══════════════════════════════════════════ */
+    /* Tiles: no blur behind them (there is nothing to blur), and the gold glow
+       pulses by fading a layer in and out instead of redrawing its shadow. */
+    .tile {
+      overflow: visible;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      animation: none;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, .9), 0 4px 24px rgba(0, 0, 0, .08), 0 0 8px rgba(200, 169, 110, .22);
+    }
+    .tile::after {
+      counter-increment: none;
+      content: '';
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 0 22px rgba(200, 169, 110, .95), 0 0 40px rgba(200, 169, 110, .45);
+      opacity: .1;
+      animation: pl-glow 2.8s ease-in-out infinite;
+      will-change: opacity;
+      pointer-events: none;
+    }
+    @keyframes pl-glow {
+      0%, 100% { opacity: .1; }
+      50%      { opacity: 1; }
+    }
+    /* the tile's contents now do the clipping, so the glow can sit outside */
+    .tile-inner {
+      position: absolute;
+      inset: 0;
+      justify-content: center;
+      padding: 0 18px;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    .tile-inner::after {            /* 01, 02, 03 … */
+      counter-increment: pl-tile;
+      content: counter(pl-tile, decimal-leading-zero);
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      font-size: .62rem;
+      letter-spacing: .26em;
+      font-variant-numeric: tabular-nums;
+      color: rgba(0, 0, 0, .4);
+    }
+    /* Lucy's button glows the same way, in time with the tiles */
+    #lucy-launcher { animation: none; box-shadow: 0 0 6px 1px rgba(255, 200, 80, .25); }
+    #lucy-launcher::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      box-shadow: 0 0 18px 6px rgba(255, 200, 80, .65), 0 0 40px 10px rgba(255, 200, 80, .35);
+      opacity: .1;
+      animation: pl-glow 2.8s ease-in-out infinite;
+      will-change: opacity;
+      pointer-events: none;
+    }
+    #scroll-hint { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(245, 242, 236, .92); }
+    #pl-progress { will-change: transform; }
+    /* every list inside a case study glides, and never drags the page behind it */
+    #gm-inbox, #gm-email-view, .bk-body, .bk-resv-panel, .bk-side-panel, .detail-body, .bm-text-page {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tile::after, #lucy-launcher::after { animation: none; opacity: .5; }
+    }
+
+    /* ---------- Happier on phones: rows and cards sized to fit ---------- */
+    @media (max-width: 700px) {
+      .bk-resv-row { grid-template-columns: 62px 36px 1fr auto; gap: 8px; padding: 9px 10px; }
+      .bk-time { font-size: .8rem; white-space: nowrap; }
+      .bk-pax { font-size: .74rem; white-space: nowrap; }
+      .bk-guest { font-size: .86rem; line-height: 1.3; }
+      .bk-guest .bk-note { font-size: .72rem; line-height: 1.35; }
+      .bk-table { font-size: .68rem; text-align: right; white-space: nowrap; }
+      /* the card sits in the middle of the screen, as tall as its contents */
+      .popup.resv-popup {
+        top: 50% !important;
+        left: 50% !important;
+        translate: -50% -50%;
+        width: min(92vw, 420px);
+        min-width: 0;
+        height: auto;
+        min-height: 0;
+        max-height: 86vh;
+        max-height: 86dvh;
+      }
+      .resv-popup .popup-photo { flex: none; height: min(58vw, 250px); }
+      .resv-popup .popup-body { flex-shrink: 1; padding: .8rem 1rem .6rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .resv-popup .popup-text { font-size: .93rem; line-height: 1.55; }
     }

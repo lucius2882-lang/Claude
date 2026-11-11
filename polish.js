@@ -38,8 +38,15 @@
       requestAnimationFrame(tick);
     })();
   }
-  var launcher = document.getElementById('lucy-launcher');
-  if (launcher) launcher.addEventListener('click', function () { holdScroll(window.scrollY, 1200); }, true);
+  // Lucy's button and frame come after this script in the page, so wait for them.
+  function whenReady(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+  whenReady(function () {
+    var launcher = document.getElementById('lucy-launcher');
+    if (launcher) launcher.addEventListener('click', function () { holdScroll(window.scrollY, 1200); }, true);
+  });
   if (splashShowing) {
     // the page starts at the very top once the splash is gone
     new MutationObserver(function (changes, watcher) {
@@ -50,6 +57,75 @@
       }
     }).observe(splash, { attributes: true, attributeFilter: ['class', 'style'] });
   }
+
+  // ---- keep the page still while typing to Lucy (phones and tablets) ----
+  // Tapping into Lucy's text box brings up the keyboard, and iPhone and iPad
+  // browsers then drag the page somewhere else. While her box has the keyboard
+  // the page is pinned exactly where the visitor left it, and it is put back
+  // when the keyboard goes away. A finger on the page itself always frees it.
+  var touchScreen = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  whenReady(function () {
+    var lucyFrame = document.getElementById('lucy-frame');
+    if (!lucyFrame || !touchScreen) return;
+    var vv = window.visualViewport || null;
+    var restY = window.scrollY;   // where the visitor last left the page
+    var lastPageTouch = 0;        // last time a finger was on the page (not on Lucy)
+    var pinnedAt = null, sawKeyboard = false, pinTimer = 0;
+
+    function keyboardUp() { return !!vv && window.innerHeight - vv.height > 120; }
+    function lucyHasFocus() { return document.activeElement === lucyFrame; }
+    function touched() { lastPageTouch = Date.now(); }
+
+    function pin() {
+      if (pinnedAt !== null) return;
+      if (document.body.style.overflow === 'hidden') return;   // a full-screen view is open
+      pinnedAt = restY;
+      sawKeyboard = keyboardUp();
+      var b = document.body.style;
+      b.position = 'fixed'; b.top = -pinnedAt + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+      clearTimeout(pinTimer);
+      // no keyboard came (hardware keyboard, or a tap on her messages): let go again
+      pinTimer = setTimeout(function () { if (!keyboardUp()) unpin(); }, 1000);
+    }
+    function unpin() {
+      if (pinnedAt === null) return;
+      var y = pinnedAt;
+      pinnedAt = null;
+      clearTimeout(pinTimer);
+      var b = document.body.style;
+      b.position = b.top = b.left = b.right = b.width = '';
+      window.scrollTo(0, y);
+      restY = y;
+    }
+
+    window.addEventListener('scroll', function () {
+      // moves the keyboard causes do not count; only the visitor's own scrolling does
+      if (pinnedAt === null && (!lucyHasFocus() || Date.now() - lastPageTouch < 1600)) restY = window.scrollY;
+    }, { passive: true });
+    document.addEventListener('touchstart', function (e) {
+      touched();
+      if (pinnedAt !== null && e.target !== lucyFrame) unpin();
+    }, { passive: true, capture: true });
+    document.addEventListener('touchmove', touched, { passive: true, capture: true });
+    document.addEventListener('touchend', touched, { passive: true, capture: true });
+
+    // focus moving into her frame is the tap on her text box
+    window.addEventListener('blur', function () {
+      setTimeout(function () { if (lucyHasFocus()) pin(); }, 0);
+    });
+    // focus coming back to the page itself (not just the window waking up) frees it
+    window.addEventListener('focus', function () {
+      setTimeout(function () { if (!lucyHasFocus()) unpin(); }, 0);
+    });
+    if (vv) vv.addEventListener('resize', function () {
+      if (pinnedAt === null) {
+        if (lucyHasFocus() && keyboardUp()) pin();     // keyboard came up later
+        return;
+      }
+      if (keyboardUp()) sawKeyboard = true;
+      else if (sawKeyboard) unpin();                    // keyboard has gone away
+    });
+  });
 
   if (reduce) return;
 
