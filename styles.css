@@ -2625,3 +2625,8 @@
         min-width: 0;
       }
     }
+    /* on phones, the end of an email and of the inbox scroll clear of the Compose and Lucy buttons */
+    @media (max-width: 700px) {
+      #gm-email-view::after { content: ''; display: block; flex: none; height: 124px; }
+      #gm-inbox::after { content: ''; display: block; flex: none; height: 140px; }
+    }
