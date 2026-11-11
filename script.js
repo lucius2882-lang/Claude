@@ -30,36 +30,9 @@
       btn.disabled = true;
 
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
       const pageW = 215.9, pageH = 279.4;
       const ml = 15, mr = 15, mb = 11;
       const cw = pageW - ml - mr;
-      let y = 15;
-
-      const sf = (size, style='normal', r=17, g=17, b=17) => {
-        doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
-      };
-      // Start a new page rather than run off the bottom of this one.
-      const room = (h) => { if (y + h > pageH - mb) { doc.addPage(); y = 16; } };
-      const secHead = (title) => {
-        room(16);
-        sf(7, 'bold', 120,120,120); doc.text(title, ml, y); y += 3.4;
-        doc.setDrawColor(185,185,185); doc.setLineWidth(0.2); doc.line(ml, y, ml+cw, y);
-        y += 5;
-      };
-      const rightText = (text) => doc.text(text, ml + cw - doc.getTextWidth(text), y);
-
-      // Centered header
-      sf(24, 'bold');
-      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 7.2;
-      sf(8.5, 'normal', 85,85,85);
-      doc.text('Front-of-House Leadership  ·  Events & Activations  ·  Data & Analytics', pageW / 2, y, { align: 'center' }); y += 5;
-      sf(7.5, 'normal', 120,120,120);
-      doc.text('New York, NY  ·  lucius@luciuscampany.com  ·  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 5;
-      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 7;
-
-      // Experience
-      secHead('EXPERIENCE');
 
       const jobs = [
         { title:"Waitress", dates:"Mar 2025 – Present", company:"Trapizzino  ·  New York, NY",
@@ -99,34 +72,6 @@
           ]}
       ];
 
-      const LH = 4.15;   // bullet line height
-      jobs.forEach((job, ji) => {
-        room(9.4 + LH * 2);
-        sf(9, 'bold'); doc.text(job.title, ml, y);
-        sf(7.5, 'normal', 100,100,100); rightText(job.dates);
-        y += 4.6;
-        sf(8, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 4.6;
-        job.bullets.forEach(b => {
-          sf(8, 'normal', 17,17,17);
-          const lines = doc.splitTextToSize('–  ' + b, cw - 3);
-          room(lines.length * LH);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += LH; });
-        });
-        if (ji < jobs.length - 1) y += 3;
-      });
-
-      y += 5.5;
-
-      // Education
-      secHead('EDUCATION');
-      sf(8.5, 'bold'); doc.text('George Washington University', ml, y);
-      sf(7.5, 'normal', 100,100,100); rightText('2015 – 2019');
-      y += 4.6;
-      sf(8, 'normal', 100,100,100);
-      doc.text('B.A. Political Science & Women’s, Gender & Sexuality Studies', ml, y); y += 7.5;
-
-      // Skills, one line per group
-      secHead('SKILLS');
       const groups = [
         { label:'Data & Analytics', tags:['Campaign Performance Analysis','Budget Management','CPA & ROAS Optimization','Performance Reporting','Paid Media'] },
         { label:'Front-of-House & Service', tags:['Guest Relations','VIP Management','Floor Operations','Reservation Management','Staff Training','Scheduling'] },
@@ -134,17 +79,81 @@
         { label:'Food & Beverage', tags:['Fine Dining Service','High-Volume Operations','Cocktail & Wine Knowledge','Health Department Compliance'] },
         { label:'Tools', tags:['Resy','OpenTable','SevenRooms','Tripleseat','Toast POS'] }
       ];
-      groups.forEach(grp => {
-        const label = grp.label + ':';
-        sf(8, 'bold'); const lw = doc.getTextWidth(label) + 1.6;
-        sf(8, 'normal', 17,17,17);
-        const lines = doc.splitTextToSize(grp.tags.join(', '), cw - lw);
-        room(lines.length * LH);
-        sf(8, 'bold'); doc.text(label, ml, y);
-        sf(8, 'normal', 17,17,17);
-        lines.forEach(l => { doc.text(l, ml + lw, y); y += LH; });
-        y += 0.5;
-      });
+
+      // Lays the whole resume out at a given scale. k = 1 is the normal size;
+      // smaller values shrink the type and spacing together.
+      const build = (k) => {
+        const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
+        let y = 15;
+        const sf = (size, style='normal', r=17, g=17, b=17) => {
+          doc.setFontSize(size * k); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
+        };
+        const down = (mm) => { y += mm * k; };
+        // If something still does not fit, it goes to a new page rather than off the edge.
+        const room = (h) => { if (y + h * k > pageH - mb) { doc.addPage(); y = 16; } };
+        const secHead = (title) => {
+          room(16);
+          sf(7, 'bold', 120,120,120); doc.text(title, ml, y); down(3.4);
+          doc.setDrawColor(185,185,185); doc.setLineWidth(0.2); doc.line(ml, y, ml+cw, y);
+          down(5);
+        };
+        const rightText = (text) => doc.text(text, ml + cw - doc.getTextWidth(text), y);
+        const LH = 4.15;   // line height for body text
+
+        // Centered header
+        sf(24, 'bold');
+        doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); down(7.2);
+        sf(8.5, 'normal', 85,85,85);
+        doc.text('Front-of-House Leadership  ·  Events & Activations  ·  Data & Analytics', pageW / 2, y, { align: 'center' }); down(5);
+        sf(7.5, 'normal', 120,120,120);
+        doc.text('New York, NY  ·  lucius@luciuscampany.com  ·  luciuscampany.com', pageW / 2, y, { align: 'center' }); down(5);
+        doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); down(7);
+
+        // Experience
+        secHead('EXPERIENCE');
+        jobs.forEach((job, ji) => {
+          room(9.4 + LH * 2);
+          sf(9, 'bold'); doc.text(job.title, ml, y);
+          sf(7.5, 'normal', 100,100,100); rightText(job.dates);
+          down(4.6);
+          sf(8, 'normal', 100,100,100); doc.text(job.company, ml, y); down(4.6);
+          job.bullets.forEach(b => {
+            sf(8, 'normal', 17,17,17);
+            const lines = doc.splitTextToSize('–  ' + b, cw - 3);
+            room(lines.length * LH);
+            lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); down(LH); });
+          });
+          if (ji < jobs.length - 1) down(3);
+        });
+        down(5.5);
+
+        // Education
+        secHead('EDUCATION');
+        sf(8.5, 'bold'); doc.text('George Washington University', ml, y);
+        sf(7.5, 'normal', 100,100,100); rightText('2015 – 2019');
+        down(4.6);
+        sf(8, 'normal', 100,100,100);
+        doc.text('B.A. Political Science & Women’s, Gender & Sexuality Studies', ml, y); down(7.5);
+
+        // Skills, one line per group
+        secHead('SKILLS');
+        groups.forEach(grp => {
+          const label = grp.label + ':';
+          sf(8, 'bold'); const lw = doc.getTextWidth(label) + 1.6;
+          sf(8, 'normal', 17,17,17);
+          const lines = doc.splitTextToSize(grp.tags.join(', '), cw - lw);
+          room(lines.length * LH);
+          sf(8, 'bold'); doc.text(label, ml, y);
+          sf(8, 'normal', 17,17,17);
+          lines.forEach(l => { doc.text(l, ml + lw, y); down(LH); });
+          down(0.5);
+        });
+        return doc;
+      };
+
+      // Always one page: if it runs over, shrink a little at a time until it fits.
+      let k = 1, doc = build(k);
+      while (doc.getNumberOfPages() > 1 && k > 0.72) { k -= 0.02; doc = build(k); }
 
       doc.save('lucius-campany-resume.pdf');
       btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download`;
