@@ -1,4 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="5" fill="#111111"/>
-  <text x="16" y="22" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#e8a820" text-anchor="middle">LC</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0.725" stop-color="#ff3ea5" stop-opacity=".85"/>
+      <stop offset="0.874" stop-color="#ff5fb4" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#ff8fcd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ball" cx="40%" cy="34%" r="72%">
+      <stop offset="0" stop-color="#ffb9de"/>
+      <stop offset=".28" stop-color="#ff86c7"/>
+      <stop offset=".6" stop-color="#ff55ac"/>
+      <stop offset=".86" stop-color="#ee2a91"/>
+      <stop offset="1" stop-color="#c9127a"/>
+    </radialGradient>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff0f8" stop-opacity=".9"/>
+      <stop offset=".45" stop-color="#ffc6e4" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ff8ccb" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="star" cx="50%" cy="52%" r="56%">
+      <stop offset="0" stop-color="#fff5fb"/>
+      <stop offset=".5" stop-color="#ffd9ed"/>
+      <stop offset="1" stop-color="#ffaad6"/>
+    </radialGradient>
+    <radialGradient id="edge" cx="50%" cy="50%" r="50%">
+      <stop offset=".72" stop-color="#b40c6c" stop-opacity="0"/>
+      <stop offset="1" stop-color="#b40c6c" stop-opacity=".42"/>
+    </radialGradient>
+    <radialGradient id="under" cx="50%" cy="100%" r="62%">
+      <stop offset="0" stop-color="#ffd3ea" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#ffd3ea" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gloss" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="48" cy="48" r="48" fill="url(#halo)"/>
+  <circle cx="48" cy="48" r="37" fill="url(#ball)"/>
+  <circle cx="48" cy="48" r="37" fill="url(#edge)"/>
+  <circle cx="48" cy="48" r="37" fill="url(#under)"/>
+  <circle cx="48" cy="48.8775" r="24.375" fill="url(#core)"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.04" stroke-width="13.65" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.04" stroke-width="11.70" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.04" stroke-width="9.75" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.05" stroke-width="7.99" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.06" stroke-width="6.24" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.06" stroke-width="4.68" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="none" stroke="#ffe3f2" stroke-opacity="0.07" stroke-width="3.12" stroke-linejoin="round"/>
+  <path d="M48.00 29.38 L53.27 41.62 L66.55 42.85 L56.53 51.65 L59.46 64.65 L48.00 57.85 L36.54 64.65 L39.47 51.65 L29.45 42.85 L42.73 41.62 Z" fill="url(#star)" stroke="url(#star)" stroke-width="2.145" stroke-linejoin="round"/>
+  <ellipse cx="31.72" cy="26.54" rx="12.58" ry="5.55" transform="rotate(-34 31.72 26.54)" fill="url(#gloss)" opacity=".8"/>
 </svg>
