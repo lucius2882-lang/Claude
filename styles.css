@@ -2435,7 +2435,7 @@
     }
 
     /* ---------- tighter spacing everywhere ---------- */
-    #resume { min-height: 0; padding: 54px 0 12px; }
+    #resume { min-height: 0; padding: 54px 0 34px; }
     .rv-header { padding-bottom: 22px; margin-bottom: 30px; }
     .rv-body { gap: 44px; }
     .rv-section { margin-bottom: 24px; }
@@ -2455,7 +2455,7 @@
     .rv-main > .rv-section:last-child, .rv-sidebar > .rv-section:last-child { margin-bottom: 0; }
     .rv-section > .rv-job:last-child { margin-bottom: 4px; }
     .rv-skill-group:last-child { margin-bottom: 4px; }
-    #contact { padding: 22px 20px 34px; }
+    #contact { padding: 42px 20px 36px; }
     .cf-heading { margin-bottom: 8px; }
     .cf-sub { margin-bottom: 18px; }
     .cf-form { gap: 4px; }
@@ -2464,7 +2464,7 @@
     .cf-submit { margin-top: 16px; }
     #site-footer { padding: 18px 20px 22px; }
     @media (max-width: 700px) {
-      #resume { padding: 34px 0 8px; }
+      #resume { padding: 34px 0 30px; }
       .rv-header { margin-bottom: 24px; }
       .rv-body { gap: 0; }
       #site-footer { padding-bottom: 82px; }
