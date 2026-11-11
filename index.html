@@ -432,10 +432,15 @@
     title="Lucy"
     style="position:fixed; border:0; background:transparent; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.2s;"
   ></iframe>
+  <div id="lucy-grip" role="separator" aria-orientation="horizontal" aria-label="Resize Lucy" tabindex="0"
+    style="display:none; position:fixed; z-index:10000; width:96px; height:24px; margin-left:-48px; cursor:ns-resize; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;">
+    <span style="position:absolute; left:30px; right:30px; top:7px; height:4px; border-radius:2px; background:rgba(255,255,255,0.45);"></span>
+  </div>
   <script>
   (function () {
     var frame  = document.getElementById('lucy-frame');
     var dot    = document.getElementById('lucy-launcher');
+    var grip   = document.getElementById('lucy-grip');
     var origin = 'https://claudelucy.netlify.app';
     var ready  = false;
 
@@ -449,6 +454,9 @@
     var tallest = 0;       // tallest keyboard-free viewport seen at this width
     var lastWidth = 0;
     var rafId = 0;
+    var MIN_H = 140;       // smallest the user can drag her to
+    var userH = 0;         // height the user dragged to (0 = default size)
+    try { userH = parseInt(sessionStorage.getItem('lucy:h'), 10) || 0; } catch (e) {}
 
     // The part of the page the user can actually see, in the same coordinates
     // position:fixed uses (the layout viewport). When the on-screen keyboard is
@@ -480,14 +488,14 @@
       var gap, baseH;
       if (mobile) {
         gap = MOBILE_GAP;
-        baseH = Math.round(tallest * 0.33);
+        baseH = userH || Math.round(tallest * 0.33);
         frame.style.left = '0'; frame.style.right = '0';
         frame.style.width = '100%';
         frame.style.maxWidth = '';
         frame.style.borderRadius = '12px 12px 0 0';
       } else {
         gap = DESKTOP_GAP;
-        baseH = Math.min(520, Math.round(tallest * 0.5));
+        baseH = userH || Math.min(520, Math.round(tallest * 0.5));
         frame.style.left = 'auto'; frame.style.right = '20px';
         frame.style.width = '380px';
         frame.style.maxWidth = 'calc(100vw - 40px)';
@@ -507,6 +515,12 @@
       frame.style.maxHeight = '';
       frame.style.height = h + 'px';
       frame.style.top = top + 'px';
+
+      // Grab bar sits centred on the panel's top edge
+      var r = frame.getBoundingClientRect();
+      grip.style.top = r.top + 'px';
+      grip.style.left = (r.left + r.width / 2) + 'px';
+      grip.style.display = 'block';
     }
 
     function schedule() {
@@ -540,10 +554,63 @@
 
     function close() {
       isOpen = false;
+      grip.style.display = 'none';
       frame.style.opacity = '0';
       frame.style.pointerEvents = 'none';
       dot.style.display = 'block';
     }
+
+    // ---- Drag the grab bar to make Lucy taller / shorter ----
+    // Anchored at the bottom (on the keyboard, or the screen edge), so dragging
+    // up grows her. Capped so she never covers the whole visible area.
+    function maxH() {
+      var a = visibleArea();
+      var gap = window.innerWidth < 768 ? MOBILE_GAP : 12;
+      return Math.max(MIN_H, a.height - gap - TOP_ROOM);
+    }
+    function setUserH(h) {
+      userH = Math.round(Math.max(MIN_H, Math.min(maxH(), h)));
+      try { sessionStorage.setItem('lucy:h', String(userH)); } catch (e) {}
+      layout();
+    }
+
+    var dragY = null, dragH = 0;
+    grip.addEventListener('pointerdown', function (e) {
+      if (!isOpen) return;
+      dragY = e.clientY;
+      dragH = frame.getBoundingClientRect().height;
+      frame.style.pointerEvents = 'none';   // keep moves from vanishing into the iframe
+      try { grip.setPointerCapture(e.pointerId); } catch (err) {}
+      e.preventDefault();
+    });
+    grip.addEventListener('pointermove', function (e) {
+      if (dragY === null) return;
+      setUserH(dragH + (dragY - e.clientY));
+      e.preventDefault();
+    });
+    function endDrag() {
+      if (dragY === null) return;
+      dragY = null;
+      if (isOpen) frame.style.pointerEvents = 'auto';
+    }
+    grip.addEventListener('pointerup', endDrag);
+    grip.addEventListener('pointercancel', endDrag);
+    grip.addEventListener('lostpointercapture', endDrag);
+    // Don't let touching the grab bar steal focus from Lucy's text box —
+    // on a phone that would close the keyboard mid-drag.
+    grip.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
+    grip.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    grip.addEventListener('keydown', function (e) {
+      var cur = frame.getBoundingClientRect().height;
+      if (e.key === 'ArrowUp')   { setUserH(cur + 40); e.preventDefault(); }
+      if (e.key === 'ArrowDown') { setUserH(cur - 40); e.preventDefault(); }
+    });
+    // Double-tap / double-click the bar to go back to the default size
+    grip.addEventListener('dblclick', function () {
+      userH = 0;
+      try { sessionStorage.removeItem('lucy:h'); } catch (e) {}
+      layout();
+    });
 
     dot.addEventListener('click', open);
 
