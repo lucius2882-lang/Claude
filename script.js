@@ -37,9 +37,9 @@
       const jobs = [
         { title:"Waitress", dates:"Mar 2025 – Present", company:"Trapizzino  ·  New York, NY",
           bullets:[
-            "Run up to 70 covers of a 150-cover dinner service, covering bussing, food running, table-side needs, and ordering",
-            "Bartend a fully seated room of about 50 covers, batching cocktails and restocking at close",
-            "Designated closer: setup and breakdown, cash outs, register duties, and restocking"
+            "Ran up to 70 covers of a 150-cover dinner service, covering bussing, food running, table-side needs, and ordering",
+            "Bartended a fully seated room of about 50 covers, batching cocktails and restocking at close",
+            "Served as designated closer: setup and breakdown, cash outs, register duties, and restocking"
           ]},
         { title:"Maître D' & Events Producer", dates:"Jun 2023 – Oct 2024", company:"Happier New York / Scott Avenue Association  ·  Brooklyn, NY",
           bullets:[
@@ -135,18 +135,32 @@
         sf(8, 'normal', 100,100,100);
         doc.text('B.A. Political Science & Women’s, Gender & Sexuality Studies', ml, y); down(7.5);
 
-        // Skills, one line per group
+        // Skills: the group name on the left, its tags in rows beside it.
+        // A tag is never broken across lines.
         secHead('SKILLS');
+        const labelW = 47, padX = 2.1 * k, gapX = 1.5 * k, rowH = 5.5;
         groups.forEach(grp => {
-          const label = grp.label + ':';
-          sf(8, 'bold'); const lw = doc.getTextWidth(label) + 1.6;
-          sf(8, 'normal', 17,17,17);
-          const lines = doc.splitTextToSize(grp.tags.join(', '), cw - lw);
-          room(lines.length * LH);
-          sf(8, 'bold'); doc.text(label, ml, y);
-          sf(8, 'normal', 17,17,17);
-          lines.forEach(l => { doc.text(l, ml + lw, y); down(LH); });
-          down(0.5);
+          sf(6.6, 'normal', 40,40,40);
+          const rows = [[]]; let x = 0;
+          grp.tags.forEach(tag => {
+            const w = doc.getTextWidth(tag) + padX * 2;
+            if (x + w > cw - labelW && rows[rows.length - 1].length) { rows.push([]); x = 0; }
+            rows[rows.length - 1].push({ tag, w, x });
+            x += w + gapX;
+          });
+          room(rows.length * rowH + 1);
+          sf(6.2, 'bold', 110,110,110);
+          doc.text(grp.label.toUpperCase(), ml, y, { charSpace: 0.18 * k });
+          rows.forEach(row => {
+            row.forEach(c => {
+              doc.setFillColor(238,238,238);
+              doc.roundedRect(ml + labelW + c.x, y - 3.25 * k, c.w, 4.5 * k, 0.9 * k, 0.9 * k, 'F');
+              sf(6.6, 'normal', 40,40,40);
+              doc.text(c.tag, ml + labelW + c.x + padX, y);
+            });
+            down(rowH);
+          });
+          down(0.8);
         });
         return doc;
       };
@@ -701,7 +715,37 @@
     document.getElementById('gm-inbox-btn').addEventListener('click', showInbox);
     document.getElementById('gm-nav-inbox').addEventListener('click', showInbox);
 
-    // --- Compose: a real message to Lucius, sent through the site's contact form ---
+    // --- Sending a message to Lucius (Compose window and the contact form) ---
+    // Both post to the site's "contact" form on Netlify. If Netlify does not take
+    // it, the visitor is handed to their own mail app with everything filled in,
+    // so nobody is ever left on an error page.
+    const LUCIUS_EMAIL = 'lucius@luciuscampany.com';
+    let formsDown = false;   // set once a send fails; cleared by reloading the page
+
+    function mailtoLink(v) {
+      return 'mailto:' + LUCIUS_EMAIL +
+        '?subject=' + encodeURIComponent(v.subject || 'Hello from luciuscampany.com') +
+        '&body=' + encodeURIComponent(v.message + (v.name ? '\n\n' + v.name : ''));
+    }
+    async function postToLucius(v) {
+      const body = (v.subject ? 'Subject: ' + v.subject + '\n\n' : '') + v.message +
+        '\n\n(Sent from ' + v.from + ' on luciuscampany.com)';
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ 'form-name': 'contact', name: v.name || v.email, email: v.email, message: body }).toString()
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return true;
+      } catch (err) {
+        // remember until the page is reloaded, so the next Send goes straight to the mail app
+        formsDown = true;
+        return false;
+      }
+    }
+
+    // --- Compose window in the New Blue inbox ---
     const gmCw = document.getElementById('gm-cw');
     const gmToast = document.getElementById('gm-toast');
     const cw = {
@@ -710,18 +754,58 @@
       subject: document.getElementById('gm-cw-subject'),
       message: document.getElementById('gm-cw-message'),
       send: document.getElementById('gm-cw-send'),
+      mail: document.getElementById('gm-cw-mail'),
       status: document.getElementById('gm-cw-status')
     };
+    const cwTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     let gmToastTimer = null;
+
+    function cwValues() {
+      return { name: cw.name.value.trim(), email: cw.email.value.trim(), subject: cw.subject.value.trim(),
+        message: cw.message.value.trim(), from: 'the Compose window in the New Blue inbox' };
+    }
+    function cwSay(text, calm) {
+      cw.status.textContent = text;
+      cw.status.classList.toggle('calm', !!calm);
+    }
+    function cwMailMode(on) {
+      cw.send.hidden = on;
+      cw.mail.hidden = !on;
+      if (on) cw.mail.href = mailtoLink(cwValues());
+    }
+    // On phones the window is a full sheet. Keep it exactly on the part of the
+    // screen that is visible, so it sits still when the keyboard comes and goes.
+    function fitCompose() {
+      if (!gmCw.classList.contains('sheet') || gmCw.hidden) return;
+      const vv = window.visualViewport;
+      if (!vv) return;
+      gmCw.style.top = Math.max(0, vv.offsetTop) + 'px';
+      gmCw.style.height = vv.height + 'px';
+    }
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', fitCompose);
+      window.visualViewport.addEventListener('scroll', fitCompose);
+    }
 
     function openCompose() {
       gmCw.hidden = false;
+      gmCw.classList.toggle('sheet', window.matchMedia('(max-width: 700px)').matches);
+      document.body.classList.add('gm-composing');     // hides the Lucy button while writing
+      fitCompose();
       requestAnimationFrame(() => gmCw.classList.add('open'));
-      (cw.name.value ? (cw.email.value ? cw.message : cw.email) : cw.name).focus({ preventScroll: true });
+      // Desktop gets a cursor straight away. On a touch screen the visitor taps the
+      // field they want, so the keyboard does not jump up while the sheet is opening.
+      if (!cwTouch) (cw.name.value ? (cw.email.value ? cw.message : cw.email) : cw.name).focus({ preventScroll: true });
     }
     function closeCompose() {
+      if (gmCw.contains(document.activeElement)) document.activeElement.blur();
       gmCw.classList.remove('open');
-      setTimeout(() => { if (!gmCw.classList.contains('open')) gmCw.hidden = true; }, 300);
+      document.body.classList.remove('gm-composing');
+      setTimeout(() => {
+        if (gmCw.classList.contains('open')) return;
+        gmCw.hidden = true;
+        gmCw.style.top = gmCw.style.height = '';
+      }, 300);
     }
     function showGmToast(text) {
       gmToast.textContent = text;
@@ -732,66 +816,85 @@
 
     document.querySelectorAll('.gm-compose, #gm-fab').forEach(b => b.addEventListener('click', openCompose));
     document.getElementById('gm-cw-close').addEventListener('click', closeCompose);
-    // a warning clears as soon as they start fixing it
-    gmCw.addEventListener('input', () => { cw.status.textContent = ''; });
-    // Escape closes the draft window, not the whole inbox
+    gmCw.addEventListener('input', () => {
+      if (!cw.mail.hidden) cw.mail.href = mailtoLink(cwValues());   // keep the mail link current
+      else cwSay('');
+    });
     gmCw.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { e.stopPropagation(); closeCompose(); }
+      // Escape closes the draft window, not the whole inbox
+      if (e.key === 'Escape') { e.stopPropagation(); closeCompose(); return; }
+      // Return moves down the form instead of sending early; the keyboard stays up
+      if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+        e.preventDefault();
+        const order = [cw.name, cw.email, cw.subject, cw.message];
+        const next = order[order.indexOf(e.target) + 1];
+        if (next) next.focus({ preventScroll: true });
+      }
     });
 
     gmCw.addEventListener('submit', async e => {
       e.preventDefault();
-      const name = cw.name.value.trim();
-      const email = cw.email.value.trim();
-      const subject = cw.subject.value.trim();
-      const message = cw.message.value.trim();
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
-        cw.status.textContent = 'Add your email so Lucius can write back.';
-        cw.email.focus();
-        return;
-      }
-      if (!message) {
-        cw.status.textContent = 'Write a message first.';
-        cw.message.focus();
-        return;
-      }
-      cw.status.textContent = '';
+      const v = cwValues();
+      if (!/^\S+@\S+\.\S+$/.test(v.email)) { cwSay('Add your email so Lucius can write back.'); cw.email.focus({ preventScroll: true }); return; }
+      if (!v.message) { cwSay('Write a message first.'); cw.message.focus({ preventScroll: true }); return; }
+      if (formsDown) { window.location.href = mailtoLink(v); return; }   // still inside the tap, so the mail app opens cleanly
+
+      cwSay('');
       cw.send.disabled = true;
       cw.send.textContent = 'Sending…';
-
-      // Goes to the same place as the contact form at the bottom of the page.
-      const body = (subject ? 'Subject: ' + subject + '\n\n' : '') + message +
-        '\n\n(Sent from the Compose window in the New Blue inbox on luciuscampany.com)';
-      let sent = false;
-      try {
-        const res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ 'form-name': 'contact', name: name || email, email, message: body }).toString()
-        });
-        sent = res.ok;
-      } catch (err) {
-        sent = false;
-      }
+      const sent = await postToLucius(v);
       cw.send.disabled = false;
       cw.send.textContent = 'Send';
 
       if (sent) {
         gmCw.reset();
+        cwMailMode(false);
         closeCompose();
         showGmToast('Message sent to Lucius.');
       } else {
-        // The form service did not take it, so offer the visitor's own mail app instead.
-        const mailto = 'mailto:lucius@luciuscampany.com?subject=' + encodeURIComponent(subject || 'Hello from your site') +
-          '&body=' + encodeURIComponent(message + (name ? '\n\n' + name : ''));
-        cw.status.textContent = 'That did not send from here. ';
-        const link = document.createElement('a');
-        link.href = mailto;
-        link.textContent = 'Open it in your mail app';
-        cw.status.appendChild(link);
-        cw.status.appendChild(document.createTextNode(' instead.'));
+        cwMailMode(true);
+        cwSay('Almost there. Tap to send it from your mail app.', true);
       }
     });
+
+    // --- Contact form at the bottom of the page ---
+    const cf = document.querySelector('.cf-form');
+    if (cf) {
+      const cfBtn = cf.querySelector('.cf-submit');
+      const cfMail = document.createElement('a');
+      cfMail.className = 'cf-submit cf-mail';
+      cfMail.textContent = 'Send from your mail app';
+      cfMail.hidden = true;
+      const cfNote = document.createElement('p');
+      cfNote.className = 'cf-note';
+      cfNote.setAttribute('role', 'status');
+      cf.appendChild(cfMail);
+      cf.appendChild(cfNote);
+      const cfValues = () => ({ name: cf.elements.name.value.trim(), email: cf.elements.email.value.trim(), subject: '',
+        message: cf.elements.message.value.trim(), from: 'the contact form' });
+
+      cf.addEventListener('input', () => { if (!cfMail.hidden) cfMail.href = mailtoLink(cfValues()); });
+      cf.addEventListener('submit', async e => {
+        e.preventDefault();                       // never leave the page for an error screen
+        const v = cfValues();
+        if (formsDown) { window.location.href = mailtoLink(v); return; }
+        cfBtn.disabled = true;
+        cfBtn.textContent = 'Sending…';
+        cfNote.textContent = '';
+        const sent = await postToLucius(v);
+        cfBtn.disabled = false;
+        cfBtn.textContent = 'Send Message';
+        if (sent) {
+          cf.reset();
+          cfNote.textContent = 'Sent. Thank you. Lucius will write back.';
+        } else {
+          cfBtn.hidden = true;
+          cfMail.hidden = false;
+          cfMail.href = mailtoLink(v);
+          cfNote.textContent = 'Almost there. Tap to send it from your mail app.';
+        }
+      });
+    }
 
     document.getElementById('gm-back-btn').addEventListener('click', () => history.back());
 

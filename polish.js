@@ -23,6 +23,34 @@
     if (!queued) { queued = true; requestAnimationFrame(progress); }
   }, { passive: true });
 
+  // ---- keep the page still while Lucy opens ----
+  // Lucy's chat opens after the splash and from her button. On iPhone and iPad
+  // that can make the browser jump the page. Hold the page where it was until
+  // things settle, unless the visitor starts scrolling themselves.
+  function holdScroll(y, ms) {
+    var until = Date.now() + ms, cancelled = false;
+    function cancel() { cancelled = true; }
+    window.addEventListener('touchstart', cancel, { passive: true, once: true });
+    window.addEventListener('wheel', cancel, { passive: true, once: true });
+    (function tick() {
+      if (cancelled || Date.now() > until) return;
+      if (Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y);
+      requestAnimationFrame(tick);
+    })();
+  }
+  var launcher = document.getElementById('lucy-launcher');
+  if (launcher) launcher.addEventListener('click', function () { holdScroll(window.scrollY, 1200); }, true);
+  if (splashShowing) {
+    // the page starts at the very top once the splash is gone
+    new MutationObserver(function (changes, watcher) {
+      if (splash.classList.contains('fade-out') || splash.style.display === 'none') {
+        watcher.disconnect();
+        window.scrollTo(0, 0);
+        holdScroll(0, 1500);
+      }
+    }).observe(splash, { attributes: true, attributeFilter: ['class', 'style'] });
+  }
+
   if (reduce) return;
 
   // ---- splash stats count up to their values ----

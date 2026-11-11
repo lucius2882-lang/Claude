@@ -1914,7 +1914,6 @@
       --ease: cubic-bezier(.22, 1, .36, 1);
     }
 
-    html { scroll-behavior: smooth; }
     body {
       background: var(--ivory);
       -webkit-font-smoothing: antialiased;
@@ -2251,7 +2250,6 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
       .splash-name, .splash-rule { animation-duration: .01s; animation-delay: 0s; }
       .splash-enter-btn::after { animation: none; }
     }
@@ -2400,7 +2398,7 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
         cursor: pointer;
       }
-      .gm-cw { inset: 0; width: 100%; height: 100%; border-radius: 0; }
+      .gm-cw { position: fixed; inset: auto; left: 0; right: 0; top: 0; width: 100%; height: 100%; border-radius: 0; transform: none; overscroll-behavior: contain; }
       /* Send goes to the top on phones, where the keyboard or the Lucy chat can't cover it */
       .gm-cw-foot { order: 1; flex-direction: row-reverse; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid #eceff1; }
       .gm-cw-row { order: 2; }
@@ -2434,4 +2432,74 @@
       .rv-headline { font-size: .7rem; letter-spacing: .2em; }
       #site-footer { flex-direction: column; align-items: center; }
       #site-footer .sf-dot { display: none; }
+    }
+
+    /* ---------- tighter spacing everywhere ---------- */
+    #resume { min-height: 0; padding: 54px 0 34px; }
+    .rv-header { padding-bottom: 22px; margin-bottom: 30px; }
+    .rv-body { gap: 44px; }
+    .rv-section { margin-bottom: 24px; }
+    .rv-section-title { margin-bottom: 14px; padding-bottom: 7px; }
+    .rv-job { margin-bottom: 20px; }
+    .rv-job-company { margin-bottom: 7px; }
+    .rv-job-bullets li { line-height: 1.55; margin-bottom: 2px; }
+    .rv-skill-group { margin-bottom: 15px; }
+    .rv-skill-label { margin-bottom: 7px; }
+    /* every tile is the same size; they just sit closer together, with less
+       empty space above the first one and below the last one */
+    #grid { gap: 6px; padding: 6px; }
+    .tile { height: 260px; min-height: 0; padding: 0 18px; }
+    .tile-inner { gap: .8rem; }
+    .tile-logo, .tile-uc .tile-logo { max-height: 104px; max-width: 200px; }
+    .tile-label { padding: .1rem 1rem; }
+    .rv-main > .rv-section:last-child, .rv-sidebar > .rv-section:last-child { margin-bottom: 0; }
+    .rv-section > .rv-job:last-child { margin-bottom: 4px; }
+    .rv-skill-group:last-child { margin-bottom: 4px; }
+    #contact { padding: 42px 20px 36px; }
+    .cf-heading { margin-bottom: 8px; }
+    .cf-sub { margin-bottom: 18px; }
+    .cf-form { gap: 4px; }
+    .cf-input { padding: 12px 2px; }
+    .cf-textarea { min-height: 84px; }
+    .cf-submit { margin-top: 16px; }
+    #site-footer { padding: 18px 20px 22px; }
+    @media (max-width: 700px) {
+      #resume { padding: 34px 0 30px; }
+      .rv-header { margin-bottom: 24px; }
+      .rv-body { gap: 0; }
+      #site-footer { padding-bottom: 82px; }
+    }
+    /* phones up to the largest: name and headline take the full width, Download sits underneath */
+    @media (max-width: 480px) {
+      .rv-header-row { flex-wrap: wrap; gap: 12px; }
+      .rv-download { margin-top: 0; }
+    }
+
+    /* ---------- the splash never drags the page behind it ---------- */
+    #splash { overscroll-behavior: contain; }
+
+    /* ---------- contact form and Compose: sending states ---------- */
+    .cf-note { min-height: 1.3em; margin-top: 10px; font-size: .82rem; color: #6d6658; }
+    a.cf-submit { display: inline-block; text-decoration: none; text-align: center; }
+    .cf-submit[hidden], .gm-cw-send[hidden] { display: none; }
+    a.gm-cw-send { display: inline-block; text-decoration: none; }
+    .gm-cw-status.calm { color: #444746; }
+    .gm-cw { overscroll-behavior: contain; }
+    .gm-cw-body { overflow-y: auto; }
+    /* while someone is writing, Lucy's button and panel stay out of the way */
+    body.gm-composing #lucy-launcher,
+    body.gm-composing #lucy-frame,
+    body.gm-composing #lucy-grip { display: none !important; }
+
+    /* ---------- Happier reservation book: dependable finger scrolling on phones ---------- */
+    @media (max-width: 700px) {
+      .bk-body {
+        display: block;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+        padding-bottom: 96px;        /* the last rows can scroll clear of the Lucy button */
+      }
+      .bk-resv-panel { flex: none; overflow: visible; }
     }
