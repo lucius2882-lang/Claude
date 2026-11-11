@@ -315,6 +315,7 @@
     }
     view.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('sv-open');          // Lucy steps aside while the schedule maker is open
     requestAnimationFrame(function () { view.classList.add('visible'); });
     // A step in the browser's history, so the back button or a back swipe closes it.
     history.pushState({ page: 'scheduler' }, '', window.location.pathname);
@@ -328,6 +329,7 @@
     var v = view;
     v.classList.remove('visible');
     document.body.style.overflow = '';
+    document.body.classList.remove('sv-open');
     setTimeout(function () { if (!v.classList.contains('visible')) v.style.display = 'none'; }, 300);
     tile.focus({ preventScroll: true });
   }
