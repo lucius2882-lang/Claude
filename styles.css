@@ -2676,3 +2676,171 @@
     /* the inbox and an open email only ever move up and down, so a finger never has to choose a direction */
     #gm-inbox, #gm-email-view { overflow-x: hidden; touch-action: pan-y; }
     .gm-ev-body { overflow-wrap: anywhere; }
+
+    /* ═══════════════════════════════════════════
+       TRAPIZZINO — caught: the wine girl speaks, then shows the schedule maker
+       ═══════════════════════════════════════════ */
+    #trap-takeover { transition: background-color .5s ease; }
+    #trap-takeover.caught { background: rgba(11, 11, 11, .9); }
+    #trap-takeover.caught .trap-bug { animation: trap-fade-out .4s ease both; }
+    #trap-takeover.caught .trap-sign { animation: trap-fade-out .4s ease both !important; }
+    /* once she has flown to her spot she is part of the layout */
+    .trap-escape.landed { position: relative; left: auto; top: auto; display: block; margin: 0 auto; cursor: default; }
+
+    .trap-reveal {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 18px 28px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    /* centred when there is room, scrollable from the top when there is not */
+    .trap-spot { flex: none; margin-top: auto; }
+    .trap-bubble {
+      position: relative;
+      flex: none;
+      width: min(100%, 500px);
+      margin: 18px 0 auto;
+      padding: 26px 26px 22px;
+      border-radius: 22px;
+      background: var(--ivory, #f5f2ec);
+      color: var(--ink, #0b0b0b);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
+      opacity: 0;
+      transform: translateY(14px) scale(.97);
+      transition: opacity .4s ease, transform .5s cubic-bezier(.2, .9, .25, 1);
+    }
+    .trap-bubble::before {            /* the tail, pointing up at her */
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      background: inherit;
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .trap-reveal.speaking .trap-bubble { opacity: 1; transform: none; }
+    /* her three lines arrive one after another, then the buttons */
+    .trap-line,
+    .trap-actions {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .5s ease, transform .5s ease;
+      transition-delay: calc(.2s + var(--i) * .5s);
+    }
+    .trap-reveal.speaking .trap-line,
+    .trap-reveal.speaking .trap-actions { opacity: 1; transform: none; }
+    .trap-line {
+      margin: 0 0 12px;
+      font-family: var(--sans, sans-serif);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+    .trap-line:first-child { font-size: 1.14rem; font-weight: 600; letter-spacing: -.01em; }
+    .trap-motto {
+      margin: 18px 0 0;
+      font-family: var(--serif, Georgia, serif);
+      font-style: italic;
+      font-size: 1.42rem;
+      line-height: 1.25;
+      color: #d21f2c;
+    }
+    .trap-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .trap-go {
+      flex: 1 1 200px;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 100px;
+      background: #d21f2c;
+      color: #fff;
+      font-family: var(--sans, sans-serif);
+      font-size: .98rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 0 3px #ffcc03;        /* the yellow edge from the logo */
+      transition: background .15s, transform .15s ease;
+    }
+    .trap-go:hover { background: #b81a26; transform: translateY(-1px); }
+    .trap-done {
+      flex: 0 0 auto;
+      padding: 14px 22px;
+      border: 1px solid rgba(11, 11, 11, .22);
+      border-radius: 100px;
+      background: transparent;
+      color: inherit;
+      font-family: var(--sans, sans-serif);
+      font-size: .95rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .trap-done:hover { background: rgba(11, 11, 11, .06); }
+    .trap-go:focus-visible, .trap-done:focus-visible { outline: 3px solid #0b0b0b; outline-offset: 3px; }
+    /* small or short screens: the same speech, set a little tighter so it fits without scrolling */
+    @media (max-width: 380px), (max-height: 660px) {
+      .trap-reveal { padding: 12px 14px 18px; }
+      .trap-bubble { margin-top: 12px; padding: 20px 20px 18px; border-radius: 18px; }
+      .trap-line { margin-bottom: 8px; font-size: .94rem; line-height: 1.45; }
+      .trap-line:first-child { font-size: 1.04rem; }
+      .trap-motto { margin-top: 12px; font-size: 1.18rem; }
+      .trap-actions { margin-top: 16px; gap: 8px; }
+      .trap-go { flex-basis: 150px; padding: 12px 16px; font-size: .92rem; }
+      .trap-done { padding: 12px 16px; font-size: .9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .trap-bubble, .trap-line, .trap-actions { transition-duration: .01s; transition-delay: 0s; }
+    }
+
+    /* the schedule maker, opened inside the site */
+    #schedview {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      flex-direction: column;
+      background: #f7f2e9;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+    #schedview.visible { opacity: 1; }
+    .sv-bar {
+      flex: none;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 12px;
+      background: #0b0b0b;
+      color: #f5f2ec;
+    }
+    .sv-close {
+      flex: none;
+      padding: 9px 16px;
+      border: 1px solid rgba(245, 242, 236, .35);
+      border-radius: 100px;
+      background: transparent;
+      color: inherit;
+      font-family: var(--sans, sans-serif);
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      cursor: pointer;
+    }
+    .sv-close:hover { background: rgba(245, 242, 236, .12); }
+    .sv-title {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-family: var(--sans, sans-serif);
+      font-size: .76rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 236, .7);
+    }
+    .sv-frame { flex: 1; min-height: 0; width: 100%; border: 0; background: #f7f2e9; }

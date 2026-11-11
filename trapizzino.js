@@ -1,12 +1,13 @@
-// Trapizzino tile: no case study yet. Clicking it puts up an
-// UNDER CONSTRUCTION sign in the Trapizzino logo's lettering and colours,
-// with the role line underneath throbbing harder and harder like it's about
-// to blow. Then the little Trapizzino characters start
-// popping up everywhere: slowly at first, faster and faster, until they bury
-// the sign. The only way out is to catch the glowing wine girl running
-// around. She's almost impossible to catch at first; as the screen fills up
-// she slows down and burns brighter.
-// (Escape also closes it, for keyboard users.)
+// Trapizzino tile. Clicking it puts up an UNDER CONSTRUCTION sign in the
+// Trapizzino logo's lettering and colours, with the role line underneath
+// throbbing harder and harder like it's about to blow. Then the little
+// Trapizzino characters start popping up everywhere: slowly at first, faster
+// and faster, until they bury the sign. The only way on is to catch the
+// glowing wine girl running around. She's almost impossible to catch at first;
+// as the screen fills up she slows down and burns brighter.
+// Catch her and the crowd clears. She says her piece about the schedule maker
+// Lucius built, and a button opens it inside the site (the copy in /scheduler/).
+// (Escape closes everything, for keyboard users.)
 (function () {
   var tile = document.querySelector('.tile[data-role="trapizzino"]');
   if (!tile) return;
@@ -171,7 +172,7 @@
       '<span class="trap-sparkles"><span class="trap-sparkle s1">✦</span><span class="trap-sparkle s2">✦</span>' +
       '<span class="trap-sparkle s3">✧</span><span class="trap-sparkle s4">✦</span></span>';
     escapeBtn.querySelector('img').style.width = Math.round(screenScale() * 0.08) + 'px';
-    escapeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
+    escapeBtn.addEventListener('click', function (e) { e.stopPropagation(); caught(); });
     layer.appendChild(escapeBtn);
     escapeBtn.focus({ preventScroll: true });
 
@@ -235,6 +236,107 @@
   }
 
   function onKey(e) { if (e.key === 'Escape') close(); }
+
+  // ---- Caught. She has something to say, and something to show. ----
+  var SAYS = [
+    'Here\u2019s a lil something Lucius has done.',
+    'She\u2019s made this amazing scheduler that balances all employee shifts by employing ' +
+      'exhaustive calculations to best determine equity.',
+    'Equity must be obtained before we can have equality!'
+  ];
+
+  function caught() {
+    if (!layer || layer.classList.contains('caught')) return;
+    timers.forEach(clearTimeout);
+    timers = [];
+    cancelAnimationFrame(raf);
+    var btn = escapeBtn, l = layer;
+    escapee = null;                                   // she stops running
+    l.classList.add('caught');                        // the crowd and the sign fade, the page dims
+    l.setAttribute('aria-label', 'A schedule maker Lucius built');
+    btn.style.setProperty('--glow', '1');
+    btn.style.pointerEvents = 'none';
+    btn.tabIndex = -1;
+    btn.setAttribute('aria-hidden', 'true');
+
+    var reveal = document.createElement('div');
+    reveal.className = 'trap-reveal';
+    reveal.innerHTML =
+      '<div class="trap-spot"></div>' +
+      '<div class="trap-bubble">' +
+        SAYS.map(function (line, i) {
+          return '<p class="trap-line' + (i === 2 ? ' trap-motto' : '') + '" style="--i:' + i + '">' + line + '</p>';
+        }).join('') +
+        '<div class="trap-actions" style="--i:3">' +
+          '<button type="button" class="trap-go">See the scheduler</button>' +
+          '<button type="button" class="trap-done">Close</button>' +
+        '</div>' +
+      '</div>';
+    l.appendChild(reveal);
+    reveal.querySelector('.trap-go').addEventListener('click', function () { close(); openScheduler(); });
+    reveal.querySelector('.trap-done').addEventListener('click', close);
+
+    // She flies from where she was caught to her spot above the speech bubble,
+    // then settles into the layout so a turned phone keeps her in place.
+    // (Measured now, not from when she was released: her picture may not have loaded back then.)
+    var spot = reveal.querySelector('.trap-spot');
+    spot.style.width = btn.offsetWidth + 'px';
+    spot.style.height = btn.offsetHeight + 'px';
+    var to = spot.getBoundingClientRect();
+    btn.style.transition = reduceMotion ? 'none' : 'transform .65s cubic-bezier(.2,.9,.25,1)';
+    btn.style.transform = 'translate3d(' + to.left.toFixed(1) + 'px,' + to.top.toFixed(1) + 'px,0)';
+    later(function () {
+      l.querySelectorAll('.trap-bug, .trap-sign').forEach(function (n) { n.remove(); });
+      spot.appendChild(btn);
+      btn.classList.add('landed');
+      btn.style.transition = btn.style.transform = '';
+      reveal.classList.add('speaking');
+    }, reduceMotion ? 30 : 680);
+    later(function () { reveal.querySelector('.trap-go').focus({ preventScroll: true }); }, reduceMotion ? 80 : 900);
+  }
+
+  // ---- The schedule maker, opened inside the site like the other case studies ----
+  var view = null;
+
+  function openScheduler() {
+    if (!view) {
+      view = document.createElement('div');
+      view.id = 'schedview';
+      view.setAttribute('role', 'dialog');
+      view.setAttribute('aria-modal', 'true');
+      view.setAttribute('aria-label', 'The schedule maker Lucius built');
+      view.innerHTML =
+        '<div class="sv-bar">' +
+          '<button type="button" class="sv-close">\u2715 Close</button>' +
+          '<span class="sv-title">Trapizzino \u00b7 the schedule maker</span>' +
+        '</div>' +
+        '<iframe class="sv-frame" title="Schedule maker" src="/scheduler/"></iframe>';
+      document.body.appendChild(view);
+      view.querySelector('.sv-close').addEventListener('click', function () { history.back(); });
+    }
+    view.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () { view.classList.add('visible'); });
+    // A step in the browser's history, so the back button or a back swipe closes it.
+    history.pushState({ page: 'scheduler' }, '', window.location.pathname);
+    view.querySelector('.sv-close').focus({ preventScroll: true });
+  }
+
+  function schedulerOpen() { return !!view && view.classList.contains('visible'); }
+
+  function closeScheduler() {
+    if (!schedulerOpen()) return;
+    var v = view;
+    v.classList.remove('visible');
+    document.body.style.overflow = '';
+    setTimeout(function () { if (!v.classList.contains('visible')) v.style.display = 'none'; }, 300);
+    tile.focus({ preventScroll: true });
+  }
+
+  window.addEventListener('popstate', closeScheduler);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && schedulerOpen()) history.back();
+  });
 
   function open() {
     if (layer) return;
