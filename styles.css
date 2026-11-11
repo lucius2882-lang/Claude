@@ -1640,3 +1640,241 @@
       color: #fff;
     }
 
+
+    /* ═══════════════════════════════════════════
+       TRAPIZZINO — under construction takeover
+       ═══════════════════════════════════════════ */
+    /* keep the logo above the tile's white sheen so its colors stay true */
+    .tile-uc .tile-logo { position: relative; }
+
+    #trap-takeover {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      overflow: hidden;
+      background: transparent;
+      animation: trap-fade-in 0.3s ease both;
+    }
+    #trap-takeover.leaving { animation: trap-fade-out 0.45s ease both; }
+
+    .trap-sign {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(900px, calc(100vw - 32px));
+      translate: -50% -50%;
+      color: #f02a37;
+      text-align: center;
+      animation: trap-pop 0.5s 0.1s cubic-bezier(.3,1.6,.5,1) both;
+    }
+    .trap-word { position: relative; }
+    .trap-word svg { position: relative; display: block; width: 100%; height: auto; }
+
+    /* blur the page only in a soft outline around the writing */
+    .trap-haze {
+      position: absolute;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      pointer-events: none;
+    }
+    .trap-sub::before {
+      content: '';
+      position: absolute;
+      inset: -0.7em -1.1em;
+      z-index: -1;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+                          linear-gradient(to bottom, transparent, #000 32%, #000 68%, transparent);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+                  linear-gradient(to bottom, transparent, #000 32%, #000 68%, transparent);
+      mask-composite: intersect;
+      pointer-events: none;
+    }
+    .trap-sub {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+      will-change: transform;
+      text-shadow: 0 0 2px #fff, 0 0 3px #fff, 0 0 5px #fff, 0 0 8px #fff;
+      margin-top: clamp(0.8rem, 2.5vw, 1.6rem);
+      font-size: clamp(0.6rem, 2.5vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: clamp(0.06em, 0.6vw, 0.16em);
+      text-transform: uppercase;
+    }
+
+    .trap-bug {
+      position: absolute;
+      height: auto;
+      translate: -50% -50%;
+      transform: rotate(var(--r, 0deg));
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+      animation: trap-pop 0.35s cubic-bezier(.3,1.7,.5,1) both;
+    }
+    .trap-bug.wiggle {
+      animation: trap-pop 0.35s cubic-bezier(.3,1.7,.5,1) both,
+                 trap-wiggle var(--d, 0.8s) ease-in-out infinite;
+    }
+
+    .trap-escape {
+      --glow: 0;              /* 0 = racing around, 1 = slowed right down; set from trapizzino.js */
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 3;
+      padding: 12px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .trap-escape:focus-visible { outline: 3px dashed #f02a37; outline-offset: 2px; }
+
+    /* the glass itself: a steady flicker, plus extra heat that grows with --glow */
+    .trap-glassfx {
+      position: relative;
+      display: block;
+      filter: brightness(calc(1 + 0.45 * var(--glow)))
+              drop-shadow(0 0 calc(2px + 12px * var(--glow)) #fff)
+              drop-shadow(0 0 calc(3px + 22px * var(--glow)) #ff9500)
+              drop-shadow(0 0 calc(2px + 38px * var(--glow)) rgba(255, 60, 0, 0.9));
+    }
+    .trap-escape img {
+      display: block;
+      height: auto;
+      pointer-events: none;
+      animation: trap-blaze 0.35s ease-in-out infinite alternate,
+                 trap-wiggle 0.45s ease-in-out infinite;
+    }
+
+    /* fire behind her: an aura and flames that swell as --glow rises */
+    .trap-fire {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: calc(0.3 + 0.7 * var(--glow));
+      scale: calc(0.6 + 0.75 * var(--glow));
+      transform-origin: 50% 70%;
+      pointer-events: none;
+    }
+    .trap-aura {
+      position: absolute;
+      left: -45%;
+      right: -45%;
+      top: -30%;
+      bottom: -5%;
+      background: radial-gradient(ellipse 50% 60% at 50% 62%,
+        rgba(255, 255, 225, 0.95) 0%, rgba(255, 214, 64, 0.9) 22%,
+        rgba(255, 128, 0, 0.75) 45%, rgba(255, 48, 0, 0.45) 65%, rgba(255, 48, 0, 0) 80%);
+      filter: blur(8px);
+      transform-origin: 50% 90%;
+      animation: trap-flicker 0.5s linear infinite;
+    }
+    .trap-flame {
+      position: absolute;
+      bottom: 8%;
+      left: calc(50% + var(--fx, 0%));
+      width: 55%;
+      aspect-ratio: 1 / 1.6;
+      translate: -50% 0;
+      border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+      background: radial-gradient(ellipse at 50% 75%,
+        #fff6c0 0%, #ffcf3a 30%, #ff7a00 60%, rgba(255, 40, 0, 0) 75%);
+      filter: blur(3px);
+      opacity: 0;
+      animation: trap-rise 0.9s ease-out infinite;
+    }
+    /* embers flying off */
+    .trap-embers {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: calc(0.1 + 0.9 * var(--glow));
+      pointer-events: none;
+    }
+    .trap-ember {
+      position: absolute;
+      bottom: 15%;
+      left: var(--ex, 50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ffe680;
+      box-shadow: 0 0 6px 2px #ff9500, 0 0 12px 4px rgba(255, 60, 0, 0.6);
+      opacity: 0;
+      animation: trap-ember 1.3s linear infinite;
+    }
+    .trap-sparkles {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: calc(0.6 + 0.4 * var(--glow));
+      scale: calc(0.7 + 0.6 * var(--glow));
+      pointer-events: none;
+    }
+    .trap-sparkle {
+      position: absolute;
+      color: #fff;
+      font-size: 26px;
+      line-height: 1;
+      text-shadow: 0 0 6px #fff, 0 0 12px #ffd23f, 0 0 22px #ff7a00;
+      animation: trap-twinkle 0.8s ease-in-out infinite;
+    }
+    .trap-sparkle.s1 { top: -4px; left: 2px; }
+    .trap-sparkle.s2 { top: 10px; right: -6px; animation-delay: 0.3s; font-size: 20px; }
+    .trap-sparkle.s3 { bottom: 10px; left: -6px; animation-delay: 0.55s; font-size: 22px; }
+    .trap-sparkle.s4 { bottom: -2px; right: 6px; animation-delay: 0.15s; font-size: 28px; }
+
+    @keyframes trap-pop {
+      from { opacity: 0; scale: 0; }
+      to   { opacity: 1; scale: 1; }
+    }
+    @keyframes trap-wiggle {
+      0%, 100% { rotate: -8deg; }
+      50%      { rotate: 8deg; }
+    }
+    @keyframes trap-blaze {
+      0%   { filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 8px #ffd23f) brightness(1.06) saturate(1.15); }
+      50%  { filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 13px #ffe680) brightness(1.18) saturate(1.3); }
+      100% { filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px #ffc400) brightness(1.1) saturate(1.2); }
+    }
+    @keyframes trap-flicker {
+      0%   { transform: scale(1, 1);       opacity: 0.9; }
+      20%  { transform: scale(1.06, 1.12); opacity: 1; }
+      40%  { transform: scale(0.97, 1.03); opacity: 0.85; }
+      60%  { transform: scale(1.04, 1.18); opacity: 1; }
+      80%  { transform: scale(0.99, 1.06); opacity: 0.9; }
+      100% { transform: scale(1, 1);       opacity: 0.9; }
+    }
+    @keyframes trap-rise {
+      0%   { transform: translateY(0) scale(1);       opacity: 0; }
+      15%  { opacity: 0.95; }
+      100% { transform: translateY(-120%) scale(0.3); opacity: 0; }
+    }
+    @keyframes trap-ember {
+      0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translate(var(--dx, 0px), -160px) scale(0.2); opacity: 0; }
+    }
+    @keyframes trap-twinkle {
+      0%, 100% { opacity: 0; scale: 0.3; }
+      50%      { opacity: 1; scale: 1.2; }
+    }
+    @keyframes trap-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes trap-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .trap-bug, .trap-bug.wiggle, .trap-sign { animation: trap-fade-in 0.2s both; }
+      .trap-escape img { animation: trap-blaze 1.2s ease-in-out infinite alternate; }
+      .trap-aura { animation: none; }
+      .trap-flame, .trap-ember { display: none; }
+    }

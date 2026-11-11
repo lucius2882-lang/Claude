@@ -1274,7 +1274,7 @@
     }
 
     // Tile clicks push URL + open view
-    document.querySelectorAll('.tile').forEach(tile => {
+    document.querySelectorAll('.tile:not(.tile-uc)').forEach(tile => {
       tile.addEventListener('click', () => {
         const roleKey = tile.dataset.role;
         const slug = roleToSlug[roleKey] || roleKey;
