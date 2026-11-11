@@ -2625,8 +2625,54 @@
         min-width: 0;
       }
     }
-    /* on phones, the end of an email and of the inbox scroll clear of the Compose and Lucy buttons */
+    /* on phones, the end of the inbox list scrolls clear of the Compose and Lucy buttons */
     @media (max-width: 700px) {
-      #gm-email-view::after { content: ''; display: block; flex: none; height: 124px; }
       #gm-inbox::after { content: ''; display: block; flex: none; height: 140px; }
     }
+
+    /* ---------- reading an email: one obvious way back to the inbox ---------- */
+    /* At the top of an email the blue link is the way back. On phones, once that has scrolled
+       away, a blue button fades in at the bottom left and stays until the email is closed. */
+    .gm-backfab { display: none; }
+    #gmail.gm-reading .gm-backfab {
+      position: absolute;
+      left: 244px;                 /* just inside the reading pane, past the 220px sidebar */
+      bottom: 28px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 16px;
+      background: #0b57d0;
+      color: #fff;
+      font: inherit;
+      font-size: .92rem;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .28);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: background .15s, opacity .2s ease, transform .2s ease;
+    }
+    #gmail.gm-reading.gm-scrolled .gm-backfab { opacity: 1; transform: none; pointer-events: auto; }
+    #gmail.gm-reading .gm-backfab:hover { background: #0a4cb8; }
+    #gmail.gm-reading .gm-backfab:active { background: #0842a0; }
+    body.gm-composing .gm-backfab { display: none !important; }
+    /* wider screens have Inbox in the sidebar, so the button is for phones only */
+    @media (min-width: 701px) {
+      #gmail .gm-backfab { display: none !important; }
+    }
+    /* room under the last line so it never ends up behind the floating buttons */
+    #gm-email-view::after { content: ''; display: block; flex: none; height: 64px; }
+    @media (max-width: 700px) {
+      /* phones have no sidebar: the button sits in the corner, level with the Lucy button */
+      #gmail.gm-reading .gm-backfab { left: 16px; bottom: 20px; padding: 14px 20px; }
+      /* and Compose steps aside while an email is being read, as it does in a mail app, so the bottom is not crowded */
+      #gmail.gm-reading .gm-fab { display: none; }
+    }
+    /* the inbox and an open email only ever move up and down, so a finger never has to choose a direction */
+    #gm-inbox, #gm-email-view { overflow-x: hidden; touch-action: pan-y; }
+    .gm-ev-body { overflow-wrap: anywhere; }
