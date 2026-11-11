@@ -1,0 +1,1153 @@
+<!doctype html>
+<!-- Website copy of the schedule maker. Staff names here are samples; made by make_site_scheduler.py from the working copy. -->
+<html><head><meta charset=utf8><meta name="robots" content="noindex"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>La Prima Uguaglianza è L'equità</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one column with three tabs. Schedule opens first, Numbers shows the pay, Setup holds every setting. */
+:root{
+  --bg:#f7f2e9; --card:#fffdf8; --field:#ffffff; --ink:#1d1b17; --ink2:#675e50; --line:#e2d7c3;
+  --green:#1f4d3a; --greenInk:#1f4d3a; --onGreen:#ffffff; --greenSoft:#e3eee8; --beige:#efe6d4;
+  --warn:#fff1c7; --warnLine:#c9a235; --red:#a33a2a; --scrim:rgba(29,27,23,.4);
+  --am:#2e8a68; --s:#b8891a; --pm:#b5523f;
+  --display:Georgia,"Times New Roman",serif;
+  --body:-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171613; --card:#211f1b; --field:#2b2924; --ink:#f0e9dc; --ink2:#b6ac98; --line:#3d382f;
+    --green:#2f7a5c; --greenInk:#8fd1b0; --onGreen:#ffffff; --greenSoft:#1f3027; --beige:#2d2a24;
+    --warn:#3a3012; --warnLine:#c9a235; --red:#ef8f7b; --scrim:rgba(0,0,0,.6);
+    --am:#4fb08c; --s:#d6aa3d; --pm:#e08a75; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171613; --card:#211f1b; --field:#2b2924; --ink:#f0e9dc; --ink2:#b6ac98; --line:#3d382f;
+  --green:#2f7a5c; --greenInk:#8fd1b0; --onGreen:#ffffff; --greenSoft:#1f3027; --beige:#2d2a24;
+  --warn:#3a3012; --warnLine:#c9a235; --red:#ef8f7b; --scrim:rgba(0,0,0,.6);
+  --am:#4fb08c; --s:#d6aa3d; --pm:#e08a75; color-scheme:dark;
+}
+*{box-sizing:border-box}
+/* The charset and viewport lines at the top, the two rules below and the line-height on tables let a saved copy of this file stand on its own in a browser */
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.4}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.app{max-width:560px;margin:0 auto;padding-block:10px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-family:var(--display);font-weight:400;font-size:22px;margin:4px 0 0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:400;font-size:20px;margin:24px 0 4px;text-wrap:balance}
+h3{font-size:15px;margin:0 0 6px}
+p{margin:6px 0}
+.lead{color:var(--ink2);font-size:14px;margin:2px 0 6px}
+.muted{color:var(--ink2);font-size:13px}
+.sub{font-size:12px;color:var(--ink2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.r{text-align:right}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{opacity:.35;cursor:default}
+:focus-visible{outline:2px solid var(--greenInk);outline-offset:2px}
+.btn{background:var(--green);color:var(--onGreen);border:0;border-radius:999px;padding:10px 16px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:8px 0}
+.seg{display:flex;background:var(--beige);border-radius:999px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;border-radius:999px;padding:9px 8px;color:var(--ink2);font-weight:700;font-size:14px}
+.seg button.on{background:var(--green);color:var(--onGreen)}
+input[type=text],input[type=number],input[type=date],input[type=time],textarea{font:inherit;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:var(--field);color:var(--ink);min-width:0}
+input.name{font-weight:700;font-size:16px;flex:1}
+input.num{width:84px;text-align:right}
+label.check{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(--green)}
+.step{display:inline-flex;align-items:center;gap:6px}
+.step button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--field);font-size:18px;line-height:1;padding:0}
+.step b{min-width:24px;text-align:center}
+.chip{height:34px;border-radius:8px;border:1px solid var(--line);background:var(--beige);color:var(--ink2);font-weight:700;font-size:12px;padding:0}
+.chip.on{background:var(--green);border-color:var(--green);color:var(--onGreen)}
+.reqchip{height:30px;padding:0 9px;white-space:nowrap;font-size:12px}
+.pri{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)}
+.pri:first-child{border-top:0}
+.pri .pn{flex:1;font-weight:600}
+.pri button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--field)}
+.warn{background:var(--warn);border-left:4px solid var(--warnLine);border-radius:8px;padding:9px 11px;margin:8px 0;font-size:14px}
+.okbox{background:var(--greenSoft);border-radius:8px;padding:9px 11px;margin:8px 0;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px;line-height:inherit;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:8px 0;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--beige)}
+th.r,td.r{text-align:right;white-space:nowrap}
+tr.tot td{background:var(--beige);font-weight:800;border-bottom:0}
+.tight{font-size:13px}
+.tight th,.tight td{padding:7px 3px}
+.tight th:first-child,.tight td:first-child{padding-left:8px}
+.tight th:last-child,.tight td:last-child{padding-right:8px}
+.tight .sub{font-size:11px;font-weight:400}
+.tight th .sub{text-transform:none;letter-spacing:0}
+@media (max-width:380px){.tight{font-size:12px}.tight th{font-size:10px;letter-spacing:0}.tight .sub{font-size:10px}}
+@media (max-width:340px){.tight{font-size:11px}.tight th,.tight td{padding:6px 2px}.tight th:first-child,.tight td:first-child{padding-left:6px}.tight th:last-child,.tight td:last-child{padding-right:6px}}
+.wrapx{overflow-x:auto}
+.sched td{font-size:13px}
+.sched td:first-child{white-space:nowrap}
+.openTxt{color:var(--red);font-weight:700}
+.fz{color:var(--red);font-weight:800}
+.need{display:grid;grid-template-columns:44px repeat(3,minmax(0,1fr));gap:6px;align-items:stretch;margin-top:8px}
+.need .hd{font-size:11px;font-weight:800;text-align:center;color:var(--ink2);letter-spacing:.06em;align-self:end;text-transform:uppercase}
+.need .dl{font-weight:700;font-size:14px;align-self:center;line-height:1.2}
+.ncell{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--field);border:1px solid var(--line);border-top-width:4px;border-radius:12px;padding:6px 2px;min-width:0}
+.ncell.am{border-top-color:var(--am)}
+.ncell.s{border-top-color:var(--s)}
+.ncell.pm{border-top-color:var(--pm)}
+.ncell.x{border-top-color:var(--s)}
+.xtag{display:inline-block;margin-top:3px;padding:1px 6px;border-radius:999px;background:var(--warn);border:1px solid var(--warnLine);color:var(--ink);font-size:10px}
+.ncell .step{gap:4px}
+.ncell .step button{width:26px;height:26px;font-size:16px}
+.ncell .step b{min-width:20px}
+.ncell .tm{border:0;background:none;color:var(--ink2);font-size:11px;font-weight:700;padding:0}
+@media (max-width:350px){.need{grid-template-columns:36px repeat(3,minmax(0,1fr));gap:4px}.ncell .step{gap:2px}.ncell .step button{width:22px;height:22px}.ncell .step b{min-width:14px}}
+.avgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:6px}
+.avday{display:flex;flex-direction:column;gap:4px}
+.avday .dbtn{height:36px;border-radius:9px;border:1px solid var(--line);background:var(--beige);font-weight:700;font-size:12px;padding:0;color:var(--ink2)}
+.avday .dbtn.on{background:var(--greenSoft);border-color:var(--greenInk);color:var(--ink)}
+.person{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.person:first-child{border-top:0;padding-top:0;margin-top:0}
+.reqbox{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.pager{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;margin:6px 0 10px}
+.pgbtn{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--field);font-size:24px;line-height:1;padding:0 0 3px}
+.pgmid{flex:1;min-width:0;text-align:center}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:5px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dot.on{background:var(--ink);transform:scale(1.35)}
+.dot.bad{background:var(--red)}
+.opt{display:block;width:100%;text-align:left;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px}
+.opt.on{background:var(--greenSoft);border-color:var(--greenInk);box-shadow:inset 0 0 0 1px var(--greenInk)}
+.opt b{display:flex;justify-content:space-between;gap:8px}
+.opt .pick{font-size:12px;color:var(--greenInk)}
+.opt .muted{display:block;margin-top:2px}
+.eq{display:grid;gap:10px}
+.eqrow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.eqrow .big{font-family:var(--display);font-size:21px}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;background:var(--beige);color:var(--ink);white-space:nowrap}
+.tag.ok{background:var(--greenSoft);color:var(--greenInk)}
+.tag.bad{background:var(--warn);border:1px solid var(--warnLine)}
+.scrim{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:center;justify-content:center;z-index:50;padding:calc(14px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px))}
+.dialog{width:100%;max-width:330px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;max-height:90%;overflow:auto}
+.dialog textarea{width:100%;height:240px;font-size:13px;margin-top:8px}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calh{text-align:center;font-size:12px;font-weight:700;color:var(--ink2)}
+.cday{height:38px;border-radius:9px;border:1px solid var(--line);background:var(--beige);font-weight:700;padding:0}
+.cday.on{background:var(--green);border-color:var(--green);color:var(--onGreen)}
+.cday.anchor{outline:3px solid var(--ink2);outline-offset:1px}
+details summary{cursor:pointer;font-weight:700}
+details.card{padding:10px 12px}
+ol.rules{padding-left:20px;margin:6px 0}
+/* Printing, offered only in a saved copy opened in a browser: the schedule alone, black on white, one week to a page.
+   The rules apply only while the Print buttons are in use, so the browser's own Print still prints the page as it looks. */
+#printable{display:none}
+@media print{
+  :root:root.printing{--bg:#fff;--card:#fff;--field:#fff;--ink:#000;--ink2:#333;--line:#999;--beige:#eee;--red:#000;color-scheme:light}
+  .printing body::before,.printing .app{display:none}
+  .printing #printable{display:block}
+  #printable .wk{break-after:page}
+  #printable .wk:last-child{break-after:auto}
+  #printable h2{margin:0 0 10px;font-size:18pt}
+  #printable table{border-radius:0;margin:0}
+  #printable th,#printable td{border:1px solid var(--line);padding:6pt 7pt}
+  #printable th{font-size:9pt}
+  #printable td{font-size:12pt}
+  #printable .sub{font-size:9.5pt}
+  #printable tr{break-inside:avoid}
+}
+</style>
+
+<a id="pf-home" href="/" hidden style="display:block;padding:10px 16px;font:500 13px/1.2 -apple-system,system-ui,sans-serif;color:#1f4d3a;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.08)">← Lucius Campany's portfolio</a>
+<script>try{ if(window.top===window.self) document.getElementById("pf-home").hidden=false; }catch(e){}</script>
+<div class="app" id="app">
+  <!-- Shown only where scripts do not run, such as a file preview. The script below replaces it. -->
+  <h1>La Prima Uguaglianza è L'equità</h1>
+  <div class="card">
+    <p><b>This copy can't run here.</b></p>
+    <p class="muted">The schedule maker is a small app, and it builds the schedule with scripts. Whatever opened this file doesn't run them, which is normal for a file preview on a phone or in mail.</p>
+    <p class="muted">To use this copy offline, open the file in a browser on a computer: Safari, Chrome, Edge or Firefox. On a phone, open the page from its link instead.</p>
+  </div>
+</div>
+<div id="printable" aria-hidden="true"></div>
+
+<script>
+/* ============================================================
+   La Prima Uguaglianza è L'equità: schedule maker
+   Words used on screen:
+     Lunch / Swing / Dinner = the switches for what a person can work.
+     AM / Swing / PM        = the shifts on the schedule.
+     Minimum / Maximum      = how many shifts a person is scheduled for in a week.
+   Weeks run Saturday to Friday, matching payroll. Four weeks are planned at a time.
+   Fairness rule: everyone earns about the same per hour and per shift, so more shifts means more pay.
+   ============================================================ */
+
+const DAYS=["Sat","Sun","Mon","Tue","Wed","Thu","Fri"];
+const SLOTS=["am","s","pm"];
+const SIDX={am:0,s:1,pm:2};
+const SHIFT_NAME={am:"AM",s:"Swing",pm:"PM"};
+const AVAIL_NAME={am:"Lunch",s:"Swing",pm:"Dinner"};
+/* Standard clock times for each day, Saturday first. A clock-out earlier than the clock-in runs past midnight. */
+const DEFAULT_TIMES={
+  am:[["10:00","16:00"],["10:00","16:00"],["11:00","16:00"],["11:00","16:00"],["11:00","16:00"],["11:00","16:00"],["11:00","16:00"]],
+  s: [["12:30","23:30"],["13:30","22:30"],["14:00","21:00"],["14:00","21:00"],["14:00","21:00"],["14:00","21:00"],["14:00","21:00"]],
+  pm:[["16:00","01:00"],["16:00","22:30"],["16:00","22:00"],["16:00","23:00"],["16:00","23:00"],["16:00","23:00"],["16:00","01:00"]]
+};
+const DEFAULT_NEED=DAYS.map((_,d)=>({am:1, s:[1,1,0,0,0,0,0][d], pm:[3,1,2,2,2,2,3][d]}));
+const DEFAULT_RATES={lunch:22.21, dinner:30.91};
+const DEFAULT_PEOPLE=[
+  ["Sam","Full-time",5],
+  ["Dee","Full-time",4],
+  ["Theo","Full-time",4],
+  ["Marco","Full-time",4],
+  ["Rosa","Part-time",3],
+  ["Lucius Campany","Part-time",3]
+];
+const DEFAULT_PRIORITY=["Sam","Theo","Dee","Marco","Rosa","Lucius Campany"];
+const MIN_RATE=17, OT_CAP=40, LUNCH_END=16, MAX_SHIFT=16;
+const STORE_WEEKS="schedule-maker-weeks", STORE_SETUP="schedule-maker-setup-v2";
+const TABS=[["schedule","Schedule"],["numbers","Numbers"],["setup","Setup"]];
+/* The two seasons differ only in who gets shifts beyond the minimums. [peak?, name, what it does] */
+const SEASONS=[
+  [false,"Regular season","Extra shifts take turns across everyone, starting with the smallest schedules."],
+  [true,"Peak season","Extra shifts go to full-time staff first, in priority order. Part-time staff keep their minimum."]
+];
+
+/* ---------- Small helpers ---------- */
+const round1=n=>Math.round(n*10)/10;
+const round2=n=>Math.round(n*100)/100;
+const money=n=>"$"+Math.round(n).toLocaleString("en-US");
+const money2=n=>"$"+round2(n).toFixed(2);
+const plural=(n,one,many)=>`${n} ${n===1?one:(many||one+"s")}`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const ymd=(y,m,d)=>`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+const addDays=(s,n)=>new Date(Date.parse(s)+n*864e5).toISOString().slice(0,10);
+const dayIdx=s=>(new Date(s+"T00:00:00Z").getUTCDay()+1)%7;          /* Sat=0 ... Fri=6 */
+const satOnOrBefore=s=>addDays(s,-dayIdx(s));
+const today=()=>{ const d=new Date(); return ymd(d.getFullYear(),d.getMonth(),d.getDate()); };
+const fmtDay=s=>new Date(s+"T00:00:00Z").toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"});
+const monthName=s=>new Date(s+"T00:00:00Z").toLocaleDateString("en-US",{month:"long",year:"numeric",timeZone:"UTC"});
+const weekRange=ws=>`${fmtDay(ws)} to ${fmtDay(addDays(ws,6))}`;
+const parseT=s=>{ const [h,m]=s.split(":").map(Number); return h+(m||0)/60; };
+const fmt12=s=>{ let [h,m]=s.split(":").map(Number); const ap=h>=12?"p":"a"; h=h%12||12; return h+(m?":"+String(m).padStart(2,"0"):"")+ap; };
+const cv2=a=>{ if(a.length<2) return 0; const m=a.reduce((x,y)=>x+y,0)/a.length; if(m<=0) return 0; return a.reduce((s,v)=>s+(v-m)*(v-m),0)/a.length/(m*m); };
+/* Lowest, highest and the gap between them */
+const span=a=>a.length ? {lo:Math.min(...a), hi:Math.max(...a), gap:Math.max(...a)-Math.min(...a), avg:a.reduce((x,y)=>x+y,0)/a.length} : null;
+
+/* ---------- State ---------- */
+function freshPeople(){
+  return DEFAULT_PEOPLE.map(([name,ptype,min])=>({name, ptype, onRota:true, min, max:min+1,
+    avail:DAYS.map(()=>[true,true,true]), req:[]}));
+}
+function freshTimes(){
+  const t={};
+  DAYS.forEach((_,d)=>SLOTS.forEach(k=>{ t[`${d}-${k}`]={start:DEFAULT_TIMES[k][d][0], end:DEFAULT_TIMES[k][d][1], set:false}; }));
+  return t;
+}
+/* Sections the user has opened; kept across redraws */
+const OPEN=new Set();
+const S={
+  tab:"schedule",                /* schedule, numbers or setup */
+  page:0,                        /* which of the four weeks is showing */
+  weekStart:satOnOrBefore(today()),   /* always a Saturday */
+  people:freshPeople(),
+  need:DEFAULT_NEED.map(x=>({...x})),
+  times:freshTimes(),
+  rates:{...DEFAULT_RATES},
+  peak:false,                    /* false = regular season, true = peak season */
+  priority:[...DEFAULT_PRIORITY],
+  force:false,
+  weeks:[],                      /* saved weeks, a record only */
+  modal:null,
+  note:"",
+  confirm:""                     /* an erase waiting for its second tap */
+};
+let downloads=null;              /* the viewer's save-a-file feature, when this view has one */
+/* A saved copy opened in its own browser tab. The browser can print there, and Claude's save-a-file feature does not exist. */
+const STANDALONE=!window.claude;
+
+function loadAll(){
+  try{ const w=JSON.parse(localStorage.getItem(STORE_WEEKS)||"[]"); if(Array.isArray(w)) S.weeks=w; }catch(e){}
+  try{
+    const x=JSON.parse(localStorage.getItem(STORE_SETUP)||"null");
+    if(x && Array.isArray(x.people) && x.people.length===DEFAULT_PEOPLE.length){
+      S.weekStart=satOnOrBefore(x.weekStart||S.weekStart);
+      S.people=x.people.map(p=>({...p, req:Array.isArray(p.req)?p.req:[]}));
+      S.need=x.need; S.times=x.times; S.rates=x.rates;
+      /* One time: every shift takes the standard clock times. Changes made after that are kept. */
+      if(x.tv!==3) Object.entries(S.times).forEach(([k,t])=>{
+        const [d,kind]=k.split("-"), std=DEFAULT_TIMES[kind][+d];
+        t.start=std[0]; t.end=std[1];
+      });
+      S.peak=!!x.peak;
+      S.priority=x.priority; S.force=!!x.force;
+    }
+  }catch(e){}
+}
+function saveAll(){
+  try{
+    localStorage.setItem(STORE_WEEKS, JSON.stringify(S.weeks));
+    localStorage.setItem(STORE_SETUP, JSON.stringify({tv:3, weekStart:S.weekStart, people:S.people, need:S.need,
+      times:S.times, rates:S.rates, peak:S.peak, priority:S.priority, force:S.force}));
+  }catch(e){}
+}
+
+/* ---------- Pay and limits ---------- */
+/* Pay for one shift, whichever box it sits in: hours before 4pm at the lunch rate, hours from 4pm at the dinner rate.
+   A clock-out at or before the clock-in means the shift ends the next day. */
+function splitPay(start,end){
+  const s=parseT(start); let e=parseT(end);
+  if(e<=s) e+=24;
+  const raw=e-s;
+  if(!(raw>0) || raw>MAX_SHIFT) return {hours:0, pay:0, lunchH:0, dinH:0, raw};
+  const lunchH=Math.max(0, Math.min(e,LUNCH_END)-s), dinH=raw-lunchH;
+  return {hours:raw, lunchH, dinH, pay:lunchH*S.rates.lunch+dinH*S.rates.dinner, nextDay:e>24, raw};
+}
+/* Shift limits from open days. Full-time needs five open days. */
+function limitsFor(days,ptype){
+  const ft=ptype==="Full-time";
+  const hi = days>=(ft?6:5) ? days-1 : days;
+  const lo0 = ft ? (days<=1?days : days===2?1 : days===3?2 : Math.min(4,days))
+                 : (days>=5?3 : days>=3?2 : days>=2?1 : days);
+  return {lo:Math.min(lo0,hi), hi, days};
+}
+function openDays(p){ return p.avail.filter(a=>a.some(Boolean)).length; }
+function bounds(p){ return limitsFor(openDays(p), p.ptype); }
+/* Keep every person's numbers inside their limits */
+function tidy(){
+  S.people.forEach(p=>{
+    const b=bounds(p);
+    if(b.days<5) p.ptype="Part-time";
+    p.min=clamp(p.min,b.lo,b.hi);
+    p.max=clamp(p.max,p.min,b.hi);
+  });
+}
+function totalNeed(){
+  let am=0,s=0,pm=0;
+  S.need.forEach(x=>{ am+=x.am; s+=x.s; pm+=x.pm; });
+  return {am,s,pm,all:am+s+pm};
+}
+const rankOf=i=>{ const k=S.priority.indexOf(S.people[i].name); return k<0?999:k; };
+
+/* ---------- Solver ----------
+   Each week is planned in two steps, and each week sees the weeks before it (carry).
+   Step 1, how many shifts each person gets: minimums first (full-time before part-time), then extra shifts by season.
+   Step 2, which shifts: everyone's pay per hour and pay per shift, counted from week 1, is brought as close together
+   as the shifts allow. That is what keeps pay in line with work. */
+function slotList(){
+  const out=[];
+  DAYS.forEach((_,d)=>SLOTS.forEach(k=>{
+    const tm=S.times[`${d}-${k}`], sp=splitPay(tm.start,tm.end);
+    for(let j=0;j<S.need[d][k];j++) out.push({d, t:k, hh:sp.hours, v:sp.pay, h:-1, forced:false});
+  }));
+  return out;
+}
+/* Requested days off, mapped onto the seven days of the week starting ws */
+function reqBlocked(p,ws){
+  const out=DAYS.map(()=>false);
+  p.req.forEach(s=>{
+    const k=Math.round((Date.parse(s)-Date.parse(ws))/864e5);
+    if(k>=0 && k<7) out[dayIdx(addDays(ws,k))]=true;
+  });
+  return out;
+}
+/* Step 1. lo and hi are each person's minimum and maximum for this week, already cut down to the days they can work. */
+function shiftTargets(total,lo,hi,on,carry){
+  const P=S.people, idx=P.map((_,i)=>i), t=P.map(()=>0);
+  const ft=i=>P[i].ptype==="Full-time";
+  let left=total;
+  for(const full of [true,false]){
+    const g=idx.filter(i=>on[i] && ft(i)===full);
+    const want=g.reduce((s,i)=>s+lo[i],0);
+    if(left>=want){ g.forEach(i=>{ t[i]=lo[i]; }); left-=want; continue; }
+    /* Not enough for this group: hand shifts out one at a time to whoever has been shorted most so far */
+    while(left>0){
+      const c=g.filter(i=>t[i]<lo[i]);
+      if(!c.length) break;
+      c.sort((a,b)=>((carry[b].owed+lo[b]-t[b])-(carry[a].owed+lo[a]-t[a])) || (rankOf(a)-rankOf(b)));
+      t[c[0]]++; left--;
+    }
+  }
+  /* Extra shifts go to whoever has had the fewest extras so far. Peak season: full-time first. Regular: smallest schedule first. */
+  while(left>0){
+    let c=idx.filter(i=>on[i] && t[i]<hi[i]);
+    if(!c.length) break;
+    if(S.peak){ const f=c.filter(ft); if(f.length) c=f; }
+    const extras=i=>carry[i].extra+t[i]-lo[i];
+    c.sort((a,b)=>(extras(a)-extras(b)) || (S.peak ? 0 : t[a]-t[b]) || (rankOf(a)-rankOf(b)));
+    t[c[0]]++; left--;
+  }
+  return t;
+}
+function solve(ws,force,carry){
+  const P=S.people, n=P.length, idx=[...Array(n).keys()];
+  const on=P.map(p=>p.onRota), mx=P.map(p=>p.max);
+  const blocked=P.map(p=>reqBlocked(p,ws));
+  const slots=slotList();
+  const free=(i,s)=>P[i].avail[s.d][SIDX[s.t]] && !blocked[i][s.d];
+  /* Days each person can work this week, and so their minimum and maximum for the week */
+  const cap=idx.map(i=>on[i] ? DAYS.filter((_,d)=>slots.some(s=>s.d===d && free(i,s))).length : 0);
+  const lo=idx.map(i=>Math.min(P[i].min,cap[i])), hi=idx.map(i=>Math.min(mx[i],cap[i]));
+  const want=shiftTargets(slots.length,lo,hi,on,carry);
+  const st={pay:Array(n).fill(0), hrs:Array(n).fill(0), cnt:Array(n).fill(0), forced:Array(n).fill(0)};
+  const day=P.map(()=>Array(7).fill(null));      /* the shift each person holds on each day */
+
+  const put=(s,i)=>{ s.h=i; st.cnt[i]++; st.pay[i]+=s.v; st.hrs[i]+=s.hh; day[i][s.d]=s; };
+  const take=s=>{ const i=s.h; s.h=-1; st.cnt[i]--; st.pay[i]-=s.v; st.hrs[i]-=s.hh; day[i][s.d]=null; };
+  const canTake=(i,s)=>on[i] && free(i,s) && !day[i][s.d] && st.cnt[i]<mx[i] && st.hrs[i]+s.hh<=OT_CAP;
+  /* Lower is better: shifts away from step 1 count most, then how far apart pay per hour and pay per shift are */
+  const score=()=>{
+    let off=0; const perHour=[], perShift=[];
+    for(const i of idx){
+      if(!on[i]) continue;
+      off+=Math.abs(st.cnt[i]-want[i]);
+      const pay=carry[i].pay+st.pay[i], h=carry[i].hrs+st.hrs[i], c=carry[i].cnt+st.cnt[i];
+      if(h>0 && c>0){ perHour.push(pay/h); perShift.push(pay/c); }
+    }
+    return off*10+cv2(perHour)+cv2(perShift);
+  };
+  const best=(s,cands)=>{
+    let b=-1, bs=Infinity;
+    for(const i of cands){
+      put(s,i); const sc=score(); take(s);
+      if(b<0 || sc<bs-1e-12 || (Math.abs(sc-bs)<=1e-12 && rankOf(i)<rankOf(b))){ b=i; bs=sc; }
+    }
+    return b;
+  };
+  /* Fill an open shift. If everyone free for it is busy that day or at their maximum, first move one of their shifts to someone else. */
+  const fill=(s,depth,seen)=>{
+    const c=idx.filter(i=>canTake(i,s));
+    if(c.length){ put(s,best(s,c)); return true; }
+    if(!depth) return false;
+    for(const i of idx){
+      if(!on[i] || !free(i,s)) continue;
+      const inTheWay=day[i][s.d] ? [day[i][s.d]] : slots.filter(y=>y.h===i);
+      for(const y of inTheWay){
+        if(y.forced || seen.has(y)) continue;
+        take(y);
+        if(canTake(i,s)){
+          put(s,i); seen.add(y);
+          if(fill(y,depth-1,seen)) return true;
+          seen.delete(y); take(s);
+        }
+        put(y,i);
+      }
+    }
+    return false;
+  };
+  /* Try every single move and every swap, keep the one that helps most, repeat until nothing helps */
+  const improve=()=>{
+    for(let g=0;g<300;g++){
+      let bestS=score()-1e-9, act=null;
+      for(const s of slots){
+        if(s.h<0 || s.forced) continue;
+        const A=s.h;
+        take(s);
+        for(const B of idx){
+          if(B===A || !canTake(B,s)) continue;
+          put(s,B); const sc=score(); take(s);
+          if(sc<bestS){ bestS=sc; act=[s,B]; }
+        }
+        put(s,A);
+      }
+      for(let x=0;x<slots.length;x++){
+        const X=slots[x];
+        if(X.h<0 || X.forced) continue;
+        for(let y=x+1;y<slots.length;y++){
+          const Y=slots[y];
+          if(Y.h<0 || Y.forced || Y.h===X.h) continue;
+          const A=X.h, B=Y.h;
+          take(X); take(Y);
+          if(canTake(A,Y) && canTake(B,X)){
+            put(Y,A); put(X,B);
+            const sc=score();
+            if(sc<bestS){ bestS=sc; act=[X,B,Y,A]; }
+            take(Y); take(X);
+          }
+          put(X,A); put(Y,B);
+        }
+      }
+      if(!act) break;
+      for(let k=0;k<act.length;k+=2) take(act[k]);
+      for(let k=0;k<act.length;k+=2) put(act[k],act[k+1]);
+    }
+  };
+
+  /* Hardest shifts to cover first, then the best paid */
+  slots.forEach(s=>{ s.nc=idx.filter(i=>on[i] && free(i,s)).length; });
+  const order=[...slots].sort((x,y)=>(x.nc-y.nc) || (y.v-x.v) || (x.d-y.d));
+  for(const s of order){
+    const c=idx.filter(i=>canTake(i,s) && st.cnt[i]<want[i]);
+    if(c.length) put(s,best(s,c));
+  }
+  for(const s of order) if(s.h<0) fill(s,3,new Set());
+  improve();
+  for(const s of order) if(s.h<0 && fill(s,3,new Set())) improve();
+
+  /* Force fill: someone not already working that day, taking turns. A requested day off is the last thing overridden. */
+  if(force){
+    for(const s of [...slots].sort((x,y)=>y.v-x.v)){
+      if(s.h>=0) continue;
+      const c=idx.filter(i=>on[i] && !day[i][s.d] && st.hrs[i]+s.hh<=OT_CAP);
+      if(!c.length) continue;
+      const key=i=>[blocked[i][s.d]?1:0, carry[i].forced+st.forced[i], st.cnt[i]>=mx[i]?1:0, st.cnt[i], rankOf(i)];
+      c.sort((a,b)=>{ const x=key(a), y=key(b); for(let k=0;k<x.length;k++) if(x[k]!==y[k]) return x[k]-y[k]; return 0; });
+      s.forced=true; put(s,c[0]); st.forced[c[0]]++;
+    }
+    improve();
+  }
+  return {
+    pay:st.pay, hrs:st.hrs, cnt:st.cnt, forcedCnt:st.forced, lo, want,
+    assigned:slots.filter(s=>s.h>=0).map(s=>({d:s.d, t:s.t, i:s.h, forced:s.forced})),
+    open:slots.filter(s=>s.h<0).map(s=>({d:s.d, t:s.t})),
+    below:idx.filter(i=>on[i] && st.cnt[i]<P[i].min).map(i=>({i, short:P[i].min-st.cnt[i], days:cap[i]}))
+  };
+}
+
+/* Four weeks from the chosen Saturday, planned in order. Recomputed only when an input changes. */
+let planMemo={key:"", weeks:[]};
+function plan(){
+  const key=JSON.stringify([S.weekStart,S.force,S.peak,S.priority,S.need,S.times,S.rates,S.people]);
+  if(planMemo.key!==key){
+    /* carry: what each person has had so far. owed = shifts short of their minimum, extra = shifts above it. */
+    const carry=S.people.map(()=>({pay:0,hrs:0,cnt:0,owed:0,extra:0,forced:0}));
+    const run=S.people.map(()=>({pay:0,hrs:0,cnt:0})), weeks=[];
+    for(let k=0;k<4;k++){
+      const ws=addDays(S.weekStart,7*k);
+      const base=solve(ws,false,carry);
+      const cur=S.force && base.open.length ? solve(ws,true,carry) : base;
+      cur.cnt.forEach((c,i)=>{
+        const x=carry[i];
+        x.pay+=cur.pay[i]; x.hrs+=cur.hrs[i]; x.cnt+=c; x.forced+=cur.forcedCnt[i];
+        x.owed+=Math.max(0,cur.lo[i]-c); x.extra+=Math.max(0,c-cur.lo[i]);
+        run[i].pay+=round2(cur.pay[i]); run[i].hrs+=cur.hrs[i]; run[i].cnt+=c;      /* pay to the cent each week */
+      });
+      weeks.push({ws, base, cur, soFar:run.map(r=>({...r}))});
+    }
+    planMemo={key, weeks};
+  }
+  return planMemo;
+}
+/* The four weeks added up, per person */
+function monthTotals(pl){
+  const T=S.people.map(()=>({am:0,s:0,pm:0,cnt:0,hrs:0,pay:0}));
+  pl.weeks.forEach(w=>{
+    w.cur.assigned.forEach(a=>{ T[a.i][a.t]++; T[a.i].cnt++; });
+    S.people.forEach((_,i)=>{ T[i].hrs+=w.cur.hrs[i]; T[i].pay+=round2(w.cur.pay[i]); });
+  });
+  return T;
+}
+
+/* Printing, for a saved copy: the print-only block gets the chosen weeks, then the browser's print window opens */
+function printWeeks(all){
+  const pl=plan(), weeks=all?pl.weeks:[pl.weeks[S.page]];
+  document.getElementById("printable").innerHTML=weeks.map(w=>`<div class="wk"><h2>Week of ${weekRange(w.ws)}</h2>
+    <table class="sched"><thead><tr><th>Day</th>${SLOTS.map(k=>`<th>${SHIFT_NAME[k]}</th>`).join("")}</tr></thead><tbody>${DAYS.map((d,di)=>`<tr>
+      <td><b>${d}</b><div class="sub">${fmtDay(addDays(w.ws,di))}</div></td>${weekCells(w,di).map(c=>`<td>${c.names.length?`<div class="sub">${c.time}</div>${c.names.map(esc).join("<br>")}`:"—"}</td>`).join("")}</tr>`).join("")}</tbody></table>
+    ${w.cur.assigned.some(a=>a.forced)?`<p class="sub">* forced shift</p>`:""}</div>`).join("");
+  document.documentElement.classList.add("printing");
+  window.print();
+}
+/* Once the print window closes, the page goes back to printing as it looks */
+window.addEventListener("afterprint",()=>{
+  document.documentElement.classList.remove("printing");
+  document.getElementById("printable").innerHTML="";
+});
+
+/* ---------- Saving weeks (a record; saved weeks never change the plan) ---------- */
+function recordFrom(ws,res){
+  const pay={}, shifts={}, hours={};
+  S.people.forEach((p,i)=>{
+    if(p.onRota){ pay[p.name]=round2(res.pay[i]); shifts[p.name]=res.cnt[i]; hours[p.name]=round2(res.hrs[i]); }
+  });
+  return {
+    start:ws, pay, shifts, hours,
+    assigned:res.assigned.map(a=>({d:a.d, t:a.t, name:S.people[a.i].name, forced:a.forced})),
+    open:res.open.map(o=>({d:o.d, t:o.t}))
+  };
+}
+function saveRecord(rec){
+  const k=S.weeks.findIndex(w=>w.start===rec.start);
+  if(k>=0) S.weeks[k]=rec; else S.weeks.push(rec);
+  S.weeks.sort((a,b)=>a.start.localeCompare(b.start));
+}
+function saveMonth(){
+  plan().weeks.forEach(w=>saveRecord(recordFrom(w.ws,w.cur)));
+  S.note=`Saved 4 weeks, ${fmtDay(S.weekStart)} to ${fmtDay(addDays(S.weekStart,27))}.`;
+}
+
+/* ---------- Getting the schedule out: a PDF to print or share, or plain text to paste ---------- */
+function weekCells(w,di){
+  return SLOTS.map(k=>{
+    const names=w.cur.assigned.filter(a=>a.d===di && a.t===k).map(a=>S.people[a.i].name+(a.forced?" *":""));
+    const open=w.cur.open.filter(o=>o.d===di && o.t===k).length;
+    if(open) names.push(`${open} open`);
+    const tm=S.times[`${di}-${k}`];
+    return {k, names, time:`${fmt12(tm.start)}-${fmt12(tm.end)}`};
+  });
+}
+function weekText(w){
+  const lines=[`Week of ${weekRange(w.ws)}`];
+  DAYS.forEach((d,di)=>{
+    const rows=weekCells(w,di).filter(c=>c.names.length).map(c=>`  ${SHIFT_NAME[c.k]} ${c.time}: ${c.names.join(", ")}`);
+    lines.push("", `${d} ${fmtDay(addDays(w.ws,di))}`, ...(rows.length?rows:["  Closed"]));
+  });
+  if(w.cur.assigned.some(a=>a.forced)) lines.push("", "* forced shift");
+  return lines.join("\n");
+}
+/* One letter-size page per week */
+function buildPdf(weeks){
+  const doc=new window.jspdf.jsPDF({unit:"pt",format:"letter"});
+  const L=40, R=572, W=R-L, colDay=78, colW=(W-colDay)/3, lineH=14;
+  const plain=s=>String(s).replace(/[^\x20-\xff]/g,"?");          /* the built-in PDF font covers Latin letters only */
+  weeks.forEach((w,n)=>{
+    if(n) doc.addPage();
+    let y=58;
+    doc.setTextColor(25); doc.setFont("helvetica","bold"); doc.setFontSize(20);
+    doc.text(`Week of ${weekRange(w.ws)}`,L,y);
+    y+=20;
+    doc.setFillColor(239,230,212); doc.rect(L,y,W,22,"F");
+    doc.setFontSize(9.5); doc.setTextColor(90);
+    doc.text("DAY",L+8,y+15);
+    SLOTS.forEach((k,j)=>doc.text(SHIFT_NAME[k].toUpperCase(),L+colDay+j*colW+8,y+15));
+    y+=22;
+    DAYS.forEach((d,di)=>{
+      doc.setFont("helvetica","normal"); doc.setFontSize(11.5);
+      const cells=weekCells(w,di).map(c=>({...c, lines:c.names.flatMap(nm=>doc.splitTextToSize(plain(nm),colW-14))}));
+      const rowH=Math.max(2,...cells.map(c=>c.lines.length?c.lines.length+1:1))*lineH+14;
+      doc.setTextColor(25); doc.setFont("helvetica","bold"); doc.setFontSize(12.5);
+      doc.text(d,L+8,y+19);
+      doc.setFont("helvetica","normal"); doc.setFontSize(9); doc.setTextColor(110);
+      doc.text(fmtDay(addDays(w.ws,di)),L+8,y+32);
+      cells.forEach((c,j)=>{
+        const x=L+colDay+j*colW+8; let yy=y+17;
+        if(!c.lines.length){ doc.setFontSize(11); doc.setTextColor(160); doc.text("-",x,yy); return; }
+        doc.setFontSize(8.5); doc.setTextColor(110); doc.text(c.time,x,yy); yy+=lineH;
+        doc.setFontSize(11.5); doc.setTextColor(25);
+        c.lines.forEach(t=>{ doc.text(t,x,yy); yy+=lineH; });
+      });
+      y+=rowH;
+      doc.setDrawColor(215); doc.setLineWidth(0.7); doc.line(L,y,R,y);
+    });
+    if(w.cur.assigned.some(a=>a.forced)){ doc.setFontSize(9); doc.setTextColor(110); doc.text("* forced shift",L,y+16); }
+  });
+  return doc.output("arraybuffer");
+}
+async function savePdf(all){
+  const pl=plan(), weeks=all?pl.weeks:[pl.weeks[S.page]];
+  if(!window.jspdf){ S.note="The PDF tool is still loading. Try again in a moment."; render(); return; }
+  try{
+    await downloads.save({filename:all?`schedule-4-weeks-from-${S.weekStart}.pdf`:`schedule-week-of-${weeks[0].ws}.pdf`, data:buildPdf(weeks)});
+    S.note="Saved. Print it or share it from there.";
+  }catch(e){
+    const code=e && e.code;
+    S.note = code==="declined" ? "" : code==="rate_limited" ? "A save is already open. Finish that one, then try again." : "This view could not save the file. Copy as text still works.";
+  }
+  render();
+}
+function copyWeek(){
+  const text=weekText(plan().weeks[S.page]);
+  const fallback=()=>{ S.modal={type:"text", text}; render(); };
+  try{
+    navigator.clipboard.writeText(text).then(()=>{ S.note="Copied. Paste it into a message or a note."; render(); }, fallback);
+  }catch(e){ fallback(); }
+}
+
+/* ---------- Rendering: shared pieces ---------- */
+function gridTable(ws,assigned,open){
+  let h=`<div class="wrapx"><table class="sched"><thead><tr><th>Day</th>${SLOTS.map(k=>`<th>${SHIFT_NAME[k]}</th>`).join("")}</tr></thead><tbody>`;
+  DAYS.forEach((d,di)=>{
+    h+=`<tr><td><b>${d}</b><div class="sub">${fmtDay(addDays(ws,di))}</div></td>`;
+    SLOTS.forEach(k=>{
+      const parts=assigned.filter(a=>a.d===di && a.t===k).map(a=>esc(a.name)+(a.forced?' <span class="fz">*</span>':""));
+      const n=open.filter(o=>o.d===di && o.t===k).length;
+      if(n) parts.push(`<span class="openTxt">${n} open</span>`);
+      h+=`<td>${parts.length?parts.join("<br>"):"—"}</td>`;
+    });
+    h+=`</tr>`;
+  });
+  return h+`</tbody></table></div>`;
+}
+/* "Sat PM ×2, Mon AM" */
+const shiftList=list=>{
+  const groups={};
+  list.forEach(o=>{ const key=`${o.d}-${o.t}`; groups[key]=(groups[key]||0)+1; });
+  return Object.keys(groups).map(k=>{ const [d,t]=k.split("-"); return `${DAYS[+d]} ${SHIFT_NAME[t]}${groups[k]>1?` ×${groups[k]}`:""}`; }).join(", ");
+};
+
+/* ---------- Schedule tab: the week on screen and nothing else ---------- */
+function pagerBar(pl){
+  const pg=S.page, ws=pl.weeks[pg].ws;
+  const dots=pl.weeks.map((w,k)=>`<span class="dot ${k===pg?"on":""} ${w.cur.open.length?"bad":""}" title="Week ${k+1}${w.cur.open.length?", has an open shift":""}"></span>`).join("");
+  const arrow=(dl,label,off)=>`<button class="pgbtn" data-act="page" data-dl="${dl}" ${off?"disabled":""} aria-label="${label}">${dl<0?"‹":"›"}</button>`;
+  return `<div class="pager">
+    ${arrow(-1,"Previous week",pg===0)}
+    <div class="pgmid"><b>Week ${pg+1} of 4</b><div class="sub">${weekRange(ws)}</div><div class="dots">${dots}</div></div>
+    ${arrow(1,"Next week",pg===3)}
+  </div>`;
+}
+function weekStatus(w){
+  const P=S.people, cur=w.cur, slots=cur.assigned.length+cur.open.length;
+  const sumMin=P.reduce((s,p)=>s+(p.onRota?p.min:0),0), sumMax=P.reduce((s,p)=>s+(p.onRota?p.max:0),0);
+  let h="";
+  if(w.base.open.length && !S.force){
+    h+=`<div class="warn"><b>${plural(w.base.open.length,"shift")} with nobody free:</b> ${shiftList(w.base.open)}.
+      <div class="row" style="margin:8px 0 6px"><button class="btn" data-act="force">Force fill</button></div>
+      <div class="sub">Force fill puts someone on each open shift even though their open days say no. It takes turns from week to week, and it overrides a requested day off only when nobody else is left. Nobody gets two shifts in a day or goes past ${OT_CAP} hours.</div></div>`;
+  } else if(S.force){
+    const forced=cur.assigned.filter(a=>a.forced);
+    h+=`<div class="warn"><b>Force fill is on.</b> ${forced.length
+        ? `Forced this week, marked *: ${forced.map(a=>`${DAYS[a.d]} ${SHIFT_NAME[a.t]}, ${esc(P[a.i].name)}`).join("; ")}.`
+        : "Nobody had to be forced this week."}${cur.open.length?` ${plural(cur.open.length,"shift")} still open (${shiftList(cur.open)}): nobody is left to take ${cur.open.length===1?"it":"them"}.`:""}
+      <div class="row" style="margin-top:8px"><button class="btn ghost" data-act="force">Turn force fill off</button></div></div>`;
+  }
+  cur.below.forEach(x=>{
+    const p=P[x.i];
+    h+=`<div class="warn">${esc(p.name)} is ${plural(x.short,"shift")} under their minimum this week. ${x.days<p.min ? `They can only work ${plural(x.days,"day")} this week.` : "There were not enough shifts to go around."}</div>`;
+  });
+  if(sumMin>slots) h+=`<div class="warn">This week has ${plural(slots,"shift")} and the minimums add up to ${sumMin}. Full-time staff are covered first, and part-time staff take turns going short.</div>`;
+  if(sumMax<slots) h+=`<div class="warn">This week has ${plural(slots,"shift")} and the maximums add up to ${sumMax}, so some shifts stay open unless a maximum goes up.</div>`;
+  return h || `<div class="okbox">All ${plural(slots,"shift")} are covered and everyone is inside their limits.</div>`;
+}
+function tabSchedule(pl){
+  const w=pl.weeks[S.page], cur=w.cur;
+  return pagerBar(pl)
+    + gridTable(w.ws, cur.assigned.map(a=>({d:a.d,t:a.t,name:S.people[a.i].name,forced:a.forced})), cur.open)
+    + weekStatus(w)
+    + `<div class="row" style="margin-top:12px">
+        ${downloads ? `<button class="btn" data-act="pdf">Save this week as a PDF</button><button class="btn ghost" data-act="pdfall">All 4 weeks as a PDF</button>`
+          : STANDALONE ? `<button class="btn" data-act="print">Print this week</button><button class="btn ghost" data-act="printall">Print all 4 weeks</button>` : ""}
+        <button class="btn ghost" data-act="copy">Copy this week as text</button>
+      </div>
+      ${S.note?`<p class="muted" role="status">${esc(S.note)}</p>`:""}
+      ${downloads ? `<p class="muted">The PDF opens your phone's share options, where you can print it or send it on.</p>`
+        : STANDALONE ? `<p class="muted">Printing opens your browser's print window. You can save a PDF from there too.</p>` : ""}`;
+}
+
+/* ---------- Numbers tab: pay by week, running totals, and how even it all is ---------- */
+/* Even when the gap is within 2% of the average, Close within 5%, Uneven beyond that */
+function evenTag(r){
+  if(!r || !(r.avg>0)) return "";
+  const pct=r.gap/r.avg;
+  return pct<=0.02 ? `<span class="tag ok">Even</span>` : pct<=0.05 ? `<span class="tag">Close</span>` : `<span class="tag bad">Uneven</span>`;
+}
+function tabNumbers(pl){
+  const P=S.people, rows=P.map((_,i)=>i).filter(i=>P[i].onRota), T=monthTotals(pl), W=pl.weeks;
+  const worked=rows.filter(i=>T[i].cnt>0 && T[i].hrs>0);
+  const hr=span(worked.map(i=>T[i].pay/T[i].hrs)), sh=span(worked.map(i=>T[i].pay/T[i].cnt));
+  const tot={am:0,s:0,pm:0,cnt:0,hrs:0,pay:0};
+  rows.forEach(i=>Object.keys(tot).forEach(k=>{ tot[k]+=T[i][k]; }));
+  const wkHead=W.map((w,k)=>`<th class="r">Wk ${k+1}<div class="sub">${fmtDay(w.ws)}</div></th>`).join("");
+  const dash="—";
+
+  let h=`<h2>The four weeks</h2><p class="lead">${fmtDay(S.weekStart)} to ${fmtDay(addDays(S.weekStart,27))}, ${S.peak?"peak season":"regular season"}.</p>
+    <div class="card eq">
+      <div class="eqrow"><span>Pay per hour</span><span class="big">${hr?`${money2(hr.lo)} to ${money2(hr.hi)}`:dash}</span>${evenTag(hr)}</div>
+      <div class="eqrow"><span>Pay per shift</span><span class="big">${sh?`${money(sh.lo)} to ${money(sh.hi)}`:dash}</span>${evenTag(sh)}</div>
+      <p class="muted" style="margin:0">Lowest to highest across the team. When these are close, pay follows work: more shifts means more pay, and nobody is left with only the weak shifts.</p>
+    </div>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th><th class="r">Shifts</th><th class="r">Hours</th><th class="r">Pay</th><th class="r">Per<br>shift</th><th class="r">Per<br>hour</th></tr></thead><tbody>`;
+  rows.forEach(i=>{ const t=T[i];
+    h+=`<tr><td>${esc(P[i].name)}<div class="sub">${P[i].ptype}</div></td><td class="r">${t.cnt}</td><td class="r">${round1(t.hrs)}</td><td class="r"><b>${money(t.pay)}</b></td><td class="r">${t.cnt?money(t.pay/t.cnt):dash}</td><td class="r">${t.hrs?money2(t.pay/t.hrs):dash}</td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.cnt}</td><td class="r">${round1(tot.hrs)}</td><td class="r">${money(tot.pay)}</td><td class="r">${tot.cnt?money(tot.pay/tot.cnt):dash}</td><td class="r">${tot.hrs?money2(tot.pay/tot.hrs):dash}</td></tr></tbody></table></div>`;
+
+  h+=`<h2>Pay by week</h2><p class="lead">Each week's pay, with the running total under it.</p>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${wkHead}</tr></thead><tbody>`;
+  rows.forEach(i=>{
+    h+=`<tr><td>${esc(P[i].name)}</td>${W.map(w=>`<td class="r"><b>${money(w.cur.pay[i])}</b><div class="sub">${money(w.soFar[i].pay)}</div></td>`).join("")}</tr>`; });
+  h+=`<tr class="tot"><td>Team</td>${W.map(w=>`<td class="r">${money(rows.reduce((s,i)=>s+w.cur.pay[i],0))}<div class="sub">${money(rows.reduce((s,i)=>s+w.soFar[i].pay,0))}</div></td>`).join("")}</tr></tbody></table></div>`;
+
+  h+=`<h2>Hours worked</h2><p class="lead">Hours each week, and the total over the four weeks.</p>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${wkHead}<th class="r">All 4</th></tr></thead><tbody>`;
+  rows.forEach(i=>{
+    h+=`<tr><td>${esc(P[i].name)}</td>${W.map(w=>`<td class="r">${round1(w.cur.hrs[i])}</td>`).join("")}<td class="r"><b>${round1(T[i].hrs)}</b></td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td>${W.map(w=>`<td class="r">${round1(rows.reduce((s,i)=>s+w.cur.hrs[i],0))}</td>`).join("")}<td class="r">${round1(tot.hrs)}</td></tr></tbody></table></div>`;
+
+  const wkGap=W.map(w=>span(rows.filter(i=>w.cur.hrs[i]>0).map(i=>w.cur.pay[i]/w.cur.hrs[i])));
+  h+=`<h2>How even each week is</h2><p class="lead">Pay per hour, week by week. One week can wobble because shifts come whole. The last column is all four weeks together, which is what the schedule evens out.</p>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${wkHead}<th class="r">All 4</th></tr></thead><tbody>`;
+  rows.forEach(i=>{
+    h+=`<tr><td>${esc(P[i].name)}</td>${W.map(w=>`<td class="r">${w.cur.hrs[i]>0?money2(w.cur.pay[i]/w.cur.hrs[i]):dash}</td>`).join("")}<td class="r"><b>${T[i].hrs>0?money2(T[i].pay/T[i].hrs):dash}</b></td></tr>`; });
+  h+=`<tr class="tot"><td>Gap</td>${wkGap.map(g=>`<td class="r">${g?money2(g.gap):dash}</td>`).join("")}<td class="r">${hr?money2(hr.gap):dash}</td></tr></tbody></table></div>`;
+
+  h+=`<h2>Shifts</h2><p class="lead">How many each week, then what kind over the four weeks.</p>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${wkHead}<th class="r">All 4</th></tr></thead><tbody>`;
+  rows.forEach(i=>{
+    h+=`<tr><td>${esc(P[i].name)}</td>${W.map(w=>`<td class="r">${w.cur.cnt[i]}</td>`).join("")}<td class="r"><b>${T[i].cnt}</b></td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td>${W.map(w=>`<td class="r">${rows.reduce((s,i)=>s+w.cur.cnt[i],0)}</td>`).join("")}<td class="r">${tot.cnt}</td></tr></tbody></table></div>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${SLOTS.map(k=>`<th class="r">${SHIFT_NAME[k]}</th>`).join("")}<th class="r">Total</th></tr></thead><tbody>`;
+  rows.forEach(i=>{ const t=T[i];
+    h+=`<tr><td>${esc(P[i].name)}</td><td class="r">${t.am}</td><td class="r">${t.s}</td><td class="r">${t.pm}</td><td class="r"><b>${t.cnt}</b></td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.am}</td><td class="r">${tot.s}</td><td class="r">${tot.pm}</td><td class="r">${tot.cnt}</td></tr></tbody></table></div>`;
+
+  return h+sectionSaved();
+}
+function sectionSaved(){
+  /* Every month the four weeks touch */
+  const months=[...new Set(plan().weeks.map(w=>w.ws.slice(0,7)))];
+  const blocks=months.filter(mk=>S.weeks.some(r=>r.start.slice(0,7)===mk)).map(savedMonth).join("");
+  const sure=S.confirm==="resetall";
+  return `<h2>Saved weeks</h2><p class="lead">A record of what was scheduled, kept in this browser. Saving a week again replaces it. Saved weeks never change the schedule.</p>
+    <div class="row"><button class="btn" data-act="save4">Save these 4 weeks</button></div>
+    ${S.note?`<p class="muted" role="status">${esc(S.note)}</p>`:""}
+    ${blocks || `<p class="muted">Nothing saved for ${months.map(mk=>monthName(mk+"-01")).join(" or ")} yet.</p>`}
+    ${S.weeks.length?`<div class="row" style="margin-top:8px"><button class="btn ghost" data-act="resetall">${sure?"Tap again to erase every saved week":"Erase all saved weeks"}</button></div>`:""}`;
+}
+function savedMonth(mk){
+  const recs=S.weeks.filter(r=>r.start.slice(0,7)===mk).sort((a,b)=>a.start.localeCompare(b.start));
+  const month=monthName(mk+"-01"), key="saved-"+mk, sure=S.confirm==="reset-"+mk;
+  const names=[...new Set([...S.people.map(p=>p.name), ...recs.flatMap(r=>Object.keys(r.pay))])];
+  const colTot=recs.map(()=>0), colSh=recs.map(()=>0);
+  const shifts=c=>`<div class="sub">${plural(c,"shift")}</div>`;
+  let grand=0, grandSh=0;
+  let h=`<details class="card" data-key="${key}" ${OPEN.has(key)?"open":""}><summary>${month}: ${plural(recs.length,"saved week")}</summary>
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${recs.map(r=>`<th class="r">${fmtDay(r.start)}</th>`).join("")}<th class="r">Month</th></tr></thead><tbody>`;
+  names.forEach(n=>{
+    let tot=0, sh=0;
+    h+=`<tr><td>${esc(n)}</td>`;
+    recs.forEach((r,j)=>{
+      const v=r.pay[n]||0, c=(r.shifts&&r.shifts[n])||0;
+      tot+=v; sh+=c; colTot[j]+=v; colSh[j]+=c;
+      h+=`<td class="r">${v?money(v)+shifts(c):"—"}</td>`;
+    });
+    grand+=tot; grandSh+=sh;
+    h+=`<td class="r"><b>${money(tot)}</b>${shifts(sh)}</td></tr>`;
+  });
+  h+=`<tr class="tot"><td>Total</td>${colTot.map((v,j)=>`<td class="r">${money(v)}${shifts(colSh[j])}</td>`).join("")}<td class="r">${money(grand)}${shifts(grandSh)}</td></tr></tbody></table></div>`;
+  recs.forEach(r=>{
+    if(!r.assigned) return;
+    h+=`<h3 style="margin-top:12px">Week of ${fmtDay(r.start)}${dayIdx(r.start)!==0?" (saved before weeks started on Saturday)":""}</h3>${gridTable(r.start,r.assigned,r.open||[])}`;
+  });
+  return h+`<div class="row" style="margin-top:8px"><button class="btn ghost" data-act="resetmonth" data-mk="${mk}">${sure?`Tap again to erase ${month}`:`Erase ${month}`}</button></div></details>`;
+}
+
+/* ---------- Setup tab ---------- */
+function sectionWeek(){
+  const ws=S.weekStart;
+  return `<div class="card">
+    <div class="row spread"><b>Four weeks</b><span class="muted">Paid Fridays</span></div>
+    <div class="row" style="margin-top:8px">
+      <input type="date" id="wk-start" value="${ws}" data-wk="1" aria-label="First week starts on a Saturday">
+      <span>${fmtDay(ws)} to ${fmtDay(addDays(ws,27))}</span>
+    </div>
+    <p class="muted" style="margin-bottom:0">Pick the first week. Weeks run Saturday to Friday to match payroll, so any date you pick starts on the Saturday before it.</p>
+  </div>`;
+}
+function sectionNeeded(){
+  const tot=totalNeed();
+  let h=`<h2>Needed shifts</h2><p class="lead">How many people each shift needs, every week. Tap the times under a number to change when that shift starts and ends.</p>
+    <div class="card">
+      <div class="row spread"><b>${plural(tot.all,"shift")} a week</b><span class="muted">${tot.am} AM · ${tot.s} Swing · ${tot.pm} PM</span></div>
+      <div class="need">
+        <span></span>${SLOTS.map(k=>`<span class="hd">${SHIFT_NAME[k]}</span>`).join("")}`;
+  DAYS.forEach((d,di)=>{
+    h+=`<span class="dl">${d}</span>`;
+    SLOTS.forEach(k=>{
+      const tm=S.times[`${di}-${k}`], n=S.need[di][k], sp=splitPay(tm.start,tm.end);
+      const cross=k!=="s" && sp.lunchH>0 && sp.dinH>0;      /* a lunch or dinner shift that runs across 4pm is paid like a swing */
+      h+=`<div class="ncell ${k} ${cross?"x":""}">
+        <div class="step">
+          <button data-act="need" data-d="${di}" data-t="${k}" data-dl="-1" ${n<=0?"disabled":""} aria-label="Fewer on ${d} ${SHIFT_NAME[k]}">−</button>
+          <b>${n}</b>
+          <button data-act="need" data-d="${di}" data-t="${k}" data-dl="1" aria-label="More on ${d} ${SHIFT_NAME[k]}">+</button>
+        </div>
+        <button class="tm" data-act="timeopen" data-d="${di}" data-t="${k}">${fmt12(tm.start)}–<wbr>${fmt12(tm.end)}${cross?`<br><span class="xtag">swing pay</span>`:""}</button>
+      </div>`;
+    });
+  });
+  return h+`</div></div>`;
+}
+function sectionSeason(){
+  return `<h2>Season</h2>
+    <p class="lead">In both seasons everyone is paid at about the same rate, so more shifts means more pay. The season only decides who gets the extra shifts once every minimum is met.</p>
+    <div class="card">
+      ${SEASONS.map(([v,name,txt],k)=>{ const on=S.peak===v; return `<button class="opt ${on?"on":""}" ${k?"":'style="margin-top:0"'} data-act="season" data-v="${v?1:0}" aria-pressed="${on}"><b><span>${name}</span>${on?`<span class="pick">Selected</span>`:""}</b><span class="muted">${txt}</span></button>`; }).join("")}
+    </div>`;
+}
+function sectionPriority(){
+  const rows=S.priority.map((n,k)=>`<div class="pri">
+      <span class="pn">${k+1}. ${esc(n)}</span>
+      <button data-act="up" data-n="${k}" ${k===0?"disabled":""} aria-label="Move ${esc(n)} up">▲</button>
+      <button data-act="down" data-n="${k}" ${k===S.priority.length-1?"disabled":""} aria-label="Move ${esc(n)} down">▼</button>
+    </div>`).join("");
+  return `<h2>Priority order</h2>
+    <p class="lead">Who is covered first when a week is short of shifts, and who goes first when two people are equally due a shift. Full-time is always ahead of part-time. The order never changes anyone's rate of pay.</p>
+    <div class="card">${rows}</div>`;
+}
+function sectionStaff(){
+  let h=`<h2>Staff</h2><p class="lead">Limits, open days, and requested days off. Limits follow from open days; see How it works.</p><div class="card">`;
+  S.people.forEach((p,i)=>{
+    const b=bounds(p), ftOK=b.days>=5;
+    h+=`<div class="person">
+      <div class="row spread">
+        <label class="check"><input type="checkbox" id="rota-${i}" data-rota="${i}" ${p.onRota?"checked":""}> On the schedule</label>
+      </div>
+      <div class="row" style="margin-top:6px"><input type="text" class="name" id="name-${i}" value="${esc(p.name)}" data-name="${i}" aria-label="Name"></div>
+      <div class="row" style="margin-top:6px;gap:14px">
+        <label class="check"><input type="radio" id="ft-${i}" name="pt${i}" data-pt="${i}" data-v="Full-time" ${p.ptype==="Full-time"?"checked":""} ${ftOK?"":"disabled"}> Full-time</label>
+        <label class="check"><input type="radio" id="pt-${i}" name="pt${i}" data-pt="${i}" data-v="Part-time" ${p.ptype==="Part-time"?"checked":""}> Part-time</label>
+        ${ftOK?"":`<span class="muted">Full-time needs 5 open days</span>`}
+      </div>
+      <div style="margin-top:8px">
+        <div class="row spread"><span>Minimum shifts</span>
+          <span class="step"><button data-act="bound" data-i="${i}" data-kind="min" data-dl="-1" ${p.min<=b.lo?"disabled":""} aria-label="Lower minimum">−</button><b>${p.min}</b><button data-act="bound" data-i="${i}" data-kind="min" data-dl="1" ${p.min>=b.hi?"disabled":""} aria-label="Raise minimum">+</button></span></div>
+        <div class="row spread" style="margin-top:6px"><span>Maximum shifts</span>
+          <span class="step"><button data-act="bound" data-i="${i}" data-kind="max" data-dl="-1" ${p.max<=p.min?"disabled":""} aria-label="Lower maximum">−</button><b>${p.max}</b><button data-act="bound" data-i="${i}" data-kind="max" data-dl="1" ${p.max>=b.hi?"disabled":""} aria-label="Raise maximum">+</button></span></div>
+        <p class="muted" style="margin:6px 0 0">Limits: ${b.lo} to ${b.hi} shifts from ${plural(b.days,"open day")}.</p>
+      </div>
+      <div style="margin-top:10px"><b>Open days</b>
+        <div class="muted">Tap a day to open or close all of it. Tap L, S, or D to change one shift.</div>
+        <div class="avgrid">${DAYS.map((d,di)=>{
+          const any=p.avail[di].some(Boolean);
+          return `<div class="avday">
+            <button class="dbtn ${any?"on":""}" data-act="day" data-i="${i}" data-d="${di}" aria-pressed="${any}">${d}</button>
+            ${SLOTS.map((k,ki)=>`<button class="chip ${p.avail[di][ki]?"on":""}" data-act="chip" data-i="${i}" data-d="${di}" data-ki="${ki}" aria-label="${d} ${AVAIL_NAME[k]}" aria-pressed="${p.avail[di][ki]}">${AVAIL_NAME[k][0]}</button>`).join("")}
+          </div>`;}).join("")}
+        </div></div>
+      <div class="reqbox">
+        <div class="row spread"><b>Requested off</b><button class="btn ghost" data-act="calopen" data-i="${i}">Pick dates</button></div>
+        <div class="row" style="gap:6px;margin-top:8px">${p.req.length
+          ? p.req.map(s=>`<button class="chip on reqchip" data-act="reqdel" data-i="${i}" data-date="${s}" aria-label="Remove ${fmtDay(s)}">${fmtDay(s)} ✕</button>`).join("")
+          : `<span class="muted">None. Pick dates to add days they asked off.</span>`}</div>
+      </div>
+    </div>`;
+  });
+  return h+`</div>`;
+}
+function limitRows(){
+  return [7,6,5,4,3,2,1].map(n=>{
+    const pt=limitsFor(n,"Part-time"), ft=n>=5?limitsFor(n,"Full-time"):null;
+    return `<tr><td>${n}</td><td>${ft?(ft.lo===ft.hi?ft.lo:`${ft.lo}–${ft.hi}`):"—"}</td><td>${pt.lo===pt.hi?pt.lo:`${pt.lo}–${pt.hi}`}</td></tr>`;
+  }).join("");
+}
+function sectionHelp(){
+  return `<details class="card" data-key="help" ${OPEN.has("help")?"open":""}><summary>How it works</summary>
+      <h3 style="margin-top:12px">Fair pay</h3>
+      <p class="muted">The schedule shares out the strong shifts and the weak ones so that, over the four weeks, everyone earns about the same for each hour and each shift. More shifts means more pay. Later weeks make up for earlier ones.</p>
+      <h3 style="margin-top:12px">Who gets how many shifts</h3>
+      <ol class="muted rules">
+        <li>Everyone gets their minimum. If a week is short, full-time staff are covered first and part-time staff take turns going short.</li>
+        <li>Extra shifts follow the season. Regular: they take turns across everyone, smallest schedules first. Peak: full-time staff first.</li>
+        <li>Nobody goes over their maximum, works two shifts in a day, or goes past ${OT_CAP} hours in a week.</li>
+      </ol>
+      <h3 style="margin-top:12px">Days off</h3>
+      <p class="muted">A day closed in Open days is off every week. Requested off blocks the dates picked. Time off lowers that week's shifts and is not made up later.</p>
+      <h3 style="margin-top:12px">Force fill</h3>
+      <p class="muted">Used only when a shift has nobody free. It takes turns, so the same person is not forced week after week, and it overrides a requested day off only when nobody else is left.</p>
+      <h3 style="margin-top:12px">Pay for a shift</h3>
+      <p class="muted">Each shift is paid by its clock times: hours before 4pm at the lunch rate, hours from 4pm at the dinner rate. A swing shift is a blend of the two. A lunch or dinner shift whose hours cross 4pm is paid the same way and stays in its own box. A clock-out earlier than the clock-in runs past midnight.</p>
+      <h3 style="margin-top:12px">Shift limits</h3>
+      <p class="muted">Limits come from open days: days with at least one shift switched on.</p>
+      <table><thead><tr><th>Open days</th><th>Full-time</th><th>Part-time</th></tr></thead><tbody>${limitRows()}</tbody></table>
+    </details>`;
+}
+function sectionRates(){
+  return `<details class="card" data-key="rates" ${OPEN.has("rates")?"open":""}><summary>Pay rates</summary>
+    <p class="muted">Lunch covers hours before 4pm, dinner covers hours from 4pm. Rates never go below $${MIN_RATE}.</p>
+    <div class="row spread" style="margin-top:8px"><label for="rate-lunch">Lunch, per hour</label><input type="number" class="num" step="0.01" id="rate-lunch" value="${S.rates.lunch}" data-rate="lunch"></div>
+    <div class="row spread" style="margin-top:8px"><label for="rate-dinner">Dinner, per hour</label><input type="number" class="num" step="0.01" id="rate-dinner" value="${S.rates.dinner}" data-rate="dinner"></div>
+    <div style="margin-top:10px"><button class="btn ghost" data-act="rates">Reset to the starting rates</button></div>
+  </details>`;
+}
+function tabSetup(){
+  return sectionWeek()+sectionNeeded()+sectionSeason()+sectionPriority()+sectionStaff()+sectionRates()+sectionHelp();
+}
+
+/* ---------- Pop-ups ---------- */
+function timeModal(m){
+  const est=splitPay(m.start,m.end), ok=est.hours>0;
+  const cross=ok && m.t!=="s" && est.lunchH>0 && est.dinH>0;
+  const info = ok
+    ? `${est.hours.toFixed(2)} hours, about ${money2(est.pay)} (${est.lunchH.toFixed(2)} before 4pm, ${est.dinH.toFixed(2)} from 4pm).${est.nextDay?" Ends the next day.":""}${cross?` These hours cross 4pm, so this shift is paid as a swing shift. It stays in the ${AVAIL_NAME[m.t]} box.`:""}`
+    : est.raw>MAX_SHIFT ? `Clock out is before clock in, so this reads as a ${round1(est.raw)}-hour shift that ends the next day. A shift can run up to ${MAX_SHIFT} hours.`
+    : "Pick a clock in and a clock out.";
+  const label=`${DAYS[m.d]} ${AVAIL_NAME[m.t]}`+(m.chip?` · ${esc(S.people[m.chip.i].name)}`:"");
+  return `<div class="scrim"><div class="dialog" role="dialog" aria-label="${label}">
+    <h3>${label}</h3>
+    <p class="muted">Clock in and clock out. These times apply to everyone on this shift, and they are kept when the shift is switched off and on again.</p>
+    <div class="row spread" style="margin-top:8px"><label for="m-start">Clock in</label><input type="time" id="m-start" value="${m.start}" data-mstart="1"></div>
+    <div class="row spread" style="margin-top:8px"><label for="m-end">Clock out</label><input type="time" id="m-end" value="${m.end}" data-mend="1"></div>
+    <p class="muted">${info}</p>
+    <div class="row spread" style="margin-top:12px"><button class="btn ghost" data-act="mcancel">Cancel</button><button class="btn" data-act="msave" ${ok?"":"disabled"}>Save</button></div>
+  </div></div>`;
+}
+function calModal(m){
+  const p=S.people[m.i];
+  const dim=new Date(Date.UTC(m.y,m.mo+1,0)).getUTCDate();
+  const lead=(new Date(Date.UTC(m.y,m.mo,1)).getUTCDay()+1)%7;
+  const title=new Date(Date.UTC(m.y,m.mo,1)).toLocaleDateString("en-US",{month:"long",year:"numeric",timeZone:"UTC"});
+  let cells="";
+  for(let k=0;k<lead;k++) cells+=`<span></span>`;
+  for(let d=1;d<=dim;d++){
+    const s=ymd(m.y,m.mo,d);
+    cells+=`<button class="cday ${p.req.includes(s)?"on":""} ${m.anchor===s?"anchor":""}" data-act="caldate" data-date="${s}" aria-pressed="${p.req.includes(s)}">${d}</button>`;
+  }
+  const hint = !m.range ? "Tap days one at a time to add or remove them."
+    : (m.anchor ? "Now tap the last day of the range." : "Tap the first day, then the last day. A range that is already fully picked is cleared.");
+  return `<div class="scrim"><div class="dialog" role="dialog" aria-label="Requested days off for ${esc(p.name)}">
+    <div class="row spread"><button class="btn ghost" data-act="calnav" data-dl="-1" aria-label="Previous month">‹</button><b>${title}</b><button class="btn ghost" data-act="calnav" data-dl="1" aria-label="Next month">›</button></div>
+    <div class="row spread" style="margin-top:10px"><b>${esc(p.name)}</b><button class="btn ghost" data-act="calrange" aria-pressed="${m.range}">${m.range?"Range: on":"Range: off"}</button></div>
+    <p class="muted" style="margin:6px 0 8px">${hint}</p>
+    <div class="calgrid">${["S","S","M","T","W","T","F"].map(x=>`<span class="calh">${x}</span>`).join("")}${cells}</div>
+    <p class="muted" style="margin:10px 0">${p.req.length} requested off</p>
+    <div class="row spread"><button class="btn ghost" data-act="calclear">Clear all</button><button class="btn" data-act="caldone">Done</button></div>
+  </div></div>`;
+}
+function textModal(m){
+  return `<div class="scrim"><div class="dialog" role="dialog" aria-label="Schedule as text">
+    <h3>Schedule as text</h3>
+    <p class="muted">This view could not copy for you. Press and hold the text, choose Select All, then Copy.</p>
+    <textarea id="copy-text" readonly>${esc(m.text)}</textarea>
+    <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn" data-act="mcancel">Done</button></div>
+  </div></div>`;
+}
+function renderModal(){
+  const m=S.modal; if(!m) return "";
+  return m.type==="time" ? timeModal(m) : m.type==="cal" ? calModal(m) : m.type==="text" ? textModal(m) : "";
+}
+
+/* ---------- Page ---------- */
+function render(){
+  /* Read which sections are open before the page is rebuilt */
+  document.querySelectorAll("details[data-key]").forEach(d=>{ if(d.open) OPEN.add(d.dataset.key); else OPEN.delete(d.dataset.key); });
+  tidy();
+  const pl=plan();
+  const h=`<h1>La Prima Uguaglianza è L'equità</h1>
+    <nav class="tabs" aria-label="Sections"><div class="seg">${TABS.map(([id,name])=>`<button data-act="tab" data-v="${id}" class="${S.tab===id?"on":""}" aria-pressed="${S.tab===id}">${name}</button>`).join("")}</div></nav>
+    ${S.tab==="numbers" ? tabNumbers(pl) : S.tab==="setup" ? tabSetup() : tabSchedule(pl)}`;
+  document.getElementById("app").innerHTML=h+renderModal();
+  saveAll();
+}
+
+/* ---------- Events ---------- */
+document.addEventListener("toggle",e=>{
+  const d=e.target;
+  if(d.tagName!=="DETAILS" || !d.dataset.key) return;
+  if(d.open) OPEN.add(d.dataset.key); else OPEN.delete(d.dataset.key);
+},true);
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]"); if(!b||b.disabled) return;
+  const a=b.dataset.act, i=+b.dataset.i, d=+b.dataset.d, t=b.dataset.t, ki=+b.dataset.ki;
+  const asked=S.confirm;
+  S.note=""; S.confirm="";
+  switch(a){
+    case "tab": S.tab=b.dataset.v; break;
+    case "page": S.page=clamp(S.page+(+b.dataset.dl),0,3); break;
+    case "season": S.peak=b.dataset.v==="1"; break;
+    case "pdf": savePdf(false); return;
+    case "pdfall": savePdf(true); return;
+    case "copy": copyWeek(); return;
+    case "print": printWeeks(false); return;
+    case "printall": printWeeks(true); return;
+    case "save4": saveMonth(); break;
+    case "force": S.force=!S.force; break;
+    case "need": S.need[d][t]=clamp(S.need[d][t]+(+b.dataset.dl),0,20); break;
+    case "timeopen": { const tm=S.times[`${d}-${t}`]; S.modal={type:"time", d, t, start:tm.start, end:tm.end, chip:null}; break; }
+    case "chip": {
+      const p=S.people[i];
+      if(p.avail[d][ki]) p.avail[d][ki]=false;
+      else {
+        const k=SLOTS[ki], tm=S.times[`${d}-${k}`];
+        if(tm.set) p.avail[d][ki]=true;
+        else S.modal={type:"time", d, t:k, start:tm.start, end:tm.end, chip:{i, ki}};
+      }
+      break;
+    }
+    case "day": { const p=S.people[i], any=p.avail[d].some(Boolean); p.avail[d]=[!any,!any,!any]; break; }
+    case "bound": {
+      const p=S.people[i], bd=bounds(p), dl=+b.dataset.dl;
+      if(b.dataset.kind==="min") p.min=clamp(p.min+dl,bd.lo,bd.hi);
+      else p.max=clamp(p.max+dl,p.min,bd.hi);
+      p.max=clamp(p.max,p.min,bd.hi);
+      break;
+    }
+    case "up": case "down": {
+      const n=+b.dataset.n, j=a==="up"?n-1:n+1;
+      if(j>=0 && j<S.priority.length) [S.priority[n],S.priority[j]]=[S.priority[j],S.priority[n]];
+      break;
+    }
+    case "rates": S.rates={...DEFAULT_RATES}; break;
+    case "mcancel": S.modal=null; break;
+    case "msave": {
+      const m=S.modal; if(!m) break;
+      if(splitPay(m.start,m.end).hours<=0) break;
+      S.times[`${m.d}-${m.t}`]={start:m.start, end:m.end, set:true};
+      if(m.chip) S.people[m.chip.i].avail[m.d][m.chip.ki]=true;
+      S.modal=null;
+      break;
+    }
+    case "calopen": {
+      const ws=S.weekStart;
+      S.modal={type:"cal", i, y:+ws.slice(0,4), mo:+ws.slice(5,7)-1, range:false, anchor:null};
+      break;
+    }
+    case "calnav": {
+      const m=S.modal; if(!m) break;
+      m.mo+=+b.dataset.dl;
+      if(m.mo<0){ m.mo=11; m.y--; }
+      if(m.mo>11){ m.mo=0; m.y++; }
+      break;
+    }
+    case "calrange": { const m=S.modal; m.range=!m.range; m.anchor=null; break; }
+    case "caldate": {
+      const m=S.modal, p=S.people[m.i], s=b.dataset.date;
+      if(m.range && m.anchor){
+        const lo=[m.anchor,s].sort()[0], hi=[m.anchor,s].sort()[1];
+        const days=[];
+        for(let x=lo; x<=hi; x=addDays(x,1)) days.push(x);
+        if(days.every(x=>p.req.includes(x))) p.req=p.req.filter(x=>!days.includes(x));
+        else days.forEach(x=>{ if(!p.req.includes(x)) p.req.push(x); });
+        m.anchor=null;
+      } else if(m.range){
+        m.anchor=s;
+      } else {
+        p.req = p.req.includes(s) ? p.req.filter(x=>x!==s) : [...p.req, s];
+      }
+      p.req.sort();
+      break;
+    }
+    case "calclear": if(S.modal) S.people[S.modal.i].req=[]; break;
+    case "caldone": S.modal=null; break;
+    case "reqdel": S.people[i].req=S.people[i].req.filter(x=>x!==b.dataset.date); break;
+    /* Erasing takes two taps: the first asks, the second does it */
+    case "resetmonth": {
+      const want="reset-"+b.dataset.mk;
+      if(asked===want) S.weeks=S.weeks.filter(w=>w.start.slice(0,7)!==b.dataset.mk); else S.confirm=want;
+      break;
+    }
+    case "resetall": if(asked==="resetall") S.weeks=[]; else S.confirm="resetall"; break;
+    default: return;
+  }
+  render();
+  if(a==="tab") window.scrollTo(0,0);
+});
+
+document.addEventListener("change",e=>{
+  const el=e.target, ds=el.dataset;
+  if(ds.wk!==undefined){ if(el.value){ S.weekStart=satOnOrBefore(el.value); S.page=0; } }
+  else if(ds.name!==undefined){
+    const p=S.people[+ds.name], old=p.name, nn=el.value.trim()||old;
+    p.name=nn;
+    const k=S.priority.indexOf(old); if(k>=0) S.priority[k]=nn;
+  }
+  else if(ds.rota!==undefined){ S.people[+ds.rota].onRota=el.checked; }
+  else if(ds.pt!==undefined){ S.people[+ds.pt].ptype=ds.v; }
+  else if(ds.rate!==undefined){ S.rates[ds.rate]=Math.max(MIN_RATE, parseFloat(el.value)||MIN_RATE); }
+  else if(ds.mstart!==undefined){ if(S.modal) S.modal.start=el.value; }
+  else if(ds.mend!==undefined){ if(S.modal) S.modal.end=el.value; }
+  else return;
+  S.note=""; S.confirm="";
+  render();
+});
+
+loadAll();
+render();
+/* Saving a file is offered only where this view supports it */
+if(window.claude && typeof window.claude.use==="function"){
+  window.claude.use("downloads").then(d=>{ if(d){ downloads=d; render(); } }).catch(()=>{});
+}
+</script>
+
+</body></html>
