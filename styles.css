@@ -2736,61 +2736,76 @@
     }
     .trap-reveal.speaking .trap-line,
     .trap-reveal.speaking .trap-actions { opacity: 1; transform: none; }
+    /* Set in the site's own type: a small spaced-out label, plain body text, and the serif in italics for the line that matters. */
     .trap-line {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-family: var(--sans, sans-serif);
-      font-size: 1.02rem;
-      line-height: 1.55;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #3a362f;
     }
-    .trap-line:first-child { font-size: 1.14rem; font-weight: 600; letter-spacing: -.01em; }
-    .trap-motto {
-      margin: 18px 0 0;
+    .trap-line:first-child {             /* like the section labels on the resume, behind a short gold rule */
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: .72rem;
+      font-weight: 500;
+      line-height: 1.7;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: #806425;
+    }
+    .trap-line:first-child::before {
+      content: '';
+      flex: none;
+      width: 18px;
+      height: 1px;
+      background: var(--gold-deep, #a5843c);
+      transform: translateY(-.32em);
+    }
+    .trap-motto {                        /* like the headline on the opening screen */
+      margin: 20px 0 0;
       font-family: var(--serif, Georgia, serif);
       font-style: italic;
-      font-size: 1.42rem;
-      line-height: 1.25;
-      color: #d21f2c;
+      font-weight: 400;
+      font-size: 1.7rem;
+      line-height: 1.2;
+      letter-spacing: .005em;
+      color: var(--ink, #0b0b0b);
     }
-    .trap-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-    .trap-go {
-      flex: 1 1 200px;
-      padding: 14px 22px;
-      border: 0;
-      border-radius: 100px;
-      background: #d21f2c;
-      color: #fff;
-      font-family: var(--sans, sans-serif);
-      font-size: .98rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 0 0 3px #ffcc03;        /* the yellow edge from the logo */
-      transition: background .15s, transform .15s ease;
-    }
-    .trap-go:hover { background: #b81a26; transform: translateY(-1px); }
+    /* buttons like the site's own: dark pill, spaced capitals */
+    .trap-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .trap-go,
     .trap-done {
-      flex: 0 0 auto;
-      padding: 14px 22px;
-      border: 1px solid rgba(11, 11, 11, .22);
-      border-radius: 100px;
-      background: transparent;
-      color: inherit;
+      padding: 14px 24px;
+      border: 1px solid #111;
+      border-radius: 999px;
       font-family: var(--sans, sans-serif);
-      font-size: .95rem;
+      font-size: .72rem;
       font-weight: 500;
+      letter-spacing: .2em;
+      text-indent: .2em;
+      text-transform: uppercase;
+      white-space: nowrap;
       cursor: pointer;
+      transition: background .3s, color .3s, transform .3s var(--ease, ease);
     }
-    .trap-done:hover { background: rgba(11, 11, 11, .06); }
-    .trap-go:focus-visible, .trap-done:focus-visible { outline: 3px solid #0b0b0b; outline-offset: 3px; }
+    .trap-go { flex: 1 1 200px; background: #111; color: var(--ivory, #f5f2ec); }
+    .trap-go:hover { background: #000; transform: translateY(-1px); }
+    .trap-done { flex: 0 0 auto; background: transparent; color: #111; }
+    .trap-done:hover { background: #111; color: var(--ivory, #f5f2ec); }
+    .trap-go:focus-visible, .trap-done:focus-visible { outline: 2px solid var(--gold-deep, #a5843c); outline-offset: 3px; }
     /* small or short screens: the same speech, set a little tighter so it fits without scrolling */
     @media (max-width: 380px), (max-height: 660px) {
       .trap-reveal { padding: 12px 14px 18px; }
       .trap-bubble { margin-top: 12px; padding: 20px 20px 18px; border-radius: 18px; }
-      .trap-line { margin-bottom: 8px; font-size: .94rem; line-height: 1.45; }
-      .trap-line:first-child { font-size: 1.04rem; }
-      .trap-motto { margin-top: 12px; font-size: 1.18rem; }
-      .trap-actions { margin-top: 16px; gap: 8px; }
-      .trap-go { flex-basis: 150px; padding: 12px 16px; font-size: .92rem; }
-      .trap-done { padding: 12px 16px; font-size: .9rem; }
+      .trap-line { margin-bottom: 10px; font-size: .94rem; line-height: 1.55; }
+      .trap-line:first-child { margin-bottom: 8px; font-size: .66rem; letter-spacing: .2em; }
+      .trap-motto { margin-top: 14px; font-size: 1.42rem; }
+      .trap-actions { margin-top: 18px; gap: 8px; }
+      .trap-go, .trap-done { padding: 12px 14px; font-size: .66rem; letter-spacing: .14em; text-indent: .14em; }
+      .trap-go { flex-basis: 150px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .trap-bubble, .trap-line, .trap-actions { transition-duration: .01s; transition-delay: 0s; }
