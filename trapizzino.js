@@ -239,10 +239,9 @@
 
   // ---- Caught. She has something to say, and something to show. ----
   var SAYS = [
-    'Here\u2019s a lil something Lucius has done.',
-    'She\u2019s made this amazing scheduler that balances all employee shifts by employing ' +
-      'exhaustive calculations to best determine equity.',
-    'Equity must be obtained before we can have equality!'
+    'Here\u2019s a lil something Lucius made.',
+    'A scheduler that does the math so every shift is shared fairly.',
+    'Equity first, then equality.'
   ];
 
   function caught() {

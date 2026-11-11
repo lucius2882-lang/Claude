@@ -1,10 +1,12 @@
 <!doctype html>
-<!-- Website copy of the schedule maker. Staff names here are samples; made by make_site_scheduler.py from the working copy. -->
-<html><head><meta charset=utf8><meta name="robots" content="noindex"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>La Prima Uguaglianza è L'equità</title>
+<!-- Website copy of Lucius Campany's schedule maker. Apart from Lucius, the staff names are made up. -->
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<title>La Prima Uguaglianza è L'equità</title>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <style>
 /* Layout: one column with three tabs. Schedule opens first, Numbers shows the pay, Setup holds every setting. */
 :root{
@@ -140,6 +142,12 @@ tr.tot td{background:var(--beige);font-weight:800;border-bottom:0}
 details summary{cursor:pointer;font-weight:700}
 details.card{padding:10px 12px}
 ol.rules{padding-left:20px;margin:6px 0}
+.cellbtn{font:inherit;color:inherit;background:none;border:0;padding:0;text-align:left;width:100%;cursor:pointer;line-height:inherit}
+.cand{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.cand .who{flex:1;min-width:0}
+.cand .btn{padding:7px 12px;font-size:13px;flex:none}
+.advin{width:100%;min-width:0;text-align:center;padding:6px 2px;font-size:14px}
+.rk{display:inline-block;min-width:22px;font-weight:800;color:var(--ink2)}
 /* Printing, offered only in a saved copy opened in a browser: the schedule alone, black on white, one week to a page.
    The rules apply only while the Print buttons are in use, so the browser's own Print still prints the page as it looks. */
 #printable{display:none}
@@ -157,9 +165,12 @@ ol.rules{padding-left:20px;margin:6px 0}
   #printable .sub{font-size:9.5pt}
   #printable tr{break-inside:avoid}
 }
+/* A way back to the portfolio, shown only when this page is opened on its own. */
+#pf-home{display:block;padding:10px 16px;font:500 13px/1.2 var(--body);color:var(--greenInk);text-decoration:none;border-bottom:1px solid var(--line)}
 </style>
-
-<a id="pf-home" href="/" hidden style="display:block;padding:10px 16px;font:500 13px/1.2 -apple-system,system-ui,sans-serif;color:#1f4d3a;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.08)">← Lucius Campany's portfolio</a>
+</head>
+<body>
+<a id="pf-home" href="/" hidden>← Lucius Campany's portfolio</a>
 <script>try{ if(window.top===window.self) document.getElementById("pf-home").hidden=false; }catch(e){}</script>
 <div class="app" id="app">
   <!-- Shown only where scripts do not run, such as a file preview. The script below replaces it. -->
@@ -180,7 +191,7 @@ ol.rules{padding-left:20px;margin:6px 0}
      AM / Swing / PM        = the shifts on the schedule.
      Minimum / Maximum      = how many shifts a person is scheduled for in a week.
    Weeks run Saturday to Friday, matching payroll. Four weeks are planned at a time.
-   Fairness rule: everyone earns about the same per hour and per shift, so more shifts means more pay.
+   Fairness rule: everyone earns about the same per hour, so more shifts means more pay.
    ============================================================ */
 
 const DAYS=["Sat","Sun","Mon","Tue","Wed","Thu","Fri"];
@@ -197,22 +208,20 @@ const DEFAULT_TIMES={
 const DEFAULT_NEED=DAYS.map((_,d)=>({am:1, s:[1,1,0,0,0,0,0][d], pm:[3,1,2,2,2,2,3][d]}));
 const DEFAULT_RATES={lunch:22.21, dinner:30.91};
 const DEFAULT_PEOPLE=[
-  ["Sam","Full-time",5],
-  ["Dee","Full-time",4],
-  ["Theo","Full-time",4],
-  ["Marco","Full-time",4],
-  ["Rosa","Part-time",3],
+  ["Sherry Currency","Full-time",5],
+  ["Tilapiana Bronco","Full-time",4],
+  ["Prayfah Her","Full-time",4],
+  ["Connie Codedit","Full-time",4],
+  ["Teaness Sippa","Part-time",3],
   ["Lucius Campany","Part-time",3]
 ];
-const DEFAULT_PRIORITY=["Sam","Theo","Dee","Marco","Rosa","Lucius Campany"];
+const DEFAULT_PRIORITY=["Sherry Currency","Prayfah Her","Tilapiana Bronco","Connie Codedit","Teaness Sippa","Lucius Campany"];
 const MIN_RATE=17, OT_CAP=40, LUNCH_END=16, MAX_SHIFT=16;
+/* Equity rules. A shift's value is its pay per hour: the number typed in the Pay rates grid, else the lunch and dinner estimate. */
+const DES_W=150, SHORT_W=0.003, RANK_W=0.00002, MIN32=32, HRS_W=2, MIN_W=25;
+const PROT_TEXT="Protected is only for disability, religion, caregiving, school, or another reason your manager has approved. A protected day will not lower your rank or count against you.";
 const STORE_WEEKS="schedule-maker-weeks", STORE_SETUP="schedule-maker-setup-v2";
 const TABS=[["schedule","Schedule"],["numbers","Numbers"],["setup","Setup"]];
-/* The two seasons differ only in who gets shifts beyond the minimums. [peak?, name, what it does] */
-const SEASONS=[
-  [false,"Regular season","Extra shifts take turns across everyone, starting with the smallest schedules."],
-  [true,"Peak season","Extra shifts go to full-time staff first, in priority order. Part-time staff keep their minimum."]
-];
 
 /* ---------- Small helpers ---------- */
 const round1=n=>Math.round(n*10)/10;
@@ -239,7 +248,7 @@ const span=a=>a.length ? {lo:Math.min(...a), hi:Math.max(...a), gap:Math.max(...
 /* ---------- State ---------- */
 function freshPeople(){
   return DEFAULT_PEOPLE.map(([name,ptype,min])=>({name, ptype, onRota:true, min, max:min+1,
-    avail:DAYS.map(()=>[true,true,true]), req:[]}));
+    avail:DAYS.map(()=>[true,true,true]), req:[], reqP:[], prot:DAYS.map(()=>false), min32:false}));
 }
 function freshTimes(){
   const t={};
@@ -256,12 +265,16 @@ const S={
   need:DEFAULT_NEED.map(x=>({...x})),
   times:freshTimes(),
   rates:{...DEFAULT_RATES},
-  peak:false,                    /* false = regular season, true = peak season */
   priority:[...DEFAULT_PRIORITY],
+  pins:[],                       /* manual picks: {ws, d, t, name} */
+  cant:[],                       /* someone who cannot work a day that week: {ws, d, name} */
+  shiftPay:{},                   /* advanced: average pay for one person on a shift, keyed "day-slot", replaces the rate estimate */
+  rank:"numbers",                /* numbers = rank from shifts offered, manual = the order above */
   force:false,
   weeks:[],                      /* saved weeks, a record only */
   modal:null,
   note:"",
+  nameNote:-1,                   /* the person whose new name was turned down because someone else has it */
   confirm:""                     /* an erase waiting for its second tap */
 };
 let downloads=null;              /* the viewer's save-a-file feature, when this view has one */
@@ -274,15 +287,14 @@ function loadAll(){
     const x=JSON.parse(localStorage.getItem(STORE_SETUP)||"null");
     if(x && Array.isArray(x.people) && x.people.length===DEFAULT_PEOPLE.length){
       S.weekStart=satOnOrBefore(x.weekStart||S.weekStart);
-      S.people=x.people.map(p=>({...p, req:Array.isArray(p.req)?p.req:[]}));
+      S.people=x.people.map(p=>({...p, req:Array.isArray(p.req)?p.req:[], reqP:Array.isArray(p.reqP)?p.reqP:[], prot:(Array.isArray(p.prot) && p.prot.length===7)?p.prot:DAYS.map(()=>false), min32:!!p.min32}));
       S.need=x.need; S.times=x.times; S.rates=x.rates;
       /* One time: every shift takes the standard clock times. Changes made after that are kept. */
       if(x.tv!==3) Object.entries(S.times).forEach(([k,t])=>{
         const [d,kind]=k.split("-"), std=DEFAULT_TIMES[kind][+d];
         t.start=std[0]; t.end=std[1];
       });
-      S.peak=!!x.peak;
-      S.priority=x.priority; S.force=!!x.force;
+      S.priority=x.priority; S.force=!!x.force; S.rank=x.rank==="manual"?"manual":"numbers"; S.pins=Array.isArray(x.pins)?x.pins:[]; S.cant=Array.isArray(x.cant)?x.cant:[]; S.shiftPay=(x.shiftPay && typeof x.shiftPay==="object")?x.shiftPay:{};
     }
   }catch(e){}
 }
@@ -290,7 +302,7 @@ function saveAll(){
   try{
     localStorage.setItem(STORE_WEEKS, JSON.stringify(S.weeks));
     localStorage.setItem(STORE_SETUP, JSON.stringify({tv:3, weekStart:S.weekStart, people:S.people, need:S.need,
-      times:S.times, rates:S.rates, peak:S.peak, priority:S.priority, force:S.force}));
+      times:S.times, rates:S.rates, priority:S.priority, rank:S.rank, pins:S.pins, cant:S.cant, shiftPay:S.shiftPay, force:S.force}));
   }catch(e){}
 }
 
@@ -308,46 +320,94 @@ function splitPay(start,end){
 /* Shift limits from open days. Full-time needs five open days. */
 function limitsFor(days,ptype){
   const ft=ptype==="Full-time";
-  const hi = days>=(ft?6:5) ? days-1 : days;
+  const hi = Math.min(days,6);                    /* up to every open day, never more than six */
   const lo0 = ft ? (days<=1?days : days===2?1 : days===3?2 : Math.min(4,days))
                  : (days>=5?3 : days>=3?2 : days>=2?1 : days);
   return {lo:Math.min(lo0,hi), hi, days};
 }
-function openDays(p){ return p.avail.filter(a=>a.some(Boolean)).length; }
+/* A protected day counts as offered, so it never costs anyone their limits or their rank */
+function openDays(p){ return p.avail.filter((a,d)=>a.some(Boolean) || p.prot[d]).length; }
 function bounds(p){ return limitsFor(openDays(p), p.ptype); }
 /* Keep every person's numbers inside their limits */
 function tidy(){
   S.people.forEach(p=>{
     const b=bounds(p);
     if(b.days<5) p.ptype="Part-time";
+    if(p.ptype!=="Full-time") p.min32=false;
     p.min=clamp(p.min,b.lo,b.hi);
     p.max=clamp(p.max,p.min,b.hi);
   });
+  tidyManual();
+}
+/* Manual picks that can no longer apply are dropped: a shift that is no longer needed, more picks than a shift has spots
+   (the newest stay), and anyone taken off the schedule */
+function tidyManual(){
+  const onNames=new Set(S.people.filter(p=>p.onRota).map(p=>p.name));
+  S.pins=S.pins.filter(x=>onNames.has(x.name) && S.need[x.d] && S.need[x.d][x.t]>0);
+  const seen={};
+  for(let k=S.pins.length-1;k>=0;k--){
+    const x=S.pins[k], key=`${x.ws}|${x.d}|${x.t}`;
+    seen[key]=(seen[key]||0)+1;
+    if(seen[key]>S.need[x.d][x.t]) S.pins.splice(k,1);
+  }
+  S.cant=S.cant.filter(x=>onNames.has(x.name));
 }
 function totalNeed(){
   let am=0,s=0,pm=0;
   S.need.forEach(x=>{ am+=x.am; s+=x.s; pm+=x.pm; });
   return {am,s,pm,all:am+s+pm};
 }
-const rankOf=i=>{ const k=S.priority.indexOf(S.people[i].name); return k<0?999:k; };
+/* Rank breaks ties and decides who picks first among the best open shifts. Numbers mode: most shifts they are willing to take,
+   then most days offered, then ties rotate week by week. Manual mode: the typed order. */
+let RK=null;
+function rankFor(ws){
+  const P=S.people, n=P.length, idx=[...Array(n).keys()];
+  if(S.rank==="manual") return idx.map(i=>{ const k=S.priority.indexOf(P[i].name); return k<0?999:k; });
+  const wk=Math.floor(Date.parse(ws)/(7*864e5));
+  const key=i=>[-P[i].max, -openDays(P[i]), (i+wk)%n];
+  const order=[...idx].sort((a,b)=>{ const x=key(a), y=key(b); for(let k=0;k<x.length;k++) if(x[k]!==y[k]) return x[k]-y[k]; return 0; });
+  const rk=Array(n); order.forEach((i,r)=>{ rk[i]=r; }); return rk;
+}
+const rankOf=i=>RK ? RK[i] : (()=>{ const k=S.priority.indexOf(S.people[i].name); return k<0?999:k; })();
 
 /* ---------- Solver ----------
    Each week is planned in two steps, and each week sees the weeks before it (carry).
-   Step 1, how many shifts each person gets: minimums first (full-time before part-time), then extra shifts by season.
-   Step 2, which shifts: everyone's pay per hour and pay per shift, counted from week 1, is brought as close together
+   Step 1, how many shifts each person gets: minimums first (full-time before part-time), then extra shifts to the smallest schedules.
+   Step 2, which shifts: everyone's pay per hour, counted from week 1, is brought as close together
    as the shifts allow. That is what keeps pay in line with work. */
+/* A pay average set under Advanced replaces the rate-based estimate for that shift */
+const shiftValue=(d,k,est)=>{ const o=S.shiftPay[`${d}-${k}`]; return o>0 ? o : est; };
+const shiftPay1=(d,k)=>{ const tm=S.times[`${d}-${k}`]; return shiftValue(d,k,splitPay(tm.start,tm.end).pay); };
+const shiftPH=(d,k)=>{ const tm=S.times[`${d}-${k}`], sp=splitPay(tm.start,tm.end); return sp.hours>0 ? shiftValue(d,k,sp.pay)/sp.hours : 0; };
 function slotList(){
   const out=[];
   DAYS.forEach((_,d)=>SLOTS.forEach(k=>{
     const tm=S.times[`${d}-${k}`], sp=splitPay(tm.start,tm.end);
-    for(let j=0;j<S.need[d][k];j++) out.push({d, t:k, hh:sp.hours, v:sp.pay, h:-1, forced:false});
+    for(let j=0;j<S.need[d][k];j++) out.push({d, t:k, hh:sp.hours, v:shiftValue(d,k,sp.pay), dz:shiftPH(d,k), h:-1, forced:false});
   }));
   return out;
 }
 /* Requested days off, mapped onto the seven days of the week starting ws */
-function reqBlocked(p,ws){
+/* Days this person has been marked unable to work that week */
+function cantDays(p,ws){
   const out=DAYS.map(()=>false);
+  S.cant.forEach(c=>{ if(c.ws===ws && c.name===p.name) out[c.d]=true; });
+  return out;
+}
+function reqBlocked(p,ws){
+  const out=cantDays(p,ws);
   p.req.forEach(s=>{
+    const k=Math.round((Date.parse(s)-Date.parse(ws))/864e5);
+    if(k>=0 && k<7) out[dayIdx(addDays(ws,k))]=true;
+  });
+  return out;
+}
+/* Days that are protected this week: a protected closed day, or a protected requested day off */
+function protBlocked(p,ws){
+  const out=p.prot.slice();
+  cantDays(p,ws).forEach((v,d)=>{ if(v) out[d]=true; });
+  (p.reqP||[]).forEach(s=>{
+    if(!p.req.includes(s)) return;
     const k=Math.round((Date.parse(s)-Date.parse(ws))/864e5);
     if(k>=0 && k<7) out[dayIdx(addDays(ws,k))]=true;
   });
@@ -370,43 +430,68 @@ function shiftTargets(total,lo,hi,on,carry){
       t[c[0]]++; left--;
     }
   }
-  /* Extra shifts go to whoever has had the fewest extras so far. Peak season: full-time first. Regular: smallest schedule first. */
+  /* Extra shifts go to whoever has had the fewest extras so far, then the smallest schedule, then rank */
   while(left>0){
-    let c=idx.filter(i=>on[i] && t[i]<hi[i]);
+    const c=idx.filter(i=>on[i] && t[i]<hi[i]);
     if(!c.length) break;
-    if(S.peak){ const f=c.filter(ft); if(f.length) c=f; }
     const extras=i=>carry[i].extra+t[i]-lo[i];
-    c.sort((a,b)=>(extras(a)-extras(b)) || (S.peak ? 0 : t[a]-t[b]) || (rankOf(a)-rankOf(b)));
+    c.sort((a,b)=>(extras(a)-extras(b)) || (t[a]-t[b]) || (rankOf(a)-rankOf(b)));
     t[c[0]]++; left--;
   }
   return t;
 }
 function solve(ws,force,carry){
+  RK=rankFor(ws);
   const P=S.people, n=P.length, idx=[...Array(n).keys()];
   const on=P.map(p=>p.onRota), mx=P.map(p=>p.max);
   const blocked=P.map(p=>reqBlocked(p,ws));
+  const prot=P.map(p=>protBlocked(p,ws));
   const slots=slotList();
+  /* Each shift's pay per hour, scaled: bad is 0 for the best-paying shift and 5 for the worst, good marks the top quarter of the range */
+  const phs=slots.map(s=>s.dz), topPH=phs.length?Math.max(...phs):0, botPH=phs.length?Math.min(...phs):0, rngPH=topPH-botPH;
+  slots.forEach(s=>{ s.bad=rngPH>0.01 ? 5*(topPH-s.dz)/rngPH : 0; s.good=rngPH>0.01 && s.dz>=topPH-0.25*rngPH; });
   const free=(i,s)=>P[i].avail[s.d][SIDX[s.t]] && !blocked[i][s.d];
   /* Days each person can work this week, and so their minimum and maximum for the week */
   const cap=idx.map(i=>on[i] ? DAYS.filter((_,d)=>slots.some(s=>s.d===d && free(i,s))).length : 0);
-  const lo=idx.map(i=>Math.min(P[i].min,cap[i])), hi=idx.map(i=>Math.min(mx[i],cap[i]));
+  /* A 32-hour minimum needs enough shifts to reach 32 hours at the average shift length */
+  const avgH=slots.length ? slots.reduce((s,x)=>s+x.hh,0)/slots.length : 0;
+  const n32=avgH>0 ? Math.ceil(MIN32/avgH) : 0;
+  const m32=idx.map(i=>!!(on[i] && P[i].min32 && P[i].ptype==="Full-time"));
+  const need32=i=>Math.min(n32, bounds(P[i]).hi);        /* never more shifts than the limits table allows */
+  idx.forEach(i=>{ if(m32[i]) mx[i]=Math.max(mx[i],need32(i)); });
+  const lo=idx.map(i=>Math.min(m32[i]?Math.max(P[i].min,need32(i)):P[i].min,cap[i])), hi=idx.map(i=>Math.min(mx[i],cap[i]));
   const want=shiftTargets(slots.length,lo,hi,on,carry);
-  const st={pay:Array(n).fill(0), hrs:Array(n).fill(0), cnt:Array(n).fill(0), forced:Array(n).fill(0)};
+  /* Short-scheduled: behind the shifts they agreed to, counting earlier weeks. They get first pick of the best-paying shifts and are kept off the lowest-paying ones. */
+  const short=idx.map(i=>on[i] && (carry[i].owed-carry[i].extra+(lo[i]-want[i]))>0);
+  const shortMode=short.some(Boolean) && !short.every(Boolean);
+  const st={pay:Array(n).fill(0), hrs:Array(n).fill(0), cnt:Array(n).fill(0), forced:Array(n).fill(0), des:Array(n).fill(0), pr:Array(n).fill(0), sv:Array(n).fill(0)};
   const day=P.map(()=>Array(7).fill(null));      /* the shift each person holds on each day */
 
-  const put=(s,i)=>{ s.h=i; st.cnt[i]++; st.pay[i]+=s.v; st.hrs[i]+=s.hh; day[i][s.d]=s; };
-  const take=s=>{ const i=s.h; s.h=-1; st.cnt[i]--; st.pay[i]-=s.v; st.hrs[i]-=s.hh; day[i][s.d]=null; };
+  const put=(s,i)=>{ s.h=i; st.cnt[i]++; st.pay[i]+=s.v; st.hrs[i]+=s.hh; st.des[i]+=s.dz; st.sv[i]+=s.bad; if(s.good) st.pr[i]++; day[i][s.d]=s; };
+  const take=s=>{ const i=s.h; s.h=-1; st.cnt[i]--; st.pay[i]-=s.v; st.hrs[i]-=s.hh; st.des[i]-=s.dz; st.sv[i]-=s.bad; if(s.good) st.pr[i]--; day[i][s.d]=null; };
   const canTake=(i,s)=>on[i] && free(i,s) && !day[i][s.d] && st.cnt[i]<mx[i] && st.hrs[i]+s.hh<=OT_CAP;
-  /* Lower is better: shifts away from step 1 count most, then how far apart pay per hour and pay per shift are */
+  /* Lower is better. In order of weight: shifts away from step 1 (and, after the first pass, anyone under their minimum), then how far behind
+     short-scheduled people are on the best-paying shifts, then how far apart pay per hour is, then how far apart everyone's average shift rate is,
+     then a tiny nudge so higher-ranked people get the best shifts when everything else is level */
+  let minOn=false;                                           /* switched on once the first pass is done; see repairMinimums */
   const score=()=>{
-    let off=0; const perHour=[], perShift=[];
+    let off=0, un=0, rk=0, sh=0, hd=0; const perHour=[], desAvg=[];
     for(const i of idx){
       if(!on[i]) continue;
       off+=Math.abs(st.cnt[i]-want[i]);
+      un+=Math.max(0,lo[i]-st.cnt[i]);
+      if(shortMode && short[i]) sh+=st.sv[i];
       const pay=carry[i].pay+st.pay[i], h=carry[i].hrs+st.hrs[i], c=carry[i].cnt+st.cnt[i];
-      if(h>0 && c>0){ perHour.push(pay/h); perShift.push(pay/c); }
+      if(h>0 && c>0){
+        if(!(shortMode && short[i])){                          /* short-scheduled people may run above the average, per hour and in shift rate */
+          perHour.push(pay/h);
+          desAvg.push((carry[i].des+st.des[i])/c);
+        }
+      }
+      rk+=RK[i]*st.pr[i];
+      if(m32[i]) hd+=Math.max(0,MIN32-st.hrs[i]);
     }
-    return off*10+cv2(perHour)+cv2(perShift);
+    return off*10 + (minOn?MIN_W*un:0) + SHORT_W*sh + cv2(perHour) + DES_W*cv2(desAvg) + RANK_W*rk + HRS_W*hd;
   };
   const best=(s,cands)=>{
     let b=-1, bs=Infinity;
@@ -425,7 +510,7 @@ function solve(ws,force,carry){
       if(!on[i] || !free(i,s)) continue;
       const inTheWay=day[i][s.d] ? [day[i][s.d]] : slots.filter(y=>y.h===i);
       for(const y of inTheWay){
-        if(y.forced || seen.has(y)) continue;
+        if(y.forced || y.lock || seen.has(y)) continue;
         take(y);
         if(canTake(i,s)){
           put(s,i); seen.add(y);
@@ -442,7 +527,7 @@ function solve(ws,force,carry){
     for(let g=0;g<300;g++){
       let bestS=score()-1e-9, act=null;
       for(const s of slots){
-        if(s.h<0 || s.forced) continue;
+        if(s.h<0 || s.forced || s.lock) continue;
         const A=s.h;
         take(s);
         for(const B of idx){
@@ -454,10 +539,10 @@ function solve(ws,force,carry){
       }
       for(let x=0;x<slots.length;x++){
         const X=slots[x];
-        if(X.h<0 || X.forced) continue;
+        if(X.h<0 || X.forced || X.lock) continue;
         for(let y=x+1;y<slots.length;y++){
           const Y=slots[y];
-          if(Y.h<0 || Y.forced || Y.h===X.h) continue;
+          if(Y.h<0 || Y.forced || Y.lock || Y.h===X.h) continue;
           const A=X.h, B=Y.h;
           take(X); take(Y);
           if(canTake(A,Y) && canTake(B,X)){
@@ -475,31 +560,72 @@ function solve(ws,force,carry){
     }
   };
 
+  /* Agreed shifts come first. Someone under their minimum takes a shift from someone above theirs. When no single hand-off works,
+     a chain does it: A takes one of B's shifts, B takes one of C's, and C, who is above their minimum, ends one shift down. */
+  const handOff=(u,used,budget)=>{
+    for(const y of slots){
+      const a=y.h;
+      if(a<0 || a===u || used.has(a) || y.forced || y.lock || !canTake(u,y)) continue;
+      if(--budget.n<0) return false;
+      if(st.cnt[a]>lo[a]){ take(y); put(y,u); return true; }
+      take(y); put(y,u); used.add(u);
+      const ok=handOff(a,used,budget);
+      used.delete(u);
+      if(ok) return true;
+      take(y); put(y,a);
+    }
+    return false;
+  };
+  const repairMinimums=()=>{
+    let moved=false;
+    for(let g=0;g<60;g++){
+      const under=idx.filter(i=>on[i] && st.cnt[i]<lo[i]).sort((a,b)=>((lo[b]-st.cnt[b])-(lo[a]-st.cnt[a])) || (rankOf(a)-rankOf(b)));
+      if(!under.some(u=>handOff(u,new Set(),{n:4000}))) break;
+      moved=true;
+    }
+    return moved;
+  };
+
+  /* Manual picks go in first and stay where they are put */
+  S.pins.filter(x=>x.ws===ws).forEach(x=>{
+    const i=P.findIndex(p=>p.name===x.name); if(i<0 || !on[i]) return;
+    const s=slots.find(y=>y.h<0 && y.d===x.d && y.t===x.t); if(!s || day[i][s.d]) return;
+    put(s,i); s.lock=true;
+  });
   /* Hardest shifts to cover first, then the best paid */
   slots.forEach(s=>{ s.nc=idx.filter(i=>on[i] && free(i,s)).length; });
   const order=[...slots].sort((x,y)=>(x.nc-y.nc) || (y.v-x.v) || (x.d-y.d));
   for(const s of order){
+    if(s.h>=0) continue;
     const c=idx.filter(i=>canTake(i,s) && st.cnt[i]<want[i]);
     if(c.length) put(s,best(s,c));
   }
   for(const s of order) if(s.h<0) fill(s,3,new Set());
   improve();
   for(const s of order) if(s.h<0 && fill(s,3,new Set())) improve();
+  /* From here on, being under a minimum outweighs evening out pay, so a hand-off is never undone */
+  minOn=true;
+  if(repairMinimums()) improve();
 
   /* Force fill: someone not already working that day, taking turns. A requested day off is the last thing overridden. */
   if(force){
-    for(const s of [...slots].sort((x,y)=>y.v-x.v)){
-      if(s.h>=0) continue;
-      const c=idx.filter(i=>on[i] && !day[i][s.d] && st.hrs[i]+s.hh<=OT_CAP);
-      if(!c.length) continue;
-      const key=i=>[blocked[i][s.d]?1:0, carry[i].forced+st.forced[i], st.cnt[i]>=mx[i]?1:0, st.cnt[i], rankOf(i)];
-      c.sort((a,b)=>{ const x=key(a), y=key(b); for(let k=0;k<x.length;k++) if(x[k]!==y[k]) return x[k]-y[k]; return 0; });
-      s.forced=true; put(s,c[0]); st.forced[c[0]]++;
+    /* Evening out pay afterwards can free someone up, so the pass repeats until no open shift has anyone left to take it */
+    for(let pass=0;pass<8;pass++){
+      let placed=0;
+      for(const s of [...slots].sort((x,y)=>y.v-x.v)){
+        if(s.h>=0) continue;
+        const c=idx.filter(i=>on[i] && !day[i][s.d] && !prot[i][s.d] && st.hrs[i]+s.hh<=OT_CAP);
+        if(!c.length) continue;
+        const key=i=>[blocked[i][s.d]?1:0, carry[i].forced+st.forced[i], st.cnt[i]>=mx[i]?1:0, st.cnt[i], rankOf(i)];
+        c.sort((a,b)=>{ const x=key(a), y=key(b); for(let k=0;k<x.length;k++) if(x[k]!==y[k]) return x[k]-y[k]; return 0; });
+        s.forced=true; put(s,c[0]); st.forced[c[0]]++; placed++;
+      }
+      improve();
+      if(!placed) break;
     }
-    improve();
   }
   return {
-    pay:st.pay, hrs:st.hrs, cnt:st.cnt, forcedCnt:st.forced, lo, want,
+    pay:st.pay, hrs:st.hrs, cnt:st.cnt, forcedCnt:st.forced, des:st.des, short, lo, want,
     assigned:slots.filter(s=>s.h>=0).map(s=>({d:s.d, t:s.t, i:s.h, forced:s.forced})),
     open:slots.filter(s=>s.h<0).map(s=>({d:s.d, t:s.t})),
     below:idx.filter(i=>on[i] && st.cnt[i]<P[i].min).map(i=>({i, short:P[i].min-st.cnt[i], days:cap[i]}))
@@ -509,10 +635,10 @@ function solve(ws,force,carry){
 /* Four weeks from the chosen Saturday, planned in order. Recomputed only when an input changes. */
 let planMemo={key:"", weeks:[]};
 function plan(){
-  const key=JSON.stringify([S.weekStart,S.force,S.peak,S.priority,S.need,S.times,S.rates,S.people]);
+  const key=JSON.stringify([S.weekStart,S.force,S.priority,S.rank,S.pins,S.cant,S.shiftPay,S.need,S.times,S.rates,S.people]);
   if(planMemo.key!==key){
     /* carry: what each person has had so far. owed = shifts short of their minimum, extra = shifts above it. */
-    const carry=S.people.map(()=>({pay:0,hrs:0,cnt:0,owed:0,extra:0,forced:0}));
+    const carry=S.people.map(()=>({pay:0,hrs:0,cnt:0,owed:0,extra:0,forced:0,des:0}));
     const run=S.people.map(()=>({pay:0,hrs:0,cnt:0})), weeks=[];
     for(let k=0;k<4;k++){
       const ws=addDays(S.weekStart,7*k);
@@ -520,7 +646,7 @@ function plan(){
       const cur=S.force && base.open.length ? solve(ws,true,carry) : base;
       cur.cnt.forEach((c,i)=>{
         const x=carry[i];
-        x.pay+=cur.pay[i]; x.hrs+=cur.hrs[i]; x.cnt+=c; x.forced+=cur.forcedCnt[i];
+        x.pay+=cur.pay[i]; x.hrs+=cur.hrs[i]; x.cnt+=c; x.forced+=cur.forcedCnt[i]; x.des+=cur.des[i];
         x.owed+=Math.max(0,cur.lo[i]-c); x.extra+=Math.max(0,c-cur.lo[i]);
         run[i].pay+=round2(cur.pay[i]); run[i].hrs+=cur.hrs[i]; run[i].cnt+=c;      /* pay to the cent each week */
       });
@@ -532,9 +658,9 @@ function plan(){
 }
 /* The four weeks added up, per person */
 function monthTotals(pl){
-  const T=S.people.map(()=>({am:0,s:0,pm:0,cnt:0,hrs:0,pay:0}));
+  const T=S.people.map(()=>({am:0,s:0,pm:0,rate:0,cnt:0,hrs:0,pay:0}));
   pl.weeks.forEach(w=>{
-    w.cur.assigned.forEach(a=>{ T[a.i][a.t]++; T[a.i].cnt++; });
+    w.cur.assigned.forEach(a=>{ T[a.i][a.t]++; T[a.i].cnt++; T[a.i].rate+=shiftPH(a.d,a.t); T[a.i].sp=(T[a.i].sp||0)+shiftPay1(a.d,a.t); });
     S.people.forEach((_,i)=>{ T[i].hrs+=w.cur.hrs[i]; T[i].pay+=round2(w.cur.pay[i]); });
   });
   return T;
@@ -656,7 +782,7 @@ function copyWeek(){
 }
 
 /* ---------- Rendering: shared pieces ---------- */
-function gridTable(ws,assigned,open){
+function gridTable(ws,assigned,open,tap){
   let h=`<div class="wrapx"><table class="sched"><thead><tr><th>Day</th>${SLOTS.map(k=>`<th>${SHIFT_NAME[k]}</th>`).join("")}</tr></thead><tbody>`;
   DAYS.forEach((d,di)=>{
     h+=`<tr><td><b>${d}</b><div class="sub">${fmtDay(addDays(ws,di))}</div></td>`;
@@ -664,7 +790,7 @@ function gridTable(ws,assigned,open){
       const parts=assigned.filter(a=>a.d===di && a.t===k).map(a=>esc(a.name)+(a.forced?' <span class="fz">*</span>':""));
       const n=open.filter(o=>o.d===di && o.t===k).length;
       if(n) parts.push(`<span class="openTxt">${n} open</span>`);
-      h+=`<td>${parts.length?parts.join("<br>"):"—"}</td>`;
+      h+=`<td>${parts.length ? (tap ? `<button class="cellbtn" data-act="slot" data-d="${di}" data-t="${k}">${parts.join("<br>")}</button>` : parts.join("<br>")) : "—"}</td>`;
     });
     h+=`</tr>`;
   });
@@ -688,6 +814,54 @@ function pagerBar(pl){
     ${arrow(1,"Next week",pg===3)}
   </div>`;
 }
+/* Manual changes for the week shown, and the tap-a-shift pop-up */
+function manualCard(w){
+  const ws=w.ws, pins=S.pins.map((x,n)=>({x,n})).filter(o=>o.x.ws===ws), cants=S.cant.map((x,n)=>({x,n})).filter(o=>o.x.ws===ws);
+  if(!pins.length && !cants.length) return `<p class="muted" style="margin:10px 0 0">Tap a shift to see who could take it next, or to mark someone as unable.</p>`;
+  return `<div class="card"><b>Manual changes this week</b>
+    ${pins.map(o=>`<div class="cand"><span class="who">${esc(o.x.name)} is on ${DAYS[o.x.d]} ${SHIFT_NAME[o.x.t]}</span><button class="btn ghost" data-act="unpin" data-n="${o.n}">Undo</button></div>`).join("")}
+    ${cants.map(o=>`<div class="cand"><span class="who">${esc(o.x.name)} can't work ${DAYS[o.x.d]}</span><button class="btn ghost" data-act="uncant" data-n="${o.n}">Undo</button></div>`).join("")}
+  </div>`;
+}
+/* Everyone else, best next choice first. Force order: free people first, then who has been forced least, then fewest shifts, then rank. */
+function slotInfo(k,d,t){
+  const pl=plan(), wk=pl.weeks[k], P=S.people, cur=wk.cur, ws=wk.ws, rk=rankFor(ws);
+  const tm=S.times[`${d}-${t}`], hh=splitPay(tm.start,tm.end).hours;
+  const holders=cur.assigned.filter(a=>a.d===d && a.t===t).map(a=>({i:a.i, forced:a.forced}));
+  const forcedSoFar=i=>pl.weeks.slice(0,k+1).reduce((s,x)=>s+x.cur.forcedCnt[i],0);
+  const ranked=[], blocked=[];
+  P.forEach((p,i)=>{
+    if(!p.onRota || holders.some(h=>h.i===i)) return;
+    const cant=cantDays(p,ws)[d], prot=protBlocked(p,ws)[d];
+    if(cant || prot){ blocked.push({i, why:cant?"Marked unable to work this day":"Protected day"}); return; }
+    const rq=reqBlocked(p,ws)[d], closed=!p.avail[d][SIDX[t]], other=cur.assigned.find(a=>a.i===i && a.d===d);
+    const over=cur.hrs[i]+hh>OT_CAP, atMax=cur.cnt[i]>=p.max, fz=forcedSoFar(i), why=[];
+    if(other) why.push(`already on ${SHIFT_NAME[other.t]} that day`);
+    if(over) why.push(`this shift would put them past ${OT_CAP} hours`);
+    if(rq) why.push("requested the day off");
+    if(closed) why.push(`${AVAIL_NAME[t]} is switched off for them`);
+    if(atMax) why.push("at their maximum");
+    if(fz) why.push(`forced ${fz} time${fz===1?"":"s"} so far`);
+    const key=[other?1:0, over?1:0, rq?1:0, closed?1:0, fz, atMax?1:0, cur.cnt[i], rk[i]];
+    ranked.push({i, key, why:(why.length?why.join(", ")+". ":"Free. ")+`${plural(cur.cnt[i],"shift")}, ${round1(cur.hrs[i])} h this week.`});
+  });
+  ranked.sort((a,b)=>{ for(let q=0;q<a.key.length;q++) if(a.key[q]!==b.key[q]) return a.key[q]-b.key[q]; return 0; });
+  return {ws, tm, holders, ranked, blocked, open:cur.open.filter(o=>o.d===d && o.t===t).length};
+}
+function slotModal(m){
+  const info=slotInfo(m.w,m.d,m.t), P=S.people;
+  const label=`${DAYS[m.d]} ${SHIFT_NAME[m.t]}`;
+  return `<div class="scrim"><div class="dialog" role="dialog" aria-label="${label}">
+    <h3>${label}</h3>
+    <p class="muted">${fmtDay(addDays(info.ws,m.d))}, ${fmt12(info.tm.start)}-${fmt12(info.tm.end)}</p>
+    <b>On it now</b>
+    ${info.holders.length ? info.holders.map(h=>`<div class="cand"><span class="who">${esc(P[h.i].name)}${h.forced?" (forced)":""}</span><button class="btn ghost" data-act="cant" data-i="${h.i}" data-d="${m.d}" data-t="${m.t}">Can't do it</button></div>`).join("") : `<p class="muted" style="margin:4px 0">Nobody.${info.open?` ${plural(info.open,"spot")} open.`:""}</p>`}
+    <div style="margin-top:12px"><b>Try next</b></div>
+    ${info.ranked.length ? info.ranked.map((r,n)=>`<div class="cand"><span class="who"><span class="rk">${n+1}.</span> ${esc(P[r.i].name)}<div class="sub">${r.why}</div></span><button class="btn" data-act="pin" data-i="${r.i}" data-d="${m.d}" data-t="${m.t}">Assign</button></div>`).join("") : `<p class="muted" style="margin:4px 0">Nobody else.</p>`}
+    ${info.blocked.length ? `<div style="margin-top:12px"><b>Can't take it</b></div>${info.blocked.map(r=>`<div class="cand"><span class="who">${esc(P[r.i].name)}<div class="sub">${r.why}</div></span></div>`).join("")}` : ""}
+    <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn" data-act="mcancel">Done</button></div>
+  </div></div>`;
+}
 function weekStatus(w){
   const P=S.people, cur=w.cur, slots=cur.assigned.length+cur.open.length;
   const sumMin=P.reduce((s,p)=>s+(p.onRota?p.min:0),0), sumMax=P.reduce((s,p)=>s+(p.onRota?p.max:0),0);
@@ -695,7 +869,7 @@ function weekStatus(w){
   if(w.base.open.length && !S.force){
     h+=`<div class="warn"><b>${plural(w.base.open.length,"shift")} with nobody free:</b> ${shiftList(w.base.open)}.
       <div class="row" style="margin:8px 0 6px"><button class="btn" data-act="force">Force fill</button></div>
-      <div class="sub">Force fill puts someone on each open shift even though their open days say no. It takes turns from week to week, and it overrides a requested day off only when nobody else is left. Nobody gets two shifts in a day or goes past ${OT_CAP} hours.</div></div>`;
+      <div class="sub">Force fill puts someone on each open shift even though their open days say no. It takes turns from week to week, and it overrides a requested day off only when nobody else is left. It never puts anyone on a protected day. Nobody gets two shifts in a day or goes past ${OT_CAP} hours.</div></div>`;
   } else if(S.force){
     const forced=cur.assigned.filter(a=>a.forced);
     h+=`<div class="warn"><b>Force fill is on.</b> ${forced.length
@@ -707,6 +881,10 @@ function weekStatus(w){
     const p=P[x.i];
     h+=`<div class="warn">${esc(p.name)} is ${plural(x.short,"shift")} under their minimum this week. ${x.days<p.min ? `They can only work ${plural(x.days,"day")} this week.` : "There were not enough shifts to go around."}</div>`;
   });
+  P.forEach((p,i)=>{
+    if(p.onRota && cur.hrs[i]>OT_CAP+0.01) h+=`<div class="warn">${esc(p.name)} is at ${round1(cur.hrs[i])} hours this week, over ${OT_CAP}. The manual picks below put them there. Undo one to bring it back down.</div>`;
+    if(p.onRota && p.min32 && cur.hrs[i]<MIN32-0.01) h+=`<div class="warn">${esc(p.name)} is at ${round1(cur.hrs[i])} hours this week, under their ${MIN32}-hour minimum.</div>`;
+  });
   if(sumMin>slots) h+=`<div class="warn">This week has ${plural(slots,"shift")} and the minimums add up to ${sumMin}. Full-time staff are covered first, and part-time staff take turns going short.</div>`;
   if(sumMax<slots) h+=`<div class="warn">This week has ${plural(slots,"shift")} and the maximums add up to ${sumMax}, so some shifts stay open unless a maximum goes up.</div>`;
   return h || `<div class="okbox">All ${plural(slots,"shift")} are covered and everyone is inside their limits.</div>`;
@@ -714,8 +892,8 @@ function weekStatus(w){
 function tabSchedule(pl){
   const w=pl.weeks[S.page], cur=w.cur;
   return pagerBar(pl)
-    + gridTable(w.ws, cur.assigned.map(a=>({d:a.d,t:a.t,name:S.people[a.i].name,forced:a.forced})), cur.open)
-    + weekStatus(w)
+    + gridTable(w.ws, cur.assigned.map(a=>({d:a.d,t:a.t,name:S.people[a.i].name,forced:a.forced})), cur.open, true)
+    + weekStatus(w) + manualCard(w)
     + `<div class="row" style="margin-top:12px">
         ${downloads ? `<button class="btn" data-act="pdf">Save this week as a PDF</button><button class="btn ghost" data-act="pdfall">All 4 weeks as a PDF</button>`
           : STANDALONE ? `<button class="btn" data-act="print">Print this week</button><button class="btn ghost" data-act="printall">Print all 4 weeks</button>` : ""}
@@ -736,22 +914,21 @@ function evenTag(r){
 function tabNumbers(pl){
   const P=S.people, rows=P.map((_,i)=>i).filter(i=>P[i].onRota), T=monthTotals(pl), W=pl.weeks;
   const worked=rows.filter(i=>T[i].cnt>0 && T[i].hrs>0);
-  const hr=span(worked.map(i=>T[i].pay/T[i].hrs)), sh=span(worked.map(i=>T[i].pay/T[i].cnt));
-  const tot={am:0,s:0,pm:0,cnt:0,hrs:0,pay:0};
-  rows.forEach(i=>Object.keys(tot).forEach(k=>{ tot[k]+=T[i][k]; }));
+  const hr=span(worked.map(i=>T[i].pay/T[i].hrs));
+  const tot={am:0,s:0,pm:0,rate:0,cnt:0,hrs:0,pay:0,sp:0};
+  rows.forEach(i=>Object.keys(tot).forEach(k=>{ tot[k]+=(T[i][k]||0); }));
   const wkHead=W.map((w,k)=>`<th class="r">Wk ${k+1}<div class="sub">${fmtDay(w.ws)}</div></th>`).join("");
   const dash="—";
 
-  let h=`<h2>The four weeks</h2><p class="lead">${fmtDay(S.weekStart)} to ${fmtDay(addDays(S.weekStart,27))}, ${S.peak?"peak season":"regular season"}.</p>
+  let h=`<h2>The four weeks</h2><p class="lead">${fmtDay(S.weekStart)} to ${fmtDay(addDays(S.weekStart,27))}.</p>
     <div class="card eq">
       <div class="eqrow"><span>Pay per hour</span><span class="big">${hr?`${money2(hr.lo)} to ${money2(hr.hi)}`:dash}</span>${evenTag(hr)}</div>
-      <div class="eqrow"><span>Pay per shift</span><span class="big">${sh?`${money(sh.lo)} to ${money(sh.hi)}`:dash}</span>${evenTag(sh)}</div>
-      <p class="muted" style="margin:0">Lowest to highest across the team. When these are close, pay follows work: more shifts means more pay, and nobody is left with only the weak shifts.</p>
+      <p class="muted" style="margin:0">Lowest to highest across the team. When it is close, pay follows work: more shifts means more pay, and nobody is left with only the weak shifts.</p>
     </div>
-    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th><th class="r">Shifts</th><th class="r">Hours</th><th class="r">Pay</th><th class="r">Per<br>shift</th><th class="r">Per<br>hour</th></tr></thead><tbody>`;
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th><th class="r">Shifts</th><th class="r">Hours</th><th class="r">Pay</th><th class="r">Per<br>hour</th></tr></thead><tbody>`;
   rows.forEach(i=>{ const t=T[i];
-    h+=`<tr><td>${esc(P[i].name)}<div class="sub">${P[i].ptype}</div></td><td class="r">${t.cnt}</td><td class="r">${round1(t.hrs)}</td><td class="r"><b>${money(t.pay)}</b></td><td class="r">${t.cnt?money(t.pay/t.cnt):dash}</td><td class="r">${t.hrs?money2(t.pay/t.hrs):dash}</td></tr>`; });
-  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.cnt}</td><td class="r">${round1(tot.hrs)}</td><td class="r">${money(tot.pay)}</td><td class="r">${tot.cnt?money(tot.pay/tot.cnt):dash}</td><td class="r">${tot.hrs?money2(tot.pay/tot.hrs):dash}</td></tr></tbody></table></div>`;
+    h+=`<tr><td>${esc(P[i].name)}<div class="sub">${P[i].ptype}</div></td><td class="r">${t.cnt}</td><td class="r">${round1(t.hrs)}</td><td class="r"><b>${money(t.pay)}</b></td><td class="r">${t.hrs?money2(t.pay/t.hrs):dash}</td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.cnt}</td><td class="r">${round1(tot.hrs)}</td><td class="r">${money(tot.pay)}</td><td class="r">${tot.hrs?money2(tot.pay/tot.hrs):dash}</td></tr></tbody></table></div>`;
 
   h+=`<h2>Pay by week</h2><p class="lead">Each week's pay, with the running total under it.</p>
     <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${wkHead}</tr></thead><tbody>`;
@@ -777,10 +954,12 @@ function tabNumbers(pl){
   rows.forEach(i=>{
     h+=`<tr><td>${esc(P[i].name)}</td>${W.map(w=>`<td class="r">${w.cur.cnt[i]}</td>`).join("")}<td class="r"><b>${T[i].cnt}</b></td></tr>`; });
   h+=`<tr class="tot"><td>Team</td>${W.map(w=>`<td class="r">${rows.reduce((s,i)=>s+w.cur.cnt[i],0)}</td>`).join("")}<td class="r">${tot.cnt}</td></tr></tbody></table></div>
-    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${SLOTS.map(k=>`<th class="r">${SHIFT_NAME[k]}</th>`).join("")}<th class="r">Total</th></tr></thead><tbody>`;
+    <div class="wrapx"><table class="tight"><thead><tr><th>Name</th>${SLOTS.map(k=>`<th class="r">${SHIFT_NAME[k]}</th>`).join("")}<th class="r">Avg pay<br>per shift</th><th class="r">Avg shift<br>$/hr</th><th class="r">Total</th></tr></thead><tbody>`;
   rows.forEach(i=>{ const t=T[i];
-    h+=`<tr><td>${esc(P[i].name)}</td><td class="r">${t.am}</td><td class="r">${t.s}</td><td class="r">${t.pm}</td><td class="r"><b>${t.cnt}</b></td></tr>`; });
-  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.am}</td><td class="r">${tot.s}</td><td class="r">${tot.pm}</td><td class="r">${tot.cnt}</td></tr></tbody></table></div>`;
+    h+=`<tr><td>${esc(P[i].name)}</td><td class="r">${t.am}</td><td class="r">${t.s}</td><td class="r">${t.pm}</td><td class="r">${t.cnt?money2((t.sp||0)/t.cnt):dash}</td><td class="r">${t.cnt?money2(t.rate/t.cnt):dash}</td><td class="r"><b>${t.cnt}</b></td></tr>`; });
+  h+=`<tr class="tot"><td>Team</td><td class="r">${tot.am}</td><td class="r">${tot.s}</td><td class="r">${tot.pm}</td><td class="r">${tot.cnt?money2((tot.sp||0)/tot.cnt):dash}</td><td class="r">${tot.cnt?money2(tot.rate/tot.cnt):dash}</td><td class="r">${tot.cnt}</td></tr></tbody></table></div>`;
+  const rk=[]; DAYS.forEach((dn,d)=>SLOTS.forEach(k=>{ if(S.need[d][k]>0) rk.push({n:`${dn} ${SHIFT_NAME[k]}`,pay:shiftPay1(d,k),ph:shiftPH(d,k)}); })); rk.sort((a,b)=>b.ph-a.ph);
+  h+=`<h2>Shifts ranked by pay</h2><p class="lead">Best-paying first, by pay per hour. This ranking comes from your Pay rates grid (the lunch and dinner estimate where a box is empty). It is what the schedule uses to decide good and weak shifts.${(()=>{ let f=0,t=0; DAYS.forEach((_,d)=>SLOTS.forEach(k=>{ if(S.need[d][k]>0){ t++; if(S.shiftPay[`${d}-${k}`]>0) f++; } })); return f<t ? ` <b>${f} of ${t} shifts have your own average.</b> The rest use the lunch and dinner rates, so the schedule can only tell those apart as lunch or dinner.` : ""; })()}</p><div class="wrapx"><table class="tight"><thead><tr><th>#</th><th>Shift</th><th class="r">Avg pay</th><th class="r">$/hr</th></tr></thead><tbody>${rk.map((x,i)=>`<tr><td>${i+1}</td><td>${x.n}</td><td class="r">${money2(x.pay)}</td><td class="r">${money2(x.ph)}</td></tr>`).join("")}</tbody></table></div>`;
 
   return h+sectionSaved();
 }
@@ -859,25 +1038,26 @@ function sectionNeeded(){
   });
   return h+`</div></div>`;
 }
-function sectionSeason(){
-  return `<h2>Season</h2>
-    <p class="lead">In both seasons everyone is paid at about the same rate, so more shifts means more pay. The season only decides who gets the extra shifts once every minimum is met.</p>
-    <div class="card">
-      ${SEASONS.map(([v,name,txt],k)=>{ const on=S.peak===v; return `<button class="opt ${on?"on":""}" ${k?"":'style="margin-top:0"'} data-act="season" data-v="${v?1:0}" aria-pressed="${on}"><b><span>${name}</span>${on?`<span class="pick">Selected</span>`:""}</b><span class="muted">${txt}</span></button>`; }).join("")}
-    </div>`;
-}
 function sectionPriority(){
-  const rows=S.priority.map((n,k)=>`<div class="pri">
+  const numbers=S.rank!=="manual";
+  const modes=`<div class="card">
+      <button class="opt ${numbers?"on":""}" style="margin-top:0" data-act="rankmode" data-v="numbers" aria-pressed="${numbers}"><b><span>Rank by the numbers</span>${numbers?`<span class="pick">Selected</span>`:""}</b><span class="muted">Most shifts a person is willing to take, then most days offered. Ties rotate week by week. Protected days count as offered.</span></button>
+      <button class="opt ${numbers?"":"on"}" data-act="rankmode" data-v="manual" aria-pressed="${!numbers}"><b><span>Manual order</span>${numbers?"":`<span class="pick">Selected</span>`}</b><span class="muted">Set the order yourself with the arrows.</span></button>
+    </div>`;
+  const order=rankFor(S.weekStart), list=S.people.map((_,i)=>i).sort((x,y)=>order[x]-order[y]);
+  const rows = numbers
+    ? list.map((i,k)=>`<div class="pri"><span class="pn">${k+1}. ${esc(S.people[i].name)}</span><span class="muted">${S.people[i].max} shifts, ${openDays(S.people[i])} days</span></div>`).join("")
+    : S.priority.map((n,k)=>`<div class="pri">
       <span class="pn">${k+1}. ${esc(n)}</span>
       <button data-act="up" data-n="${k}" ${k===0?"disabled":""} aria-label="Move ${esc(n)} up">▲</button>
       <button data-act="down" data-n="${k}" ${k===S.priority.length-1?"disabled":""} aria-label="Move ${esc(n)} down">▼</button>
     </div>`).join("");
-  return `<h2>Priority order</h2>
-    <p class="lead">Who is covered first when a week is short of shifts, and who goes first when two people are equally due a shift. Full-time is always ahead of part-time. The order never changes anyone's rate of pay.</p>
-    <div class="card">${rows}</div>`;
+  return `<h2>Rank</h2>
+    <p class="lead">Rank breaks ties and decides who picks first among the best-paying open shifts. It never overrides an agreed minimum or the protection for anyone scheduled short, and it never changes anyone's rate of pay.</p>
+    ${modes}<div class="card">${rows}</div>`;
 }
 function sectionStaff(){
-  let h=`<h2>Staff</h2><p class="lead">Limits, open days, and requested days off. Limits follow from open days; see How it works.</p><div class="card">`;
+  let h=`<h2>Staff</h2><p class="lead">Limits, open days, and requested days off. Limits follow from open days; see How it works. ${PROT_TEXT}</p><div class="card">`;
   S.people.forEach((p,i)=>{
     const b=bounds(p), ftOK=b.days>=5;
     h+=`<div class="person">
@@ -885,9 +1065,11 @@ function sectionStaff(){
         <label class="check"><input type="checkbox" id="rota-${i}" data-rota="${i}" ${p.onRota?"checked":""}> On the schedule</label>
       </div>
       <div class="row" style="margin-top:6px"><input type="text" class="name" id="name-${i}" value="${esc(p.name)}" data-name="${i}" aria-label="Name"></div>
+      ${S.nameNote===i?`<p class="muted" role="status" style="margin:4px 0 0">Someone else already has that name, so this one was kept. Each person needs their own.</p>`:""}
       <div class="row" style="margin-top:6px;gap:14px">
         <label class="check"><input type="radio" id="ft-${i}" name="pt${i}" data-pt="${i}" data-v="Full-time" ${p.ptype==="Full-time"?"checked":""} ${ftOK?"":"disabled"}> Full-time</label>
         <label class="check"><input type="radio" id="pt-${i}" name="pt${i}" data-pt="${i}" data-v="Part-time" ${p.ptype==="Part-time"?"checked":""}> Part-time</label>
+        <label class="check"><input type="checkbox" id="m32-${i}" data-m32="${i}" ${p.min32?"checked":""} ${p.ptype==="Full-time"?"":"disabled"}> 32 hr min</label>
         ${ftOK?"":`<span class="muted">Full-time needs 5 open days</span>`}
       </div>
       <div style="margin-top:8px">
@@ -895,22 +1077,24 @@ function sectionStaff(){
           <span class="step"><button data-act="bound" data-i="${i}" data-kind="min" data-dl="-1" ${p.min<=b.lo?"disabled":""} aria-label="Lower minimum">−</button><b>${p.min}</b><button data-act="bound" data-i="${i}" data-kind="min" data-dl="1" ${p.min>=b.hi?"disabled":""} aria-label="Raise minimum">+</button></span></div>
         <div class="row spread" style="margin-top:6px"><span>Maximum shifts</span>
           <span class="step"><button data-act="bound" data-i="${i}" data-kind="max" data-dl="-1" ${p.max<=p.min?"disabled":""} aria-label="Lower maximum">−</button><b>${p.max}</b><button data-act="bound" data-i="${i}" data-kind="max" data-dl="1" ${p.max>=b.hi?"disabled":""} aria-label="Raise maximum">+</button></span></div>
-        <p class="muted" style="margin:6px 0 0">Limits: ${b.lo} to ${b.hi} shifts from ${plural(b.days,"open day")}.</p>
+        <p class="muted" style="margin:6px 0 0">Limits: ${b.lo} to ${b.hi} shifts from ${plural(b.days,"open day")}.${p.prot.some(Boolean)?" Protected days count as open.":""}</p>
       </div>
       <div style="margin-top:10px"><b>Open days</b>
-        <div class="muted">Tap a day to open or close all of it. Tap L, S, or D to change one shift.</div>
+        <div class="muted">Tap a day to open or close all of it. Tap L, S, or D to change one shift. On a closed day, tap P to mark it Protected.</div>
         <div class="avgrid">${DAYS.map((d,di)=>{
           const any=p.avail[di].some(Boolean);
           return `<div class="avday">
             <button class="dbtn ${any?"on":""}" data-act="day" data-i="${i}" data-d="${di}" aria-pressed="${any}">${d}</button>
             ${SLOTS.map((k,ki)=>`<button class="chip ${p.avail[di][ki]?"on":""}" data-act="chip" data-i="${i}" data-d="${di}" data-ki="${ki}" aria-label="${d} ${AVAIL_NAME[k]}" aria-pressed="${p.avail[di][ki]}">${AVAIL_NAME[k][0]}</button>`).join("")}
+            ${any?"":`<button class="chip ${p.prot[di]?"on":""}" data-act="prot" data-i="${i}" data-d="${di}" aria-label="${d} protected" aria-pressed="${!!p.prot[di]}">P</button>`}
           </div>`;}).join("")}
         </div></div>
       <div class="reqbox">
         <div class="row spread"><b>Requested off</b><button class="btn ghost" data-act="calopen" data-i="${i}">Pick dates</button></div>
         <div class="row" style="gap:6px;margin-top:8px">${p.req.length
-          ? p.req.map(s=>`<button class="chip on reqchip" data-act="reqdel" data-i="${i}" data-date="${s}" aria-label="Remove ${fmtDay(s)}">${fmtDay(s)} ✕</button>`).join("")
+          ? p.req.map(s=>`<span class="row" style="gap:4px"><button class="chip on reqchip" data-act="reqdel" data-i="${i}" data-date="${s}" aria-label="Remove ${fmtDay(s)}">${fmtDay(s)} ✕</button><button class="chip reqchip ${p.reqP.includes(s)?"on":""}" data-act="reqprot" data-i="${i}" data-date="${s}" aria-pressed="${p.reqP.includes(s)}">${p.reqP.includes(s)?"Protected":"Mark protected"}</button></span>`).join("")
           : `<span class="muted">None. Pick dates to add days they asked off.</span>`}</div>
+        <p class="muted" style="margin:8px 0 0">${PROT_TEXT}</p>
       </div>
     </div>`;
   });
@@ -925,34 +1109,66 @@ function limitRows(){
 function sectionHelp(){
   return `<details class="card" data-key="help" ${OPEN.has("help")?"open":""}><summary>How it works</summary>
       <h3 style="margin-top:12px">Fair pay</h3>
-      <p class="muted">The schedule shares out the strong shifts and the weak ones so that, over the four weeks, everyone earns about the same for each hour and each shift. More shifts means more pay. Later weeks make up for earlier ones.</p>
+      <p class="muted">The schedule shares out the strong shifts and the weak ones so that, over the four weeks, everyone earns about the same for each hour. More shifts means more pay. Later weeks make up for earlier ones.</p>
       <h3 style="margin-top:12px">Who gets how many shifts</h3>
       <ol class="muted rules">
-        <li>Everyone gets their minimum. If a week is short, full-time staff are covered first and part-time staff take turns going short.</li>
-        <li>Extra shifts follow the season. Regular: they take turns across everyone, smallest schedules first. Peak: full-time staff first.</li>
+        <li>Everyone gets their minimum. Nobody is left under theirs while a shift they could work is someone else's extra. If a week is short, full-time staff are covered first and part-time staff take turns going short.</li>
+        <li>Extra shifts take turns across everyone, smallest schedules first.</li>
         <li>Nobody goes over their maximum, works two shifts in a day, or goes past ${OT_CAP} hours in a week.</li>
       </ol>
+      <h3 style="margin-top:12px">Short schedules</h3>
+      <p class="muted">Anyone scheduled below the shifts they agreed to, counting earlier weeks, gets first pick of the best-paying shifts and is kept off the lowest-paying ones. Their pay per hour is allowed to run above the average.</p>
+      <h3 style="margin-top:12px">Good shifts and weak ones</h3>
+      <p class="muted">A shift's value is its pay per hour: the number in the Pay rates grid, or the lunch and dinner estimate when that box is empty. After pay is even, the schedule keeps each person's average shift rate close to everyone else's over the four weeks, so nobody collects all the best-paying shifts. The Numbers tab ranks every shift by pay and shows each person's average pay per shift and average shift rate.</p>
+      <h3 style="margin-top:12px">Protected days</h3>
+      <p class="muted">${PROT_TEXT}</p>
+      <h3 style="margin-top:12px">Forcing and swapping a shift</h3>
+      <p class="muted">Tap any shift on the schedule. You see who is on it, and everyone else ranked best next choice first: free people, then whoever has been forced least, then fewest shifts. If someone absolutely can't do it, tap Can't do it. They are taken off that day and the schedule fills it again. Tap Assign to put a specific person on it. Manual changes stay until you undo them.</p>
+      <h3 style="margin-top:12px">32-hour minimum</h3>
+      <p class="muted">Tick 32 hr min next to a full-time person to guarantee at least 32 hours a week. The scheduler gives them enough shifts to reach it and picks longer ones. If it can't (for example, too few open days), the week shows a warning. Guaranteeing hours to several full-time people leaves fewer shifts for everyone else.</p>
       <h3 style="margin-top:12px">Days off</h3>
       <p class="muted">A day closed in Open days is off every week. Requested off blocks the dates picked. Time off lowers that week's shifts and is not made up later.</p>
       <h3 style="margin-top:12px">Force fill</h3>
-      <p class="muted">Used only when a shift has nobody free. It takes turns, so the same person is not forced week after week, and it overrides a requested day off only when nobody else is left.</p>
+      <p class="muted">Used only when a shift has nobody free. It takes turns, so the same person is not forced week after week, and it overrides a requested day off only when nobody else is left. It never puts anyone on a protected day.</p>
       <h3 style="margin-top:12px">Pay for a shift</h3>
       <p class="muted">Each shift is paid by its clock times: hours before 4pm at the lunch rate, hours from 4pm at the dinner rate. A swing shift is a blend of the two. A lunch or dinner shift whose hours cross 4pm is paid the same way and stays in its own box. A clock-out earlier than the clock-in runs past midnight.</p>
+      <h3 style="margin-top:12px">Average pay for one shift</h3>
+      <p class="muted">Under Pay rates, a grid of every shift lets you type in what one person usually earns on it. A number there replaces the rate-based estimate for that shift in the schedule and the Numbers tab. An empty box keeps the estimate.</p>
       <h3 style="margin-top:12px">Shift limits</h3>
       <p class="muted">Limits come from open days: days with at least one shift switched on.</p>
       <table><thead><tr><th>Open days</th><th>Full-time</th><th>Part-time</th></tr></thead><tbody>${limitRows()}</tbody></table>
     </details>`;
+}
+/* How much of the grid is filled in, and what the schedule does with the rest */
+function advCountText(){
+  let filled=0, total=0;
+  DAYS.forEach((_,di)=>SLOTS.forEach(k=>{ if(S.need[di][k]>0){ total++; if(S.shiftPay[`${di}-${k}`]>0) filled++; } }));
+  return `${filled} of ${total} shifts have your own average.`+(filled<total?" The rest use the lunch and dinner rates above, so the schedule can only tell those apart as lunch or dinner. Fill every box to balance good and weak shifts by your own numbers.":"");
+}
+function advGrid(){
+  const cells=DAYS.map((d,di)=>`<span class="dl">${d}</span>`+SLOTS.map(k=>{
+    if(S.need[di][k]<=0) return `<div class="ncell ${k}"><span class="muted">—</span></div>`;
+    const key=`${di}-${k}`, tm=S.times[key], sp=splitPay(tm.start,tm.end), v=S.shiftPay[key];
+    return `<div class="ncell ${k}"><input type="number" inputmode="decimal" step="0.01" min="0" class="advin" data-adv="cell" data-key="${key}" value="${v>0?v:""}" placeholder="${Math.round(sp.pay)}" aria-label="Average pay, ${d} ${SHIFT_NAME[k]}"></div>`;
+  }).join("")).join("");
+  return `<div style="margin-top:14px"><b>Average pay per shift</b>
+    <p class="muted" style="margin:4px 0 6px">What one person usually earns on each shift, from your history. An empty box uses the lunch and dinner rates above, shown in grey as the estimate.</p>
+    <div class="need"><span></span>${SLOTS.map(k=>`<span class="hd">${SHIFT_NAME[k]}</span>`).join("")}${cells}</div>
+    <p class="muted" id="adv-count" style="margin:8px 0 0">${advCountText()}</p>
+    ${S.note?`<p class="muted" role="status" style="margin:6px 0 0">${esc(S.note)}</p>`:""}
+    <div class="row" style="margin-top:8px"><button class="btn ghost" data-act="ratesfromgrid">Set the rates above from this grid</button><button class="btn ghost" data-act="advclearall">Clear all averages</button></div></div>`;
 }
 function sectionRates(){
   return `<details class="card" data-key="rates" ${OPEN.has("rates")?"open":""}><summary>Pay rates</summary>
     <p class="muted">Lunch covers hours before 4pm, dinner covers hours from 4pm. Rates never go below $${MIN_RATE}.</p>
     <div class="row spread" style="margin-top:8px"><label for="rate-lunch">Lunch, per hour</label><input type="number" class="num" step="0.01" id="rate-lunch" value="${S.rates.lunch}" data-rate="lunch"></div>
     <div class="row spread" style="margin-top:8px"><label for="rate-dinner">Dinner, per hour</label><input type="number" class="num" step="0.01" id="rate-dinner" value="${S.rates.dinner}" data-rate="dinner"></div>
-    <div style="margin-top:10px"><button class="btn ghost" data-act="rates">Reset to the starting rates</button></div>
+    ${advGrid()}
+    <div style="margin-top:12px"><button class="btn ghost" data-act="rates">Reset to the starting rates</button></div>
   </details>`;
 }
 function tabSetup(){
-  return sectionWeek()+sectionNeeded()+sectionSeason()+sectionPriority()+sectionStaff()+sectionRates()+sectionHelp();
+  return sectionWeek()+sectionNeeded()+sectionPriority()+sectionStaff()+sectionRates()+sectionHelp();
 }
 
 /* ---------- Pop-ups ---------- */
@@ -1005,11 +1221,12 @@ function textModal(m){
 }
 function renderModal(){
   const m=S.modal; if(!m) return "";
-  return m.type==="time" ? timeModal(m) : m.type==="cal" ? calModal(m) : m.type==="text" ? textModal(m) : "";
+  return m.type==="time" ? timeModal(m) : m.type==="cal" ? calModal(m) : m.type==="text" ? textModal(m) : m.type==="slot" ? slotModal(m) : "";
 }
 
 /* ---------- Page ---------- */
 function render(){
+  clearTimeout(drawTimer); drawTimer=0;
   /* Read which sections are open before the page is rebuilt */
   document.querySelectorAll("details[data-key]").forEach(d=>{ if(d.open) OPEN.add(d.dataset.key); else OPEN.delete(d.dataset.key); });
   tidy();
@@ -1022,6 +1239,46 @@ function render(){
 }
 
 /* ---------- Events ---------- */
+/* Typing fields. Their value reaches the state when the field is left; a redraw then rebuilds the page.
+   Two things can go wrong around that, and both are handled here:
+   a tap on a button right after typing would land on a page that was just rebuilt and be lost, so that redraw waits for the tap;
+   and on an iPhone a tap on a button does not leave the field at all, so the tap itself takes the field's value first. */
+const TYPED=new Set(["text","number","date","time"]);
+let lastPress=0, pressDown=false, drawTimer=0;
+document.addEventListener("pointerdown",()=>{ lastPress=Date.now(); pressDown=true; },true);
+document.addEventListener("pointerup",()=>{ lastPress=Date.now(); pressDown=false; },true);
+document.addEventListener("pointercancel",()=>{ pressDown=false; },true);
+function drawSoon(){
+  clearTimeout(drawTimer);
+  drawTimer=setTimeout(()=>{ if(pressDown) drawSoon(); else render(); },400);
+}
+/* Put one field's value into the state. Returns "" when the field is not one of ours, "quiet" when nothing needs redrawing, "draw" otherwise. */
+function applyField(el){
+  const ds=el.dataset||{};
+  if(ds.wk!==undefined){ if(el.value && satOnOrBefore(el.value)!==S.weekStart){ S.weekStart=satOnOrBefore(el.value); S.page=0; } }
+  else if(ds.name!==undefined){
+    const p=S.people[+ds.name], old=p.name, nn=el.value.trim()||old;
+    if(nn!==old && S.people.some(q=>q!==p && q.name.trim().toLowerCase()===nn.toLowerCase())) S.nameNote=+ds.name;
+    else if(nn!==old){
+      p.name=nn;
+      const k=S.priority.indexOf(old); if(k>=0) S.priority[k]=nn;
+      S.pins.forEach(x=>{ if(x.name===old) x.name=nn; }); S.cant.forEach(x=>{ if(x.name===old) x.name=nn; });
+    }
+  }
+  else if(ds.rota!==undefined){ S.people[+ds.rota].onRota=el.checked; }
+  else if(ds.pt!==undefined){ if(el.checked) S.people[+ds.pt].ptype=ds.v; }
+  else if(ds.m32!==undefined){ S.people[+ds.m32].min32=el.checked; }
+  else if(ds.adv==="cell"){
+    const v=parseFloat(el.value);
+    if(v>0) S.shiftPay[ds.key]=round2(v); else delete S.shiftPay[ds.key];
+    return "quiet";
+  }
+  else if(ds.rate!==undefined){ S.rates[ds.rate]=Math.max(MIN_RATE, parseFloat(el.value)||MIN_RATE); }
+  else if(ds.mstart!==undefined){ if(S.modal) S.modal.start=el.value; }
+  else if(ds.mend!==undefined){ if(S.modal) S.modal.end=el.value; }
+  else return "";
+  return "draw";
+}
 document.addEventListener("toggle",e=>{
   const d=e.target;
   if(d.tagName!=="DETAILS" || !d.dataset.key) return;
@@ -1031,11 +1288,12 @@ document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]"); if(!b||b.disabled) return;
   const a=b.dataset.act, i=+b.dataset.i, d=+b.dataset.d, t=b.dataset.t, ki=+b.dataset.ki;
   const asked=S.confirm;
-  S.note=""; S.confirm="";
+  S.note=""; S.confirm=""; S.nameNote=-1;
+  const typing=document.activeElement;
+  if(typing && typing.tagName==="INPUT" && TYPED.has(typing.type)) applyField(typing);
   switch(a){
     case "tab": S.tab=b.dataset.v; break;
     case "page": S.page=clamp(S.page+(+b.dataset.dl),0,3); break;
-    case "season": S.peak=b.dataset.v==="1"; break;
     case "pdf": savePdf(false); return;
     case "pdfall": savePdf(true); return;
     case "copy": copyWeek(); return;
@@ -1053,9 +1311,10 @@ document.addEventListener("click",e=>{
         if(tm.set) p.avail[d][ki]=true;
         else S.modal={type:"time", d, t:k, start:tm.start, end:tm.end, chip:{i, ki}};
       }
+      if(p.avail[d].some(Boolean)) p.prot[d]=false;
       break;
     }
-    case "day": { const p=S.people[i], any=p.avail[d].some(Boolean); p.avail[d]=[!any,!any,!any]; break; }
+    case "day": { const p=S.people[i], any=p.avail[d].some(Boolean); p.avail[d]=[!any,!any,!any]; if(!any) p.prot[d]=false; break; }
     case "bound": {
       const p=S.people[i], bd=bounds(p), dl=+b.dataset.dl;
       if(b.dataset.kind==="min") p.min=clamp(p.min+dl,bd.lo,bd.hi);
@@ -1063,9 +1322,44 @@ document.addEventListener("click",e=>{
       p.max=clamp(p.max,p.min,bd.hi);
       break;
     }
+    case "slot": S.modal={type:"slot", w:S.page, d, t}; break;
+    case "pin": {
+      const ws=plan().weeks[S.page].ws, name=S.people[i].name;
+      S.cant=S.cant.filter(x=>!(x.ws===ws && x.d===d && x.name===name));
+      S.pins=S.pins.filter(x=>!(x.ws===ws && x.d===d && x.name===name));      /* one shift a day: the newest pick wins */
+      S.pins.push({ws, d, t, name});                                          /* tidyManual keeps the newest picks when a shift has more picks than spots */
+      break;
+    }
+    case "cant": {
+      const ws=plan().weeks[S.page].ws, name=S.people[i].name;
+      S.pins=S.pins.filter(x=>!(x.ws===ws && x.d===d && x.name===name));
+      if(!S.cant.some(x=>x.ws===ws && x.d===d && x.name===name)) S.cant.push({ws, d, name});
+      break;
+    }
+    case "unpin": S.pins.splice(+b.dataset.n,1); break;
+    case "uncant": S.cant.splice(+b.dataset.n,1); break;
+    case "rankmode": S.rank=b.dataset.v==="manual"?"manual":"numbers"; break;
     case "up": case "down": {
       const n=+b.dataset.n, j=a==="up"?n-1:n+1;
       if(j>=0 && j<S.priority.length) [S.priority[n],S.priority[j]]=[S.priority[j],S.priority[n]];
+      break;
+    }
+    case "prot": { const p=S.people[i]; if(!p.avail[d].some(Boolean)) p.prot[d]=!p.prot[d]; break; }
+    case "reqprot": { const p=S.people[i], s=b.dataset.date; p.reqP = p.reqP.includes(s) ? p.reqP.filter(x=>x!==s) : [...p.reqP, s]; break; }
+    case "advclearall": S.shiftPay={}; break;
+    case "ratesfromgrid": {
+      /* AM shifts that end by 4pm are all lunch hours and PM shifts that start at 4pm or later are all dinner hours. A shift that crosses 4pm is left out. */
+      let lp=0, lh=0, dp=0, dh=0;
+      DAYS.forEach((_,di)=>["am","pm"].forEach(k=>{
+        const v=S.shiftPay[`${di}-${k}`]; if(!(v>0) || S.need[di][k]<=0) return;
+        const tm=S.times[`${di}-${k}`], sp=splitPay(tm.start,tm.end); if(sp.hours<=0) return;
+        if(k==="am" ? sp.dinH>0 : sp.lunchH>0) return;
+        if(k==="am"){ lp+=v; lh+=sp.hours; } else { dp+=v; dh+=sp.hours; }
+      }));
+      const parts=[];
+      if(lh>0){ S.rates.lunch=Math.max(MIN_RATE,round2(lp/lh)); parts.push(`lunch ${money2(S.rates.lunch)}`); }
+      if(dh>0){ S.rates.dinner=Math.max(MIN_RATE,round2(dp/dh)); parts.push(`dinner ${money2(S.rates.dinner)}`); }
+      S.note = parts.length ? `Rates set from your AM and PM averages: ${parts.join(", ")} an hour.` : "Fill in some AM or PM averages first.";
       break;
     }
     case "rates": S.rates={...DEFAULT_RATES}; break;
@@ -1074,7 +1368,7 @@ document.addEventListener("click",e=>{
       const m=S.modal; if(!m) break;
       if(splitPay(m.start,m.end).hours<=0) break;
       S.times[`${m.d}-${m.t}`]={start:m.start, end:m.end, set:true};
-      if(m.chip) S.people[m.chip.i].avail[m.d][m.chip.ki]=true;
+      if(m.chip){ S.people[m.chip.i].avail[m.d][m.chip.ki]=true; S.people[m.chip.i].prot[m.d]=false; }
       S.modal=null;
       break;
     }
@@ -1108,9 +1402,9 @@ document.addEventListener("click",e=>{
       p.req.sort();
       break;
     }
-    case "calclear": if(S.modal) S.people[S.modal.i].req=[]; break;
+    case "calclear": if(S.modal){ S.people[S.modal.i].req=[]; S.people[S.modal.i].reqP=[]; } break;
     case "caldone": S.modal=null; break;
-    case "reqdel": S.people[i].req=S.people[i].req.filter(x=>x!==b.dataset.date); break;
+    case "reqdel": S.people[i].req=S.people[i].req.filter(x=>x!==b.dataset.date); S.people[i].reqP=S.people[i].reqP.filter(x=>x!==b.dataset.date); break;
     /* Erasing takes two taps: the first asks, the second does it */
     case "resetmonth": {
       const want="reset-"+b.dataset.mk;
@@ -1125,21 +1419,18 @@ document.addEventListener("click",e=>{
 });
 
 document.addEventListener("change",e=>{
-  const el=e.target, ds=el.dataset;
-  if(ds.wk!==undefined){ if(el.value){ S.weekStart=satOnOrBefore(el.value); S.page=0; } }
-  else if(ds.name!==undefined){
-    const p=S.people[+ds.name], old=p.name, nn=el.value.trim()||old;
-    p.name=nn;
-    const k=S.priority.indexOf(old); if(k>=0) S.priority[k]=nn;
+  const el=e.target;
+  S.nameNote=-1;
+  const how=applyField(el);
+  if(!how) return;
+  if(how==="quiet"){
+    /* Saved without redrawing, so the keyboard stays open while you fill in the grid. Only the count under the grid is refreshed. */
+    saveAll();
+    const c=document.getElementById("adv-count"); if(c) c.textContent=advCountText();
+    return;
   }
-  else if(ds.rota!==undefined){ S.people[+ds.rota].onRota=el.checked; }
-  else if(ds.pt!==undefined){ S.people[+ds.pt].ptype=ds.v; }
-  else if(ds.rate!==undefined){ S.rates[ds.rate]=Math.max(MIN_RATE, parseFloat(el.value)||MIN_RATE); }
-  else if(ds.mstart!==undefined){ if(S.modal) S.modal.start=el.value; }
-  else if(ds.mend!==undefined){ if(S.modal) S.modal.end=el.value; }
-  else return;
   S.note=""; S.confirm="";
-  render();
+  if(TYPED.has(el.type) && (pressDown || Date.now()-lastPress<400)) drawSoon(); else render();
 });
 
 loadAll();
@@ -1149,5 +1440,5 @@ if(window.claude && typeof window.claude.use==="function"){
   window.claude.use("downloads").then(d=>{ if(d){ downloads=d; render(); } }).catch(()=>{});
 }
 </script>
-
-</body></html>
+</body>
+</html>
