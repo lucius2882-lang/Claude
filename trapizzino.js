@@ -241,7 +241,7 @@
   var SAYS = [
     'Here\u2019s a lil something Lucius made.',
     'A scheduler that does the math so every shift is shared fairly.',
-    'Equity must be obtained before equality!'
+    'Equity first, then equality.'
   ];
 
   function caught() {
