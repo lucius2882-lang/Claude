@@ -31,55 +31,64 @@
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'portrait' });
-      const pageW = 215.9;
-      const ml = 15, mr = 15;
+      const pageW = 215.9, pageH = 279.4;
+      const ml = 15, mr = 15, mb = 11;
       const cw = pageW - ml - mr;
       let y = 15;
 
       const sf = (size, style='normal', r=17, g=17, b=17) => {
         doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(r,g,b);
       };
+      // Start a new page rather than run off the bottom of this one.
+      const room = (h) => { if (y + h > pageH - mb) { doc.addPage(); y = 16; } };
       const secHead = (title) => {
-        sf(7, 'bold', 120,120,120); doc.text(title, ml, y); y += 3.8;
+        room(16);
+        sf(7, 'bold', 120,120,120); doc.text(title, ml, y); y += 3.4;
         doc.setDrawColor(185,185,185); doc.setLineWidth(0.2); doc.line(ml, y, ml+cw, y);
-        y += 5.5;
+        y += 5;
       };
+      const rightText = (text) => doc.text(text, ml + cw - doc.getTextWidth(text), y);
 
       // Centered header
       sf(24, 'bold');
-      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 8;
+      doc.text('LUCIUS CAMPANY', pageW / 2, y, { align: 'center' }); y += 7.2;
       sf(8.5, 'normal', 85,85,85);
-      doc.text('Brand Activation  \u00b7  Experiential Marketing  \u00b7  Hospitality Operations', pageW / 2, y, { align: 'center' }); y += 6;
+      doc.text('Front-of-House Leadership  ·  Events & Activations  ·  Data & Analytics', pageW / 2, y, { align: 'center' }); y += 5;
       sf(7.5, 'normal', 120,120,120);
-      doc.text('New York, NY  \u00b7  lucius@luciuscampany.com  \u00b7  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 6;
-      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 8;
+      doc.text('New York, NY  ·  lucius@luciuscampany.com  ·  luciuscampany.com', pageW / 2, y, { align: 'center' }); y += 5;
+      doc.setDrawColor(17,17,17); doc.setLineWidth(0.4); doc.line(ml, y, ml+cw, y); y += 7;
 
       // Experience
       secHead('EXPERIENCE');
 
       const jobs = [
-        { title:"Ma\u00eetre D' & Events Producer", dates:"Jun 2023 \u2013 Oct 2024", company:"Happier New York  \u00b7  Brooklyn, NY",
+        { title:"Waitress", dates:"Mar 2025 – Present", company:"Trapizzino  ·  New York, NY",
           bullets:[
-            "Produced Studio Skate, a five-event experiential series at 99 Scott converting Chalet dinner guests into a second-half-of-night experience: vendor coordination, programming, day-of execution, 1,000+ person invite list",
-            "Ran the floor and led a five-person team at a Brooklyn members club where the brand was the membership and every shift was a brand activation",
-            "Opened Habibi and SAA alongside the flagship: buildout walk-throughs, service-flow design, FOH training, opening-week ops",
-            "Worked the floor for Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows",
-            "Managed founding member, regular, and VIP relationships; at a members club, that's the actual product",
-            "Coordinated corporate buyouts with HR, Facilities, and Comms; daily ops on Resy, OpenTable, and Toast"
+            "Run up to 70 covers of a 150-cover dinner service, covering bussing, food running, table-side needs, and ordering",
+            "Bartend a fully seated room of about 50 covers, batching cocktails and restocking at close",
+            "Designated closer: setup and breakdown, cash outs, register duties, and restocking"
           ]},
-        { title:"Digital Marketing Analyst", dates:"Mar 2021 \u2013 Apr 2023", company:"Kepler  \u00b7  New York, NY",
+        { title:"Maître D' & Events Producer", dates:"Jun 2023 – Oct 2024", company:"Happier New York / Scott Avenue Association  ·  Brooklyn, NY",
           bullets:[
-            "Managed paid social for J.Crew's post-bankruptcy rebrand across six platforms (Meta, TikTok, Pinterest, Snapchat, X, LinkedIn) inside a $250K monthly budget",
-            "Pulled daily optimizations against ROAS, handled weekly client reporting, and called platform shifts in real time while the brand was rewriting its own story in public",
-            "Dug through five years of historical campaign data, found patterns nobody had flagged, put them to work in live optimization",
-            "Watched brand recovery happen up close at one of the more scrutinized retail comebacks of the era"
+            "Led a FOH team of 5 through 150 covers nightly across three seatings, balancing the book, party size, and guest mix",
+            "Helped open two venues, Habibi and Scott Avenue Association, demonstrating the SAA brand in every activation",
+            "Produced Studio Skate, a five-event ice skating activation at 99 Scott designed to convert Chalet dinner guests; averaged 100+ guests per event and built a 1,000+ person invite list from scratch",
+            "Maître D' for the NYC Palm Heights pop-up, VIP private functions, and a Fashion Week Jean Paul Gaultier after party: 200 guests nightly, VIPs in every room",
+            "Assessed the host stand and reservation book and provided quality control for a 300-person New Year's Eve party at Palm Heights, Cayman Islands",
+            "Liaised with SAA members, clients, and VIP guests; turned first-time visitors into regulars",
+            "Partnered with HR, Communications, Facilities, and Security to execute 1–2 high-profile events a month"
           ]},
-        { title:"Floor & Closing Manager", dates:"Jan 2020 \u2013 Mar 2021", company:"Lock Stock Bar & Grill  \u00b7  Canandaigua, NY",
+        { title:"Digital Marketing Analyst", dates:"Mar 2021 – Apr 2023", company:"Kepler  ·  New York, NY",
           bullets:[
-            "Ran the floor across lunch, dinner, and late-night at a high-volume bar, day-one through close alongside family ownership",
-            "When COVID hit, rebuilt the entire operation: online ordering, digital marketing to bring takeout customers in, kitchen-to-curb fulfillment built from scratch",
-            "Wrote the SOPs for every reopening phase and retrained the team each time the restrictions changed",
-            "Closed every night: financial reports, cash reconciliation, Health Department walk-throughs, the whole shift-end stack"
+            "Balanced $250K in monthly client budgets across 6 platforms, owning budget tracking, vendor communications, and performance reporting",
+            "Analyzed five years of campaign data to surface trends and cut client cost-per-acquisition 35% year over year",
+            "Presented performance findings daily, advised on best practices, test results, and budget allocation, and tracked action items"
+          ]},
+        { title:"Floor Manager", dates:"Nov 2019 – Mar 2021", company:"Lock Stock Bar & Grill  ·  Bristol, NY",
+          bullets:[
+            "Coordinated FOH and BOH operations for a newly opened venue through full and restricted-capacity service",
+            "Navigated the March 2020 COVID-19 pivot: rewrote SOPs, restructured layouts, added contactless systems, and retrained staff",
+            "Ran nightly closing (cash outs, POS reporting, inventory) with zero-error financial accountability across all shifts"
           ]},
         { title:"Digital Strategy Assistant", dates:"Jun 2018 \u2013 May 2019", company:"New Blue Interactive  \u00b7  Washington, DC",
           bullets:[
@@ -90,52 +99,51 @@
           ]}
       ];
 
+      const LH = 4.15;   // bullet line height
       jobs.forEach((job, ji) => {
+        room(9.4 + LH * 2);
         sf(9, 'bold'); doc.text(job.title, ml, y);
-        sf(7.5, 'normal', 100,100,100);
-        doc.text(job.dates, ml + cw - doc.getTextWidth(job.dates), y);
-        y += 5;
-        sf(8, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 4.8;
+        sf(7.5, 'normal', 100,100,100); rightText(job.dates);
+        y += 4.6;
+        sf(8, 'normal', 100,100,100); doc.text(job.company, ml, y); y += 4.6;
         job.bullets.forEach(b => {
           sf(8, 'normal', 17,17,17);
-          const lines = doc.splitTextToSize('\u2013  ' + b, cw - 3);
-          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += 4.4; });
+          const lines = doc.splitTextToSize('–  ' + b, cw - 3);
+          room(lines.length * LH);
+          lines.forEach((l, i) => { doc.text(l, ml + (i > 0 ? 3 : 0), y); y += LH; });
         });
-        if (ji < jobs.length - 1) y += 3.5;
+        if (ji < jobs.length - 1) y += 3;
       });
 
-      y += 7;
+      y += 5.5;
 
       // Education
       secHead('EDUCATION');
-      sf(8.5, 'bold'); doc.text('George Washington University', ml, y); y += 5;
+      sf(8.5, 'bold'); doc.text('George Washington University', ml, y);
+      sf(7.5, 'normal', 100,100,100); rightText('2015 – 2019');
+      y += 4.6;
       sf(8, 'normal', 100,100,100);
-      doc.text('B.A. Political Science & Women\u2019s, Gender & Sexuality Studies  \u00b7  2019', ml, y); y += 9;
+      doc.text('B.A. Political Science & Women’s, Gender & Sexuality Studies', ml, y); y += 7.5;
 
-      // Skills (5 equal columns)
+      // Skills, one line per group
       secHead('SKILLS');
       const groups = [
-        { label:'Events & Activation', tags:['Event Production','Run of Show','Brand Activations','Day-of Execution','Guest Relations','Vendor Coordination','Experiential Programming'] },
-        { label:'Marketing', tags:['Paid Social','Campaign Management','A/B Testing','Performance Analytics','Email Marketing'] },
-        { label:'Platforms', tags:['Meta','TikTok','LinkedIn','Pinterest','Snapchat'] },
-        { label:'Operations', tags:['Team Leadership','Staff Training','Scheduling','Financial Reporting','Compliance'] },
-        { label:'Tools', tags:['Adobe Photoshop','Illustrator','Google Analytics'] }
+        { label:'Data & Analytics', tags:['Campaign Performance Analysis','Budget Management','CPA & ROAS Optimization','Performance Reporting','Paid Media'] },
+        { label:'Front-of-House & Service', tags:['Guest Relations','VIP Management','Floor Operations','Reservation Management','Staff Training','Scheduling'] },
+        { label:'Events & Operations', tags:['Private Events','Event Production','Pop-Ups & Activations','Cross-Functional Coordination','Budget Tracking','Cash Management'] },
+        { label:'Food & Beverage', tags:['Fine Dining Service','High-Volume Operations','Cocktail & Wine Knowledge','Health Department Compliance'] },
+        { label:'Tools', tags:['Resy','OpenTable','SevenRooms','Tripleseat','Toast POS'] }
       ];
-      const gw = cw / groups.length;
-      const baseY = y;
-      groups.forEach((grp, gi) => {
-        const gx = ml + gi * gw;
-        let gy = baseY;
-        sf(6.5, 'bold', 100,100,100); doc.text(grp.label.toUpperCase(), gx, gy); gy += 5;
-        let tx = gx;
-        grp.tags.forEach(tag => {
-          sf(6, 'normal', 17,17,17);
-          const tw = doc.getTextWidth(tag) + 4;
-          if (tx + tw > gx + gw - 1) { tx = gx; gy += 6; }
-          doc.setFillColor(238,238,238);
-          doc.roundedRect(tx, gy - 3.2, tw, 4.5, 0.6, 0.6, 'F');
-          doc.text(tag, tx + 2, gy); tx += tw + 1.5;
-        });
+      groups.forEach(grp => {
+        const label = grp.label + ':';
+        sf(8, 'bold'); const lw = doc.getTextWidth(label) + 1.6;
+        sf(8, 'normal', 17,17,17);
+        const lines = doc.splitTextToSize(grp.tags.join(', '), cw - lw);
+        room(lines.length * LH);
+        sf(8, 'bold'); doc.text(label, ml, y);
+        sf(8, 'normal', 17,17,17);
+        lines.forEach(l => { doc.text(l, ml + lw, y); y += LH; });
+        y += 0.5;
       });
 
       doc.save('lucius-campany-resume.pdf');
@@ -151,24 +159,24 @@
 
     const roles = {
       maitre: {
-        title: "Guest Experience & Events Producer",
+        title: "Ma\u00eetre D' & Events Producer",
         color: "#1a1a2e",
         sections: [
-          { heading: "Happier New York · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Ran the floor and led a team of five at a Brooklyn members club. The brand was the membership — and every shift was an activation." },
-          { heading: "Studio Skate", text: "Produced a five-event ice skating activation at The Chalet built to convert dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, day-of execution, and the audience build: 1,000+ invite list plus live conversion of pop-up walk-bys into rink guests." },
-          { heading: "In the Room", text: "Worked events on the floor including Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows. The members club was where the culture was happening — the job was making sure it felt that way for everyone in the room." },
-          { heading: "The Openings", text: "Helped open two new venues under the same hospitality group — Habibi and SAA — from buildout walk-throughs to opening-week service. Every new opening is a brand launch. Treated it that way." },
-          { heading: "The Relationships", text: "Held the relationships with founding members, regulars, and VIPs. Coordinated with HR, Facilities, and Comms on corporate buyouts. Daily ops on Resy, OpenTable, and Toast." }
+          { heading: "Happier New York / Scott Avenue Association · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Led a front-of-house team of five through 150 covers a night across three seatings at a Brooklyn members club. The brand was the membership, and every shift was an activation." },
+          { heading: "Studio Skate", text: "Produced a five-event ice skating activation at 99 Scott built to convert Chalet dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, day-of execution, and the audience build: a 1,000+ person invite list from scratch and 100+ guests per event." },
+          { heading: "In the Room", text: "Ma\u00eetre D' for the NYC Palm Heights pop-up, VIP private functions, and a Fashion Week Jean Paul Gaultier after party: 200 guests a night, VIPs in every room. Worked the floor for Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows, and did bottle service for Teyana Taylor. Ran quality control on the host stand and reservation book for a 300-person New Year's Eve party at Palm Heights in the Cayman Islands." },
+          { heading: "The Openings", text: "Helped open two venues, Habibi and Scott Avenue Association, from buildout walk-throughs to opening-week service. Every new opening is a brand launch. Treated it that way." },
+          { heading: "The Relationships", text: "Held the relationships with SAA members, clients, and VIP guests, and turned first-time visitors into regulars. Partnered with HR, Communications, Facilities, and Security on one to two high-profile events a month. Daily ops on Resy, OpenTable, and Toast." }
         ]
       },
       manager: {
-        title: "Floor & Closing Manager",
+        title: "Floor Manager",
         color: "#16213e",
         sections: [
-          { heading: "Lock Stock Bar & Grill · Canandaigua, NY · Jan 2020 – Mar 2021", text: "Ran floor operations across lunch, dinner, and late-night at a high-volume venue alongside family ownership. The brand was local and personal — everything depended on whether you could hold the experience together on a bad night." },
-          { heading: "The COVID Pivot", text: "When COVID hit, rebuilt the whole operation: stood up the online ordering system, ran the digital marketing that brought takeout customers in, coordinated fulfillment from kitchen to curb. The dining room was closed. The business wasn't." },
-          { heading: "The Reopening", text: "Wrote the reopening SOPs and retrained the team for every phase of coming back to dine-in. Kept the standards intact through a period when nobody had a playbook." },
-          { heading: "Closing the Night", text: "Closed every night — financial reports, cash reconciliation, Health Department walk-throughs, the whole shift-end stack. Cross-trained staff across every FOH role and ran ongoing coaching throughout." }
+          { heading: "Lock Stock Bar & Grill · Bristol, NY · Nov 2019 – Mar 2021", text: "Coordinated front and back of house for a newly opened venue across lunch, dinner, and late-night, alongside family ownership. The brand was local and personal. Everything depended on whether you could hold the experience together on a bad night." },
+          { heading: "The COVID Pivot", text: "When COVID hit in March 2020, rebuilt the whole operation: rewrote the SOPs, restructured the layout, added contactless systems, stood up online ordering, and ran the digital marketing that brought takeout customers in. The dining room was closed. The business wasn't." },
+          { heading: "The Reopening", text: "Retrained the team for every phase of coming back, from restricted capacity to full service. Kept the standards intact through a period when nobody had a playbook." },
+          { heading: "Closing the Night", text: "Closed every night: cash outs, POS reporting, inventory, Health Department walk-throughs. Zero-error financial accountability across all shifts." }
         ]
       },
       digital: {
@@ -197,9 +205,10 @@
 
     const keplerSlides = [
       { label: "The Brief", text: "J.Crew hired Kepler to run paid social during the post-bankruptcy rebrand. Six platforms, a $250K monthly budget, two years. The brand was in public recovery — the campaigns were live while J.Crew was still figuring out what it was again." },
-      { label: "The Work", text: "Daily optimization against a ROAS floor. Weekly client reporting. Asset coordination, QA, and constant decisions about where the money should go. The job was keeping six live campaigns accountable while the brand rebuilt around them." },
+      { label: "The Work", text: "Balancing $250K a month across six platforms: budget tracking, vendor communications, performance reporting. Daily optimization against a ROAS floor, and daily readouts on what the tests said and where the money should move next. The job was keeping six live campaigns accountable while the brand rebuilt around them." },
       { label: "The Channels", text: "Meta carried the acquisition load: lookalike audiences, retargeting, direct response. TikTok and Snapchat were reach and brand memory for audiences who didn't have a J.Crew relationship yet. Pinterest pulled high-intent traffic — different click quality than anywhere else." },
-      { label: "The Lesson", text: "A brand recovery isn't won on one channel. Each platform does a different job, and knowing which job belongs where is the whole game. I spent two years learning that from the data, then proving it in client presentations every week." }
+      { label: "The Numbers", text: "Went back through five years of campaign data, surfaced the trends nobody had flagged, and put them to work in live optimization. Client cost-per-acquisition came down 35% year over year." },
+      { label: "The Lesson", text: "A brand recovery isn't won on one channel. Each platform does a different job, and knowing which job belongs where is the whole game. I spent two years learning that from the data, then proving it in front of the client every day." }
     ];
 
     // --- Detail panel ---
@@ -316,10 +325,10 @@
           <div class="popup-text" style="color:#ffffff;">${slide.text}</div>
         </div>
         <div class="popup-footer" style="background:#155930;border-top:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
-          <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${keplerSlides.length}</span>
+          <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;font-family:var(--sans);">${idx + 1} of ${keplerSlides.length}</span>
           ${!isLast
-            ? `<button class="knext-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;letter-spacing:0.05em;">Next →</button>`
-            : `<button class="kclose-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:'Segoe UI',sans-serif;font-size:0.8rem;">Close</button>`}
+            ? `<button class="knext-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:var(--sans);font-size:0.8rem;letter-spacing:0.05em;">Next →</button>`
+            : `<button class="kclose-btn" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 16px;border-radius:3px;cursor:pointer;font-family:var(--sans);font-size:0.8rem;">Close</button>`}
         </div>`;
       tp.querySelector('.ktxt-x').addEventListener('click', () => history.back());
       const nb = tp.querySelector('.knext-btn');
@@ -366,12 +375,12 @@
         color: '#EA4335',
         subject: 'Campaign Results — 1.2 Million Raised, Target Exceeded',
         time: '9:14 AM',
-        date: 'Mar 18, 2020, 9:14 AM',
+        date: 'Nov 8, 2018, 9:14 AM',
         snippet: 'Lucius, the Q3 digital fundraising push hit $1.2M — well above target...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
           <clipPath id="cp1"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp1)">
-          <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">FUNDRAISING TOTALS — Q3 2020</text>
+          <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">FUNDRAISING TOTALS — Q3 2018</text>
           <line x1="12" y1="162" x2="308" y2="162" stroke="#eee" stroke-width="1"/>
           <line x1="12" y1="128" x2="308" y2="128" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,3"/>
           <line x1="12" y1="94"  x2="308" y2="94"  stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,3"/>
@@ -414,7 +423,7 @@
         color: '#4285F4',
         subject: 'A/B Test Results — "Tuna is taking it at the market" +22% Open Rate, 18% CTR',
         time: 'Yesterday',
-        date: 'Mar 17, 2020, 4:51 PM',
+        date: 'Nov 7, 2018, 4:51 PM',
         snippet: 'Lucius — Variant B outperformed on every metric. Your subject line call was right...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
           <clipPath id="cp2"><rect width="320" height="240"/></clipPath>
@@ -455,8 +464,8 @@
         addr: 'prayfah.her@newblueinteractive.com',
         color: '#34A853',
         subject: 'QA Sign-Off Needed — October Broadcast (104,211 subscribers)',
-        time: 'Oct 28',
-        date: 'Oct 28, 2019, 11:02 AM',
+        time: 'Oct 29',
+        date: 'Oct 29, 2018, 11:02 AM',
         snippet: 'Template staged and ready. Nothing deploys until you sign off...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
           <clipPath id="cp3"><rect width="320" height="240"/></clipPath>
@@ -501,7 +510,7 @@
         color: '#FBBC05',
         subject: 'HTML Email Build Complete — Responsive Template v3 in CRM',
         time: 'Sep 12',
-        date: 'Sep 12, 2019, 3:38 PM',
+        date: 'Sep 12, 2018, 3:38 PM',
         snippet: 'Your HTML/CSS spec is built, QA\'d, and loaded. Renders clean on all clients...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
           <clipPath id="cp4"><rect width="320" height="240"/></clipPath>
@@ -562,8 +571,8 @@
         addr: 'teaness.sippa@newblueinteractive.com',
         color: '#9C27B0',
         subject: 'Creative Package Delivered — PSD, AI, and All Platform Exports',
-        time: 'Aug 5',
-        date: 'Aug 5, 2019, 1:22 PM',
+        time: 'Aug 6',
+        date: 'Aug 6, 2018, 1:22 PM',
         snippet: 'All final creative files are ready. Everything built in Photoshop and Illustrator...',
         photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
           <clipPath id="cp5"><rect width="320" height="240"/></clipPath>
@@ -609,14 +618,14 @@
     ];
 
     const spamEmails = [
-      { color: '#F4B400', from: 'Crypto Wealth Academy', subject: '🚀 I Turned $500 Into $2.4M In 11 Days — Here\'s Exactly How (Free Webinar)', time: 'Mar 14', snippet: 'This is not a drill. A retired teacher from Ohio discovered a single loophole that Wall Street doesn\'t want you to know about...' },
-      { color: '#DB4437', from: 'LinkedIn', subject: 'Lucius, you have 847 profile views this week! 🔥', time: 'Mar 13', snippet: 'Recruiters are looking at your profile. Upgrade to Premium to see who...' },
-      { color: '#4285F4', from: 'Groupon', subject: '94% OFF Laser Hair Removal — TODAY ONLY (Expires in 00:47:22)', time: 'Mar 12', snippet: 'Don\'t miss this deal! 47 people are looking at this right now...' },
-      { color: '#0F9D58', from: 'Amazon', subject: 'Your package has been delayed 🚨 Action Required', time: 'Mar 11', snippet: 'We were unable to deliver your package. Click here to reschedule. (You have no order)' },
-      { color: '#AA00FF', from: 'DoorDash', subject: 'Lucius, your Chipotle is getting COLD 🌯 We\'re concerned', time: 'Mar 10', snippet: 'We noticed you haven\'t ordered in 3 days. Are you okay? Your burrito misses you...' },
-      { color: '#E91E63', from: 'Shutterstock', subject: 'You left something behind... 👀', time: 'Mar 9', snippet: 'Those stock photos you were looking at are still available. They\'re thinking about you.' },
-      { color: '#FF6D00', from: 'Geico', subject: 'Lucius — 15 minutes could save you 15% or more. Or you could just read this email forever', time: 'Mar 8', snippet: 'You\'ve received this email because you exist. Click to get a quote for something.' },
-      { color: '#607D8B', from: 'Ancestry.com', subject: 'We found a SHOCKING family secret 😱 (subscribe to find out)', time: 'Mar 7', snippet: 'One of your ancestors did something. Click to reveal their identity for just $29.99/mo...' }
+      { color: '#F4B400', from: 'Crypto Wealth Academy', subject: '🚀 I Turned $500 Into $2.4M In 11 Days — Here\'s Exactly How (Free Webinar)', time: 'Nov 5', snippet: 'This is not a drill. A retired teacher from Ohio discovered a single loophole that Wall Street doesn\'t want you to know about...' },
+      { color: '#DB4437', from: 'LinkedIn', subject: 'Lucius, you have 847 profile views this week! 🔥', time: 'Nov 4', snippet: 'Recruiters are looking at your profile. Upgrade to Premium to see who...' },
+      { color: '#4285F4', from: 'Groupon', subject: '94% OFF Laser Hair Removal — TODAY ONLY (Expires in 00:47:22)', time: 'Nov 3', snippet: 'Don\'t miss this deal! 47 people are looking at this right now...' },
+      { color: '#0F9D58', from: 'Amazon', subject: 'Your package has been delayed 🚨 Action Required', time: 'Nov 2', snippet: 'We were unable to deliver your package. Click here to reschedule. (You have no order)' },
+      { color: '#AA00FF', from: 'DoorDash', subject: 'Lucius, your Chipotle is getting COLD 🌯 We\'re concerned', time: 'Nov 1', snippet: 'We noticed you haven\'t ordered in 3 days. Are you okay? Your burrito misses you...' },
+      { color: '#E91E63', from: 'Shutterstock', subject: 'You left something behind... 👀', time: 'Oct 31', snippet: 'Those stock photos you were looking at are still available. They\'re thinking about you.' },
+      { color: '#FF6D00', from: 'Geico', subject: 'Lucius — 15 minutes could save you 15% or more. Or you could just read this email forever', time: 'Oct 30', snippet: 'You\'ve received this email because you exist. Click to get a quote for something.' },
+      { color: '#607D8B', from: 'Ancestry.com', subject: 'We found a SHOCKING family secret 😱 (subscribe to find out)', time: 'Oct 27', snippet: 'One of your ancestors did something. Click to reveal their identity for just $29.99/mo...' }
     ];
 
     function renderInbox() {
@@ -675,10 +684,104 @@
       gmEmailView.classList.add('open');
     }
 
-    document.getElementById('gm-inbox-btn').addEventListener('click', () => {
+    function showInbox() {
       gmEmailView.classList.remove('open');
       gmInbox.style.display = 'flex';
       gmInbox.style.flexDirection = 'column';
+    }
+    document.getElementById('gm-inbox-btn').addEventListener('click', showInbox);
+    document.getElementById('gm-nav-inbox').addEventListener('click', showInbox);
+
+    // --- Compose: a real message to Lucius, sent through the site's contact form ---
+    const gmCw = document.getElementById('gm-cw');
+    const gmToast = document.getElementById('gm-toast');
+    const cw = {
+      name: document.getElementById('gm-cw-name'),
+      email: document.getElementById('gm-cw-email'),
+      subject: document.getElementById('gm-cw-subject'),
+      message: document.getElementById('gm-cw-message'),
+      send: document.getElementById('gm-cw-send'),
+      status: document.getElementById('gm-cw-status')
+    };
+    let gmToastTimer = null;
+
+    function openCompose() {
+      gmCw.hidden = false;
+      requestAnimationFrame(() => gmCw.classList.add('open'));
+      (cw.name.value ? (cw.email.value ? cw.message : cw.email) : cw.name).focus({ preventScroll: true });
+    }
+    function closeCompose() {
+      gmCw.classList.remove('open');
+      setTimeout(() => { if (!gmCw.classList.contains('open')) gmCw.hidden = true; }, 300);
+    }
+    function showGmToast(text) {
+      gmToast.textContent = text;
+      gmToast.classList.add('show');
+      clearTimeout(gmToastTimer);
+      gmToastTimer = setTimeout(() => gmToast.classList.remove('show'), 4500);
+    }
+
+    document.querySelectorAll('.gm-compose, #gm-fab').forEach(b => b.addEventListener('click', openCompose));
+    document.getElementById('gm-cw-close').addEventListener('click', closeCompose);
+    // a warning clears as soon as they start fixing it
+    gmCw.addEventListener('input', () => { cw.status.textContent = ''; });
+    // Escape closes the draft window, not the whole inbox
+    gmCw.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.stopPropagation(); closeCompose(); }
+    });
+
+    gmCw.addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = cw.name.value.trim();
+      const email = cw.email.value.trim();
+      const subject = cw.subject.value.trim();
+      const message = cw.message.value.trim();
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        cw.status.textContent = 'Add your email so Lucius can write back.';
+        cw.email.focus();
+        return;
+      }
+      if (!message) {
+        cw.status.textContent = 'Write a message first.';
+        cw.message.focus();
+        return;
+      }
+      cw.status.textContent = '';
+      cw.send.disabled = true;
+      cw.send.textContent = 'Sending…';
+
+      // Goes to the same place as the contact form at the bottom of the page.
+      const body = (subject ? 'Subject: ' + subject + '\n\n' : '') + message +
+        '\n\n(Sent from the Compose window in the New Blue inbox on luciuscampany.com)';
+      let sent = false;
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ 'form-name': 'contact', name: name || email, email, message: body }).toString()
+        });
+        sent = res.ok;
+      } catch (err) {
+        sent = false;
+      }
+      cw.send.disabled = false;
+      cw.send.textContent = 'Send';
+
+      if (sent) {
+        gmCw.reset();
+        closeCompose();
+        showGmToast('Message sent to Lucius.');
+      } else {
+        // The form service did not take it, so offer the visitor's own mail app instead.
+        const mailto = 'mailto:lucius@luciuscampany.com?subject=' + encodeURIComponent(subject || 'Hello from your site') +
+          '&body=' + encodeURIComponent(message + (name ? '\n\n' + name : ''));
+        cw.status.textContent = 'That did not send from here. ';
+        const link = document.createElement('a');
+        link.href = mailto;
+        link.textContent = 'Open it in your mail app';
+        cw.status.appendChild(link);
+        cw.status.appendChild(document.createTextNode(' instead.'));
+      }
     });
 
     document.getElementById('gm-back-btn').addEventListener('click', () => history.back());
@@ -694,6 +797,7 @@
     }
 
     function closeGmail() {
+      closeCompose();
       gmailEl.classList.remove('visible');
       document.body.style.overflow = '';
       setTimeout(() => { gmailEl.style.display = 'none'; }, 300);
@@ -703,32 +807,32 @@
     const bookviewEl = document.getElementById('bookview');
 
     const reservations = [
-      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Stewarded team of 5 from open to close', table: 'Tbl 3', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Stewarded a front-of-house team of 5 through every service period, active on the floor from open to close, working directly alongside staff rather than directing from a distance.' },
+      { time: '11:00 AM', pax: 2, guest: 'FOH Team Leadership', note: 'Team of 5 · 150 covers a night · three seatings', table: 'Tbl 3', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Led a front-of-house team of five through 150 covers a night across three seatings, on the floor from open to close, working alongside the staff rather than directing from a distance.' },
         { label: 'How It Worked', text: 'The team knew where the standard was because they could see it being held every shift. I was the last line of quality control for the guest experience, the team\'s execution, and the energy of the room.' }
       ]},
       { time: '11:30 AM', pax: 4, guest: 'Staff Training & Development', note: 'Onboarding programs & performance reviews', table: 'Tbl 7', status: 'completed', slides: [
         { label: 'The Skill', text: 'Designed and executed onboarding and training for incoming FOH staff, covering service standards, product knowledge, and what it means to steward a members club.' },
         { label: 'How It Worked', text: 'Training wasn\'t a one-time event. It was ongoing. Real-time feedback during shifts, formal performance reviews each season. Small corrections compounded into real improvement.' }
       ]},
-      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Primary contact for founding members & regulars', table: 'Tbl 1', status: 'vip', photos: ['https://i.imgur.com/3SM2sT5.jpg','https://i.imgur.com/G1PYxXJ.jpg'], slides: [
-        { label: 'The Skill', text: 'Stewarded relationships with founding members, regulars, and high-value guests. Primary point of contact across every service period.' },
-        { label: 'How It Worked', text: 'Tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. Joy is the strongest engine of brand memory. That was the strategy.' }
+      { time: '12:00 PM', pax: 2, guest: 'VIP Guest Relations', note: 'Members, clients & VIPs · first-timers into regulars', table: 'Tbl 1', status: 'vip', photos: ['https://i.imgur.com/3SM2sT5.jpg','https://i.imgur.com/G1PYxXJ.jpg'], slides: [
+        { label: 'The Skill', text: 'Held the relationships with SAA members, founding members, clients, and VIP guests. Primary point of contact across every service period.' },
+        { label: 'How It Worked', text: 'Tracked preferences, remembered names, and made every returning guest feel like the room was set up for them. That is how a first-time visitor becomes a regular. Joy is the strongest engine of brand memory. That was the strategy.' }
       ]},
-      { time: '12:00 PM', pax: 6, guest: 'Studio Skate — Ice Activation', note: 'Five-event series · 1,000+ invite list · Chalet → rink conversion', table: 'Event', status: 'completed', slides: [
-        { label: 'The Activation', text: 'Produced Studio Skate — a five-event ice skating series built to convert Chalet dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, and day-of execution start to finish.' },
-        { label: 'The Audience Build', text: 'Built a 1,000+ person invite list from scratch and managed live conversion of pop-up walk-bys into rink guests on the night. The event was the marketing.' }
+      { time: '12:00 PM', pax: 6, guest: 'Studio Skate — Ice Activation', note: 'Five events · 100+ guests a night · 1,000+ invite list', table: 'Event', status: 'completed', slides: [
+        { label: 'The Activation', text: 'Produced Studio Skate, a five-event ice skating activation at 99 Scott built to convert Chalet dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, and day-of execution start to finish.' },
+        { label: 'The Audience Build', text: 'Built a 1,000+ person invite list from scratch, averaged 100+ guests per event, and converted pop-up walk-bys into rink guests on the night. The event was the marketing.' }
       ]},
-      { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Daily oversight via Resy & OpenTable', table: 'Tbl 4', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Managed the full reservation flow daily using Resy and OpenTable, balancing capacity, pacing, and the guest experience from the host stand.' },
+      { time: '12:30 PM', pax: 2, guest: 'Reservation Management', note: 'Balancing the book, party size & guest mix', table: 'Tbl 4', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Managed the full reservation flow daily on Resy and OpenTable, balancing the book, party size, and guest mix across three seatings from the host stand.' },
         { label: 'How It Worked', text: 'I actively supported the host throughout each shift, making real-time adjustments to seating assignments to keep covers moving without guests feeling rushed.' }
       ]},
       { time: '1:00 PM', pax: 3, guest: 'Guest Recovery', note: 'De-escalation & service recovery on the floor', table: 'Tbl 6', status: 'seated', photos: ['https://i.imgur.com/xMJo2FG.jpg','https://i.imgur.com/cXqqkq2.jpg'], slides: [
         { label: 'The Skill', text: 'Handled all escalated guest concerns on the floor: resolving complaints, de-escalating tension, and converting a negative experience into a reason to return.' },
         { label: 'How It Worked', text: 'Speed and ownership. Never passed a problem to someone else. Made the call on the floor, handled it personally, and followed up before the guest left. A guest who got it handled right often becomes more loyal than one who never had an issue.' }
       ]},
-      { time: '1:00 PM', pax: 8, guest: 'Corporate Activations', note: 'Multi-property coordination with HR & Comms', table: 'Tbl 12', status: 'completed', slides: [
-        { label: 'The Skill', text: 'Produced corporate events across multiple Happier properties, coordinating cross-functionally with HR, Facilities, and Communications from first contact through execution.' },
+      { time: '1:00 PM', pax: 8, guest: 'Corporate Activations', note: '1–2 high-profile events a month · HR, Comms, Facilities & Security', table: 'Tbl 12', status: 'completed', slides: [
+        { label: 'The Skill', text: 'Executed one to two high-profile events a month across Happier\'s properties, partnering with HR, Communications, Facilities, and Security from first contact through execution.' },
         { label: 'How It Worked', text: 'These weren\'t dinner reservations. They were full activations involving space setup, custom programming, and internal stakeholder alignment before a single guest arrived.' }
       ]},
       { time: '1:30 PM', pax: 2, guest: 'Real-Time Seating Flow', note: 'Adjusted assignments to maintain service pacing', table: 'Tbl 2', status: 'arrived', photos: ['https://i.imgur.com/9eoB4jd.jpg','https://i.imgur.com/biMncas.jpg'], slides: [
@@ -743,9 +847,13 @@
         { label: 'The Skill', text: 'Operated Toast POS daily for order management, payment processing, and end-of-shift reporting, alongside Resy and OpenTable for reservations.' },
         { label: 'How It Worked', text: 'Knowing the systems meant the team could lean on me for troubleshooting during service, and I could pull accurate reporting at close without delays.' }
       ]},
-      { time: '3:00 PM', pax: 20, guest: 'Tyla · OBJ · Luar', note: 'Release parties, birthdays, fashion activations — floor-level', table: 'Main Floor', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
-        { label: 'In the Room', text: 'Worked events on the floor including Tyla\'s release party, Odell Beckham Jr.\'s birthday, and Luar fashion shows. The members club was where the culture was happening — the job was making sure it felt that way for everyone in it.' },
+      { time: '3:00 PM', pax: 20, guest: 'Tyla · OBJ · Luar', note: 'Release parties, birthdays, fashion shows · bottle service for Teyana Taylor', table: 'Main Floor', status: 'reserved', photos: ['https://i.imgur.com/NYxXVd2.jpg','https://i.imgur.com/RB3kxOp.jpg'], slides: [
+        { label: 'In the Room', text: 'Worked events on the floor including Tyla\'s release party, Odell Beckham Jr.\'s birthday, and Luar fashion shows, and did bottle service for Teyana Taylor. The members club was where the culture was happening — the job was making sure it felt that way for everyone in it.' },
         { label: 'What That Requires', text: 'High-profile events don\'t run themselves. Seating, flow, VIP handling, real-time problem solving — the floor work is what makes the room feel effortless. Nobody in the room should ever see the coordination behind it.' }
+      ]},
+      { time: '4:30 PM', pax: 2, guest: 'Habibi & Scott Avenue Association', note: 'Two venue openings · buildout to opening week', table: 'Openings', status: 'completed', slides: [
+        { label: 'The Openings', text: 'Helped open two venues, Habibi and Scott Avenue Association: buildout walk-throughs, service-flow design, FOH training, and opening-week service.' },
+        { label: 'How It Worked', text: 'Every opening is a brand launch. The SAA brand had to show up in every activation, from the first walk-through to the first full book.' }
       ]},
       { time: '5:00 PM', pax: 2, guest: 'Service Standards', note: 'Brand delivery from first cover to last', table: 'Tbl 5', status: 'completed', slides: [
         { label: 'The Skill', text: 'Held Happier\'s brand standard across every service period, from the first cover of the day through the last. The brand doesn\'t live in a deck. It lives in the room.' },
@@ -755,13 +863,21 @@
         { label: 'The Skill', text: 'Provided ongoing performance feedback to FOH staff and contributed to formal reviews, keeping the team accountable and growing throughout each season.' },
         { label: 'How It Worked', text: 'Feedback happened in real time, not just at review cycles. A quick note after service about what went well or what to adjust is more effective than a quarterly conversation.' }
       ]},
-      { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Facilities & Communications', table: 'Tbl 12', status: 'reserved', photos: ['https://i.imgur.com/FPLyO64.jpg','https://i.imgur.com/jW8Su7Y.jpg'], slides: [
-        { label: 'The Skill', text: 'Coordinated regularly with HR, Facilities, and Communications teams to execute events and resolve operational issues across Happier\'s properties.' },
+      { time: '6:00 PM', pax: 10, guest: 'Cross-Functional Coordination', note: 'Aligned ops across HR, Comms, Facilities & Security', table: 'Tbl 12', status: 'reserved', photos: ['https://i.imgur.com/FPLyO64.jpg','https://i.imgur.com/jW8Su7Y.jpg'], slides: [
+        { label: 'The Skill', text: 'Coordinated regularly with HR, Communications, Facilities, and Security to execute events and resolve operational issues across Happier\'s properties.' },
         { label: 'How It Worked', text: 'Hospitality doesn\'t operate in a silo. Getting the right things done meant knowing who to call, communicating clearly, and following through without being chased.' }
+      ]},
+      { time: '7:00 PM', pax: 200, guest: 'Palm Heights · Jean Paul Gaultier', note: 'NYC pop-up, VIP private functions, Fashion Week after party · 200 guests a night', table: 'Main Floor', status: 'completed', slides: [
+        { label: 'At the Door', text: 'Ma\u00eetre D\' for the NYC Palm Heights pop-up, VIP private functions, and a Fashion Week Jean Paul Gaultier after party. 200 guests a night, VIPs in every room.' },
+        { label: 'What That Requires', text: 'A pop-up has no regulars and no second night to fix the first one. The book, the door, and the room have to be right the first time.' }
       ]},
       { time: '8:00 PM', pax: 4, guest: 'Chalet · 4 top', note: 'Member mentioned Studio Skate after dinner', table: 'Tbl 6', status: 'reserved', photos: ['https://i.imgur.com/J7oOK2g.jpg','https://i.imgur.com/OPATVq7.jpg'], slides: [
         { label: 'The Setup', text: 'Chalet was Happier\'s winter dining experience, running alongside Studio Skate in the same building on the same nights. My job was managing the Chalet floor while pitching the transition — moving dinner guests into the skating activation at the right moment.' },
         { label: 'The Conversion', text: 'The pitch window was 9:00–9:15, after the main course. Soft, not pushy — the ones who went almost always came back. That\'s the job: make a dinner into an evening, and an evening into a membership story.' }
+      ]},
+      { time: '9:00 PM', pax: 300, guest: 'New Year\'s Eve · Palm Heights, Cayman Islands', note: '300-person party · host stand & reservation book QC', table: 'Off-site', status: 'completed', slides: [
+        { label: 'The Assignment', text: 'Assessed the host stand and reservation book and ran quality control for a 300-person New Year\'s Eve party at Palm Heights in the Cayman Islands.' },
+        { label: 'Why It Matters', text: 'A 300-person night lives or dies at the host stand. If the book is wrong, the room is wrong.' }
       ]}
     ];
 
@@ -847,7 +963,7 @@
       const isLast = idx === resv.slides.length - 1;
       return `
         <div class="popup-titlebar" data-drag style="background:linear-gradient(to right,#111,#2a1f00);border-bottom:1px solid #c8a96e;">
-          <div class="popup-title" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;letter-spacing:0.08em;">${resv.guest}</div>
+          <div class="popup-title" style="color:#c8a96e;font-family:var(--sans);letter-spacing:0.08em;">${resv.guest}</div>
           <div class="popup-controls">
             <button class="popup-btn resv-close-btn" style="background:#2a2a2a;border-color:#555;color:#aaa;">✕</button>
           </div>
@@ -972,9 +1088,9 @@
         title: 'Spirits', ornament: '— ⬥ —',
         items: [
           { name: 'The Close, Every Night', desc: 'Financial discipline isn\'t inherited in a new operation — it\'s built from the first shift.', detail: 'Nightly Close', slides: [
-            { label: 'The Reality', text: 'There were no established close procedures when we opened. We built the routine from scratch — cash reconciliation, comps, voids, documentation — and held to it every single night regardless of how late it ran.' },
+            { label: 'The Reality', text: 'There were no established close procedures when we opened. We built the routine from scratch — cash outs, POS reporting, inventory, comps, voids, documentation — and held to it every single night regardless of how late it ran.' },
             { label: 'How It Worked', text: 'The report was filed before anyone went home. Clean books meant management had accurate information every morning. You can\'t make decisions for a young business on guesswork.' },
-            { label: 'The Result', text: 'That financial discipline became infrastructure. It was part of the culture before we even called it that.' }
+            { label: 'The Result', text: 'Zero-error closes across every shift. That financial discipline became infrastructure. It was part of the culture before we even called it that.' }
           ]},
           { name: 'Compliance From Day One', desc: 'A new restaurant gets inspected. We made sure we were always ready.', detail: 'DOH Standards', slides: [
             { label: 'The Reality', text: 'Opening a new food service operation means starting the compliance clock immediately. We built regulatory standards into the close routine from the first week — not as a response to inspections, but as part of how the operation ran.' },
@@ -993,12 +1109,12 @@
         items: [
           { name: 'The COVID Pivot', desc: 'COVID closed the dining room overnight. Everything we\'d built for in-house service had to be rebuilt for a model we\'d never run.', detail: 'March 2020', slides: [
             { label: 'Before', text: 'By early 2020, Lock Stock had the systems any well-run restaurant puts in place — floor protocols, trained staff, close procedures, compliance built into the nightly routine. The operation was running the way it was supposed to.' },
-            { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. None of those systems applied anymore. We rebuilt the operation for takeout from scratch — online ordering stood up, kitchen-to-curb fulfillment designed, new SOPs written for a model we\'d never operated. Every management process had to be rethought for a fundamentally different kind of service.' },
+            { label: 'The Pivot', text: 'COVID closed the dining room in March 2020. None of those systems applied anymore. We rebuilt the operation for takeout from scratch — online ordering stood up, contactless systems added, the layout restructured, kitchen-to-curb fulfillment designed, new SOPs written for a model we\'d never operated. Every management process had to be rethought for a fundamentally different kind of service.' },
             { label: 'The Shift', text: 'Managing a takeout operation isn\'t managing a dining room with the tables removed. The pacing is different, the handoffs are different, the quality control points are different. We figured out what the new version of each system needed to look like — and we did it fast.' }
           ]},
           { name: 'Marketing a Restaurant That Couldn\'t Open', desc: 'We had to give people a reason to come back when coming in wasn\'t an option.', detail: 'Digital · Social', slides: [
             { label: 'The Problem', text: 'A restaurant that can\'t seat guests still has rent, staff, and a kitchen. The only path through was volume — and volume meant making sure the community knew we were still operating, still worth ordering from, and still worth supporting.' },
-            { label: 'The Work', text: 'Ran digital marketing across social and local channels to promote the takeout program — positioning Lock Stock as the go-to option in Canandaigua for the duration of restrictions. Built campaigns around the menu, turnaround times, and the fact that we were local and staying open.' },
+            { label: 'The Work', text: 'Ran digital marketing across social and local channels to promote the takeout program — positioning Lock Stock as the go-to local option for the duration of restrictions. Built campaigns around the menu, turnaround times, and the fact that we were local and staying open.' },
             { label: 'The Result', text: 'The marketing worked. Takeout volume sustained the business through the closure period. Customers who found us through that channel came back when the dining room reopened — the pivot extended the customer base rather than just preserving it.' }
           ]},
           { name: 'Rebuilding the Team', desc: 'Every reopening phase meant a different version of the operation — and a different version of the staff.', detail: 'Phased Return', slides: [
@@ -1071,8 +1187,8 @@
           <div class="bm-ps-cover-overlay">
             <div class="bm-cover-name">Lock Stock<br>Bar &amp; Grill</div>
             <div class="bm-cover-rule"></div>
-            <div class="bm-cover-sub">Canandaigua, NY &nbsp;·&nbsp; Est. 2020</div>
-            <div class="bm-cover-sub" style="margin-top:4px">Floor &amp; Closing Manager</div>
+            <div class="bm-cover-sub">Bristol, NY &nbsp;·&nbsp; 2019 – 2021</div>
+            <div class="bm-cover-sub" style="margin-top:4px">Floor Manager</div>
             <div class="bm-cover-tap" style="margin-top:20px">Open ›</div>
           </div>
         </div>`;
@@ -1118,11 +1234,11 @@
         const [p1,p2] = spread.photos;
         return `<div class="bm-ps">
           <div class="bm-ps-half" style="position:relative;">${im(p1)}
-            <div class="bm-ps-caption">Floor &amp; Closing Manager<br><span style="opacity:0.55;letter-spacing:0.12em">2019 – 2023</span></div>
+            <div class="bm-ps-caption">Floor Manager<br><span style="opacity:0.55;letter-spacing:0.12em">2019 – 2021</span></div>
           </div>
           <div class="bm-ps-gutter"></div>
           <div class="bm-ps-half" style="position:relative;">${im(p2)}
-            <div class="bm-ps-caption">Lock Stock Bar &amp; Grill<br><span style="opacity:0.55;letter-spacing:0.12em">Canandaigua, NY</span></div>
+            <div class="bm-ps-caption">Lock Stock Bar &amp; Grill<br><span style="opacity:0.55;letter-spacing:0.12em">Bristol, NY</span></div>
           </div>
         </div>`;
       }
@@ -1184,7 +1300,7 @@
           </div>
         </div>
         <div class="popup-photo" style="background:#0a0805;border-bottom:1px solid #1e160a;">
-          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.15);color:rgba(200,169,110,0.25);font-family:'Segoe UI',sans-serif;">
+          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.15);color:rgba(200,169,110,0.25);font-family:var(--sans);">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -1194,14 +1310,14 @@
           </div>
         </div>
         <div class="popup-body" style="background:#110d08;border-top:none;">
-          <div class="popup-label" style="color:#5a4a2a;font-family:'Segoe UI',sans-serif;">${slide.label}</div>
+          <div class="popup-label" style="color:#5a4a2a;font-family:var(--sans);">${slide.label}</div>
           <div class="popup-text" style="color:#c8b88a;font-family:Georgia,serif;line-height:1.7;">${slide.text}</div>
         </div>
         <div class="popup-footer" style="background:#0d0a07;border-top:1px solid #1e160a;">
-          <span class="popup-counter" style="color:#3a2a15;font-family:'Segoe UI',sans-serif;">${idx + 1} of ${item.slides.length}</span>
+          <span class="popup-counter" style="color:#3a2a15;font-family:var(--sans);">${idx + 1} of ${item.slides.length}</span>
           ${!isLast
-            ? `<button class="popup-next-btn bm-next-btn" style="color:#c8a96e;font-family:'Segoe UI',sans-serif;text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
-            : '<span style="font-size:0.7rem;color:#3a2a15;font-family:\'Segoe UI\',sans-serif;letter-spacing:0.1em;">— fin —</span>'}
+            ? `<button class="popup-next-btn bm-next-btn" style="color:#c8a96e;font-family:var(--sans);text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
+            : '<span style="font-size:0.7rem;color:#3a2a15;font-family:var(--sans);letter-spacing:0.1em;">— fin —</span>'}
         </div>`;
     }
 
