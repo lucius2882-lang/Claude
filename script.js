@@ -180,40 +180,6 @@
       splashEl.style.display = 'none';
     }
 
-    const roles = {
-      maitre: {
-        title: "Ma\u00eetre D' & Events Producer",
-        color: "#1a1a2e",
-        sections: [
-          { heading: "Happier New York / Scott Avenue Association · Brooklyn, NY · Jun 2023 – Oct 2024", text: "Led a front-of-house team of five through 150 covers a night across three seatings at a Brooklyn members club. The brand was the membership, and every shift was an activation." },
-          { heading: "Studio Skate", text: "Produced a five-event ice skating activation at 99 Scott built to convert Chalet dinner guests into a second-half-of-night experience. Owned vendor coordination, programming, day-of execution, and the audience build: a 1,000+ person invite list from scratch and 100+ guests per event." },
-          { heading: "In the Room", text: "Ma\u00eetre D' for the NYC Palm Heights pop-up, VIP private functions, and a Fashion Week Jean Paul Gaultier after party: 200 guests a night, VIPs in every room. Worked the floor for Tyla's release party, Odell Beckham Jr.'s birthday, and Luar fashion shows, and did bottle service for Teyana Taylor. Ran quality control on the host stand and reservation book for a 300-person New Year's Eve party at Palm Heights in the Cayman Islands." },
-          { heading: "The Openings", text: "Helped open two venues, Habibi and Scott Avenue Association, from buildout walk-throughs to opening-week service. Every new opening is a brand launch. Treated it that way." },
-          { heading: "The Relationships", text: "Held the relationships with SAA members, clients, and VIP guests, and turned first-time visitors into regulars. Partnered with HR, Communications, Facilities, and Security on one to two high-profile events a month. Daily ops on Resy, OpenTable, and Toast." }
-        ]
-      },
-      manager: {
-        title: "Floor Manager",
-        color: "#16213e",
-        sections: [
-          { heading: "Lock Stock Bar & Grill · Bristol, NY · Nov 2019 – Mar 2021", text: "Coordinated front and back of house for a newly opened venue across lunch, dinner, and late-night, alongside family ownership. The brand was local and personal. Everything depended on whether you could hold the experience together on a bad night." },
-          { heading: "The COVID Pivot", text: "When COVID hit in March 2020, rebuilt the whole operation: rewrote the SOPs, restructured the layout, added contactless systems, stood up online ordering, and ran the digital marketing that brought takeout customers in. The dining room was closed. The business wasn't." },
-          { heading: "The Reopening", text: "Retrained the team for every phase of coming back, from restricted capacity to full service. Kept the standards intact through a period when nobody had a playbook." },
-          { heading: "Closing the Night", text: "Closed every night: cash outs, POS reporting, inventory, Health Department walk-throughs. Zero-error financial accountability across all shifts." }
-        ]
-      },
-      digital: {
-        title: "Digital Strategy Assistant",
-        color: "#533483",
-        sections: [
-          { heading: "New Blue Interactive · Washington DC – Baltimore Area · Jun 2018 – May 2019", text: "Digital fundraising for state and local political candidates. Million-dollar lift, 100,000+ subscriber lists, real money on the line every send. This is where I learned that persuasion is a discipline, not a vibe." },
-          { heading: "The Testing", text: "Drafted fundraising emails and A/B tested everything: subject lines, tone, ask amounts, the order of the buttons. Every variable was a hypothesis. Every send was data." },
-          { heading: "The Technical Work", text: "Built HTML/CSS email templates for CRM deployment and handled creative production in Photoshop and Illustrator. The acquisition work and the craft lived in the same role." },
-          { heading: "The Lesson", text: "Political fundraising is just marketing under maximum pressure. Every open, every click, every dollar raised is a conversion. And every conversion is a vote you might actually win." }
-        ]
-      }
-    };
-
     // --- J.Crew × Kepler — scatter popup system ---
     const keplerPhotos = [
       "https://i.imgur.com/GSuZaci.jpg","https://i.imgur.com/MOMyb6R.jpg","https://i.imgur.com/gmRLdp2.jpg",
@@ -233,32 +199,6 @@
       { label: "The Numbers", text: "Went back through five years of campaign data, surfaced the trends nobody had flagged, and put them to work in live optimization. Client cost-per-acquisition came down 35% year over year." },
       { label: "The Lesson", text: "A brand recovery isn't won on one channel. Each platform does a different job, and knowing which job belongs where is the whole game. I spent two years learning that from the data, then proving it in front of the client every day." }
     ];
-
-    // --- Detail panel ---
-    const detail = document.getElementById('detail');
-    const detailHeader = document.getElementById('detail-header');
-    const detailTitle = document.getElementById('detail-title');
-    const detailBody = document.getElementById('detail-body');
-    document.getElementById('close-btn').addEventListener('click', () => {
-      detail.classList.remove('visible');
-      document.body.style.overflow = '';
-      setTimeout(() => { detail.style.display = 'none'; }, 400);
-    });
-
-    function openDetail(roleKey) {
-      const role = roles[roleKey];
-      detailTitle.textContent = role.title;
-      detailHeader.style.background = role.color;
-      detailBody.innerHTML = role.sections.map(s => `
-        <div class="detail-section">
-          <h3>${s.heading}</h3>
-          <p>${s.text}</p>
-        </div>
-      `).join('');
-      detail.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => detail.classList.add('visible'));
-    }
 
     // --- Kepler popup ---
     const overlay = document.getElementById('overlay');
@@ -400,7 +340,7 @@
         time: '9:14 AM',
         date: 'Nov 8, 2018, 9:14 AM',
         snippet: 'One point two million dollars. The goal was $900K, which I now understand was a number for children. The money is here...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 320 240" overflow="hidden" style="background:#fff8f7;border-radius:8px">
           <clipPath id="cp1"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp1)">
           <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">FUNDRAISING TOTALS — Q3 2018</text>
@@ -448,7 +388,7 @@
         time: 'Yesterday',
         date: 'Nov 7, 2018, 4:51 PM',
         snippet: 'The results are in and I need you to sit down, sul sul, ideally in a body of water. Variant A was mine: "Friend, a quick...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 320 240" overflow="hidden" style="background:#f5f8ff;border-radius:8px">
           <clipPath id="cp2"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp2)">
           <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">A/B TEST — OCTOBER SEND</text>
@@ -490,7 +430,7 @@
         time: 'Oct 29',
         date: 'Oct 29, 2018, 11:02 AM',
         snippet: 'The October broadcast is staged. 104,211 people. I have not touched the send button. I put a small traffic cone on the send...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 320 240" overflow="hidden" style="background:#f6fff8;border-radius:8px">
           <clipPath id="cp3"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp3)">
           <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">QA CHECKLIST — OCTOBER BROADCAST</text>
@@ -535,7 +475,7 @@
         time: 'Sep 12',
         date: 'Sep 12, 2018, 3:38 PM',
         snippet: 'v3 is alive. I mean that. It blinked. For the record: v1 was a table inside a table inside a table inside a cry for help. v2 is...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 320 240" overflow="hidden" style="background:#1e1e1e;border-radius:8px">
           <clipPath id="cp4"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp4)">
           <rect width="320" height="24" fill="#252526"/>
@@ -597,7 +537,7 @@
         time: 'Aug 6',
         date: 'Aug 6, 2018, 1:22 PM',
         snippet: 'Sit down. The files are in and I have tea. The hero banner PSD has 214 layers and every single one, yibs, has a name. Not...',
-        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 320 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
+        photo: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 320 240" overflow="hidden" style="background:#faf5ff;border-radius:8px">
           <clipPath id="cp5"><rect width="320" height="240"/></clipPath>
           <g clip-path="url(#cp5)">
           <text x="160" y="14" font-family="Arial" font-size="9" fill="#aaa" letter-spacing="1.5" text-anchor="middle">CREATIVE PACKAGE — FINAL DELIVERY</text>
@@ -1530,11 +1470,6 @@
 
     function closeCurrent() {
       if (keplerActivePopups.length) { closeAllKeplerPopups(() => overlay.classList.remove('active')); return; }
-      if (detail.classList.contains('visible')) {
-        detail.classList.remove('visible');
-        setTimeout(() => { detail.style.display = 'none'; }, 400);
-        return;
-      }
       if (gmailEl.classList.contains('visible'))    { closeGmail();    return; }
       if (bookviewEl.classList.contains('visible')) { closeBook();     return; }
       if (barmenuEl.classList.contains('visible'))  { closeBarMenu();  return; }
@@ -1542,7 +1477,6 @@
 
     function isAnyViewOpen() {
       return keplerActivePopups.length > 0 ||
-        detail.classList.contains('visible') ||
         gmailEl.classList.contains('visible') ||
         bookviewEl.classList.contains('visible') ||
         barmenuEl.classList.contains('visible');
