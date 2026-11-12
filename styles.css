@@ -2569,30 +2569,21 @@
     /* ═══════════════════════════════════════════
        THE OWNER'S DOOR — a small lock beside Lucy, a PIN pad, and the tools behind it
        ═══════════════════════════════════════════ */
-    /* The button: about half Lucy's size. A black disc with a raised rim, lit from the upper left
-       so the rim falls away flat toward the lower right, and a lock pressed into its face. */
+    /* The button: about half Lucy's size. Its face is drawn in owner.js: a raised outline, a sunken
+       face inside it, and a lock standing up out of that face, all lit from the upper left. */
     #owner-lock {
       position: fixed;
       right: 80px;                  /* to the left of Lucy's button */
       bottom: 31px;                 /* centred on it */
       z-index: 9998;
-      display: grid;
-      place-items: center;
       width: 26px;
       height: 26px;
       padding: 0;
       border: 0;
       border-radius: 50%;
-      color: #050505;
+      background: #000;
       cursor: pointer;
-      background:
-        radial-gradient(circle at 54% 56%, #0b0b0b 0 55%, rgba(11, 11, 11, 0) 62%),
-        conic-gradient(from 315deg, #8a8a8a 0deg, #3a3a3a 55deg, #0b0b0b 130deg, #0b0b0b 230deg, #3a3a3a 305deg, #8a8a8a 360deg);
-      box-shadow:
-        0 0 0 1px #000,
-        inset 1px 1px 1px rgba(255, 255, 255, .16),
-        inset -1px -1px 2px rgba(0, 0, 0, .9),
-        0 2px 5px rgba(0, 0, 0, .55);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .55);
       -webkit-tap-highlight-color: transparent;
       animation: ow-arrive .6s ease both;
     }
@@ -2610,20 +2601,14 @@
       will-change: opacity;
       pointer-events: none;
     }
-    /* the lock: black on black, raised by a hairline of light and a soft glow */
-    #owner-lock svg {
-      position: relative;
-      width: 12px;
-      height: 12px;
-      filter: drop-shadow(0 -.5px 0 rgba(255, 255, 255, .5)) drop-shadow(0 .6px 0 #000) drop-shadow(0 0 2.5px rgba(255, 255, 255, .5));
-      animation: ow-glint 2.8s ease-in-out infinite;
-    }
-    #owner-lock .keyhole, .ow-emblem .keyhole { fill: #6f6f6f; }
-    #owner-lock:hover svg, #owner-lock:focus-visible svg { filter: drop-shadow(0 -.5px 0 rgba(255, 255, 255, .7)) drop-shadow(0 .6px 0 #000) drop-shadow(0 0 4px rgba(255, 255, 255, .85)); }
+    #owner-lock svg, .ow-emblem svg { position: relative; display: block; width: 100%; height: 100%; border-radius: 50%; }
+    /* the glow around the lock breathes; a pointer or the keyboard brings it up */
+    .ow-glow { animation: ow-glint 2.8s ease-in-out infinite; }
+    #owner-lock:hover .ow-glow, #owner-lock:focus-visible .ow-glow { animation: none; opacity: .85; }
     #owner-lock:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
     @keyframes ow-arrive { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
     @keyframes ow-radiate { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
-    @keyframes ow-glint { 0%, 100% { opacity: .82; } 50% { opacity: 1; } }
+    @keyframes ow-glint { 0%, 100% { opacity: .3; } 50% { opacity: .62; } }
     /* out of the way whenever something else has the screen */
     body.gm-composing #owner-lock,
     body.sv-open #owner-lock,
@@ -2632,7 +2617,7 @@
     body.owner-open #lucy-frame,
     body.owner-open #lucy-grip { display: none !important; }
     @media (prefers-reduced-motion: reduce) {
-      #owner-lock, #owner-lock svg { animation: none; }
+      #owner-lock, .ow-glow { animation: none; }
       #owner-lock::after { animation: none; opacity: .6; }
     }
     @media print { #owner-lock { display: none !important; } }
@@ -2717,21 +2702,8 @@
       color: rgba(245, 242, 236, .62);
     }
     .ow-eyebrow { margin: 0 0 12px; color: var(--gold); }
-    /* the lock again, large, on the same rimmed disc as the button */
-    .ow-emblem {
-      display: grid;
-      place-items: center;
-      width: 68px;
-      height: 68px;
-      margin-bottom: 22px;
-      border-radius: 50%;
-      color: #050505;
-      background:
-        radial-gradient(circle at 54% 56%, #0b0b0b 0 56%, rgba(11, 11, 11, 0) 62%),
-        conic-gradient(from 315deg, #8a8a8a 0deg, #3a3a3a 55deg, #0b0b0b 130deg, #0b0b0b 230deg, #3a3a3a 305deg, #8a8a8a 360deg);
-      box-shadow: 0 0 0 1px #000, inset 2px 2px 2px rgba(255, 255, 255, .14), inset -2px -2px 4px rgba(0, 0, 0, .9), 0 0 34px 6px rgba(0, 0, 0, .8);
-    }
-    .ow-emblem svg { width: 30px; height: 30px; filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, .5)) drop-shadow(0 1px 0 #000) drop-shadow(0 0 6px rgba(255, 255, 255, .45)); }
+    /* the same disc, large */
+    .ow-emblem { width: 72px; height: 72px; margin-bottom: 22px; border-radius: 50%; box-shadow: 0 0 34px 6px rgba(0, 0, 0, .8); }
     .ow-dots { display: flex; gap: 16px; margin: 26px 0 30px; }
     .ow-dots i { width: 13px; height: 13px; border: 1px solid rgba(245, 242, 236, .5); border-radius: 50%; transition: background .15s, border-color .15s, transform .15s; }
     .ow-dots i.on { background: var(--ivory); border-color: var(--ivory); transform: scale(1.08); }
@@ -2786,8 +2758,7 @@
     /* short or narrow screens: the same pad, a little smaller, so it fits without scrolling */
     @media (max-height: 700px), (max-width: 360px) {
       .ow-stage { padding: 14px 16px 20px; }
-      .ow-emblem { width: 52px; height: 52px; margin-bottom: 14px; }
-      .ow-emblem svg { width: 23px; height: 23px; }
+      .ow-emblem { width: 56px; height: 56px; margin-bottom: 14px; }
       .ow-heading { font-size: 1.6rem; }
       .ow-dots { margin: 18px 0 20px; }
       .ow-pad { grid-template-columns: repeat(3, 58px); gap: 10px 18px; }
