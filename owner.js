@@ -22,10 +22,40 @@
       src: '/scheduler/' }
   ];
 
-  var LOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 10.6V8.1a4.4 4.4 0 0 1 8.8 0v2.5" fill="none" ' +
-    'stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><rect x="5.2" y="10.2" width="13.6" height="10.2" rx="2.4" ' +
-    'fill="currentColor"/><circle class="keyhole" cx="12" cy="15.2" r="1.45"/></svg>';
-  lock.innerHTML = LOCK;
+  // The button's face, drawn once and used at two sizes (the button, and the emblem over the PIN pad).
+  // Light comes from the upper left. The outline is a raised ring: bright where it faces the light, dark
+  // where it turns away. Inside it the face is sunk: in shadow under the upper-left wall, catching light
+  // on the lower-right one. The lock stands up out of that face, with a lit upper-left edge and a shadow
+  // thrown to the lower right, and a faint glow around it. `id` keeps the two copies' gradients apart.
+  function LOCK(id) {
+    var shape = '<path d="M20.4 25V20.9a5.6 5.6 0 0 1 11.2 0V25" fill="none" stroke-width="3.3" stroke-linecap="round"/>' +
+      '<rect x="17.2" y="24.2" width="17.6" height="13.6" rx="3.1" stroke="none"/>';
+    function grad(name, stops) {
+      return '<linearGradient id="' + id + name + '" x1="0" y1="0" x2="1" y2="1">' + stops.map(function (st) {
+        return '<stop offset="' + st[0] + '" stop-color="' + st[1] + '"/>';
+      }).join('') + '</linearGradient>';
+    }
+    var u = function (name) { return 'url(#' + id + name + ')'; };
+    return '<svg viewBox="0 0 52 52" aria-hidden="true"><defs>' +
+      grad('rim', [[0, '#c9c9c9'], [.42, '#474747'], [1, '#040404']]) +
+      grad('wall', [[0, '#000'], [.5, '#0c0c0c'], [1, '#8c8c8c']]) +
+      grad('face', [[0, '#000'], [.55, '#0d0d0d'], [1, '#232323']]) +
+      grad('lock', [[0, '#7a7a7a'], [.45, '#232323'], [1, '#060606']]) +
+      '<filter id="' + id + 'soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation=".9"/></filter>' +
+      '<filter id="' + id + 'glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.6"/></filter>' +
+      '</defs>' +
+      '<circle cx="26" cy="26" r="26" fill="#000"/>' +
+      '<circle cx="26" cy="26" r="22.9" fill="none" stroke="' + u('rim') + '" stroke-width="5"/>' +          // the raised outline
+      '<circle cx="26" cy="26" r="19.6" fill="' + u('face') + '"/>' +                                         // the sunken face
+      '<circle cx="26" cy="26" r="19.6" fill="none" stroke="' + u('wall') + '" stroke-width="2"/>' +          // the wall down into it
+      '<g class="ow-glow" filter="' + u('glow') + '" fill="#fff" stroke="#fff" opacity=".42">' + shape + '</g>' +
+      '<g transform="translate(1.7 2)" filter="' + u('soft') + '" fill="#000" stroke="#000" opacity=".95">' + shape + '</g>' +   // shadow, lower right
+      '<g transform="translate(-.9 -1)" fill="#e6e6e6" stroke="#e6e6e6" opacity=".6">' + shape + '</g>' +                    // lit edge, upper left
+      '<g fill="' + u('lock') + '" stroke="' + u('lock') + '">' + shape + '</g>' +
+      '<circle cx="26" cy="30.6" r="1.9" fill="#000"/><path d="M27.5 31.8a1.9 1.9 0 0 0 .4-1.4" fill="none" stroke="#9a9a9a" stroke-width=".7" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+  lock.innerHTML = LOCK('owb-');
 
   // ---- the lock appears once the opening screen has gone ----
   var splash = document.getElementById('splash');
@@ -66,7 +96,7 @@
       '</div>' +
       '<div class="ow-stage">' +
         '<section class="ow-pin">' +
-          '<div class="ow-emblem">' + LOCK + '</div>' +
+          '<div class="ow-emblem">' + LOCK('owe-') + '</div>' +
           '<h2 class="ow-heading">Owner’s entrance</h2>' +
           '<p class="ow-hint" aria-live="polite">Enter your PIN</p>' +
           '<div class="ow-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
