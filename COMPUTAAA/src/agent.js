@@ -149,7 +149,7 @@ export class Agent extends EventEmitter {
   }
 
   async #where() {
-    try { return new URL(this.browser.page.url()).hostname; } catch { return "this page"; }
+    try { return new URL(this.browser.currentUrl).hostname; } catch { return "this page"; }
   }
 
   async #guardClick(name, coordinate) {
@@ -199,18 +199,20 @@ export class Agent extends EventEmitter {
     this.#set("running");
     this.#log("user", command);
     audit("command", { text: command.slice(0, 500) });
-    await this.browser.start();
-
-    const shot = await this.browser.screenshot();
-    this.messages.push({
-      role: "user",
-      content: [
-        { type: "text", text: `${command}\n\n(Current page)\n${await this.browser.info()}` },
-        { type: "image", source: { type: "base64", media_type: "image/png", data: shot.toString("base64") } },
-      ],
-    });
 
     try {
+      // Inside the try: if the worker is down, this fails cleanly and the agent returns to idle.
+      await this.browser.start();
+      const shot = await this.browser.screenshot();
+      const info = await this.browser.info();
+      this.messages.push({
+        role: "user",
+        content: [
+          { type: "text", text: `${command}\n\n(Current page)\n${info}` },
+          { type: "image", source: { type: "base64", media_type: "image/png", data: shot.toString("base64") } },
+        ],
+      });
+
       for (let step = 0; step < MAX_STEPS; step++) {
         await this.#gate();
         const response = await this.#callClaude();

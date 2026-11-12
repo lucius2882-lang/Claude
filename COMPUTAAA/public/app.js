@@ -15,14 +15,21 @@ function connect() {
       logEl.innerHTML = "";
       m.history.forEach(addLog);
       setUrl(m.url);
-      $("sites").textContent = m.sites.includes("*") ? "Allowed sites: any" : `Allowed sites: ${m.sites.join(", ")}`;
-      setAsleep(!m.browserOpen);
+      setSites(m.sites);
+      setWorker(m.workerOnline);
+      setAsleep(m.workerOnline && !m.browserOpen);
       setState(m.state, { approval: m.approval });
     } else if (m.type === "status") {
       setState(m.state, m);
     } else if (m.type === "log") addLog(m);
     else if (m.type === "url") setUrl(m.url);
     else if (m.type === "browser") setAsleep(!m.open);
+    else if (m.type === "worker") {
+      setWorker(m.online);
+      setSites(m.sites);
+      setAsleep(m.online && !m.browserOpen);
+      if (m.url) setUrl(m.url);
+    }
     else if (m.type === "panic") location.replace("/login.html");
   };
   ws.onclose = async () => {
@@ -49,6 +56,12 @@ const LABELS = { idle: "Idle", running: "Working", paused: "Paused", waiting_hum
 let approvalId = null;
 function setAsleep(asleep) {
   $("asleep").hidden = !asleep;
+}
+function setWorker(online) {
+  $("offline").hidden = !!online;
+}
+function setSites(sites = []) {
+  $("sites").textContent = !sites.length ? "" : sites.includes("*") ? "Allowed sites: any" : `Allowed sites: ${sites.join(", ")}`;
 }
 function setState(s, extra = {}) {
   const reason = extra.reason;

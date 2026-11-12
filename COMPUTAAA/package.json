@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env src/server.js",
+    "worker": "node --env-file-if-exists=.env src/worker.js",
     "enroll": "node --env-file-if-exists=.env scripts/enroll.js",
     "login": "node --env-file-if-exists=.env scripts/headed-login.js"
   },

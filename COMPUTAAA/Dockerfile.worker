@@ -1,0 +1,10 @@
+# Browser worker: one logged-in Chromium profile. No API key, no passkeys, no dashboard.
+# Keep the tag in step with the "playwright" version in package.json.
+FROM mcr.microsoft.com/playwright:v1.65.0-noble
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY src ./src
+ENV NODE_ENV=production PROFILE_DIR=/profile
+USER pwuser
+CMD ["node", "src/worker.js"]

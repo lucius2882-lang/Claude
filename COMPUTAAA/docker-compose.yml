@@ -1,21 +1,43 @@
-# Two containers, no open ports:
-#   computaaa   the agent + dashboard, reachable only from inside this compose network
-#   cloudflared makes an outbound-only tunnel to Cloudflare, which enforces Cloudflare Access
+# Three containers, no open ports, three separate networks:
+#
+#   cloudflared ──edge── control ──internal── worker-main ──egress── the web
+#
+#   control      dashboard, passkeys, approvals, Claude agent loop. Holds the API key, no logins.
+#   worker-main  the logged-in browser. Holds your logins, no API key, can't reach cloudflared.
+#   cloudflared  outbound-only tunnel to Cloudflare, which enforces Cloudflare Access.
 services:
-  computaaa:
-    build: .
+  control:
+    build: { context: ., dockerfile: Dockerfile.control }
     env_file: .env
     environment:
       HOST: 0.0.0.0
+      WORKER_HOST: 0.0.0.0
       DATA_DIR: /data
-      PROFILE_DIR: /data/profile
     volumes:
-      # Mount point of the ENCRYPTED folder (see README step 3). Never point this at a plain disk.
-      - /srv/computaaa/data:/data
+      - /srv/computaaa/data/control:/data          # on the ENCRYPTED folder (README step 3)
+    networks: [edge, internal]
     read_only: true
-    tmpfs:
-      - /tmp
-      - /home/pwuser
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    pids_limit: 128
+    restart: unless-stopped
+
+  worker-main:
+    build: { context: ., dockerfile: Dockerfile.worker }
+    # Deliberately NOT env_file: the worker gets only what it needs, never the API key.
+    environment:
+      WORKER_NAME: main
+      WORKER_TOKEN: ${WORKER_TOKEN}
+      CONTROL_URL: ws://control:3001/worker
+      ALLOWED_SITES: ${ALLOWED_SITES}
+      PROFILE_DIR: /profile
+    volumes:
+      - /srv/computaaa/data/worker-main:/profile   # your logins; ENCRYPTED folder only
+    networks: [internal, egress]
+    read_only: true
+    tmpfs: [/tmp, /home/pwuser]
     shm_size: 1gb
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
@@ -28,8 +50,14 @@ services:
     command: tunnel --no-autoupdate run
     environment:
       TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    networks: [edge]
     read_only: true
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
     restart: unless-stopped
-    depends_on: [computaaa]
+    depends_on: [control]
+
+networks:
+  edge: {}                  # cloudflared <-> control, plus internet for the API and Cloudflare
+  internal: { internal: true }  # control <-> worker only; no internet at all
+  egress: {}                # the worker's way out to websites

@@ -6,7 +6,8 @@ import path from "node:path";
 import { EventEmitter } from "node:events";
 import { chromium } from "playwright";
 
-export const VIEWPORT = { width: 1280, height: 800 };
+import { VIEWPORT } from "./viewport.js";
+export { VIEWPORT };
 
 // Claude sends xdotool-style key names; Playwright wants its own names.
 const KEY_MAP = {
@@ -270,6 +271,21 @@ export class BrowserManager extends EventEmitter {
   async settle() {
     await this.page.waitForLoadState("domcontentloaded", { timeout: 5000 }).catch(() => {});
     await sleep(400);
+  }
+
+  // ---- raw input from the owner's own hands (no approval checks: it's you) ----
+  async wheel(dx, dy) { await this.page.mouse.wheel(Number(dx) || 0, Number(dy) || 0); }
+  async pressKey(key) { await this.page.keyboard.press(String(key).slice(0, 40)); }
+  async typeText(text) { await this.page.keyboard.type(String(text).slice(0, 2000)); }
+
+  state() {
+    return { open: this.isOpen, url: this.page?.url() || "", cursor: this.cursor, sites: this.allowedSites };
+  }
+
+  /** Delete every saved login: close the browser and remove the whole profile folder. */
+  async wipe() {
+    await this.close();
+    fs.rmSync(this.profileDir, { recursive: true, force: true });
   }
 
   async close() {

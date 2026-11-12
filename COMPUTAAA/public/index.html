@@ -29,6 +29,10 @@
         <div id="marker" class="marker" hidden></div>
         <div id="driving" class="driving" hidden>You're driving · Esc to release</div>
         <div id="locked" class="locked" hidden>Agent is working · Pause to take control</div>
+        <div id="offline" class="asleep" hidden>
+          <p><strong>The browser worker is offline.</strong></p>
+          <p class="muted small">It reconnects on its own. If this lasts, check the worker container on the server.</p>
+        </div>
         <div id="asleep" class="asleep" hidden>
           <p>The browser is asleep (closed after being idle).</p>
           <button id="wake" class="primary">Wake browser</button>
