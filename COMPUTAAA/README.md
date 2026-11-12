@@ -4,21 +4,63 @@ Your browser, on command. You type what you want done in the owner panel of luci
 
 ![Approval inside the owner panel](docs-approval.png)
 
+![The Jobs tab: job profile, résumé and application tracker](docs-jobs.png)
+
 > **This folder is not part of the website.** Netlify publishes this repo, so `_redirects` returns a 404 for `/COMPUTAAA/*`. COMPUTAAA runs on its own server at `agent.luciuscampany.com`. The website only has the tile that opens it (`owner.js`).
 
 ## How it's built
 
 ```
 cloudflared ──edge── control ──internal── worker-main ──egress── websites
+                                    └──── worker-jobs ──egress── job sites
 ```
 
 | Part | Holds | Doesn't hold |
 |---|---|---|
 | **control** (`src/server.js`) | Dashboard, passkeys, approvals, security log, the Claude agent loop, the API key | No browser, no saved logins |
-| **worker-main** (`src/worker.js`) | One Chromium profile with your logins; enforces its own site allowlist | No API key, no passkeys, no dashboard, no open port |
+| **worker-main**, **worker-jobs** (`src/worker.js`) | One Chromium profile each, with that agent's logins; each enforces its own site allowlist | No API key, no passkeys, no dashboard, no open port, and no access to each other |
 | **cloudflared** | The outbound tunnel to Cloudflare | Can't reach the worker at all |
 
-The worker connects *out* to the control plane over a private network with a shared secret (`WORKER_TOKEN`), and only runs actions from a fixed list. A break-in at the control plane doesn't reach your logins; a hijacked browser can't see the API key or grant itself approvals. This is phase 1 of the plan: later phases add a lead agent and more workers (one per area of your life).
+Each worker connects *out* to the control plane over a private network with its own secret (`WORKER_TOKEN_MAIN`, `WORKER_TOKEN_JOBS`), so one can never pose as another, and only runs actions from a fixed list. A break-in at the control plane doesn't reach your logins; a hijacked browser can't see the API key or grant itself approvals. This is phase 1 of the plan: later phases add a lead agent and more workers (one per area of your life).
+
+## The agents
+
+The dashboard has a tab per agent. Each has its own browser, logins, allowed sites and conversation.
+
+### Main
+General tasks on the sites in `ALLOWED_SITES`.
+
+### Jobs
+Finds jobs and fills in applications from your **Job profile** (open it on the Jobs tab):
+
+- **Résumé:** upload a PDF; uploading again replaces it straight away.
+- **Standard answers:** work authorization, availability, pay, start date, contact details…
+- **Job preferences:** roles, places, schedule, minimum pay, deal-breakers.
+- **Cover letter style:** paste one you like or describe the tone.
+
+Changes apply from the agent's next task. It never stores or types your Social Security number, date of birth, bank details or passwords; it stops and asks you.
+
+**Who clicks Submit depends on the site** (`JOBS_FILL_ONLY_SITES`):
+
+| Sites | What happens at the final submit |
+|---|---|
+| LinkedIn, Indeed, Glassdoor, Craigslist | Their rules ban bots, so the agent fills everything, then **hands the Submit to you**: a ring shows the button, you click it in the live view (or don't), and press Done. The agent's own click is never made. |
+| Culinary Agents, company career sites (Greenhouse, Lever, Workday, Harri…), Gmail | The agent submits or sends, **after your passkey tap**. |
+
+Every job it touches lands in the **Applications** tracker (found → filled → waiting on you / submitted / skipped), so it never applies twice. Moving through a form ("Easy Apply", "Next", "Continue", "Review", "Upload résumé") doesn't ask; the final send always does.
+
+### Throwaway sessions
+Set `JOBS_EPHEMERAL=true` (or `MAIN_EPHEMERAL=true`) and that agent starts every session with an empty browser, asks you to sign in when a site needs it, and **deletes everything** (cookies, logins, history) when you press **End session**, when it goes idle, or on Panic. Nothing is left on disk. The trade-off: you sign in, often with 2FA, every session, and sites may send more "new device" emails.
+
+## Cost (estimate)
+
+| | Monthly |
+|---|---|
+| Server, 8 GB (Hetzner; check current prices) | ~$8–18 |
+| Cloudflare tunnel + Access, ntfy alerts | $0 |
+| Claude API (Opus 5.5), billed separately from a Claude subscription | ~$1–1.50 per job application, ~$0.25–1 per everyday task |
+
+Roughly **$40–60/month** for light use (~20 applications plus a few tasks a week), **$100–140** for regular use. Set a spending limit on the API key.
 
 ## How it's protected
 
@@ -68,11 +110,11 @@ cp .env.example .env && chmod 600 .env
 sudo mkdir -p /srv/computaaa/vault /srv/computaaa/data
 sudo gocryptfs -init /srv/computaaa/vault          # choose a long passphrase; save the master key it prints, offline
 sudo gocryptfs -allow_other /srv/computaaa/vault /srv/computaaa/data
-sudo mkdir -p /srv/computaaa/data/control /srv/computaaa/data/worker-main
+sudo mkdir -p /srv/computaaa/data/control /srv/computaaa/data/worker-main /srv/computaaa/data/worker-jobs
 # give each folder to its container's user (check the numbers with the two commands below)
 docker compose run --rm --no-deps control id -u        # usually 1000
 docker compose run --rm --no-deps worker-main id -u    # usually 1001
-sudo chown 1000 /srv/computaaa/data/control && sudo chown 1001 /srv/computaaa/data/worker-main
+sudo chown 1000 /srv/computaaa/data/control && sudo chown 1001 /srv/computaaa/data/worker-main /srv/computaaa/data/worker-jobs
 ```
 After every reboot, the data stays locked until you SSH in and run the `gocryptfs … /srv/computaaa/data` line again. That's deliberate: a stolen disk or snapshot is useless.
 
@@ -87,7 +129,7 @@ After every reboot, the data stays locked until you SSH in and run the `gocryptf
 4. Turn on a passkey or security key for your Cloudflare account login.
 
 ### 5. Fill in `.env`
-`OWNER_EMAIL`, `ANTHROPIC_API_KEY`, `WORKER_TOKEN` (run `openssl rand -hex 32`), `ALLOWED_SITES` (start small, e.g. `google.com`), and optionally `NTFY_URL` for phone alerts. Docker passes the worker only `WORKER_TOKEN` and `ALLOWED_SITES`, never the API key. Leave `PUBLIC_ORIGIN` and `FRAME_ANCESTORS` as they are unless your domain differs.
+`OWNER_EMAIL`, `ANTHROPIC_API_KEY`, `WORKER_TOKEN_MAIN` and `WORKER_TOKEN_JOBS` (run `openssl rand -hex 32` once for each), `ALLOWED_SITES` for Main (start small, e.g. `google.com`), and optionally `NTFY_URL` for phone alerts. `JOBS_ALLOWED_SITES` comes filled in with job boards and the common application systems; add any company site you want it to apply on. Docker gives each worker only its own token and sites, never the API key. Leave `PUBLIC_ORIGIN` and `FRAME_ANCESTORS` as they are unless your domain differs.
 
 ### 6. Start it and create your passkey
 ```bash
@@ -120,7 +162,8 @@ When you change the `playwright` version in `package.json`, change the image tag
 npm install && npx playwright install chromium
 cp .env.example .env    # set PUBLIC_ORIGIN=http://localhost:3000, CF_ACCESS_DISABLED=true, WORKER_TOKEN
 npm start               # terminal 1: control plane
-npm run worker          # terminal 2: browser worker
+WORKER_NAME=main WORKER_TOKEN=$WORKER_TOKEN_MAIN npm run worker   # terminal 2
+WORKER_NAME=jobs WORKER_TOKEN=$WORKER_TOKEN_JOBS ALLOWED_SITES=$JOBS_ALLOWED_SITES PROFILE_DIR=./data/jobs-profile npm run worker   # terminal 3
 npm run enroll          # prints your passkey link
 ```
 `CF_ACCESS_DISABLED` is refused for anything but `http://localhost`.
@@ -132,6 +175,7 @@ npm run enroll          # prints your passkey link
 | `src/server.js` | Control plane: HTTP + WebSocket server, worker channel, panic, wipe, idle sleep |
 | `src/worker.js` | Browser worker: runs the allowed browser actions the control plane asks for |
 | `src/remote.js` | The control plane's handle on a worker |
+| `src/jobs.js` | Job profile, résumé and application tracker (control plane only) |
 | `src/auth.js` | Cloudflare Access check, passkeys, recovery codes, sessions, step-up approvals |
 | `src/agent.js` | Claude agent loop (`claude-opus-5-5`, computer use toolset) and the approval rules |
 | `src/browser.js` | Persistent Chromium profile, site allowlist, live view, input (runs in the worker) |

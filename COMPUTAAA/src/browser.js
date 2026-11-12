@@ -2,6 +2,7 @@
 // streaming frames (CDP screencast), and executing low-level mouse/keyboard input
 // for both the AI agent and the human takeover controls.
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { EventEmitter } from "node:events";
 import { chromium } from "playwright";
@@ -35,11 +36,15 @@ export function toPlaywrightCombo(combo) {
 }
 
 export class BrowserManager extends EventEmitter {
-  constructor({ profileDir, headless = true, executablePath, allowedSites = [] }) {
+  constructor({ profileDir, headless = true, executablePath, allowedSites = [], ephemeral = false }) {
     super();
     this.allowedSites = allowedSites; // ["*"] = anywhere
     this.lastActivity = Date.now();
-    this.profileDir = path.resolve(profileDir);
+    this.baseProfileDir = path.resolve(profileDir);
+    this.profileDir = this.baseProfileDir;
+    // Ephemeral: every session starts with an empty browser in a throwaway folder,
+    // and that folder (cookies, logins, history) is deleted when the session ends.
+    this.ephemeral = ephemeral;
     this.headless = headless;
     this.executablePath = executablePath || undefined;
     this.context = null;
@@ -66,6 +71,10 @@ export class BrowserManager extends EventEmitter {
 
   async start() {
     if (this.context) return;
+    if (this.ephemeral) {
+      fs.mkdirSync(os.tmpdir(), { recursive: true });
+      this.profileDir = fs.mkdtempSync(path.join(os.tmpdir(), "computaaa-session-"));
+    }
     // Profile = cookies, localStorage, IndexedDB. Owner-only permissions.
     fs.mkdirSync(this.profileDir, { recursive: true, mode: 0o700 });
     fs.chmodSync(this.profileDir, 0o700);
@@ -273,13 +282,47 @@ export class BrowserManager extends EventEmitter {
     await sleep(400);
   }
 
+  /**
+   * Attach a file (your résumé) to the upload control at (x, y). Works with a visible
+   * file input, a label/button that opens the file picker, or a page's single hidden input.
+   */
+  async uploadFile([x, y], file) {
+    const payload = { name: String(file?.name || "resume.pdf"), mimeType: "application/pdf", buffer: Buffer.from(String(file?.b64 || ""), "base64") };
+    if (!payload.buffer.length) throw new Error("no file to upload");
+    const direct = await this.page.evaluateHandle(([x, y]) => {
+      const el = document.elementFromPoint(x, y);
+      const input = el?.closest("label")?.control || el?.querySelector?.("input[type=file]") || el;
+      return input?.tagName === "INPUT" && input.type === "file" ? input : null;
+    }, [x, y]);
+    const el = direct.asElement();
+    if (el) {
+      await el.setInputFiles(payload);
+      return "attached";
+    }
+    try {
+      const [chooser] = await Promise.all([
+        this.page.waitForEvent("filechooser", { timeout: 8000 }),
+        this.page.mouse.click(x, y),
+      ]);
+      await chooser.setFiles(payload);
+      return "attached";
+    } catch {
+      const inputs = this.page.locator("input[type=file]");
+      if ((await inputs.count()) === 1) {
+        await inputs.first().setInputFiles(payload);
+        return "attached";
+      }
+      throw new Error("couldn't find an upload control there; point at the résumé upload button or field");
+    }
+  }
+
   // ---- raw input from the owner's own hands (no approval checks: it's you) ----
   async wheel(dx, dy) { await this.page.mouse.wheel(Number(dx) || 0, Number(dy) || 0); }
   async pressKey(key) { await this.page.keyboard.press(String(key).slice(0, 40)); }
   async typeText(text) { await this.page.keyboard.type(String(text).slice(0, 2000)); }
 
   state() {
-    return { open: this.isOpen, url: this.page?.url() || "", cursor: this.cursor, sites: this.allowedSites };
+    return { open: this.isOpen, url: this.page?.url() || "", cursor: this.cursor, sites: this.allowedSites, ephemeral: this.ephemeral };
   }
 
   /** Delete every saved login: close the browser and remove the whole profile folder. */
@@ -296,6 +339,10 @@ export class BrowserManager extends EventEmitter {
     this.context = null;
     this.page = null;
     await ctx?.close().catch(() => {});
+    if (this.ephemeral && this.profileDir !== this.baseProfileDir) {
+      fs.rmSync(this.profileDir, { recursive: true, force: true }); // the session dies with everything in it
+      this.profileDir = this.baseProfileDir;
+    }
     this.emit("closed");
   }
 }

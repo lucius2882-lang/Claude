@@ -6,7 +6,7 @@ import { EventEmitter } from "node:events";
 const METHODS = [
   "start", "close", "wipe", "screenshot", "zoom", "info", "describeTarget", "describeFocus",
   "navigate", "back", "move", "click", "drag", "scroll", "type", "key", "holdKey", "mouseDown", "mouseUp",
-  "settle", "wheel", "pressKey", "typeText",
+  "settle", "wheel", "pressKey", "typeText", "uploadFile",
 ];
 const SLOW = new Set(["holdKey", "start", "navigate"]);
 
@@ -27,6 +27,7 @@ export class RemoteBrowser extends EventEmitter {
   get currentUrl() { return this.state.url; }
   get cursor() { return this.state.cursor; }
   get sites() { return this.state.sites; }
+  get ephemeral() { return !!this.state.ephemeral; }
 
   attach(ws, hello) {
     if (this.ws) this.ws.close(4000, "replaced");

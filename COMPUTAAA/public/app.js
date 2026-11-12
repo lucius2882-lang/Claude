@@ -1,97 +1,152 @@
 const $ = (id) => document.getElementById(id);
 const screen = $("screen"), viewer = $("viewer"), logEl = $("log");
-let ws, viewport = { width: 1280, height: 800 }, state = "idle", lastFrameUrl = null, retry = 500;
+let ws, viewport = { width: 1280, height: 800 }, lastFrameUrl = null, retry = 500;
+const agents = {};   // name -> summary from the server (state, approval, url, history, ...)
+let current = null;  // which agent's tab is showing
 
 // ---------------- connection ----------------
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`);
-  ws.binaryType = "blob";
+  ws.binaryType = "arraybuffer";
   ws.onopen = () => (retry = 500);
   ws.onmessage = (e) => {
-    if (e.data instanceof Blob) return showFrame(e.data);
+    if (e.data instanceof ArrayBuffer) {
+      const bytes = new Uint8Array(e.data);
+      const name = new TextDecoder().decode(bytes.subarray(1, 1 + bytes[0]));
+      if (name === current) showFrame(new Blob([bytes.subarray(1 + bytes[0])], { type: "image/jpeg" }));
+      return;
+    }
     const m = JSON.parse(e.data);
     if (m.type === "hello") {
       viewport = m.viewport;
-      logEl.innerHTML = "";
-      m.history.forEach(addLog);
-      setUrl(m.url);
-      setSites(m.sites);
-      setWorker(m.workerOnline);
-      setAsleep(m.workerOnline && !m.browserOpen);
-      setState(m.state, { approval: m.approval });
-    } else if (m.type === "status") {
-      setState(m.state, m);
-    } else if (m.type === "log") addLog(m);
-    else if (m.type === "url") setUrl(m.url);
-    else if (m.type === "browser") setAsleep(!m.open);
-    else if (m.type === "worker") {
-      setWorker(m.online);
-      setSites(m.sites);
-      setAsleep(m.online && !m.browserOpen);
-      if (m.url) setUrl(m.url);
+      m.agents.forEach((a) => (agents[a.name] = a));
+      const keep = current && agents[current] ? current : m.view;
+      renderTabs();
+      switchTo(keep, keep !== m.view);
+      return;
     }
-    else if (m.type === "panic") location.replace("/login.html");
+    if (m.type === "panic") return location.replace("/login.html");
+    const a = agents[m.agent];
+    if (!a) return;
+    switch (m.type) {
+      case "status":
+        a.state = m.state;
+        a.status = m;
+        a.approval = m.approval || (m.state === "awaiting_approval" ? a.approval : null);
+        if (m.state === "awaiting_approval" || m.state === "waiting_human") notify(`${a.label}: ${m.approval?.description || m.reason || "needs you"}`);
+        break;
+      case "log":
+        a.history.push(m);
+        if (m.agent === current) addLog(m);
+        return renderTabs();
+      case "url": a.url = m.url; break;
+      case "browser": a.browserOpen = m.open; break;
+      case "worker": Object.assign(a, { workerOnline: m.online, sites: m.sites, browserOpen: m.browserOpen, url: m.url || a.url, ephemeral: m.ephemeral }); break;
+      case "applications": if (m.agent === current) loadApplications(); return;
+    }
+    renderTabs();
+    if (m.agent === current) render();
   };
   ws.onclose = async () => {
-    setState("offline");
-    // Session expired or logged out elsewhere? Go to login instead of retrying forever.
+    setPill("offline");
     const r = await fetch("/app.js", { method: "HEAD" }).catch(() => null);
     if (r && r.status === 401) return location.replace("/login.html");
     setTimeout(connect, (retry = Math.min(retry * 2, 10000)));
   };
 }
-const send = (obj) => ws?.readyState === 1 && ws.send(JSON.stringify(obj));
+const send = (obj) => ws?.readyState === 1 && ws.send(JSON.stringify({ agent: current, ...obj }));
 
 function showFrame(blob) {
   const url = URL.createObjectURL(blob);
-  screen.onload = () => lastFrameUrl && lastFrameUrl !== url && URL.revokeObjectURL(lastFrameUrl);
   const prev = lastFrameUrl;
   lastFrameUrl = url;
   screen.src = url;
   if (prev) setTimeout(() => URL.revokeObjectURL(prev), 1000);
 }
 
-// ---------------- UI state ----------------
+// ---------------- tabs ----------------
+const NEEDS_YOU = new Set(["waiting_human", "awaiting_approval"]);
+function renderTabs() {
+  const nav = $("tabs");
+  nav.hidden = Object.keys(agents).length < 2;
+  nav.replaceChildren(...Object.values(agents).map((a) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tab" + (a.name === current ? " active" : "");
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", a.name === current ? "true" : "false");
+    const dot = document.createElement("span");
+    dot.className = "dot " + (!a.workerOnline ? "off" : NEEDS_YOU.has(a.state) ? "alert" : a.state === "idle" ? "idle" : "busy");
+    const label = document.createElement("span");
+    label.textContent = a.label + (a.kind === "jobs" ? " · job hunt" : "");
+    b.append(dot, label);
+    b.onclick = () => switchTo(a.name);
+    return b;
+  }));
+}
+
+function switchTo(name, tellServer = true) {
+  if (!agents[name]) return;
+  current = name;
+  if (tellServer) send({ type: "view" });
+  screen.removeAttribute("src");
+  releaseControl();
+  logEl.innerHTML = "";
+  agents[name].history.forEach(addLog);
+  $("jobsPanels").hidden = agents[name].kind !== "jobs";
+  if (agents[name].kind === "jobs") { loadProfile(); loadApplications(); }
+  renderTabs();
+  render();
+}
+
+// ---------------- render the current agent ----------------
 const LABELS = { idle: "Idle", running: "Working", paused: "Paused", waiting_human: "Needs you", awaiting_approval: "Approval needed", offline: "Offline" };
-let approvalId = null;
-function setAsleep(asleep) {
-  $("asleep").hidden = !asleep;
-}
-function setWorker(online) {
-  $("offline").hidden = !!online;
-}
-function setSites(sites = []) {
-  $("sites").textContent = !sites.length ? "" : sites.includes("*") ? "Allowed sites: any" : `Allowed sites: ${sites.join(", ")}`;
-}
-function setState(s, extra = {}) {
-  const reason = extra.reason;
-  state = s;
+function setPill(s) {
   const pill = $("status");
   pill.textContent = LABELS[s] || s;
   pill.className = `pill ${s}`;
+}
+
+function render() {
+  const a = agents[current];
+  if (!a) return;
+  const s = a.state;
+  setPill(s);
+  setUrl(a.url);
+  const sites = a.sites || [];
+  $("sites").textContent = (a.ephemeral ? "Throwaway session: everything is deleted when it ends. " : "") +
+    (!sites.length ? "" : sites.includes("*") ? "Allowed sites: any" : `Allowed sites: ${sites.join(", ")}`);
+  $("offline").hidden = !!a.workerOnline;
+  $("asleep").hidden = !(a.workerOnline && !a.browserOpen);
+  $("asleepText").textContent = a.ephemeral ? "No session running. Starting one opens a fresh, empty browser." : "The browser is asleep (closed after being idle).";
+  $("wake").textContent = a.ephemeral ? "Start session" : "Wake browser";
+  $("endSession").textContent = a.ephemeral ? "End session (delete it)" : "Close browser";
+  $("endSession").disabled = !a.browserOpen;
+
   const canDrive = ["idle", "paused", "waiting_human"].includes(s);
   $("locked").textContent = s === "awaiting_approval" ? "Waiting for your approval" : "Agent is working · Pause to take control";
   $("locked").hidden = canDrive;
   $("pause").disabled = s !== "running";
   $("resume").disabled = s !== "paused";
-  $("stop").disabled = s === "idle" || s === "offline";
+  $("stop").disabled = s === "idle";
   $("send").disabled = s !== "idle";
   $("reset").disabled = s !== "idle";
   $("human").hidden = s !== "waiting_human";
   $("approval").hidden = s !== "awaiting_approval";
-  approvalId = null;
   $("marker").hidden = true;
-  if (s === "awaiting_approval" && extra.approval) {
-    approvalId = extra.approval.id;
-    $("approvalText").textContent = extra.approval.description;
-    if (extra.approval.point) showMarker(extra.approval.point);
-    notify("Approval needed: " + extra.approval.description);
+  if (s === "awaiting_approval" && a.approval) {
+    $("approvalText").textContent = a.approval.description;
+    if (a.approval.point) showMarker(a.approval.point);
   }
   if (s === "waiting_human") {
-    $("humanReason").textContent = reason || "";
-    $("humanNote").value = "";
-    notify(reason);
+    const reason = a.status?.reason || "";
+    if ($("humanReason").textContent !== reason) $("humanNote").value = "";
+    $("humanReason").textContent = reason;
+    if (a.status?.point) showMarker(a.status.point); // "click here yourself" on fill-only sites
   }
+  $("cmd").placeholder = a.kind === "jobs"
+    ? "e.g. “Find 5 line cook or sous chef jobs in Brooklyn on Culinary Agents and apply to the ones that fit”"
+    : "Tell the browser what to do… e.g. “Open my Gmail and summarize today's unread emails”";
   if (!canDrive) releaseControl();
 }
 
@@ -121,17 +176,74 @@ function addLog({ kind, text, at }) {
   while (logEl.children.length > 300) logEl.lastChild.remove();
 }
 
-function notify(reason) {
+function notify(text) {
   try {
-    if (document.hidden && Notification.permission === "granted") new Notification("Browser agent needs you", { body: reason });
+    if (document.hidden && Notification.permission === "granted") new Notification("COMPUTAAA needs you", { body: text });
   } catch {}
+}
+
+// ---------------- Jobs: profile, résumé, tracker ----------------
+const PROFILE_FIELDS = ["answers", "preferences", "coverLetterStyle"];
+async function loadProfile() {
+  const r = await fetch("/api/jobs/profile").then((x) => x.json()).catch(() => null);
+  if (!r) return;
+  PROFILE_FIELDS.forEach((k) => ($(`p_${k}`).value = r.profile[k] || ""));
+  showResume(r.resume);
+}
+function showResume(meta) {
+  $("resumeInfo").textContent = meta
+    ? `On file: ${meta.name} (${Math.round(meta.size / 1024)} KB, uploaded ${new Date(meta.uploaded).toLocaleDateString()})`
+    : "No résumé yet. Upload a PDF.";
+}
+$("profileForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const body = Object.fromEntries(PROFILE_FIELDS.map((k) => [k, $(`p_${k}`).value]));
+  const res = await fetch("/api/jobs/profile", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  $("profileMsg").textContent = res.ok ? "Saved. The Jobs agent uses it from its next task." : "Couldn't save. Try again.";
+});
+$("resumeFile").addEventListener("change", async (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  $("profileMsg").textContent = "Uploading…";
+  const res = await fetch("/api/jobs/resume", { method: "PUT", headers: { "Content-Type": "application/pdf", "X-File-Name": f.name.replace(/[^\w.\- ]+/g, "") }, body: f });
+  const r = await res.json().catch(() => ({}));
+  if (res.ok) { showResume(r.resume); $("profileMsg").textContent = "Résumé replaced. New applications use it right away."; }
+  else $("profileMsg").textContent = r.error || "Upload failed.";
+  e.target.value = "";
+});
+
+const STATUS_LABEL = { found: "Found", filled: "Filled", handed_to_owner: "Waiting on you", submitted: "Submitted", skipped: "Skipped", failed: "Failed" };
+async function loadApplications() {
+  const rows = await fetch("/api/jobs/applications").then((x) => x.json()).catch(() => []);
+  const body = $("appsBody");
+  body.replaceChildren(...rows.map((r) => {
+    const tr = document.createElement("tr");
+    const cell = (text) => { const td = document.createElement("td"); td.textContent = text; return td; };
+    const role = document.createElement("td");
+    if (/^https?:\/\//.test(r.url)) {
+      const a = document.createElement("a");
+      a.href = r.url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = r.role || "(role)";
+      role.append(a);
+    } else role.textContent = r.role;
+    const st = document.createElement("td");
+    const chip = document.createElement("span");
+    chip.className = `status-chip s-${r.status}`;
+    chip.textContent = STATUS_LABEL[r.status] || r.status;
+    st.append(chip);
+    tr.append(cell(r.company), role, cell(r.site), st, cell(new Date(r.updated).toLocaleDateString()));
+    tr.title = r.notes || "";
+    return tr;
+  }));
+  $("appsEmpty").hidden = rows.length > 0;
+  const submitted = rows.filter((r) => r.status === "submitted").length;
+  $("appsCount").textContent = rows.length ? `${rows.length} tracked · ${submitted} submitted` : "";
 }
 
 // ---------------- commands & controls ----------------
 $("cmdForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const text = $("cmd").value.trim();
-  if (!text || state !== "idle") return;
+  if (!text || agents[current]?.state !== "idle") return;
   send({ type: "command", text });
   $("cmd").value = "";
   try { if (Notification.permission === "default") Notification.requestPermission(); } catch {}
@@ -146,17 +258,21 @@ $("reset").onclick = () => send({ type: "reset" });
 $("humanResume").onclick = () => send({ type: "resume", note: $("humanNote").value.trim() });
 $("humanNote").addEventListener("keydown", (e) => e.key === "Enter" && $("humanResume").click());
 $("approve").onclick = () => {
-  if (!approvalId) return;
-  window.open(`/approve.html#approve:${approvalId}`, "computaaa-auth", "popup,width=460,height=620");
+  const id = agents[current]?.approval?.id;
+  if (id) window.open(`/approve.html#approve:${id}`, "computaaa-auth", "popup,width=460,height=620");
 };
-$("deny").onclick = () => approvalId && send({ type: "deny", id: approvalId });
+$("deny").onclick = () => {
+  const id = agents[current]?.approval?.id;
+  if (id) send({ type: "deny", id });
+};
 $("wake").onclick = () => send({ type: "wake" });
+$("endSession").onclick = () => send({ type: "end_session" });
 $("panic").onclick = () => {
-  if (confirm("Panic: stop the agent, close the browser, and sign out everywhere?")) send({ type: "panic" });
+  if (confirm("Panic: stop every agent, close every browser, and sign out everywhere?")) send({ type: "panic" });
 };
 $("wipe").onclick = () => {
-  if (confirm("Delete every saved login in the agent's browser? You'll confirm with your passkey next.")) {
-    window.open("/approve.html#wipe", "computaaa-auth", "popup,width=460,height=620");
+  if (confirm(`Delete every saved login in the ${agents[current]?.label} agent's browser? You'll confirm with your passkey next.`)) {
+    window.open(`/approve.html#wipe:${current}`, "computaaa-auth", "popup,width=460,height=620");
   }
 };
 $("securityLog").addEventListener("toggle", async (e) => {
@@ -191,7 +307,8 @@ $("enterKey").onclick = () => send({ type: "key", key: "Enter" });
 // ---------------- human takeover in the live view ----------------
 let driving = false;
 function takeControl() {
-  if (state === "running" || state === "offline") return;
+  const s = agents[current]?.state;
+  if (!["idle", "paused", "waiting_human"].includes(s)) return;
   driving = true;
   $("driving").hidden = false;
   viewer.classList.add("is-driving");

@@ -5,18 +5,18 @@ const $ = (id) => document.getElementById(id);
 (async () => {
   if (purpose === "wipe") {
     $("title").textContent = "Wipe saved logins?";
-    $("what").textContent = "This deletes the agent browser's whole profile: every cookie and saved login. You'll have to log in to your accounts again. It can't be undone.";
+    $("what").textContent = `This deletes the ${ref || "agent"} agent's whole browser profile: every cookie and saved login. You'll have to log in to those accounts again. It can't be undone.`;
     $("ok").textContent = "Wipe with passkey";
     $("ok").className = "danger-solid";
     return;
   }
-  const a = await fetch("/api/approval").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const a = await fetch(`/api/approval?id=${encodeURIComponent(ref)}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (!a || a.id !== ref) {
     $("what").textContent = "This approval is no longer pending.";
     $("ok").disabled = true;
     return;
   }
-  $("what").textContent = a.description;
+  $("what").textContent = `${a.agent}: ${a.description}`;
 })();
 
 $("cancel").onclick = () => window.close();

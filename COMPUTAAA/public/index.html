@@ -15,6 +15,7 @@
     <button id="panic" class="danger-solid" title="Stop the agent, close the browser, and sign out everywhere">Panic</button>
     <button id="logout" class="ghost">Sign out</button>
   </header>
+  <nav id="tabs" class="tabs" role="tablist" aria-label="Agents" hidden></nav>
 
   <main class="layout">
     <section class="viewer-col">
@@ -34,7 +35,7 @@
           <p class="muted small">It reconnects on its own. If this lasts, check the worker container on the server.</p>
         </div>
         <div id="asleep" class="asleep" hidden>
-          <p>The browser is asleep (closed after being idle).</p>
+          <p id="asleepText">The browser is asleep (closed after being idle).</p>
           <button id="wake" class="primary">Wake browser</button>
         </div>
       </div>
@@ -74,6 +75,38 @@
         <button id="resume">Resume</button>
         <button id="stop" class="danger">Stop</button>
         <button id="reset" class="ghost" title="Forget the conversation so far">New task</button>
+        <button id="endSession" class="ghost" title="Close this agent's browser">Close browser</button>
+      </div>
+
+      <div id="jobsPanels" class="stack" hidden>
+        <details class="panel" id="profilePanel">
+          <summary>Job profile</summary>
+          <form id="profileForm" class="stack">
+            <div class="resume-row">
+              <span id="resumeInfo" class="muted small">No résumé yet. Upload a PDF.</span>
+              <label class="button-like" for="resumeFile">Upload résumé (PDF)</label>
+              <input id="resumeFile" type="file" accept="application/pdf" class="visually-hidden">
+            </div>
+            <label for="p_answers">Standard answers</label>
+            <textarea id="p_answers" rows="6" placeholder="Authorized to work in the US: yes&#10;Need sponsorship: no&#10;Available: nights and weekends, start in 2 weeks&#10;Desired pay: $24/hr or more&#10;Willing to relocate: no&#10;Phone / email to use: …"></textarea>
+            <label for="p_preferences">Job preferences</label>
+            <textarea id="p_preferences" rows="5" placeholder="Roles: sous chef, line cook, kitchen manager&#10;Where: Brooklyn and lower Manhattan&#10;Full time only, min $24/hr&#10;Skip: catering, hotels"></textarea>
+            <label for="p_coverLetterStyle">Cover letter style</label>
+            <textarea id="p_coverLetterStyle" rows="5" placeholder="Paste a cover letter you like, or describe the tone: short, warm, 3 sentences, mention specific dishes from their menu…"></textarea>
+            <button type="submit" class="primary">Save profile</button>
+            <p id="profileMsg" class="muted small" role="status"></p>
+          </form>
+        </details>
+        <details class="panel" id="appsPanel" open>
+          <summary>Applications <span id="appsCount" class="muted small"></span></summary>
+          <div class="apps-wrap">
+            <table class="apps">
+              <thead><tr><th>Company</th><th>Role</th><th>Site</th><th>Status</th><th>Updated</th></tr></thead>
+              <tbody id="appsBody"></tbody>
+            </table>
+          </div>
+          <p id="appsEmpty" class="muted small">Nothing tracked yet. Every job the agent works on shows up here.</p>
+        </details>
       </div>
 
       <ol id="log" class="log" aria-live="polite"></ol>
@@ -84,7 +117,7 @@
       </details>
       <details class="panel">
         <summary>Danger zone</summary>
-        <p class="muted small">Deletes every saved login in the agent's browser. Use it if you think anything was compromised.</p>
+        <p class="muted small">Deletes every saved login in this agent's browser. Use it if you think anything was compromised.</p>
         <button id="wipe" class="danger">Wipe saved logins…</button>
       </details>
     </section>

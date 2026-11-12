@@ -114,3 +114,31 @@ button.danger-solid { background: var(--danger); border-color: var(--danger); co
 .log-approval { background: var(--warn-bg) !important; border-left: 3px solid var(--danger) !important; }
 .login-card details { font-size: 13px; }
 .login-card details form { margin-top: 8px; }
+
+/* ---- agents tabs + Jobs panels ---- */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px 0; max-width: 1800px; margin: 0 auto; }
+.tab { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 7px 14px; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex: none; }
+.dot.idle { background: var(--ok); } .dot.busy { background: var(--run); } .dot.off { background: var(--border); }
+.dot.alert { background: var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 30%, transparent); }
+.tab.active .dot { outline: 2px solid var(--accent-text); }
+.panel label { font-weight: 600; font-size: 13px; }
+.panel textarea { font-size: 13px; resize: vertical; }
+.resume-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.button-like { border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-weight: 500; font-size: 13px; }
+.button-like:hover { border-color: var(--accent); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#resumeFile:focus-visible + .button-like, .button-like:focus-within { outline: 2px solid var(--accent); }
+.apps-wrap { overflow-x: auto; max-height: 45vh; }
+.apps { width: 100%; border-collapse: collapse; font-size: 13px; }
+.apps th, .apps td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.apps th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.apps td:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.apps a { color: var(--accent); }
+.status-chip { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.s-submitted { color: var(--ok); } .s-handed_to_owner { color: var(--pause); } .s-filled { color: var(--run); }
+.s-found { color: var(--muted); } .s-skipped { color: var(--muted); } .s-failed { color: var(--danger); }
+/* Keep wide content (the applications table, long text) from widening the side column */
+.side-col > *, .stack > *, .panel { min-width: 0; }
+.panel { overflow-wrap: anywhere; }

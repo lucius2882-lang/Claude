@@ -23,13 +23,14 @@ const browser = new BrowserManager({
   headless: process.env.HEADLESS !== "false",
   executablePath: process.env.CHROMIUM_PATH,
   allowedSites: SITES,
+  ephemeral: process.env.EPHEMERAL === "true",
 });
 
 // The only things the control plane may ask for. Anything else is refused.
 const METHODS = new Set([
   "start", "close", "wipe", "state", "screenshot", "zoom", "info", "describeTarget", "describeFocus",
   "navigate", "back", "move", "click", "drag", "scroll", "type", "key", "holdKey", "mouseDown", "mouseUp",
-  "settle", "startStream", "stopStream", "wheel", "pressKey", "typeText",
+  "settle", "startStream", "stopStream", "wheel", "pressKey", "typeText", "uploadFile",
 ]);
 
 let ws = null;
@@ -46,7 +47,7 @@ for (const ev of ["navigated", "blocked", "opened", "closed"]) {
 function connect() {
   ws = new WebSocket(CONTROL_URL, {
     headers: { authorization: `Bearer ${TOKEN}`, "x-worker-name": NAME },
-    maxPayload: 1024 * 1024,
+    maxPayload: 16 * 1024 * 1024, // room for a résumé upload
     handshakeTimeout: 10_000,
   });
 

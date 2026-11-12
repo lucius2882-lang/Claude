@@ -1,9 +1,11 @@
-# Three containers, no open ports, three separate networks:
+# Four containers, no open ports, separate networks:
 #
 #   cloudflared ──edge── control ──internal── worker-main ──egress── the web
+#                                       └──── worker-jobs ──egress── job sites
 #
-#   control      dashboard, passkeys, approvals, Claude agent loop. Holds the API key, no logins.
-#   worker-main  the logged-in browser. Holds your logins, no API key, can't reach cloudflared.
+#   control      dashboard, passkeys, approvals, Claude agent loops, your job profile. Holds the API key, no logins.
+#   worker-main  your Main agent's browser. Holds its logins, no API key.
+#   worker-jobs  the Jobs agent's browser: its own profile and sites, completely separate from Main.
 #   cloudflared  outbound-only tunnel to Cloudflare, which enforces Cloudflare Access.
 services:
   control:
@@ -29,12 +31,34 @@ services:
     # Deliberately NOT env_file: the worker gets only what it needs, never the API key.
     environment:
       WORKER_NAME: main
-      WORKER_TOKEN: ${WORKER_TOKEN}
+      WORKER_TOKEN: ${WORKER_TOKEN_MAIN}
       CONTROL_URL: ws://control:3001/worker
       ALLOWED_SITES: ${ALLOWED_SITES}
+      EPHEMERAL: ${MAIN_EPHEMERAL:-false}
       PROFILE_DIR: /profile
     volumes:
       - /srv/computaaa/data/worker-main:/profile   # your logins; ENCRYPTED folder only
+    networks: [internal, egress]
+    read_only: true
+    tmpfs: [/tmp, /home/pwuser]
+    shm_size: 1gb
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 3g
+    pids_limit: 512
+    restart: unless-stopped
+
+  worker-jobs:
+    build: { context: ., dockerfile: Dockerfile.worker }
+    environment:
+      WORKER_NAME: jobs
+      WORKER_TOKEN: ${WORKER_TOKEN_JOBS}
+      CONTROL_URL: ws://control:3001/worker
+      ALLOWED_SITES: ${JOBS_ALLOWED_SITES}
+      EPHEMERAL: ${JOBS_EPHEMERAL:-false}
+      PROFILE_DIR: /profile
+    volumes:
+      - /srv/computaaa/data/worker-jobs:/profile   # the Jobs agent's logins; ENCRYPTED folder only
     networks: [internal, egress]
     read_only: true
     tmpfs: [/tmp, /home/pwuser]
