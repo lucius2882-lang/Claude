@@ -87,7 +87,7 @@ Each layer assumes the one before it might fail.
 | 2 | **Passkey sign-in** (Face ID / Touch ID / security key) | `src/auth.js` | Phishing and stolen passwords; there's no password to steal. Eight single-use recovery codes are your backup. Sessions end after 30 min idle or 8 h. |
 | 3 | **Approvals enforced by code** | `src/agent.js` | Before every click or Enter, the server reads what's under the cursor or in focus. Buy, send, post, delete, submit, confirm, sign, save, and clicks inside embedded payment frames all wait for a **fresh passkey tap**. A web page can trick the AI into *trying*; it can't skip this check. |
 | 4 | **Site allowlist** | `src/browser.js` | The browser can only open sites in `ALLOWED_SITES`, for the agent and for you. That stops hijack attempts from sending your data to an attacker's site. |
-| 5 | **Isolation** | `docker-compose.yml` | Logins live only in the worker, the API key only in the control plane, on separate networks. Read-only containers, no Linux capabilities, memory and process limits, no ports, data on an encrypted folder. The browser closes after 30 idle minutes. |
+| 5 | **Isolation** | `docker-compose.yml` | Logins live only in the workers, the API key only in the control plane, on separate networks; workers are refused by the dashboard even on the private network. Read-only containers, non-root, no Linux capabilities, memory and process limits, no open ports. Data lives on an encrypted folder, and containers refuse to start while it's locked. The browser closes after 30 idle minutes. |
 | 6 | **Panic button + wipe** | dashboard | Panic stops the agent, closes the browser, and signs out every session. "Wipe saved logins" (passkey required) deletes the whole browser profile. |
 | 7 | **Security log + phone alerts** | `src/audit.js` | Every sign-in, command, approval, denial and blocked site is written to `data/audit.log` and shown in the dashboard. Important events also ping your phone via ntfy. |
 
@@ -99,61 +99,51 @@ Each layer assumes the one before it might fail.
 - **Set a spending limit** on the Anthropic API key (Console → Settings → Limits).
 - **Anyone who controls your Cloudflare account controls layer 1.** Turn on a passkey or security key for your Cloudflare login too.
 
-## Deploy it (about an hour, once)
+## Deploy it (about 30 minutes, once)
 
-### 1. Rent and lock down a VPS
-A Hetzner CX22 or DigitalOcean 4 GB droplet with Ubuntu 24.04 is plenty.
-```bash
-# as root on the new server
-adduser lucius && usermod -aG sudo lucius
-# copy your SSH key to lucius, then in /etc/ssh/sshd_config set:
-#   PasswordAuthentication no   PermitRootLogin no
-systemctl restart ssh
-apt update && apt install -y unattended-upgrades ufw gocryptfs docker.io docker-compose-v2 git
-ufw default deny incoming && ufw allow OpenSSH && ufw enable   # the tunnel needs NO inbound ports
-```
+Do the Cloudflare part first (it gives you three values the setup script asks for), then run one script on the server.
 
-### 2. Get the code
-```bash
-git clone https://github.com/lucius2882-lang/claude.git && cd claude/COMPUTAAA
-cp .env.example .env && chmod 600 .env
-```
-
-### 3. Encrypted storage for your logins
-```bash
-sudo mkdir -p /srv/computaaa/vault /srv/computaaa/data
-sudo gocryptfs -init /srv/computaaa/vault          # choose a long passphrase; save the master key it prints, offline
-sudo gocryptfs -allow_other /srv/computaaa/vault /srv/computaaa/data
-sudo mkdir -p /srv/computaaa/data/control /srv/computaaa/data/worker-main /srv/computaaa/data/worker-jobs
-# give each folder to its container's user (check the numbers with the two commands below)
-docker compose run --rm --no-deps control id -u        # usually 1000
-docker compose run --rm --no-deps worker-main id -u    # usually 1001
-sudo chown 1000 /srv/computaaa/data/control && sudo chown 1001 /srv/computaaa/data/worker-main /srv/computaaa/data/worker-jobs
-```
-After every reboot, the data stays locked until you SSH in and run the `gocryptfs … /srv/computaaa/data` line again. That's deliberate: a stolen disk or snapshot is useless.
-
-### 4. Cloudflare (free plan)
+### 1. Cloudflare (free plan, in your browser)
 1. Add `luciuscampany.com` to Cloudflare and switch your domain's nameservers to Cloudflare's. Recreate the DNS records that point the website at Netlify (Cloudflare usually imports them), and the website keeps working.
-2. **Zero Trust → Networks → Tunnels → Create tunnel** (type *Cloudflared*). Copy the token into `.env` as `CLOUDFLARE_TUNNEL_TOKEN`. Add a public hostname `agent.luciuscampany.com` → `http://control:3000`. (Never route port 3001; that's the private worker channel.)
+2. **Zero Trust → Networks → Tunnels → Create tunnel** (type *Cloudflared*). Copy the **tunnel token**. Add a public hostname `agent.luciuscampany.com` → `http://control:3000`. (Never route port 3001; that's the private worker channel.)
 3. **Zero Trust → Access → Applications → Add → Self-hosted**, domain `agent.luciuscampany.com`.
    - Policy: **Allow**, Include → **Emails** → your email only.
    - Session duration: 24 hours.
    - Advanced → Cookies: SameSite **Lax**, HttpOnly on. This lets the dashboard load inside your owner panel.
-   - Copy the **Application Audience (AUD) tag** into `.env` as `CF_ACCESS_AUD`, and your team domain (`<team>.cloudflareaccess.com`) as `CF_ACCESS_TEAM_DOMAIN`.
+   - Copy the **Application Audience (AUD) tag** and your **team domain** (`<team>.cloudflareaccess.com`).
 4. Turn on a passkey or security key for your Cloudflare account login.
+5. Create an API key at console.anthropic.com and **set a monthly spending limit** on it.
 
-### 5. Fill in `.env`
-`OWNER_EMAIL`, `ANTHROPIC_API_KEY`, `WORKER_TOKEN_MAIN` and `WORKER_TOKEN_JOBS` (run `openssl rand -hex 32` once for each), `ALLOWED_SITES` for Main (start small, e.g. `google.com`), and optionally `NTFY_URL` for phone alerts. `JOBS_ALLOWED_SITES` comes filled in with job boards and the common application systems; add any company site you want it to apply on. Docker gives each worker only its own token and sites, never the API key. Leave `PUBLIC_ORIGIN` and `FRAME_ANCESTORS` as they are unless your domain differs.
+### 2. Rent a VPS
+Hetzner or DigitalOcean, **Ubuntu 24.04**, 4 GB RAM to start (8 GB once you run both agents a lot). Add your SSH key when you create it.
 
-### 6. Start it and create your passkey
+### 3. Run the setup script
 ```bash
-docker compose up -d --build
-docker compose exec control node scripts/enroll.js
+ssh root@YOUR-SERVER-IP
+git clone https://github.com/lucius2882-lang/claude.git && cd claude/COMPUTAAA
+sudo bash scripts/setup-server.sh
 ```
-Open the printed link on your phone (it works once, for 15 minutes), create the passkey, and **write down the 8 recovery codes**. To add a second device later, run the enroll command again.
+(If the repo is private, GitHub will ask you to sign in: use a [personal access token](https://github.com/settings/tokens) with read-only access to this repo as the password. Until the COMPUTAAA branch is merged, add `-b claude/gracious-davinci-hcx6a6` to the clone command.)
+It installs and locks everything down, then asks you for:
+- an **encryption passphrase** (you'll need it after every reboot) and shows a **master key** to write down offline,
+- your **email**, the **Anthropic API key**, and the three **Cloudflare values** from step 1 (secrets are typed hidden).
 
-### 7. Log in to your accounts once
-Open the owner panel → COMPUTAAA. Type the site in the address bar, click into the live view and log in. Use the "Type" box for passwords and 2FA codes. Sessions are saved on the encrypted disk.
+What it does, in order: installs Docker, encryption and firewall tools; turns on automatic security updates; blocks all incoming traffic except SSH (the tunnel only goes out); turns off password sign-in for SSH (only if your SSH key is already set up, so you can't lock yourself out); creates the encrypted folder; writes `.env` with fresh per-worker secrets (owner-only permissions); builds and starts COMPUTAAA; and prints your **passkey link**.
+
+### 4. Create your passkey
+Open the printed link on your phone within 15 minutes, create the passkey, and **write down the 8 recovery codes**. To add another device later: `sudo docker compose exec control node scripts/enroll.js`.
+
+### 5. Sign in to your accounts once
+Open the owner panel → COMPUTAAA. Type the site in the address bar, click into the live view and sign in. Use the "Type" box for passwords and 2FA codes. Sessions are saved on the encrypted disk.
+
+### After a reboot
+```bash
+cd claude/COMPUTAAA && sudo bash scripts/unlock.sh
+```
+Until you do, the containers **refuse to start**: they never fall back to writing to an unencrypted folder. A stolen disk or snapshot is useless without your passphrase.
+
+### Settings you may want to change later
+`sudo nano .env`, then `sudo docker compose up -d`: `ALLOWED_SITES` (Main agent), `JOBS_ALLOWED_SITES` (comes filled in with job boards and common application systems), `JOBS_FILL_ONLY_SITES`, `JOBS_EPHEMERAL` / `MAIN_EPHEMERAL` (throwaway sessions), `NTFY_URL` (phone alerts), `IDLE_LOCK_MINUTES`.
 
 ## Using it
 

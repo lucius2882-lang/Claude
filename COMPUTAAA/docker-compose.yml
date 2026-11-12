@@ -15,8 +15,16 @@ services:
       HOST: 0.0.0.0
       WORKER_HOST: 0.0.0.0
       DATA_DIR: /data
+      # Workers live on this private range; they may use the worker channel, never the dashboard.
+      WORKER_SUBNET: 10.250.0.0/24
     volumes:
-      - /srv/computaaa/data/control:/data          # on the ENCRYPTED folder (README step 3)
+      # Your passkeys, job profile and logs: on the ENCRYPTED folder (README step 3).
+      # Long form with create_host_path: false, so if the encrypted folder isn't unlocked (e.g. after a reboot)
+      # the container refuses to start instead of writing to a plain, unencrypted folder.
+      - type: bind
+        source: /srv/computaaa/data/control
+        target: /data
+        bind: { create_host_path: false }
     networks: [edge, internal]
     read_only: true
     tmpfs: [/tmp]
@@ -37,7 +45,13 @@ services:
       EPHEMERAL: ${MAIN_EPHEMERAL:-false}
       PROFILE_DIR: /profile
     volumes:
-      - /srv/computaaa/data/worker-main:/profile   # your logins; ENCRYPTED folder only
+      # The Main agent's logins: ENCRYPTED folder only.
+      # Long form with create_host_path: false, so if the encrypted folder isn't unlocked (e.g. after a reboot)
+      # the container refuses to start instead of writing to a plain, unencrypted folder.
+      - type: bind
+        source: /srv/computaaa/data/worker-main
+        target: /profile
+        bind: { create_host_path: false }
     networks: [internal, egress]
     read_only: true
     tmpfs: [/tmp, /home/pwuser]
@@ -58,7 +72,13 @@ services:
       EPHEMERAL: ${JOBS_EPHEMERAL:-false}
       PROFILE_DIR: /profile
     volumes:
-      - /srv/computaaa/data/worker-jobs:/profile   # the Jobs agent's logins; ENCRYPTED folder only
+      # The Jobs agent's logins: ENCRYPTED folder only.
+      # Long form with create_host_path: false, so if the encrypted folder isn't unlocked (e.g. after a reboot)
+      # the container refuses to start instead of writing to a plain, unencrypted folder.
+      - type: bind
+        source: /srv/computaaa/data/worker-jobs
+        target: /profile
+        bind: { create_host_path: false }
     networks: [internal, egress]
     read_only: true
     tmpfs: [/tmp, /home/pwuser]
@@ -83,5 +103,7 @@ services:
 
 networks:
   edge: {}                  # cloudflared <-> control, plus internet for the API and Cloudflare
-  internal: { internal: true }  # control <-> worker only; no internet at all
+  internal:                 # control <-> workers only; no internet at all
+    internal: true
+    ipam: { config: [{ subnet: 10.250.0.0/24 }] }
   egress: {}                # the worker's way out to websites

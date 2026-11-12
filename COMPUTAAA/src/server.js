@@ -75,6 +75,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Workers (on WORKER_SUBNET) may only use the worker channel; the dashboard refuses them outright.
+const inWorkerSubnet = (() => {
+  const m = String(process.env.WORKER_SUBNET || "").match(/^(\d+\.\d+\.\d+\.\d+)\/(\d{1,2})$/);
+  if (!m) return () => false;
+  const toInt = (ip) => ip.split(".").reduce((n, o) => (n << 8) + Number(o), 0) >>> 0;
+  const bits = Number(m[2]);
+  const mask = bits === 0 ? 0 : (~0 << (32 - bits)) >>> 0;
+  const net = toInt(m[1]) & mask;
+  return (addr = "") => {
+    const ip = String(addr).replace(/^::ffff:/, "");
+    return /^\d+\.\d+\.\d+\.\d+$/.test(ip) && ((toInt(ip) & mask) >>> 0) === net;
+  };
+})();
+app.use((req, res, next) => {
+  if (!inWorkerSubnet(req.socket.remoteAddress)) return next();
+  audit("worker_network_blocked", { ip: req.socket.remoteAddress, path: req.path });
+  res.status(403).send("Forbidden");
+});
+
 app.use(cfGate); // lock 1: nothing at all without a valid Cloudflare Access token for the owner
 
 const file = (name) => (req, res) => res.sendFile(path.join(PUBLIC, name));
@@ -170,7 +189,7 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ noServer: true, maxPayload: 64 * 1024 });
 
 server.on("upgrade", async (req, socket, head) => {
-  const ok = req.url === "/ws" && originAllowed(req.headers.origin) && sessionFromHeaders(req.headers) && (await gateOkForUpgrade(req));
+  const ok = !inWorkerSubnet(req.socket.remoteAddress) && req.url === "/ws" && originAllowed(req.headers.origin) && sessionFromHeaders(req.headers) && (await gateOkForUpgrade(req));
   if (!ok) {
     socket.write("HTTP/1.1 401 Unauthorized\r\n\r\n");
     return socket.destroy();
