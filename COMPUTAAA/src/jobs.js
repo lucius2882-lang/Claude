@@ -74,6 +74,68 @@ export class JobsStore {
     return existing || list[0];
   }
 
+  // ---- recipes: saved application steps for one application system (e.g. greenhouse.io) ----
+  recipes() { return this.#readJson("recipes.json", []); }
+
+  /** Save the steps the agent just took. Values for sensitive-looking fields are never stored. */
+  saveRecipe({ name, match, steps }) {
+    const SENSITIVE = /ssn|social security|date of birth|birth ?date|\bdob\b|password|passcode|bank|routing|account number|credit card|card number|cvv|tax id|\bein\b|driver'?s? licen[cs]e/i;
+    const clean = String(match || "").toLowerCase().replace(/^https?:\/\//, "").replace(/[^a-z0-9.\-/]/g, "").slice(0, 120);
+    if (!clean || !clean.includes(".")) throw new Error("match must be a site like boards.greenhouse.io");
+    const kept = [];
+    for (const st of steps || []) {
+      const desc = `${st.target?.label} ${st.target?.name} ${st.target?.placeholder} ${st.target?.aria}`;
+      if (st.op === "fill" && SENSITIVE.test(desc)) continue; // never keep these
+      kept.push(st);
+    }
+    if (!kept.length) throw new Error("no steps to save yet; apply to one job on this system first");
+    const list = this.recipes();
+    const existing = list.find((r) => r.match === clean);
+    const recipe = {
+      id: existing?.id || crypto.randomUUID(),
+      name: String(name || clean).slice(0, 60),
+      match: clean,
+      steps: kept.slice(0, 120),
+      created: existing?.created || new Date().toISOString(),
+      updated: new Date().toISOString(),
+      runs: existing?.runs || 0,
+      failures: existing?.failures || 0,
+    };
+    this.#writeJson("recipes.json", [recipe, ...list.filter((r) => r.id !== recipe.id)].slice(0, 200));
+    return recipe;
+  }
+
+  recipeFor(url, name) {
+    const list = this.recipes();
+    if (name) {
+      const byName = list.find((r) => r.name.toLowerCase() === String(name).toLowerCase() || r.id === name);
+      if (byName) return byName;
+    }
+    let u;
+    try { u = new URL(url); } catch { return null; }
+    const target = (u.hostname + u.pathname).toLowerCase();
+    // the longest matching pattern wins (most specific)
+    return list.filter((r) => target === r.match || target.startsWith(r.match) || u.hostname.toLowerCase().endsWith("." + r.match.split("/")[0]) && !r.match.includes("/"))
+      .sort((a, b) => b.match.length - a.match.length)[0] || null;
+  }
+
+  noteRecipeRun(id, ok) {
+    const list = this.recipes();
+    const r = list.find((x) => x.id === id);
+    if (!r) return;
+    r.runs += 1;
+    if (!ok) r.failures += 1;
+    r.lastRun = new Date().toISOString();
+    this.#writeJson("recipes.json", list);
+  }
+
+  deleteRecipe(id) {
+    const list = this.recipes();
+    const next = list.filter((r) => r.id !== id);
+    this.#writeJson("recipes.json", next);
+    return next.length !== list.length;
+  }
+
   /** What the agent sees at the start of each task. Marked as your own reference data. */
   briefing() {
     const p = this.getProfile();
@@ -88,6 +150,9 @@ export class JobsStore {
       block("Cover letter style", p.coverLetterStyle),
       `### Résumé\n${r ? `On file: ${r.name}. Attach it with the upload_resume tool.` : "No résumé uploaded yet. Ask the owner to upload one before applying."}`,
       `### Applications already tracked (newest first; don't apply twice)\n${recent || "(none yet)"}`,
+      `### Saved recipes (use apply_with_recipe on job URLs from these systems)\n${
+        this.recipes().map((r) => `- ${r.name}: ${r.match} (${r.steps.length} steps, used ${r.runs}×${r.failures ? `, ${r.failures} needed help` : ""})`).join("\n") || "(none yet)"
+      }`,
     ].join("\n\n");
   }
 }

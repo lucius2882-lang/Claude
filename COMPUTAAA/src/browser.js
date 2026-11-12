@@ -316,6 +316,56 @@ export class BrowserManager extends EventEmitter {
     }
   }
 
+  // ---- recipes: describe fields/buttons by name so steps can be replayed on another job ----
+
+  /** A stable description of the field or button at (x, y), or of the focused element. */
+  async describeForRecipe(x, y) {
+    return this.page.evaluate(DESCRIBE, x == null ? null : [x, y]);
+  }
+
+  /** Visible text of the page (for writing a cover letter about this job). */
+  async pageText() {
+    return this.page.evaluate(() => (document.body?.innerText || "").replace(/\n{3,}/g, "\n\n").slice(0, 12000));
+  }
+
+  /**
+   * Find the element a recipe step describes and act on it.
+   * op: "locate" (just report where it is) | "click" | "fill" | "upload"
+   */
+  async recipeAct(op, target, payload = {}) {
+    const handle = await this.page.evaluateHandle(FIND, target);
+    const el = handle.asElement();
+    const what = target?.label || target?.text || target?.placeholder || target?.name || target?.tag || "element";
+    if (!el) return { ok: false, reason: `couldn't find "${what}" on this page` };
+    await el.scrollIntoViewIfNeeded().catch(() => {});
+    const box = await el.boundingBox();
+    const point = box ? [Math.round(box.x + box.width / 2), Math.round(box.y + box.height / 2)] : null;
+    if (op === "locate") return { ok: !!point, point, reason: point ? "" : `"${what}" isn't visible` };
+    if (op === "click") {
+      if (!point) return { ok: false, reason: `"${what}" isn't visible` };
+      await this.click(point);
+    } else if (op === "fill") {
+      const tag = await el.evaluate((n) => n.tagName.toLowerCase());
+      const value = String(payload.value ?? "");
+      if (tag === "select") {
+        await el.selectOption({ label: value }).catch(() => el.selectOption(value));
+      } else {
+        await el.fill(value);
+      }
+    } else if (op === "upload") {
+      const isFile = await el.evaluate((n) => n.tagName === "INPUT" && n.type === "file");
+      if (isFile) {
+        await el.setInputFiles({ name: String(payload.name || "resume.pdf"), mimeType: "application/pdf", buffer: Buffer.from(String(payload.b64 || ""), "base64") });
+      } else {
+        if (!point) return { ok: false, reason: `"${what}" isn't visible` };
+        await this.uploadFile(point, payload);
+      }
+    } else {
+      return { ok: false, reason: `unknown step ${op}` };
+    }
+    return { ok: true, point };
+  }
+
   // ---- raw input from the owner's own hands (no approval checks: it's you) ----
   async wheel(dx, dy) { await this.page.mouse.wheel(Number(dx) || 0, Number(dy) || 0); }
   async pressKey(key) { await this.page.keyboard.press(String(key).slice(0, 40)); }
@@ -348,3 +398,73 @@ export class BrowserManager extends EventEmitter {
 }
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ---- page-side helpers for recipes (run inside the web page) ----
+
+// Describe the element at [x, y] (or the focused element) by things that survive across job postings:
+// label text, name, placeholder, aria-label, button text. Auto-generated ids are ignored.
+const DESCRIBE = (pt) => {
+  const norm = (s) => (s || "").replace(/\s+/g, " ").trim().slice(0, 120);
+  let el = pt ? document.elementFromPoint(pt[0], pt[1]) : document.activeElement;
+  while (el?.shadowRoot && (pt ? el.shadowRoot.elementFromPoint(pt[0], pt[1]) : el.shadowRoot.activeElement)) {
+    const inner = pt ? el.shadowRoot.elementFromPoint(pt[0], pt[1]) : el.shadowRoot.activeElement;
+    if (!inner || inner === el) break;
+    el = inner;
+  }
+  if (!el || el === document.body) return null;
+  const field = el.closest("input,textarea,select,[contenteditable=''],[contenteditable=true]");
+  const control = field || el.closest("label")?.control || el.closest("button,a,[role=button],[role=option],[role=radio],[role=checkbox],input[type=submit],summary,label") || el;
+  const labelText = () => {
+    if (control.labels?.length) return norm([...control.labels].map((l) => l.innerText).join(" "));
+    const by = control.getAttribute("aria-labelledby");
+    if (by) return norm(by.split(/\s+/).map((id) => document.getElementById(id)?.innerText || "").join(" "));
+    const wrap = control.closest("label");
+    return wrap ? norm(wrap.innerText) : "";
+  };
+  const id = control.id && !/\d{3,}|[a-f0-9]{8,}|^:r|^react|^ember|^mui/i.test(control.id) ? control.id : "";
+  return {
+    tag: control.tagName.toLowerCase(),
+    type: (control.getAttribute("type") || "").toLowerCase(),
+    role: control.getAttribute("role") || "",
+    id,
+    name: control.getAttribute("name") || "",
+    label: labelText(),
+    placeholder: norm(control.getAttribute("placeholder")),
+    aria: norm(control.getAttribute("aria-label")),
+    text: field ? "" : norm(control.innerText || control.value || control.getAttribute("title")),
+  };
+};
+
+// Find the element that best matches a description. Returns null when nothing matches well enough.
+const FIND = (t) => {
+  if (!t) return null;
+  const norm = (s) => (s || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const visible = (el) => {
+    const r = el.getBoundingClientRect();
+    const st = getComputedStyle(el);
+    return (r.width > 0 && r.height > 0 && st.visibility !== "hidden" && st.display !== "none") || (el.tagName === "INPUT" && el.type === "file");
+  };
+  const labelOf = (el) => {
+    if (el.labels?.length) return norm([...el.labels].map((l) => l.innerText).join(" "));
+    const by = el.getAttribute("aria-labelledby");
+    if (by) return norm(by.split(/\s+/).map((id) => document.getElementById(id)?.innerText || "").join(" "));
+    return norm(el.closest("label")?.innerText);
+  };
+  const sel = ["input", "textarea", "select"].includes(t.tag) ? "input,textarea,select"
+    : "button,a,[role=button],[role=option],[role=radio],[role=checkbox],input[type=submit],input[type=button],summary,label";
+  let best = null, bestScore = 0;
+  for (const el of document.querySelectorAll(sel)) {
+    if (!visible(el)) continue;
+    let s = 0;
+    if (t.id && el.id === t.id) s += 6;
+    if (t.name && el.getAttribute("name") === t.name) s += 5;
+    if (t.label && labelOf(el) === norm(t.label)) s += 5;
+    if (t.placeholder && norm(el.getAttribute("placeholder")) === norm(t.placeholder)) s += 4;
+    if (t.aria && norm(el.getAttribute("aria-label")) === norm(t.aria)) s += 4;
+    if (t.text && norm(el.innerText || el.value) === norm(t.text)) s += 5;
+    if (t.type && (el.getAttribute("type") || "").toLowerCase() === t.type) s += 1;
+    if (el.tagName.toLowerCase() === t.tag) s += 1;
+    if (s > bestScore) { best = el; bestScore = s; }
+  }
+  return bestScore >= 4 ? best : null;
+};

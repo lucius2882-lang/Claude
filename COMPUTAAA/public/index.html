@@ -96,6 +96,18 @@
             <button type="submit" class="primary">Save profile</button>
             <p id="profileMsg" class="muted small" role="status"></p>
           </form>
+          <div class="chrome-box stack">
+            <strong>Use it with Claude in Chrome</strong>
+            <p class="muted small">Runs on your Claude subscription in your own Chrome, with no API cost. Copy this, then in the Claude side panel save it as a shortcut (e.g. <code>/apply</code>). It follows the same rules: you click every final Submit.</p>
+            <button type="button" id="copyChrome">Copy as Claude in Chrome shortcut</button>
+            <textarea id="chromeText" rows="6" readonly hidden aria-label="Shortcut text to copy"></textarea>
+          </div>
+        </details>
+        <details class="panel" id="recipesPanel">
+          <summary>Recipes <span id="recipesCount" class="muted small"></span></summary>
+          <p class="muted small">Saved steps for each application system. The agent replays them in one step instead of ~30, and only uses Claude for cover letters or when a form changed. Your passkey and "you submit" rules still apply.</p>
+          <ul id="recipesList" class="recipes"></ul>
+          <p id="recipesEmpty" class="muted small">None yet. After the agent applies by hand on a new system, it saves a recipe.</p>
         </details>
         <details class="panel" id="appsPanel" open>
           <summary>Applications <span id="appsCount" class="muted small"></span></summary>
@@ -106,6 +118,15 @@
             </table>
           </div>
           <p id="appsEmpty" class="muted small">Nothing tracked yet. Every job the agent works on shows up here.</p>
+          <details class="import">
+            <summary class="muted small">Log applications from Claude in Chrome</summary>
+            <div class="stack">
+              <label for="importText" class="small">Paste the lines it gave you (Company | Role | Site | URL | status)</label>
+              <textarea id="importText" rows="4" placeholder="Test Bistro | Line Cook | LinkedIn | https://… | submitted"></textarea>
+              <button type="button" id="importBtn">Add to tracker</button>
+              <p id="importMsg" class="muted small" role="status"></p>
+            </div>
+          </details>
         </details>
       </div>
 

@@ -122,7 +122,7 @@ app.get("/api/approval", (req, res) => {
 app.get("/api/audit", (req, res) => res.json(readAudit(200)));
 
 // ---- Jobs agent: profile, résumé, tracker ----
-app.get("/api/jobs/profile", (req, res) => res.json({ profile: jobsStore.getProfile(), resume: jobsStore.resumeMeta() }));
+app.get("/api/jobs/profile", (req, res) => res.json({ profile: jobsStore.getProfile(), resume: jobsStore.resumeMeta(), fillOnly: FILL_ONLY }));
 app.put("/api/jobs/profile", requireSameOrigin, express.json({ limit: "100kb" }), (req, res) => {
   const profile = jobsStore.saveProfile(req.body);
   audit("jobs_profile_saved", {});
@@ -138,6 +138,31 @@ app.put("/api/jobs/resume", requireSameOrigin, express.raw({ type: "application/
   }
 });
 app.get("/api/jobs/applications", (req, res) => res.json(jobsStore.applications()));
+
+// Applications made elsewhere (e.g. with Claude in Chrome): paste lines "Company | Role | Site | URL | status"
+app.post("/api/jobs/applications/import", requireSameOrigin, express.json({ limit: "100kb" }), (req, res) => {
+  const STATUS = { submitted: "submitted", applied: "submitted", sent: "submitted", filled: "filled", "waiting on you": "handed_to_owner", ready: "handed_to_owner", skipped: "skipped", found: "found", failed: "failed" };
+  let added = 0;
+  for (const line of String(req.body?.text || "").split("\n").slice(0, 200)) {
+    const parts = line.split("|").map((x) => x.trim());
+    if (parts.length < 2 || !parts[0] || /^company$/i.test(parts[0])) continue;
+    const [company, role, site = "", url = "", status = "submitted"] = parts;
+    jobsStore.record({ company, role, site, url: /^https?:\/\//.test(url) ? url : "", status: STATUS[status.toLowerCase()] || "submitted", notes: "Logged from Claude in Chrome" });
+    added++;
+  }
+  audit("applications_imported", { count: added });
+  res.json({ added });
+});
+
+app.get("/api/jobs/recipes", (req, res) => res.json(jobsStore.recipes().map(({ steps, ...r }) => ({
+  ...r, steps: steps.length, written: steps.filter((x) => x.fresh).length,
+  fields: steps.filter((x) => x.op === "fill").map((x) => x.target?.label || x.target?.placeholder || x.target?.name).filter(Boolean).slice(0, 12),
+}))));
+app.delete("/api/jobs/recipes/:id", requireSameOrigin, (req, res) => {
+  const ok = jobsStore.deleteRecipe(String(req.params.id));
+  if (ok) audit("recipe_deleted", { id: req.params.id });
+  res.status(ok ? 200 : 404).json({ ok });
+});
 
 const server = http.createServer(app);
 
@@ -200,6 +225,7 @@ for (const slot of slots.values()) {
   agent.on("status", (s) => { touch(slot); slot.status = s; broadcast({ type: "status", agent: slot.name, ...s }); });
   agent.on("log", (l) => { touch(slot); log(slot, l.kind, l.text); });
   agent.on("applications", () => broadcast({ type: "applications", agent: slot.name }));
+  agent.on("recipes", () => broadcast({ type: "recipes", agent: slot.name }));
 }
 
 wss.on("connection", async (ws, req) => {

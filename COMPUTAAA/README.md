@@ -49,6 +49,20 @@ Changes apply from the agent's next task. It never stores or types your Social S
 
 Every job it touches lands in the **Applications** tracker (found → filled → waiting on you / submitted / skipped), so it never applies twice. Moving through a form ("Easy Apply", "Next", "Continue", "Review", "Upload résumé") doesn't ask; the final send always does.
 
+### Recipes (cheaper applications)
+The first time the Jobs agent applies through an application system (Culinary Agents, Greenhouse, Workday…), it saves the steps as a **recipe**: which fields it filled and which buttons it pressed, recorded by their labels and names rather than screen positions, so they still work on a different job on the same system. After that, an application there takes **one** agent step instead of about 30:
+
+- Short answers (name, email, phone, work authorization) are reused.
+- Cover letters and "why do you want this job" answers are written fresh for each job from the posting (the posting is treated as untrusted text).
+- The final submit still goes through the same checks: your passkey, or handed to you on LinkedIn, Indeed, Glassdoor and Craigslist.
+- If a form has changed, the recipe stops at the first field it can't find and the agent finishes by hand (and can save an updated recipe).
+- Fields that look sensitive (Social Security number, date of birth, bank, passwords) are never saved in a recipe.
+
+See and delete recipes in the **Recipes** panel on the Jobs tab.
+
+### Claude in Chrome (no API cost)
+For job hunting on your own computer under your Claude subscription: on the Jobs tab, open **Job profile → Copy as Claude in Chrome shortcut** and save it as a shortcut in the Claude side panel (e.g. `/apply`). It carries your profile and the same rules: you click every final Submit, it never posts on LinkedIn/Indeed/Glassdoor/Craigslist, and it never types passwords or sensitive numbers. At the end it lists what it worked on as `Company | Role | Site | URL | status` lines; paste them into **Applications → Log applications from Claude in Chrome** to keep one tracker. It runs in your real browser while you're there, without COMPUTAAA's isolation or passkey approvals.
+
 ### Throwaway sessions
 Set `JOBS_EPHEMERAL=true` (or `MAIN_EPHEMERAL=true`) and that agent starts every session with an empty browser, asks you to sign in when a site needs it, and **deletes everything** (cookies, logins, history) when you press **End session**, when it goes idle, or on Panic. Nothing is left on disk. The trade-off: you sign in, often with 2FA, every session, and sites may send more "new device" emails.
 
@@ -58,7 +72,7 @@ Set `JOBS_EPHEMERAL=true` (or `MAIN_EPHEMERAL=true`) and that agent starts every
 |---|---|
 | Server, 8 GB (Hetzner; check current prices) | ~$8–18 |
 | Cloudflare tunnel + Access, ntfy alerts | $0 |
-| Claude API (Opus 5.5), billed separately from a Claude subscription | ~$1–1.50 per job application, ~$0.25–1 per everyday task |
+| Claude API (Opus 5.5), billed separately from a Claude subscription | ~$1–1.50 for a job application done by hand; with a recipe, roughly a tenth of that or less (mostly the cover letter); ~$0.25–1 per everyday task |
 
 Roughly **$40–60/month** for light use (~20 applications plus a few tasks a week), **$100–140** for regular use. Set a spending limit on the API key.
 

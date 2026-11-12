@@ -6,7 +6,7 @@ import { EventEmitter } from "node:events";
 const METHODS = [
   "start", "close", "wipe", "screenshot", "zoom", "info", "describeTarget", "describeFocus",
   "navigate", "back", "move", "click", "drag", "scroll", "type", "key", "holdKey", "mouseDown", "mouseUp",
-  "settle", "wheel", "pressKey", "typeText", "uploadFile",
+  "settle", "wheel", "pressKey", "typeText", "uploadFile", "describeForRecipe", "pageText", "recipeAct",
 ];
 const SLOW = new Set(["holdKey", "start", "navigate"]);
 

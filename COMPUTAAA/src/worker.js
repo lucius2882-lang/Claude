@@ -31,6 +31,7 @@ const METHODS = new Set([
   "start", "close", "wipe", "state", "screenshot", "zoom", "info", "describeTarget", "describeFocus",
   "navigate", "back", "move", "click", "drag", "scroll", "type", "key", "holdKey", "mouseDown", "mouseUp",
   "settle", "startStream", "stopStream", "wheel", "pressKey", "typeText", "uploadFile",
+  "describeForRecipe", "pageText", "recipeAct",
 ]);
 
 let ws = null;
