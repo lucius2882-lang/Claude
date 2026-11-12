@@ -1,0 +1,35 @@
+# Two containers, no open ports:
+#   computaaa   the agent + dashboard, reachable only from inside this compose network
+#   cloudflared makes an outbound-only tunnel to Cloudflare, which enforces Cloudflare Access
+services:
+  computaaa:
+    build: .
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+      PROFILE_DIR: /data/profile
+    volumes:
+      # Mount point of the ENCRYPTED folder (see README step 3). Never point this at a plain disk.
+      - /srv/computaaa/data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /home/pwuser
+    shm_size: 1gb
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 3g
+    pids_limit: 512
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest   # pin to a current release tag once it's running
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    depends_on: [computaaa]

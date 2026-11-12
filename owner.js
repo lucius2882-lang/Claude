@@ -19,7 +19,13 @@
   var TOOLS = [
     { name: 'Schedule builder',
       note: 'La Prima Uguaglianza è L’equità. Four weeks of shifts, shared fairly.',
-      src: '/scheduler/' }
+      src: '/scheduler/' },
+    // COMPUTAAA runs on its own server (code in /COMPUTAAA). Its real locks live there:
+    // Cloudflare Access, then a passkey. This PIN only hides the tile.
+    { name: 'COMPUTAAA',
+      note: 'Your browser, on command. It asks before anything risky.',
+      src: 'https://agent.luciuscampany.com/',
+      gated: true }
   ];
 
   // The button's face, drawn once and used at two sizes (the button, and the emblem over the PIN pad).
@@ -144,6 +150,8 @@
     el.relock.hidden = next === 'pin';
     el.stage.classList.toggle('ow-in-tool', next === 'tool');
     if (next !== 'tool') { dropFrame(); el.title.textContent = 'Owner'; }
+    var gate = view.querySelector('.ow-gate');
+    if (gate && next !== 'tool') gate.remove();
     if (next === 'pin') { paint(); waiting(); }
     var focus = next === 'home' ? view.querySelector('.ow-tool') : next === 'tool' ? el.back : el.close;
     if (focus) focus.focus({ preventScroll: true });
@@ -157,12 +165,51 @@
     if (old) old.remove();
   }
 
+  // A tool on its own server behind Cloudflare Access can't show Cloudflare's sign-in page
+  // inside a frame. So check first: when the Cloudflare sign-in is needed, it opens in a
+  // tab, and the frame opens once that's done.
   function openTool(tool) {
+    if (!tool.gated) return frameTool(tool);
+    show('tool');
+    el.title.textContent = tool.name;
+    var note = document.createElement('div');
+    note.className = 'ow-gate';
+    note.innerHTML = '<p>Checking…</p>';
+    el.stage.appendChild(note);
+    function ask(text, label, action) {
+      note.innerHTML = '<p></p><button type="button" class="ow-btn"></button>';
+      note.querySelector('p').textContent = text;
+      var b = note.querySelector('button');
+      b.textContent = label;
+      b.addEventListener('click', action);
+    }
+    function check() {
+      fetch(tool.src + 'api/ping', { mode: 'cors', credentials: 'include', redirect: 'manual', cache: 'no-store' })
+        .then(function (r) {
+          if (r.type === 'opaqueredirect' || r.status === 401 || r.status === 403) {
+            ask('Sign in to Cloudflare first. It opens in a new tab; come back here when it says you\u2019re in.', 'Open sign-in', function () {
+              window.open(tool.src, '_blank', 'noopener');
+              ask('Signed in?', 'Open ' + tool.name, check);
+            });
+          } else if (!r.ok) {
+            throw new Error('not ok');
+          } else {
+            note.remove();
+            frameTool(tool);
+          }
+        })
+        .catch(function () { ask(tool.name + ' isn\u2019t answering right now.', 'Try again', check); });
+    }
+    check();
+  }
+
+  function frameTool(tool) {
     show('tool');
     var frame = document.createElement('iframe');
     frame.className = 'ow-frame';
     frame.title = tool.name;
     frame.src = tool.src;
+    if (tool.gated) frame.referrerPolicy = 'no-referrer';
     el.stage.appendChild(frame);
     el.title.textContent = tool.name;
   }

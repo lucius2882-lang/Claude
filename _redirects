@@ -1,0 +1,4 @@
+# COMPUTAAA's source sits in this repo but runs on its own server, not on this site.
+# Don't serve it here.
+/COMPUTAAA/*  /404.html  404!
+/COMPUTAAA    /404.html  404!

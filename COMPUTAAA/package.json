@@ -1,0 +1,24 @@
+{
+  "name": "computaaa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "COMPUTAAA: Lucius's private AI browser agent (Playwright + Claude computer use), behind Cloudflare Access and passkeys.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "enroll": "node --env-file-if-exists=.env scripts/enroll.js",
+    "login": "node --env-file-if-exists=.env scripts/headed-login.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "@simplewebauthn/browser": "^14.0.0",
+    "@simplewebauthn/server": "^14.1.0",
+    "express": "^5.1.0",
+    "jose": "^6.2.17",
+    "playwright": "1.65.0",
+    "ws": "^8.18.0"
+  }
+}

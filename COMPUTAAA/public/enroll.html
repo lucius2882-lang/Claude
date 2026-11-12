@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>COMPUTAAA passkey setup</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <h1>Set up your passkey</h1>
+    <section id="step1" class="stack">
+      <p class="muted">This creates the passkey that unlocks COMPUTAAA. Use the device you'll sign in with most (your phone is ideal; passkeys sync through iCloud Keychain or Google Password Manager).</p>
+      <label>Name for this passkey <input id="name" value="My iPhone" maxlength="40"></label>
+      <button id="create" class="primary">Create passkey</button>
+    </section>
+    <section id="step2" class="stack" hidden>
+      <p><strong>Passkey saved.</strong></p>
+      <div id="codesBox" hidden>
+        <p>These are your <strong>recovery codes</strong>. Each one works once if you lose your passkey. Write them down or print them and keep them somewhere safe and offline. They won't be shown again.</p>
+        <ol id="codes" class="codes"></ol>
+      </div>
+      <a class="button primary" href="/">Open COMPUTAAA</a>
+    </section>
+    <p id="msg" class="error" role="alert"></p>
+  </main>
+  <script src="/vendor/webauthn.js"></script>
+  <script src="/passkey.js"></script>
+  <script src="/enroll.js"></script>
+</body>
+</html>

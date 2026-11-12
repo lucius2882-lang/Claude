@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>COMPUTAAA</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>COMPUTAAA</h1>
+    <span id="status" class="pill idle">connecting…</span>
+    <span class="spacer"></span>
+    <button id="panic" class="danger-solid" title="Stop the agent, close the browser, and sign out everywhere">Panic</button>
+    <button id="logout" class="ghost">Sign out</button>
+  </header>
+
+  <main class="layout">
+    <section class="viewer-col">
+      <div class="urlbar">
+        <button id="back" class="ghost" title="Back" aria-label="Back">←</button>
+        <input id="url" type="text" spellcheck="false" placeholder="https://…" aria-label="Address">
+        <button id="go" class="ghost">Go</button>
+      </div>
+      <p id="sites" class="muted small sites"></p>
+      <div id="viewer" class="viewer" tabindex="0" aria-label="Live browser view. Click to take control when the agent is paused.">
+        <img id="screen" alt="Live view of the agent's browser" draggable="false">
+        <div id="marker" class="marker" hidden></div>
+        <div id="driving" class="driving" hidden>You're driving · Esc to release</div>
+        <div id="locked" class="locked" hidden>Agent is working · Pause to take control</div>
+        <div id="asleep" class="asleep" hidden>
+          <p>The browser is asleep (closed after being idle).</p>
+          <button id="wake" class="primary">Wake browser</button>
+        </div>
+      </div>
+      <div class="typebar">
+        <input id="typeText" type="text" placeholder="Type or paste into the focused field (e.g. a 2FA code)" autocomplete="off">
+        <button id="typeSend" class="ghost">Send text</button>
+        <button id="enterKey" class="ghost">Enter ↵</button>
+      </div>
+    </section>
+
+    <section class="side-col">
+      <div id="approval" class="approval" hidden>
+        <strong>Approve this action?</strong>
+        <p id="approvalText" class="approval-what"></p>
+        <p class="muted small">The ring on the live view shows where it will click. Approving needs your passkey.</p>
+        <div class="row">
+          <button id="approve" class="primary">Approve with passkey</button>
+          <button id="deny" class="danger">Deny</button>
+        </div>
+      </div>
+
+      <div id="human" class="human" hidden>
+        <strong>The agent needs you</strong>
+        <p id="humanReason"></p>
+        <p class="muted small">Handle it in the live view, then resume.</p>
+        <input id="humanNote" type="text" placeholder="Optional note to the agent">
+        <button id="humanResume" class="primary">Done, resume agent</button>
+      </div>
+
+      <form id="cmdForm" class="cmd">
+        <textarea id="cmd" rows="3" placeholder="Tell the browser what to do… e.g. “Open my Gmail and summarize today's unread emails”"></textarea>
+        <button type="submit" id="send" class="primary">Send</button>
+      </form>
+
+      <div class="controls">
+        <button id="pause">Pause for human</button>
+        <button id="resume">Resume</button>
+        <button id="stop" class="danger">Stop</button>
+        <button id="reset" class="ghost" title="Forget the conversation so far">New task</button>
+      </div>
+
+      <ol id="log" class="log" aria-live="polite"></ol>
+
+      <details id="securityLog" class="panel">
+        <summary>Security log</summary>
+        <ol id="audit" class="audit"></ol>
+      </details>
+      <details class="panel">
+        <summary>Danger zone</summary>
+        <p class="muted small">Deletes every saved login in the agent's browser. Use it if you think anything was compromised.</p>
+        <button id="wipe" class="danger">Wipe saved logins…</button>
+      </details>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

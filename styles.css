@@ -2755,6 +2755,9 @@
     .ow-tool:hover .ow-tool-go { background: var(--ivory); border-color: var(--ivory); color: #0b0b0b; }
     .ow-btn:focus-visible, .ow-key:focus-visible, .ow-tool:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     .ow-frame { flex: 1; min-height: 0; width: 100%; border: 0; background: #f7f2e9; }
+    /* COMPUTAAA: shown while checking the Cloudflare sign-in, before its frame opens */
+    .ow-gate { margin: auto; padding: 24px; max-width: 420px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+    .ow-gate p { margin: 0; font-size: .95rem; line-height: 1.6; color: rgba(245, 242, 236, .8); }
     /* short or narrow screens: the same pad, a little smaller, so it fits without scrolling */
     @media (max-height: 700px), (max-width: 360px) {
       .ow-stage { padding: 14px 16px 20px; }

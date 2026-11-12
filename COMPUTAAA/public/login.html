@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>COMPUTAAA sign in</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <h1>COMPUTAAA</h1>
+    <p class="muted">Owner sign-in</p>
+    <button id="signin" class="primary">Sign in with passkey</button>
+    <p id="framedNote" class="muted small" hidden>Opens a small window for Face ID / Touch ID, then comes back here.</p>
+    <details>
+      <summary class="muted small">Lost your passkey? Use a recovery code</summary>
+      <form id="recovery" class="stack">
+        <input name="code" autocomplete="off" spellcheck="false" placeholder="xxxx-xxxx-xxxx-xxxx">
+        <button type="submit">Use recovery code</button>
+      </form>
+    </details>
+    <p id="msg" class="error" role="alert"></p>
+  </main>
+  <script src="/vendor/webauthn.js"></script>
+  <script src="/passkey.js"></script>
+  <script src="/login.js"></script>
+</body>
+</html>
