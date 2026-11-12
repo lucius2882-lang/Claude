@@ -480,6 +480,9 @@
   <script src="trapizzino.js"></script>
   <script src="polish.js"></script>
 
+  <!-- The owner's door: a small lock beside Lucy's button. It opens a PIN pad, then Lucius's own tools (owner.js). -->
+  <button id="owner-lock" type="button" aria-label="Owner's entrance" hidden></button>
+
   <!-- Lucy -->
   <button id="lucy-launcher" aria-label="Talk to Lucy"
     style="display:none; position:fixed; right:20px; bottom:20px; width:48px; height:48px; border-radius:50%; border:0; background:#f0ede7; color:#0a0a0a; font-family:'Times New Roman',serif; font-style:italic; font-size:20px; cursor:pointer; z-index:9999;">L</button>
@@ -713,5 +716,6 @@
     });
   })();
   </script>
+  <script src="owner.js"></script>
 </body>
 </html>

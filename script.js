@@ -1225,8 +1225,6 @@
       }
     ];
 
-    let bmPopup = null;
-    let bmSlideIndex = 0;
     let bmCurrentPage = 0;
 
     const p = lsSlidePhotos;
@@ -1366,74 +1364,6 @@
       if (bmCurrentPage < bmSpreads.length - 1) { bmCurrentPage++; renderSpread(bmCurrentPage, 'next'); }
     });
 
-    function openBmPopup(item) {
-      if (bmPopup) { bmPopup.remove(); bmPopup = null; }
-      bmSlideIndex = 0;
-      const popup = document.createElement('div');
-      popup.className = 'popup bm-popup';
-      popup.style.setProperty('--tilt', '0deg');
-      popup.style.visibility = 'hidden';
-      popup.style.left = '-9999px';
-      popup.style.top = '0';
-      popup.innerHTML = buildBmPopupHTML(item, 0);
-      document.body.appendChild(popup);
-      requestAnimationFrame(() => {
-        const w = popup.offsetWidth, h = popup.offsetHeight;
-        popup.style.left = Math.round((window.innerWidth - w) / 2) + 'px';
-        popup.style.top = Math.round((window.innerHeight - h) / 2) + 'px';
-        popup.style.visibility = 'visible';
-      });
-      bindBmPopupBtns(popup, item);
-      makeDraggable(popup, popup.querySelector('[data-drag]'));
-      bmPopup = popup;
-    }
-
-    function buildBmPopupHTML(item, idx) {
-      const slide = item.slides[idx];
-      const isLast = idx === item.slides.length - 1;
-      return `
-        <div class="popup-titlebar" data-drag style="background:#0d0a07;border-bottom:1px solid #3a2a15;">
-          <div class="popup-title" style="color:#c8a96e;font-family:Georgia,serif;letter-spacing:0.06em;">${item.name}</div>
-          <div class="popup-controls">
-            <button class="popup-btn bm-close-btn" style="background:#1a1005;border-color:#3a2a15;color:#6a5a3a;">✕</button>
-          </div>
-        </div>
-        <div class="popup-photo" style="background:#0a0805;border-bottom:1px solid #1e160a;">
-          <div class="popup-photo-placeholder" style="border-color:rgba(200,169,110,0.15);color:rgba(200,169,110,0.25);font-family:var(--sans);">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            Add photo
-          </div>
-        </div>
-        <div class="popup-body" style="background:#110d08;border-top:none;">
-          <div class="popup-label" style="color:#5a4a2a;font-family:var(--sans);">${slide.label}</div>
-          <div class="popup-text" style="color:#c8b88a;font-family:Georgia,serif;line-height:1.7;">${slide.text}</div>
-        </div>
-        <div class="popup-footer" style="background:#0d0a07;border-top:1px solid #1e160a;">
-          <span class="popup-counter" style="color:#3a2a15;font-family:var(--sans);">${idx + 1} of ${item.slides.length}</span>
-          ${!isLast
-            ? `<button class="popup-next-btn bm-next-btn" style="color:#c8a96e;font-family:var(--sans);text-decoration:none;border:1px solid #3a2a15;padding:3px 12px;border-radius:3px;background:none;cursor:pointer;">Next →</button>`
-            : '<span style="font-size:0.7rem;color:#3a2a15;font-family:var(--sans);letter-spacing:0.1em;">— fin —</span>'}
-        </div>`;
-    }
-
-    function bindBmPopupBtns(popup, item) {
-      popup.querySelector('.bm-close-btn').addEventListener('click', () => {
-        popup.classList.add('closing');
-        popup.addEventListener('animationend', () => { popup.remove(); bmPopup = null; }, { once: true });
-      });
-      const nextBtn = popup.querySelector('.bm-next-btn');
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        bmSlideIndex++;
-        popup.innerHTML = buildBmPopupHTML(item, bmSlideIndex);
-        bindBmPopupBtns(popup, item);
-        makeDraggable(popup, popup.querySelector('[data-drag]'));
-      });
-    }
-
     document.getElementById('bm-back-btn').addEventListener('click', () => history.back());
 
     function openBarMenu() {
@@ -1447,7 +1377,6 @@
     }
 
     function closeBarMenu() {
-      if (bmPopup) { bmPopup.remove(); bmPopup = null; }
       barmenuEl.classList.remove('visible');
       setTimeout(() => { barmenuEl.style.display = 'none'; }, 300);
     }
