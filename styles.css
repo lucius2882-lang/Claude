@@ -1023,12 +1023,6 @@
     .bm-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(232,168,32,0.25); transition: background 0.2s; }
     .bm-dot.active { background: #e8a820; }
 
-    /* Popup */
-    .bm-popup {
-      border-color: #0a3a1e;
-      box-shadow: 0 0 0 2px #e8a820, 6px 6px 32px rgba(0,0,0,0.7);
-    }
-
     @media (max-width: 600px) {
       .bm-page:first-child { border-bottom: 2px solid #0a3a1e; }
       .bm-page-item:hover { transform: none; }
